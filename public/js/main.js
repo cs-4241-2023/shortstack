@@ -6,22 +6,31 @@ const submit = async function( event ) {
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault()
-  
+
   const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+      json = { yourname: input.value },
+      body = JSON.stringify( json )
 
   const response = await fetch( '/submit', {
     method:'POST',
-    body 
+    body
   })
 
-  const text = await response.text()
+  const data = await response.json()
 
-  console.log( 'text:', text )
+  const list = document.createElement('ul')
+
+  data.forEach( d => {
+    const item = document.createElement('li')
+    item.innerHTML = `<b>model</b> : ${d.model}, <b>mpg</b>: ${d.mpg}`
+    list.appendChild( item )
+  })
+
+  document.body.appendChild( list )
+
 }
 
 window.onload = function() {
-   const button = document.querySelector("button");
+  const button = document.querySelector("button");
   button.onclick = submit;
 }
