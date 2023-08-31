@@ -1,9 +1,5 @@
 const http = require( 'http' ),
       fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
       mime = require( 'mime' ),
       dir  = 'public/',
       port = 3000
@@ -44,8 +40,8 @@ const handlePost = function( request, response ) {
 
     // ... do something with the data here!!!
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end(JSON.stringify(appdata))
   })
 }
 

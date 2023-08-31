@@ -11,17 +11,29 @@ const submit = async function( event ) {
         json = { yourname: input.value },
         body = JSON.stringify( json )
 
+  // post JSON to server
   const response = await fetch( '/submit', {
     method:'POST',
     body 
   })
 
-  const text = await response.text()
+  // await response from server, the server is sending some example data back
+  const dataResponse = await response.json()
 
-  console.log( 'text:', text )
+  // put data response into HTML list
+  const list = document.createElement("ul");
+  dataResponse.forEach(d => {
+    const item = document.createElement("li");
+    item.innerHTML = `<b>Model:</b> ${d.model}, <b>MPG: ${d.mpg} </b>`; // format the JSON
+    list.appendChild(item);
+  });
+
+  // put list on the body of the page
+  document.body.appendChild(list);
+
 }
 
 window.onload = function() {
-   const button = document.querySelector("button");
+  const button = document.querySelector("button");
   button.onclick = submit;
 }
