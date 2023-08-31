@@ -7,8 +7,8 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
+  const input = document.querySelector( '#addfact' ),
+        json = { addfact: input.value },
         body = JSON.stringify( json )
 
   const response = await fetch( '/submit', {
