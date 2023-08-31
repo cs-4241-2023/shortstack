@@ -70,14 +70,16 @@ input:invalid{
   flex-direction: row;
   flex-wrap: wrap;
   justify-content:center;
+  background: var(--mainColor);
+  border-radius: 25px;
+  margin: 2%;
 }
 
 .item {
-  background: var(--mainColor);
   width:fit-content;
+  border: 1px #E8BC78;
   padding: 3%;
   margin:3%;
-  border-radius: 25px;
   align-content: center;
 }
 
@@ -85,3 +87,27 @@ input:invalid{
   text-align: center;
   margin-bottom: 2%;
 }
+
+.addTask{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 3% 0;
+  margin: 3%;
+  background: var(--mainColor);
+  border-radius: 25px;
+  align-items: center;
+}
+
+.addItemContainer{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.addItem{
+  margin: 3%;
+  width:fit-content;
+}
+

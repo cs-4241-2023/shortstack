@@ -14,29 +14,39 @@
   </head>
   <body>
     <div class="header">
-	    <h3>Todo Lists</h3>
+	    <h3>Todo List</h3>
+    </div>
+    <div class="addTask">
+	    <h4>Add Tasks</h4>
+	    <form class="addItemContainer">
+		    <div class="addItem">
+			    <input type="text" id="task" placeholder="Task">
+		    </div>
+		    <div class="addItem">
+			    <input type="text" id="timeEstimate" placeholder="Time Estimate">
+		    </div>
+		    <div class="addItem">
+			    <select id="priority" name="priority">
+				    <option value="High">High Priority</option>
+				    <option value="Medium">Medium Priority</option>
+				    <option value="Low">Low Priority</option>
+			    </select>
+		    </div>
+		    <div class="addItem">
+			    <button>submit</button>
+		    </div>
+	    </form>
     </div>
     <div class="container">
 	    <div class="item">
-		    <h5>Homework</h5>
-		    <form>
-			    <input type="text" id="homework" value="Homework Task">
-			    <button>submit</button>
-		    </form>
+		    <h5>Task</h5>
 	    </div>
 	    <div class="item">
-		    <h5>Job</h5>
-		    <form>
-			    <input type="text" id="job" value="Job Task">
-			    <button>submit</button>
-		    </form>
+		    <h5>Time Estimate</h5>
+		    
 	    </div>
 	    <div class="item">
-		    <h5>Misc</h5>
-		    <form>
-			    <input type="text" id="misc" value="Misc Task">
-			    <button>submit</button>
-		    </form>
+		    <h5>Priority</h5>
 	    </div>
     </div>
   </body>
