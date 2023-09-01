@@ -7,8 +7,10 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
+  const name = document.querySelector( '#artistname' ),
+        genre = document.querySelector('#genre'),
+        rating = document.querySelector('#rating'),
+        json = { Artist: name.value, Genre: genre.value, Rating: rating.value},
         body = JSON.stringify( json )
 
   const response = await fetch( '/submit', {

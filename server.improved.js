@@ -8,11 +8,7 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const appdata = [];
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -42,7 +38,14 @@ const handlePost = function( request, response ) {
   request.on( 'end', function() {
     console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
+    const jsonData = JSON.parse( dataString ); // JSON output from client
+    appdata.push(jsonData); // adding data to list 
+    //TODO Look at the ratings of all artists when a new one is pushed to the database, and make a "Leaderboard" field to show which artists the person likes the best
+    //TODO also maybe make a button that displays the artists based on rating or by genre
+    //TODO also maybe make a form to input favorite songs from artists that are on the database
+    for(let i = 0; i < appdata.length; i++){
+      console.log("appdata: " + JSON.stringify(appdata[i]));
+    }
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end('test')
