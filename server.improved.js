@@ -1,3 +1,5 @@
+// server.improved.js
+
 const http = require('http');
 const fs = require('fs');
 const mime = require('mime');
@@ -50,17 +52,38 @@ const handlePost = function(request, response) {
           appdata = appdata.filter(expense => expense.name !== requestData.name);
       } else if (requestData.action === 'add') {
           console.log('Adding expense: ', requestData.name)
+            if(appdata.some(expense => expense.name === requestData.name)) {
+                response.writeHead(400, { 'Content-Type': 'application/json' });
+                response.end(JSON.stringify({ error: 'Expense name already exists' }));
+                return;
+            }
+            else{
           appdata.push({
               name: requestData.name,
               amount: requestData.amount,
               category: requestData.category
           });
+        }
       } else if (requestData.action === 'getExpense') {
         console.log(requestData.name) 
         const expenseToEdit = appdata.find(expense => expense.name === requestData.name);
     
         response.writeHead(200, { 'Content-Type': 'application/json' });
         response.end(JSON.stringify(expenseToEdit));
+      }
+      else if (requestData.action === 'update') {
+        console.log(requestData.oldName)
+        const existingExpenseIndex = appdata.findIndex(expense => expense.name === requestData.oldName);
+          if (existingExpenseIndex !== -1) {
+              appdata[existingExpenseIndex].name = requestData.name;
+              appdata[existingExpenseIndex].amount = requestData.amount;
+              appdata[existingExpenseIndex].category = requestData.category;
+          }
+          else{
+                response.writeHead(400, { 'Content-Type': 'application/json' });
+                response.end(JSON.stringify({ error: 'Expense name does not exist' }));
+                return;
+          }
       }
       
 
