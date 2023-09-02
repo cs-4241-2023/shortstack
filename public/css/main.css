@@ -51,41 +51,45 @@ body, h3, h4, h5, h6{
   margin-top:5%;
 }
 
-button{
+.submit-button{
   color:var(--mainColor);
   background-color: var(--headerText);
 }
 
-button:Hover{
+.submit-button:Hover{
   background-color: var(--linkColor);
   color: var(--headerText);
 }
+
+.delete-button{
+  background: transparent;
+  font-size: 20px;
+  border: none;
+}
+
+.delete-button:Hover{
+  color: white;
+}
+
 
 input:invalid{
   text-decoration: underline dotted red;
 }
 
-.container {
-  display: flex; /* or inline-flex */
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content:center;
+table {
+  width: 90%;
   background: var(--mainColor);
+  margin: 5%;
   border-radius: 25px;
-  margin: 2%;
 }
 
-.item {
-  width:fit-content;
-  border: 1px #E8BC78;
-  padding: 3%;
-  margin:3%;
-  align-content: center;
-}
-
-.item h5{
+th, td {
+  padding: 1%;
   text-align: center;
-  margin-bottom: 2%;
+}
+
+.delete{
+  width: 40px;
 }
 
 .addTask{
@@ -99,7 +103,7 @@ input:invalid{
   align-items: center;
 }
 
-.addItemContainer{
+#addItemContainer{
   display: flex;
   flex-direction: row;
   width: 100%;

@@ -18,36 +18,41 @@
     </div>
     <div class="addTask">
 	    <h4>Add Tasks</h4>
-	    <form class="addItemContainer">
+	    <form id="addItemContainer">
 		    <div class="addItem">
-			    <input type="text" id="task" placeholder="Task">
+			    <input type="text" name="Task" placeholder="Task" required="required">
 		    </div>
 		    <div class="addItem">
-			    <input type="text" id="timeEstimate" placeholder="Time Estimate">
+			    <input type="date" name="CreationDate" placeholder="CreationDate" required="required">
 		    </div>
 		    <div class="addItem">
-			    <select id="priority" name="priority">
+			    <select id="priority" name="Priority">
 				    <option value="High">High Priority</option>
 				    <option value="Medium">Medium Priority</option>
 				    <option value="Low">Low Priority</option>
 			    </select>
 		    </div>
 		    <div class="addItem">
-			    <button>submit</button>
+			    <button class="add-button">submit</button>
 		    </div>
 	    </form>
     </div>
-    <div class="container">
-	    <div class="item">
-		    <h5>Task</h5>
-	    </div>
-	    <div class="item">
-		    <h5>Time Estimate</h5>
-		    
-	    </div>
-	    <div class="item">
-		    <h5>Priority</h5>
-	    </div>
-    </div>
+    <table id="task-table">
+	    <tr>
+		    <th></th>
+		    <th>Task</th>
+		    <th>Creation Date</th>
+		    <th>Deadline</th>
+		    <th>Priority</th>
+	    </tr><!--
+	    <tr id="empty-row">
+		    <td class="delete"><button id="delete-button" class="delete-button"><i class="fa-solid fa-trash"></i></button></td>
+		    <td> </td>
+		    <td> </td>
+		    <td> </td>
+		    <td> </td>
+	    </tr>-->
+    </table>
+	   
   </body>
 </html>

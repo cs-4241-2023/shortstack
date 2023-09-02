@@ -9,9 +9,9 @@ const http = require( 'http' ),
     port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14}
+  { 'task': 'homework', 'creation_date': '9/24/2020', 'priority': 'high' },
+  { 'task': 'taxes', 'creation_date': '9/24/2020', 'priority': 'medium' },
+  { 'task': 'chores', 'creation_date': '9/24/2020', 'priority': 'low' }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -27,7 +27,7 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else if (request.url === '/api' ) {
+  }else if (request.url === '/json' ) {
     handleGetData(request, response);
   }else{
     sendFile( response, filename )
@@ -39,6 +39,7 @@ function handleGetData(request, response){
 }
 
 const handlePost = function( request, response ) {
+  console.log("Handle Post");
   let dataString = ''
 
   request.on( 'data', function( data ) {
@@ -48,7 +49,7 @@ const handlePost = function( request, response ) {
   request.on( 'end', function() {
     console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
+    // TODO: do something with the data here!!!
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end( JSON.stringify( appdata ) )
@@ -58,6 +59,7 @@ const handlePost = function( request, response ) {
 function handlePostData(request, response){
   console.log("Handle Post Data");
 }
+
 
 const sendFile = function( response, filename ) {
   const type = mime.getType( filename )
