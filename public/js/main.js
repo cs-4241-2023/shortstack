@@ -38,13 +38,13 @@ const additionSubmit = async function(event) { //The async keyword here means th
   
   const data = await response.json()
   const latestDataEntry = data[data.length - 1]
-  const didLatestEntryPushToArray = ((latestDataEntry.bandName === inputObj.bandname) && (latestDataEntry.albumName === inputObj.albumname) && (latestDataEntry.releaseYear === inputObj.releaseyear))
+  const didLatestFormInputSave = ((latestDataEntry.bandName === inputObj.bandname) && (latestDataEntry.albumName === inputObj.albumname) && (latestDataEntry.releaseYear === inputObj.releaseyear))
 
   const submissionInfo = document.getElementById("submissionInfo")
   const submissionInfoParagraph = document.createElement('p')
   const additionalInfoParagraph = document.createElement('p')
 
-  if(didLatestEntryPushToArray) {
+  if(didLatestFormInputSave) {
     //Template literals
     submissionInfoParagraph.innerHTML = `<strong>Here is the music you submitted</strong>: Band Name: ${latestDataEntry.bandName}, Album Name: ${latestDataEntry.albumName}, Release Year: ${latestDataEntry.releaseYear}`
     additionalInfoParagraph.innerHTML = `<strong>And here is the age of</strong> ${latestDataEntry.albumName}: ${latestDataEntry.albumAge}`
