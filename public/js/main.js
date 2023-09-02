@@ -1,6 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const submit = async function(event) { //The async keyword here means that submit always returns a promise. It also means that one or more await keywords are allowed inside the function body.
+const additionSubmit = async function(event) { //The async keyword here means that submit always returns a promise. It also means that one or more await keywords are allowed inside the function body.
   
   //preventDefault cancels an event as long as it is cancelable.
   //stop form submission from trying to load
@@ -17,6 +17,7 @@ const submit = async function(event) { //The async keyword here means that submi
   const releaseYearInput = document.querySelector('#releaseyear')
 
   //Proper format of JSON when there is a list of objects: [{a1:o1}, {a2:o2}, {a3:o3}]
+  //The structure of the object before stringification and parsing should match the structure of an object entry in the destination array.
   let inputObj = {bandname: bandInput.value, albumname: albumInput.value, releaseyear: releaseYearInput.value}
   const body = JSON.stringify(inputObj)
 
@@ -36,16 +37,29 @@ const submit = async function(event) { //The async keyword here means that submi
   })
   
   const data = await response.json()
-  const latestSubmission = data[data.length - 1]
-  const paragraph = document.createElement('p')
+  const latestDataEntry = data[data.length - 1]
+  const didLatestEntryPushToArray = ((latestDataEntry.bandName === inputObj.bandname) && (latestDataEntry.albumName === inputObj.albumname) && (latestDataEntry.releaseYear === inputObj.releaseyear))
 
-  //Template literal
-  paragraph.innerHTML = `<strong>Here is the music you submitted</strong>: Band Name: ${latestSubmission.bandName}, Album Name: ${latestSubmission.albumName}, Release Year: ${latestSubmission.releaseYear}`
+  const submissionInfo = document.getElementById("submissionInfo")
+  const submissionInfoParagraph = document.createElement('p')
+  const additionalInfoParagraph = document.createElement('p')
 
-  document.body.appendChild(paragraph)
+  if(didLatestEntryPushToArray) {
+    //Template literals
+    submissionInfoParagraph.innerHTML = `<strong>Here is the music you submitted</strong>: Band Name: ${latestDataEntry.bandName}, Album Name: ${latestDataEntry.albumName}, Release Year: ${latestDataEntry.releaseYear}`
+    additionalInfoParagraph.innerHTML = `<strong>And here is the age of</strong> ${latestDataEntry.albumName}: ${latestDataEntry.albumAge}`
+
+    submissionInfo.appendChild(submissionInfoParagraph)
+    submissionInfo.appendChild(additionalInfoParagraph)
+  }
+  else {
+    submissionInfoParagraph.innerHTML = `<strong>The music you submitted did not get saved in the server memory</strong>: ${inputObj.albumname} has not been released yet.`
+    submissionInfo.appendChild(submissionInfoParagraph)
+  }
+  
 }
 
 window.onload = function() { //At the time the window loads, query the HTML document for the first button element. Then, on the left-mouse click of the button submit the form.
    const button = document.querySelector("button");
-   button.onclick = submit;
+   button.onclick = additionSubmit;
 }

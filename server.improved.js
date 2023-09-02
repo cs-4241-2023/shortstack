@@ -9,9 +9,9 @@ const http = require('http'), //Allow use of HTTP server and client
       port = 3000
 
 let musicListeningData = [
-  {'bandName': 'Dry Kill Logic', 'albumName': 'The Darker Side of Nonsense', 'releaseYear': '2001'},
-  {'bandName': 'Dry Kill Logic', 'albumName': 'The Dead and Dreaming', 'releaseYear': '2004'},
-  {'bandName': 'Killswitch Engage', 'albumName': 'Alive or Just Breathing', 'releaseYear': '2002'} 
+  {'bandName': 'Dry Kill Logic', 'albumName': 'The Darker Side of Nonsense', 'releaseYear': '2001', 'albumAge': 22},
+  {'bandName': 'Dry Kill Logic', 'albumName': 'The Dead and Dreaming', 'releaseYear': '2004', 'albumAge': 19},
+  {'bandName': 'Killswitch Engage', 'albumName': 'Alive or Just Breathing', 'releaseYear': '2002', 'albumAge': 21} 
 ]
 
 //Personal notes:
@@ -63,10 +63,25 @@ const handlePost = function(request, response) {
 
   request.on('end', function() { //At the end of a request, do the following:
 
+    const createDerivedFieldAndPush = function(dataObject)
+    {
+      const currentYear = 2023;
+      const albumReleaseYear = parseInt(dataObject.releaseyear)
+      const albumAge = currentYear - albumReleaseYear
+
+      console.log(albumReleaseYear)
+
+      if(albumReleaseYear > currentYear) {
+        console.log('This album has not been released yet.')
+      }
+      else {
+        console.log(dataObject) //JSON.parse converts a JSON string into an object. To access object members, use the member names that make up the JSON.
+        musicListeningData.push({'bandName': dataObject.bandname, 'albumName': dataObject.albumname, 'releaseYear': dataObject.releaseyear, 'albumAge': albumAge})
+      }
+    }
+
     const dataObject = JSON.parse(dataString)
-    
-    console.log(dataObject) //JSON.parse converts a JSON string into an object. To access object members, use the member names that make up the JSON.
-    musicListeningData.push({'bandName': dataObject.bandname, 'albumName': dataObject.albumname, 'releaseYear': dataObject.releaseyear})
+    createDerivedFieldAndPush(dataObject)
 
     response.writeHead(200, "OK", {'Content-Type': 'text/json'}) //writeHead sends a response header to the client request. Here, we send a 200 status OK response header.
     response.end(JSON.stringify(musicListeningData)) //End the response process with the appdata converted to a JSON string.
