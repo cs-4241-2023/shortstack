@@ -1,18 +1,58 @@
-<!doctype html>
+<!-- index.html -->
+
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
     <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+</head>
+<body>
+    <h1>Expense Tracker</h1>
+
+    <h2>Budget: $500</h2>
+    
+    <form id="expense-form">
+        <label class="switch">
+            <input type="checkbox" id="toggleButton">
+            <span class="slider smaller"></span>
+            <span class="label-text" id="toggleLabel">Change View</span>
+        </label>
+        
+        <!-- Add New Expense Section -->
+        <div id="addExpenseSection">
+            <h2>Add New Expense</h2>
+            <label for="name">Expense Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="amount">Expense Amount:</label>
+            <input type="number" id="amount" name="amount" required>
+            <label for="category">Expense Category:</label>
+            <input type="text" id="category" name="category" required>
+            <button type="submit" id="add">Add Expense</button>
+            <button type="reset" id="reset">Reset</button>
+        </div>
+        
+        <!-- Update Existing Expense Section -->
+        <div id="updateExpenseSection" style="display: none;">
+            <h2>Update Existing Expense</h2>
+            <label for="oldName">Old Expense Name:</label>
+            <input type="text" id="oldName" name="oldName" required>
+            <label for="newName">New Expense Name:</label>
+            <input type="text" id="newName" name="newName" required>
+            <label for="newAmount">New Expense Amount:</label>
+            <input type="number" id="newAmount" name="newAmount" required>
+            <label for="newCategory">New Expense Category:</label>
+            <input type="text" id="newCategory" name="newCategory" required>
+            <button type="button" id="update">Update Changes</button>
+            <button type="reset" id="reset">Reset</button>
+        </div>
     </form>
-  </body>
+    
+    <h2>Expense List</h2>
+    <ul id="expense-list"></ul>
+
+    <script src="js/main.js"></script>
+</body>
 </html>

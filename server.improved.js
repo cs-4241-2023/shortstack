@@ -1,74 +1,116 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+// server.improved.js
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const http = require('http');
+const fs = require('fs');
+const mime = require('mime');
+const dir = 'public/';
+const port = 3000;
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  }
-})
+let appdata = [
+    { 'name': 'Groceries', 'amount': 50, 'category': 'Food' },
+    { 'name': 'Utilities', 'amount': 100, 'category': 'Bills' },
+    { 'name': 'House Tax', 'amount': 2500, 'category': 'Bills' },
+];
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+const calculateRemainingBudget = (expenses, initialBudget) => {
+    const totalExpenseAmount = expenses.reduce((total, expense) => total + expense.amount, 0);
+    return initialBudget - totalExpenseAmount;
+};
 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }else{
-    sendFile( response, filename )
-  }
-}
+const initialBudget = 500;
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+const server = http.createServer(function(request, response) {
+    if (request.method === 'GET') {
+        handleGet(request, response);
+    } else if (request.method === 'POST') {
+        handlePost(request, response);
+    }
+});
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
+const handleGet = function(request, response) {
+    const filename = dir + request.url.slice(1);
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    if (request.url === '/') {
+        sendFile(response, 'public/index.html');
+    } else {
+        sendFile(response, filename);
+    }
+};
 
-    // ... do something with the data here!!!
+const handlePost = function(request, response) {
+  let dataString = '';
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
-  })
-}
+  request.on('data', function(data) {
+      dataString += data;
+  });
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+  request.on('end', function() {
+      const requestData = JSON.parse(dataString);
 
-   fs.readFile( filename, function( err, content ) {
+      if (requestData.action === 'delete') {
+          console.log('Deleting expense: ', requestData.name);
+          appdata = appdata.filter(expense => expense.name !== requestData.name);
+      } else if (requestData.action === 'add') {
+          console.log('Adding expense: ', requestData.name)
+            if(appdata.some(expense => expense.name === requestData.name)) {
+                response.writeHead(400, { 'Content-Type': 'application/json' });
+                response.end(JSON.stringify({ error: 'Expense name already exists' }));
+                return;
+            }
+            else{
+          appdata.push({
+              name: requestData.name,
+              amount: requestData.amount,
+              category: requestData.category
+          });
+        }
+      } else if (requestData.action === 'getExpense') {
+        console.log(requestData.name) 
+        const expenseToEdit = appdata.find(expense => expense.name === requestData.name);
+    
+        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.end(JSON.stringify(expenseToEdit));
+      }
+      else if (requestData.action === 'update') {
+        console.log(requestData.oldName)
+        const existingExpenseIndex = appdata.findIndex(expense => expense.name === requestData.oldName);
+          if (existingExpenseIndex !== -1) {
+              appdata[existingExpenseIndex].name = requestData.name;
+              appdata[existingExpenseIndex].amount = requestData.amount;
+              appdata[existingExpenseIndex].category = requestData.category;
+          }
+          else{
+                response.writeHead(400, { 'Content-Type': 'application/json' });
+                response.end(JSON.stringify({ error: 'Expense name does not exist' }));
+                return;
+          }
+      }
+      
 
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
+      const remainingBudget = calculateRemainingBudget(appdata, initialBudget);
 
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
+      const updatedData = appdata.map(expense => ({
+          ...expense,
+          remainingBudget
+      }));
 
-     }else{
+      response.writeHead(200, { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify(updatedData));
+  });
+};
 
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
+const sendFile = function(response, filename) {
+    const type = mime.getType(filename);
 
-     }
-   })
-}
+    fs.readFile(filename, function(err, content) {
+        if (err === null) {
+            response.writeHeader(200, { 'Content-Type': type });
+            response.end(content);
+        } else {
+            response.writeHeader(404);
+            response.end('404 Error: File Not Found');
+        }
+    });
+};
 
-server.listen( process.env.PORT || port )
+server.listen(process.env.PORT || port);
