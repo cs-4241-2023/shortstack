@@ -10,19 +10,15 @@ const submit = async function(event) { //The async keyword here means that submi
   event.preventDefault()
 
   //Take in three different inputs
-  //Append strings from JSON to assign body; all form inputs  
+  //Create object using key-value pairs  
   
-  const bandInput = document.querySelector('#bandname'), //query the HTML file for the first element that uses id yourname
-        band = {bandname: bandInput.value} //declare a json constant using a key value pair with the key being yourname and the value being the value of the input HTML element queried in the document.
-  
-  const albumInput = document.querySelector('#albumname'),
-        album = {albumname: albumInput.value}
-
-  const releaseYearInput = document.querySelector('#releaseyear'),
-        releaseYear = {releaseyear: releaseYearInput.value}
+  const bandInput = document.querySelector('#bandname') //query the HTML file for the first element that uses id yourname
+  const albumInput = document.querySelector('#albumname')
+  const releaseYearInput = document.querySelector('#releaseyear')
 
   //Proper format of JSON when there is a list of objects: [{a1:o1}, {a2:o2}, {a3:o3}]
-  const body = '[' + JSON.stringify(band) + ',' + JSON.stringify(album) + ',' + JSON.stringify(releaseYear) + ']'
+  let inputObj = {bandname: bandInput.value, albumname: albumInput.value, releaseyear: releaseYearInput.value}
+  const body = JSON.stringify(inputObj)
 
   //await works only inside async functions. 
   //await keyword makes JavaScript wait until the promise resolves.
@@ -43,6 +39,7 @@ const submit = async function(event) { //The async keyword here means that submi
   const latestSubmission = data[data.length - 1]
   const paragraph = document.createElement('p')
 
+  //Template literal
   paragraph.innerHTML = `<strong>Here is the music you submitted</strong>: Band Name: ${latestSubmission.bandName}, Album Name: ${latestSubmission.albumName}, Release Year: ${latestSubmission.releaseYear}`
 
   document.body.appendChild(paragraph)
