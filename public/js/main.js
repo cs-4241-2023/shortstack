@@ -1,30 +1,38 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+window.onload = function() {
+  document.querySelector("#submitButton").onclick = addData;
+}
 
-  const response = await fetch( '/submit', {
+const addData = async function(event) {
+  event.preventDefault()
+
+  const modelInput = document.querySelector('#modelInput')
+  const yearInput = document.querySelector('#yearInput')
+  const mpgInput = document.querySelector('#mpgInput')
+
+  const model = modelInput.value
+  const year = Number(yearInput.value)
+  const mpg = Number(mpgInput.value)
+
+  const json = {
+    model,
+    year,
+    mpg
+  }
+  const body = JSON.stringify( json )
+
+  const response = await fetch( '/add', {
     method:'POST',
     body 
   })
 
-  const text = await response.text()
-
-  console.log( 'text:', text )
-}
-
-window.onload = function() {
-  document.querySelector("#submitButton").onclick = addData;
-  //document.querySelector("#deleteButton").onclick = deleteData
-  //addTableRow({'model': 'Toyota', 'year': 1999, 'mpg': 23})
+  if(response.ok) {
+    addTableRow(json)
+    document.querySelector('#inputForm').reset()
+  } else {
+    alert('Failed to send data')
+  }
 }
 
 const addTableRow = function(data) {
@@ -82,35 +90,5 @@ const deleteData = async function(event) {
     tableRow.remove()
   } else {
     alert('Failed to delete data')
-  }
-}
-
-const addData = async function(event) {
-  event.preventDefault()
-
-  const modelInput = document.querySelector('#modelInput')
-  const yearInput = document.querySelector('#yearInput')
-  const mpgInput = document.querySelector('#mpgInput')
-
-  const model = modelInput.value
-  const year = Number(yearInput.value)
-  const mpg = Number(mpgInput.value)
-
-  const json = {
-    model,
-    year,
-    mpg
-  }
-  const body = JSON.stringify( json )
-
-  const response = await fetch( '/add', {
-    method:'POST',
-    body 
-  })
-
-  if(response.ok) {
-    addTableRow(json)
-  } else {
-    alert('Failed to send data')
   }
 }

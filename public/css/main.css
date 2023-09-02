@@ -1,10 +1,28 @@
+
 body {
-  /*background:black;*/
-  color:black;
+  display: flex;
+  align-items: center;
+
+  margin: 0;
+  padding: 0;
+}
+
+#dataDiv {
+  flex-grow: 1;
+}
+
+#inputDiv {
+  width: 40%;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 table {
   border-collapse: collapse;
+  margin: auto;
 }
 
 th, td {
@@ -20,17 +38,16 @@ th, td {
   padding-right: 5px;
 }
 
-.formInput {
-  display: flex;
-  align-items: center;
-  margin: 5px;
+#inputForm {
+  display: grid;
+  margin: 10px;
+  width: 80%;
 }
 
-input {
-  height: 15px;
-  margin: 5px
+#submitButton {
+  margin-top: 10px;
 }
 
-p {
-  margin: 0px
+label {
+  margin-top: 5px;
 }

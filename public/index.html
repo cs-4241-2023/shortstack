@@ -11,28 +11,29 @@
   </head>
 
   <body>
-    <form>
-      <div class="formInput">
-        <p>Model:</p>
-        <input type="text" id="modelInput" placeholder="e.g. Toyota" autocomplete="off">
-      </div>
-      <div class="formInput">
-        <p>Year:</p>
-        <input type="number" id="yearInput" min="1000" max="2500" value="2000" autocomplete="off">
-      </div>
-      <div class="formInput">
-        <p>MPG:</p>
-        <input type="number" id="mpgInput" min="0" max="200" value="25" autocomplete="off">
-      </div>
-      <button id="submitButton">Submit</button>
-    </form>
+    <div id="inputDiv">
+      <form id="inputForm" autocomplete="off">
+        <label for="modelInput">Model:</label>
+        <input type="text" id="modelInput" placeholder="e.g. Toyota">
+        
+        <label for="yearInput">Year:</label>
+        <input type="number" id="yearInput" min="1800" max="2500" placeholder="2000">
 
-    <table id="dataTable">
-      <tr>
-        <th>Model</th>
-        <th>Year</th>
-        <th>MPG</th>
-      </tr>
-    </table>
+        <label for="mpgInput">MPG:</label>
+        <input type="number" id="mpgInput" min="0" max="200" placeholder="25">
+
+        <button id="submitButton">Submit</button>
+      </form>
+    </div>
+
+    <div id="dataDiv">
+      <table id="dataTable">
+        <tr>
+          <th>Model</th>
+          <th>Year</th>
+          <th>MPG</th>
+        </tr>
+      </table>
+    </div>
   </body>
 </html>
