@@ -60,6 +60,6 @@ const additionSubmit = async function(event) { //The async keyword here means th
 }
 
 window.onload = function() { //At the time the window loads, query the HTML document for the first button element. Then, on the left-mouse click of the button submit the form.
-   const button = document.querySelector("button");
-   button.onclick = additionSubmit;
+   const submitMusicButton = document.getElementById("submitMusic");
+   submitMusicButton.onclick = additionSubmit;
 }
