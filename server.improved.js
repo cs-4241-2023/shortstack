@@ -17,7 +17,7 @@ const calculateRemainingBudget = (expenses, initialBudget) => {
     return initialBudget - totalExpenseAmount;
 };
 
-const initialBudget = 500; // Define your initial budget here
+const initialBudget = 500;
 
 const server = http.createServer(function(request, response) {
     if (request.method === 'GET') {

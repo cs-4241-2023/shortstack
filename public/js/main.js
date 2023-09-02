@@ -28,6 +28,11 @@ const submit = async function (event) {
     const nameInput = document.querySelector('#name');
     const amountInput = document.querySelector('#amount');
     const categoryInput = document.querySelector('#category');
+    
+    if (nameInput.value === '' || amountInput.value === '' || categoryInput.value === '') {
+        alert('Please fill out all fields');
+        return;
+    }
 
     const json = {
         action: 'add',
@@ -36,10 +41,6 @@ const submit = async function (event) {
         category: categoryInput.value
     };
 
-    if (nameInput.value === '' || amountInput.value === '' || categoryInput.value === '') {
-        alert('Please fill out all fields');
-        return;
-    }
 
     const response = await fetch('/submit', {
         method: 'POST',
@@ -64,6 +65,7 @@ const submit = async function (event) {
     if (isEditMode) {
         toggleView();
     }
+    
     updateExpenseList(data);
     alert('Expense added');
 };
