@@ -9,10 +9,30 @@
     <!-- get rid of favicon error -->
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
+
   <body>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <div class="formInput">
+        <p>Model:</p>
+        <input type="text" id="modelInput" placeholder="e.g. Toyota" autocomplete="off">
+      </div>
+      <div class="formInput">
+        <p>Year:</p>
+        <input type="number" id="yearInput" min="1000" max="2500" value="2000" autocomplete="off">
+      </div>
+      <div class="formInput">
+        <p>MPG:</p>
+        <input type="number" id="mpgInput" min="0" max="200" value="25" autocomplete="off">
+      </div>
+      <button id="submitButton">Submit</button>
     </form>
+
+    <table id="dataTable">
+      <tr>
+        <th>Model</th>
+        <th>Year</th>
+        <th>MPG</th>
+      </tr>
+    </table>
   </body>
 </html>
