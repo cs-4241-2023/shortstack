@@ -47,11 +47,17 @@ const server = http.createServer(function(request,response) { //Create an HTTP s
 //Handle the GET and POST requests in separate cases:
 
 const handleGet = function(request, response) {
+  
+  console.log(request.url)
   const filename = dir + request.url.slice(1) //The slice() method returns selected elements in an array, as a new array. Selects from a given starting index up to (not including) a given ending index.
 
   if(request.url === '/') { //If the request URL is to the index.html file
-    sendFile(response, 'public/index.html')
-  }else{ //If the request URL is to any other file under public folder
+    sendFile(response, 'public/html/index.html')
+  }
+  else if(request.url === '/view_music_listening_list.html') {
+    sendFile(response, 'public/html/view_music_listening_list.html')
+  }
+  else { //If the request URL is to any other file under public folder
     sendFile(response, filename)
   }
 }
