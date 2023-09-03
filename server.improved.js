@@ -38,6 +38,8 @@ const server = http.createServer(function(request,response) { //Create an HTTP s
     handleGet(request, response)    
   }else if(request.method === 'POST'){ //If client is requesting to send new data to server
     handlePost(request, response) 
+  }else if(request.method === 'DELETE'){
+    handleDelete(request, response)
   }
 })
 
@@ -63,28 +65,62 @@ const handlePost = function(request, response) {
 
   request.on('end', function() { //At the end of a request, do the following:
 
-    const createDerivedFieldAndPush = function(dataObject)
-    {
-      const currentYear = 2023;
+    const createDerivedFieldAndPush = function(dataObject) {
+      const currentYear = 2023
       const albumReleaseYear = parseInt(dataObject.releaseyear)
       const albumAge = currentYear - albumReleaseYear
 
-      console.log(albumReleaseYear)
+      console.log(dataObject) //JSON.parse converts a JSON string into an object. To access object members, use the member names that make up the JSON.
+      musicListeningData.push({'bandName': dataObject.bandname, 'albumName': dataObject.albumname, 'releaseYear': dataObject.releaseyear, 'albumAge': albumAge})
+    }
 
-      if(albumReleaseYear > currentYear) {
-        console.log('This album has not been released yet.')
-      }
-      else {
-        console.log(dataObject) //JSON.parse converts a JSON string into an object. To access object members, use the member names that make up the JSON.
-        musicListeningData.push({'bandName': dataObject.bandname, 'albumName': dataObject.albumname, 'releaseYear': dataObject.releaseyear, 'albumAge': albumAge})
-      }
+    function countDuplicatesInMusicListeningData(dataObject) {  
+      let counter = 0
+      musicListeningData.forEach(d => {        
+        console.log((d.bandName === dataObject.bandname) && (d.albumName === dataObject.albumname) && (d.releaseYear === dataObject.releaseyear))
+        
+        if(((d.bandName === dataObject.bandname) && (d.albumName === dataObject.albumname) && (d.releaseYear === dataObject.releaseyear))) {
+          counter++
+        }
+      })
+
+      return counter
     }
 
     const dataObject = JSON.parse(dataString)
-    createDerivedFieldAndPush(dataObject)
+
+    if(countDuplicatesInMusicListeningData(dataObject) === 0) {
+      createDerivedFieldAndPush(dataObject)
+    }
+    else {
+      console.log("Server cannot contain duplicate music listening data.")
+    }
 
     response.writeHead(200, "OK", {'Content-Type': 'text/json'}) //writeHead sends a response header to the client request. Here, we send a 200 status OK response header.
     response.end(JSON.stringify(musicListeningData)) //End the response process with the appdata converted to a JSON string.
+  })
+}
+
+const handleDelete = function(request, response) {
+  let dataString = ''
+
+  request.on('data', function(data) { 
+    dataString += data 
+  })
+
+  request.on('end', function() {
+    const dataObject = JSON.parse(dataString)
+    
+    musicListeningData.forEach(d => {
+      if(((d.bandName === dataObject.bandname) && (d.albumName === dataObject.albumname) && (d.releaseYear === dataObject.releaseyear))) {
+        let currentIndex = musicListeningData.indexOf(d)
+        musicListeningData.splice(currentIndex, currentIndex)
+        console.log("Music previously at index " + currentIndex + " has been removed from musicListeningData")
+      }
+    })
+
+    response.writeHead(200, "OK", {'Content-Type': 'text/json'}) //writeHead sends a response header to the client request. Here, we send a 200 status OK response header.
+    response.end(JSON.stringify(musicListeningData))
   })
 }
 
