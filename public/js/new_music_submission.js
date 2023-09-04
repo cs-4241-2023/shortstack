@@ -12,6 +12,9 @@ const additionSubmit = async function(event) { //The async keyword here means th
   //Take in three different inputs
   //Create object using key-value pairs  
   
+  const currentYear = 2023
+  const startingYear = 0
+
   const bandInput = document.querySelector('#bandname') //query the HTML file for the first element that uses id yourname
   const albumInput = document.querySelector('#albumname')
   const releaseYearInput = document.querySelector('#releaseyear')
@@ -25,11 +28,11 @@ const additionSubmit = async function(event) { //The async keyword here means th
   let inputObj = {bandname: bandInput.value, albumname: albumInput.value, releaseyear: releaseYearInput.value}
   console.log(inputObj.releaseyear)
 
-  if(inputObj.releaseyear < 0) {
-    submissionInfoParagraph.innerHTML = `<strong>The music you submitted cannot not be sent to the server</strong>: ${inputObj.releaseyear} is not a valid year.`
+  if(inputObj.releaseyear < startingYear) {
+    submissionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: ${inputObj.releaseyear} is not a valid year.`
     submissionInfo.appendChild(submissionInfoParagraph)
   }
-  else if(inputObj.releaseyear > 2023) {
+  else if(inputObj.releaseyear > currentYear) {
     submissionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: ${inputObj.albumname} has not been released yet.`
     submissionInfo.appendChild(submissionInfoParagraph)
   }
@@ -46,7 +49,7 @@ const additionSubmit = async function(event) { //The async keyword here means th
       //The response to the form submit
       //The text of the response body
 
-    const response = await fetch('/submit', { //wait until the fetch of the response to the form submit resolves to store the response.
+    const response = await fetch('/submitForAddition', { //wait until the fetch of the response to the form submit resolves to store the response.
       method:'POST', //pass in the HTTP method (so sending new data to server through POST)
       body //pass in the response body
     })
@@ -55,7 +58,7 @@ const additionSubmit = async function(event) { //The async keyword here means th
     const latestDataEntry = data[data.length - 1]
 
     //Template literals
-    submissionInfoParagraph.innerHTML = `<strong>Here is the music you submitted</strong>: Band Name: ${latestDataEntry.bandName}, Album Name: ${latestDataEntry.albumName}, Release Year: ${latestDataEntry.releaseYear}`
+    submissionInfoParagraph.innerHTML = `<strong>Here is the music saved in the server memory</strong>: Band Name: ${latestDataEntry.bandName}, Album Name: ${latestDataEntry.albumName}, Release Year: ${latestDataEntry.releaseYear}`
     additionalInfoParagraph.innerHTML = `<strong>And here is the age of</strong> ${latestDataEntry.albumName}: ${latestDataEntry.albumAge}`
 
     submissionInfo.appendChild(submissionInfoParagraph)
@@ -67,3 +70,5 @@ window.addEventListener('load', function() { //At the time the window loads, que
   const submitMusicButton = document.getElementById("submitMusic")
   submitMusicButton.onclick = additionSubmit
 })
+
+

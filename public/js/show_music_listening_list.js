@@ -1,7 +1,25 @@
 //FRONT-END (CLIENT) JAVASCRIPT FOR SHOWING ALL MUSIC IN SERVER MEMORY
+const listSection = document.getElementById("musicList")
+const musicList = document.createElement('ul')
+const listEmptyMessage = document.createElement('p')
 
 const showMusicListeningList = async function(event) {
-    
+
+    if(document.getElementById("unorderedListPresent") !== null) {
+        console.log("Child will be removed")
+        listSection.removeChild(musicList)
+        
+        while(musicList.hasChildNodes())
+        {
+            musicList.removeChild(musicList.firstChild)
+        }
+    }
+    else if(document.getElementById("listEmptyMessagePresent") !== null)
+    {
+        console.log("empty list message will be removed")
+        listSection.removeChild(listEmptyMessage)
+    }
+
     const requestURL = '/getMusicData'
     event.preventDefault()
 
@@ -11,23 +29,27 @@ const showMusicListeningList = async function(event) {
 
     const data = await response.json()
     console.log(data)
-    const listSection = document.getElementById("musicList")
-    const musicList = document.createElement('ul')
 
-    data.forEach(d => {
-        const musicItem = document.createElement('li')
-        musicItem.innerHTML = `<strong>Band Name</strong>: ${d.bandName}, <strong>Album Name</strong>: ${d.albumName}, <strong>Release Year</strong>: ${d.releaseYear}, <strong>Album Age</strong>: ${d.albumAge}` //Template literal example
-        musicList.appendChild(musicItem)
-    })
-
-    listSection.appendChild(musicList)
+    if(data.length === 0) {
+        listEmptyMessage.innerHTML = '<strong>All music has been deleted from the server memory.</strong>'
+        listSection.appendChild(listEmptyMessage)
+        listEmptyMessage.setAttribute('id', 'listEmptyMessagePresent')
+    }
+    else {
+        data.forEach(d => {
+            const musicItem = document.createElement('li')
+            console.log(musicItem)
+            musicItem.innerHTML = `<strong>Band Name</strong>: ${d.bandName}, <strong>Album Name</strong>: ${d.albumName}, <strong>Release Year</strong>: ${d.releaseYear}, <strong>Album Age</strong>: ${d.albumAge}` //Template literal example
+            musicList.appendChild(musicItem)
+        })
+    
+        listSection.appendChild(musicList)
+        musicList.setAttribute('id', 'unorderedListPresent')
+    }
 }
 
-if(window.location.href === 'view_music_listening_list.html') {   
-    window.addEventListener('load', function() { 
-        const getMusicButton = document.getElementById("getMusic")
-        getMusicButton.onclick = showMusicListeningList
-    })
-}
- 
- 
+window.addEventListener('load', function() { //At the time the window loads, query the HTML document for the first button element. Then, on the left-mouse click of the button submit the form. 
+    const getMusicButton = document.getElementById("getMusic")
+    getMusicButton.onclick = showMusicListeningList
+})
+

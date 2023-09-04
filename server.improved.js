@@ -123,12 +123,12 @@ const handleDelete = function(request, response) {
     musicListeningData.forEach(d => {
       if(((d.bandName === dataObject.bandname) && (d.albumName === dataObject.albumname) && (d.releaseYear === dataObject.releaseyear))) {
         let currentIndex = musicListeningData.indexOf(d)
-        musicListeningData.splice(currentIndex, currentIndex)
+        musicListeningData.splice(currentIndex, 1)
         console.log("Music previously at index " + currentIndex + " has been removed from musicListeningData")
       }
     })
 
-    response.writeHead(200, "OK", {'Content-Type': 'text/json'}) //writeHead sends a response header to the client request. Here, we send a 200 status OK response header.
+    response.writeHead(200, "OK", {'Content-Type': 'text/json'}) //writeHead sends a response header to the client request. Here, we send a 200 status OK response header. 
     response.end(JSON.stringify(musicListeningData))
   })
 }
