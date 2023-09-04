@@ -1,5 +1,5 @@
 //FRONT-END (CLIENT) JAVASCRIPT FOR SHOWING ALL MUSIC IN SERVER MEMORY
-const listSection = document.getElementById("musicList")
+const listDivision = document.getElementById("musicList")
 const musicList = document.createElement('ul')
 const listEmptyMessage = document.createElement('p')
 
@@ -7,7 +7,7 @@ const showMusicListeningList = async function(event) {
 
     if(document.getElementById("unorderedListPresent") !== null) {
         console.log("Child will be removed")
-        listSection.removeChild(musicList)
+        listDivision.removeChild(musicList)
         
         while(musicList.hasChildNodes())
         {
@@ -17,7 +17,7 @@ const showMusicListeningList = async function(event) {
     else if(document.getElementById("listEmptyMessagePresent") !== null)
     {
         console.log("empty list message will be removed")
-        listSection.removeChild(listEmptyMessage)
+        listDivision.removeChild(listEmptyMessage)
     }
 
     const requestURL = '/getMusicData'
@@ -32,7 +32,7 @@ const showMusicListeningList = async function(event) {
 
     if(data.length === 0) {
         listEmptyMessage.innerHTML = '<strong>All music has been deleted from the server memory.</strong>'
-        listSection.appendChild(listEmptyMessage)
+        listDivision.appendChild(listEmptyMessage)
         listEmptyMessage.setAttribute('id', 'listEmptyMessagePresent')
     }
     else {
@@ -43,7 +43,7 @@ const showMusicListeningList = async function(event) {
             musicList.appendChild(musicItem)
         })
     
-        listSection.appendChild(musicList)
+        listDivision.appendChild(musicList)
         musicList.setAttribute('id', 'unorderedListPresent')
     }
 }
