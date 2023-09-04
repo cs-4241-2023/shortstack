@@ -1,5 +1,29 @@
 body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   background-color:#BCACC9;
   color:white;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li {
+  background-color: rgb(41, 36, 58);
+  padding: 5px;
+  width: 500px;
+  position: relative;
+  margin: 3px;
+}
+
+ul li span {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20px;
+  padding: 5px;
+  text-align: center;
+  background-color: rgb(243, 70, 70);
 }
