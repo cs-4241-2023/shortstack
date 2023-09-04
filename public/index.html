@@ -9,9 +9,24 @@
   </head>
   <body>
     <h1>WPI School Work Tracker</h1>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+    <p>This application allows you to track assignments for your WPI classes. Please input information about the assignment
+      below and this web application will store it for you! The application will also calculate a relative priority for the
+      assignment based on the information that you input.</p>
+
+    <form id="assignment-form">
+      <input type="text" id="class-name" placeholder="Class Name">
+      <input type="text" id="assignment-name" placeholder="Assignment Name">
+      <input type="date" id="due-date" placeholder="Due Date">
+      <input type="number" id="difficulty" placeholder="Difficulty (1 to 10)">
+      <input type="text" id="notes" placeholder="Assignment Notes">
+      <button id="submit-button">Submit</button>
     </form>
+
+    <div id="show-information">
+      <p>Click the button below to show all tracked assignments:</p>
+      <button id="show-assignments-button">Show Tracked Assignments</button>
+    </div>
+
+
   </body>
 </html>

@@ -1,0 +1,18 @@
+body {
+    font-family: "Courier New", serif;
+    font-weight: bold;
+}
+button {
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    background-color: darkred;
+}
+
+#assignment-form {
+    padding-bottom: 25px;
+}
+
+button:hover {
+    background-color: crimson;
+}
