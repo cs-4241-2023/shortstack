@@ -51,7 +51,7 @@ const additionSubmit = async function(event) { //The async keyword here means th
       body //pass in the response body
     })
   
-    const data = await response.json()
+    const data = await response.json() //Here, JSON is parsed to produce a JavaScript object
     const latestDataEntry = data[data.length - 1]
 
     //Template literals
@@ -63,7 +63,7 @@ const additionSubmit = async function(event) { //The async keyword here means th
   }
 }
 
-window.addEventListener('load',function() { //At the time the window loads, query the HTML document for the first button element. Then, on the left-mouse click of the button submit the form.
-   const submitMusicButton = document.getElementById("submitMusic");
-   submitMusicButton.onclick = additionSubmit;
+window.addEventListener('load', function() { //At the time the window loads, query the HTML document for the first button element. Then, on the left-mouse click of the button submit the form.
+  const submitMusicButton = document.getElementById("submitMusic")
+  submitMusicButton.onclick = additionSubmit
 })

@@ -34,9 +34,8 @@ const deletionSubmit = async function(event)
     }
 }
 
-
 window.addEventListener('load', function() { 
-    const deleteMusicButton = document.getElementById("submitMusicForDeletion");
-    deleteMusicButton.onclick = deletionSubmit;
+    const deleteMusicButton = document.getElementById("submitMusicForDeletion")
+    deleteMusicButton.onclick = deletionSubmit
  })
 

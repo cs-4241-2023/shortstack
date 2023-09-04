@@ -57,6 +57,9 @@ const handleGet = function(request, response) {
   else if(request.url === '/view_music_listening_list.html') {
     sendFile(response, 'public/html/view_music_listening_list.html')
   }
+  else if(request.url === '/getMusicData') {
+    response.end(JSON.stringify(musicListeningData))
+  }
   else { //If the request URL is to any other file under public folder
     sendFile(response, filename)
   }
@@ -137,17 +140,14 @@ const sendFile = function(response, filename) { //sendFile function only applies
 
      // if the error = null, then we've loaded the file successfully
      if(err === null) {
-
        //status codes: https://httpstatuses.com
-       response.writeHeader(200, {'Content-Type': type}) //Send a response header to the client request with an OK status 200 and include the file/content type.
-       response.end(content) //End the response process with the file contents.
-
-     } else {
-
+        response.writeHeader(200, {'Content-Type': type}) //Send a response header to the client request with an OK status 200 and include the file/content type.
+        response.end(content) //End the response process with the file contents.
+     } 
+     else {
        // file not found, error code 404
        response.writeHeader(404)
        response.end('404 Error: File Not Found')
-
      }
    })
 }
