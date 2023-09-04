@@ -10,9 +10,32 @@
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
   <body>
-    <form>
-      <input type="text" id="addfact" value="add reptile fact!!" onfocus="this.value=''">
-      <button>submit</button>
-    </form>
+    <div>
+      <h1>Create a Creature!!</h1>
+      <form id="creature" method="post">
+        <div>
+          <label>Name your creature</label>
+          <input type="text" id="name">
+        </div>
+        <div>
+          <label>Creature type</label>
+          <select id="type">
+            <option value="Chameleon">Chameleon</option>
+            <option value="Gecko">Gecko</option>
+            <option value="Frog">Frog</option>
+            <option value="Snake">Snake</option>
+            <option value="Cat">Cat</option>
+            <option value="Dog">Dog</option>
+            <option value="Rat">Rat</option>
+            <option value="Capybara">Capybara</option>
+          </select>
+        </div>
+        <div>
+          <label>Creature age</label>
+          <input type="number" id="age">
+        </div>
+        <button>submit</button>
+      </form>
+    </div>
   </body>
 </html>

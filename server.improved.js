@@ -8,11 +8,14 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const avgAges = {"Chameleon": 7, "Gecko": 7,
+                 "Frog": 10, "Snake": 15,
+                 "Cat": 13, "Dog": 12,
+                 "Rat": 2, "Capybara": 6,}
+const maxAges = {"Chameleon": 25, "Gecko": 20,
+                 "Frog": 20, "Snake": 30,
+                 "Cat": 20, "Dog": 15,
+                 "Rat": 4, "Capybara": 12,}
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -41,11 +44,26 @@ const handlePost = function( request, response ) {
 
   request.on( 'end', function() {
     console.log( dataString )
-    const stuff = [ JSON.parse(dataString) ]
+    const stuff = JSON.parse(dataString)
     // ... do something with the data here!!!
+    const json = { name: stuff.name,
+                   type: stuff.type,
+                   age: stuff.age,
+                   status: ''}
+    console.log(json)
+
+    if(stuff.age <= avgAges[stuff.type] / 2){
+      json.status = "your creature is young!"
+    }else if(stuff.age >= maxAges[stuff.type]){
+      json.status = "your creature is ancient!!"
+    }else{
+      json.status = "your creature is middle aged"
+    }
+
+    console.log(json)
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
-    response.end(JSON.stringify( stuff ))
+    response.end(JSON.stringify( [json] ))
   })
 }
 

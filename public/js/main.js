@@ -9,8 +9,10 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( '#addfact' ),
-        json = { addfact: input.value },
+  const input = document.querySelector( 'form' ),
+        json = { name: input.querySelector('#name').value,
+                 type: input.querySelector('#type').value,
+                 age: input.querySelector('#age').value },
         body = JSON.stringify( json )
 
   const response = await fetch( '/submit', {
@@ -22,7 +24,8 @@ const submit = async function( event ) {
 
   jsonData.forEach(e => {
     const item = document.createElement('li')
-    item.innerText = `Fact : ${e.addfact}`
+    item.innerText = `${e.name} the ${e.type} is age ${e.age}
+                      ${e.status}`
     list.appendChild(item)
 
     const delItem = document.createElement('span');
@@ -31,7 +34,7 @@ const submit = async function( event ) {
   });
 
   document.body.appendChild(list)
-  
+
   const itemToDelete = document.querySelectorAll('span')
   itemToDelete.forEach(e => {
     e.addEventListener('click', ()=>{
