@@ -1,33 +1,38 @@
+// import node.js, mime, and other dependencies
 const http = require( 'http' ),
       fs   = require( 'fs' ),
       mime = require( 'mime' ),
       dir  = 'public/',
       port = 3000
 
+// this is the data contained by the server
 const appdata = [
   { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
   { 'model': 'honda', 'year': 2004, 'mpg': 30 },
   { 'model': 'ford', 'year': 1987, 'mpg': 14} 
 ]
 
+// server variable that handles requests
 const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
+  if(request.method === 'GET') {
+    handleGet(request, response)
+  } else if(request.method === 'POST'){
+    handlePost(request, response)
   }
 })
 
+// handle GET request
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
+  if(request.url === '/') {
+    sendFile(response, 'public/index.html')
   }else{
-    sendFile( response, filename )
+    sendFile(response, filename)
   }
 }
 
+// handle post request
 const handlePost = function( request, response ) {
   let dataString = ''
 
@@ -45,6 +50,7 @@ const handlePost = function( request, response ) {
   })
 }
 
+// sends a file to the server
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
 
@@ -67,4 +73,5 @@ const sendFile = function( response, filename ) {
    })
 }
 
+// set up server to listen on port 3000
 server.listen( process.env.PORT || port )
