@@ -9,10 +9,10 @@ button {
     background-color: darkred;
 }
 
-#assignment-form {
-    padding-bottom: 25px;
-}
-
 button:hover {
     background-color: crimson;
+}
+
+#submission-message {
+    visibility: hidden;
 }

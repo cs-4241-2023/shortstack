@@ -20,7 +20,7 @@ const server = http.createServer( function( request,response ) {
 });
 
 // handle GET request
-const handleGet = function( request, response ) {
+const handleGet = function(request, response) {
   const filename = dir + request.url.slice(1);
 
   if(request.url === '/') {
@@ -34,7 +34,7 @@ const handleGet = function( request, response ) {
 const handlePost = function(request, response) {
   let dataString = ''
 
-  request.on( 'data', function(data) {
+  request.on('data', function(data) {
       dataString += data;
   })
 
@@ -44,7 +44,8 @@ const handlePost = function(request, response) {
     // ... do something with the data here!!!
 
     response.writeHead(200, "OK", {'Content-Type': 'text/json'});
-    response.end(JSON.stringify(appdata));
+    response.end(JSON.stringify({result: "success"}));
+    // response.end(JSON.stringify(appdata)); // old response TODO: probably good for sending data back
   })
 }
 
