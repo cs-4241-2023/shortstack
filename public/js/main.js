@@ -37,7 +37,7 @@ const submitAssignment = async function(event) {
   } else {
     // show failure message
     message.style.color = "red";
-    message.textContent = "Failure!";
+    message.textContent = "Failure! " + dataResponse.message;
   }
   // un-hide element
   message.style.visibility = "visible"

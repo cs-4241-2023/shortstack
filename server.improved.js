@@ -32,21 +32,79 @@ const handleGet = function(request, response) {
 
 // handle post request
 const handlePost = function(request, response) {
-  let dataString = ''
+  let dataString = "";
 
   request.on('data', function(data) {
       dataString += data;
-  })
+  });
 
-  request.on( 'end', function() {
-    console.log(JSON.parse(dataString));
+  request.on('end', function() {
+    // get data sent on POST request
+    let sentData = JSON.parse(dataString);
+    console.log(sentData);
 
-    // ... do something with the data here!!!
+    // verify data integrity, reject bad data
+    let className = sentData.className;
+    let assignmentName = sentData.assignmentName;
+    let dueDate = sentData.dueDate;
+    let difficulty = sentData.difficulty;
+    let difficultyNum = parseInt(difficulty);
 
-    response.writeHead(200, "OK", {'Content-Type': 'text/json'});
-    response.end(JSON.stringify({result: "success"}));
-    // response.end(JSON.stringify(appdata)); // old response TODO: probably good for sending data back
-  })
+    // send failure if any of the fields are empty
+    if(className === "" || assignmentName === "" || dueDate === "")
+    {
+      endPost(response, "failure", "One or more fields are empty!");
+    }
+    else if(difficulty === "" || isNaN(difficultyNum) || difficultyNum < 0 || difficultyNum > 10)
+    {
+      endPost(response, "failure", "Difficulty must be an integer between 1 and 10!");
+    }
+    else
+    {
+      // calculate the priority - THIS IS THE DERIVED FIELD
+      let priority = calculatePriority(dueDate, difficulty);
+
+      // push the data to the app-date array
+      appdata.push({className: className, assignmentName: assignmentName, dueDate: dueDate, difficulty: difficulty, priority: priority } )
+
+      // end post with success
+      endPost(response,"success", "");
+    }
+  });
+}
+// response.end(JSON.stringify(appdata)); // old response TODO: probably good for sending data back
+/**
+ * Ends POST request with a given result
+ * @param response the post request response object
+ * @param result the result of the request
+ * @param message a message relating to the result
+ */
+const endPost = function(response, result, message) {
+  response.writeHead(200, "OK", {'Content-Type': 'text/json'});
+  response.end(JSON.stringify({result: result, message: message}));
+}
+
+/**
+ * calculates the priority of an assignment, part of the derived field
+ * @param dueDate the assignment's due date
+ * @param difficulty the assignment's difficulty
+ */
+const calculatePriority = function (dueDate, difficulty) {
+
+  let date = new Date(dueDate);
+
+  if((difficulty > 0 && difficulty <= 3) || date.getDay() >= 14) // low priority
+  {
+    return "Low"
+  }
+  else if((difficulty > 3 && difficulty <= 6) || (date.getDay() >= 7 && date.getDay() < 14)) // medium priority
+  {
+    return "Medium"
+  }
+  else // high priority
+  {
+    return "High"
+  }
 }
 
 // sends a file to the server
@@ -57,17 +115,14 @@ const sendFile = function(response, filename) {
 
      // if the error = null, then we've loaded the file successfully
      if(err === null) {
-
        // status code: https://httpstatuses.com
        response.writeHeader(200, { 'Content-Type': type });
        response.end(content);
 
      } else {
-
        // file not found, error code 404
        response.writeHeader(404);
        response.end('404 Error: File Not Found');
-
      }
    });
 }
