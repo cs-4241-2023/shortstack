@@ -40,12 +40,12 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
+    console.log( dataString )
+    const stuff = [ JSON.parse(dataString) ]
     // ... do something with the data here!!!
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end(JSON.stringify( stuff ))
   })
 }
 

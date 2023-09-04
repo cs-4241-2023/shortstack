@@ -16,9 +16,19 @@ const submit = async function( event ) {
     body 
   })
 
-  const text = await response.text()
+  const jsonData = await response.json()
 
-  console.log( 'text:', text )
+  const list = document.createElement('ul')
+
+  jsonData.forEach(e => {
+    const item = document.createElement('li')
+    item.innerText = `Fact : ${e.addfact}`
+    list.appendChild(item)
+  });
+
+  document.body.appendChild(list)
+  
+
 }
 
 window.onload = function() {
