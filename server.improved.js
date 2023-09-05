@@ -12,7 +12,7 @@ const http = require('http'),
 const inventory = [
   { 'uuid': '47ffd1bf-4bc4-4028-b1d0-4bb1f7212b0b', 'item': 'Baseball', 'amount': 25, 'unit_value': 2.10, 'total_value': 52.50 },
   { 'uuid': '76fba967-baec-46f1-9fa2-2383b6c4f7d7', 'item': 'Shoes', 'amount': 20, 'unit_value': 150.00, 'total_value': 3000.00 },
-  { 'uuid': '46d67fca-9211-4fda-84a8-ac41a12cafc3', 'item': 'Table', 'amount': 1, 'unit_value': 25.03, 'total_value': 25.03 },
+  { 'uuid': '46d67fca-9211-4fda-84a8-ac41a12cafc3', 'item': 'Table', 'amount': 7, 'unit_value': 25.03, 'total_value': 175.21 },
 ]
 
 const server = http.createServer(function (request, response) {
@@ -32,7 +32,6 @@ const handleGet = function (request, response) {
   else if (request.url === '/data') {
     response.writeHeader(200, { 'Content-Type': 'text/plain' })
     response.end(JSON.stringify(inventory))
-    //console.log('data sent')
   }
   else {
     sendFile(response, filename)

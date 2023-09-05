@@ -1,7 +1,8 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 window.onload = function() {
-  document.querySelector("#submitButton").onclick = addData;
+  //document.querySelector("#submitButton").onclick = addData;
+  document.querySelector("#inputForm").onsubmit = addData;
 
   fetch( '/data' )
     .then((response) => response.json())
@@ -11,19 +12,11 @@ window.onload = function() {
 const addData = async function(event) {
   event.preventDefault()
 
-  const itemInput = document.querySelector('#itemInput')
-  const amountInput = document.querySelector('#amountInput')
-  const valueInput = document.querySelector('#valueInput')
+  const data = new FormData(event.target)
 
-  const item = itemInput.value
-  const amount = Number(amountInput.value)
-  const unit_value = Number(valueInput.value)
-
-  const json = {
-    item,
-    amount,
-    unit_value
-  }
+  const json = Object.fromEntries(data.entries())
+  json['amount'] = Number(json['amount'])
+  json['unit_value'] = Number(json['unit_value'])
   const body = JSON.stringify( json )
 
   const response = await fetch( '/add', {
