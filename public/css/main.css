@@ -4,6 +4,7 @@ body {
     max-width: 1000px;
     background-color: whitesmoke;
 }
+
 button {
     border-radius: 10px;
     color: white;
@@ -17,6 +18,10 @@ button:hover {
 
 #submission-message {
     visibility: hidden;
+}
+
+#assignment-form {
+    text-align: center;
 }
 
 h3 {
