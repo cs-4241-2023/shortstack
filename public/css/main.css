@@ -19,6 +19,10 @@ button:hover {
     visibility: hidden;
 }
 
+h3 {
+    text-align: center;
+}
+
 td {
     outline: thin solid grey;
     padding: 5px;

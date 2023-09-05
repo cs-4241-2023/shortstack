@@ -29,21 +29,24 @@ const submitAssignment = async function(event) {
   // status message element
   let message = document.querySelector("#submission-message");
 
-  if(dataResponse.result === "success") {
+  if(dataResponse.result === "success")
+  {
     // show success message
     message.style.color = "green";
     message.textContent = "Success!";
     clearTextBoxes();
-  } else {
+
+    // update data table with new data
+    await getAllData();
+  }
+  else
+  {
     // show failure message
     message.style.color = "red";
     message.textContent = "Failure! " + dataResponse.message;
   }
   // un-hide element
   message.style.visibility = "visible"
-
-  // update data table with new data
-  await getAllData();
 }
 
 /**
