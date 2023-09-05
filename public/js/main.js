@@ -2,23 +2,27 @@
 
 window.onload = function() {
   document.querySelector("#submitButton").onclick = addData;
+
+  fetch( '/data' )
+    .then((response) => response.json())
+    .then((json) => json.forEach(element => addTableRow(element)))
 }
 
 const addData = async function(event) {
   event.preventDefault()
 
-  const modelInput = document.querySelector('#modelInput')
-  const yearInput = document.querySelector('#yearInput')
-  const mpgInput = document.querySelector('#mpgInput')
+  const itemInput = document.querySelector('#itemInput')
+  const amountInput = document.querySelector('#amountInput')
+  const valueInput = document.querySelector('#valueInput')
 
-  const model = modelInput.value
-  const year = Number(yearInput.value)
-  const mpg = Number(mpgInput.value)
+  const item = itemInput.value
+  const amount = Number(amountInput.value)
+  const unit_value = Number(valueInput.value)
 
   const json = {
-    model,
-    year,
-    mpg
+    item,
+    amount,
+    unit_value
   }
   const body = JSON.stringify( json )
 
@@ -27,31 +31,34 @@ const addData = async function(event) {
     body 
   })
 
-  if(response.ok) {
-    addTableRow(json)
-    document.querySelector('#inputForm').reset()
-  } else {
-    alert('Failed to send data')
-  }
+  const responseJson = await response.json()
+
+  addTableRow(responseJson)
+  document.querySelector('#inputForm').reset()
 }
 
 const addTableRow = function(data) {
   const table = document.querySelector("table")
   const newRow = document.createElement('tr')
+  newRow.id = data['uuid']
   table.appendChild(newRow)
 
 
-  const modelData = document.createElement('td')
-  modelData.textContent = data['model']
-  newRow.appendChild(modelData)
+  const itemData = document.createElement('td')
+  itemData.textContent = data['item']
+  newRow.appendChild(itemData)
 
-  const yearData = document.createElement('td')
-  yearData.textContent = data['year']
-  newRow.appendChild(yearData)
+  const amountData = document.createElement('td')
+  amountData.textContent = data['amount']
+  newRow.appendChild(amountData)
 
-  const mpgData = document.createElement('td')
-  mpgData.textContent = data['mpg']
-  newRow.appendChild(mpgData)
+  const unitValueData = document.createElement('td')
+  unitValueData.textContent = data['unit_value']
+  newRow.appendChild(unitValueData)
+
+  const totalValueData = document.createElement('td')
+  totalValueData.textContent = data['total_value']
+  newRow.appendChild(totalValueData)
 
   const deleteButtonData = document.createElement('td')
   deleteButtonData.className = 'tableDelete'
@@ -68,16 +75,10 @@ const deleteData = async function(event) {
   event.preventDefault()
   
   const tableRow = this.parentElement.parentElement.parentElement
-  const rowData = tableRow.children
-
-  const model = rowData[0].textContent
-  const year = Number(rowData[1].textContent)
-  const mpg = Number(rowData[2].textContent)
+  const uuid = tableRow.id
 
   const json = {
-    model,
-    year,
-    mpg
+    uuid
   }
   const body = JSON.stringify(json)
 

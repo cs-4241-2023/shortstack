@@ -5,6 +5,7 @@ body {
 
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 #dataDiv {
@@ -12,12 +13,17 @@ body {
 }
 
 #inputDiv {
-  width: 40%;
-  height: 100vh;
+  width: 30%;
+  height: 80vh;
+
+  margin: 10vh 0;
+  padding: 0 2.5%;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-right: 1px solid black;
 }
 
 table {

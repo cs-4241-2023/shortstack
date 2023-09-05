@@ -5,13 +5,14 @@ const http = require('http'),
   // However, Glitch will install it automatically by looking in your package.json
   // file.
   mime = require('mime'),
+  crypto = require('crypto'),
   dir = 'public/',
   port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14 }
+const inventory = [
+  { 'uuid': '47ffd1bf-4bc4-4028-b1d0-4bb1f7212b0b', 'item': 'Baseball', 'amount': 25, 'unit_value': 2.10, 'total_value': 52.50 },
+  { 'uuid': '76fba967-baec-46f1-9fa2-2383b6c4f7d7', 'item': 'Shoes', 'amount': 20, 'unit_value': 150.00, 'total_value': 3000.00 },
+  { 'uuid': '46d67fca-9211-4fda-84a8-ac41a12cafc3', 'item': 'Table', 'amount': 1, 'unit_value': 25.03, 'total_value': 25.03 },
 ]
 
 const server = http.createServer(function (request, response) {
@@ -27,7 +28,13 @@ const handleGet = function (request, response) {
 
   if (request.url === '/') {
     sendFile(response, 'public/index.html')
-  } else {
+  } 
+  else if (request.url === '/data') {
+    response.writeHeader(200, { 'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(inventory))
+    //console.log('data sent')
+  }
+  else {
     sendFile(response, filename)
   }
 }
@@ -57,7 +64,7 @@ const handlePost = function (request, response) {
     }
 
     response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
-    response.end('test')
+    response.end(dataString)
   })
 }
 
