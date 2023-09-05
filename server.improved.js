@@ -52,7 +52,12 @@ const handlePost = function (request, response) {
     // ... do something with the data here!!!
     switch (request.url) {
       case '/add':
+        data['uuid'] = crypto.randomUUID()
+        data['total_value'] = data['amount'] * data['unit_value']
         console.log('ADD:', data)
+
+        response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
+        response.end(JSON.stringify(data))
         break
 
       case '/delete':
@@ -62,9 +67,6 @@ const handlePost = function (request, response) {
       default:
         console.log(`Unknown Post (${request.url}):`, data)
     }
-
-    response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
-    response.end(dataString)
   })
 }
 
