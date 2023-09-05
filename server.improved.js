@@ -7,7 +7,7 @@ const http = require( 'http' ),
 
 // this is the data contained by the server, it will hold the assignments submitted by users
 const appdata = [
-  {className: "CS 4241", assignmentName: "Assignment 2", dueDate:"09/11/2023", difficulty: 5, priority: "High"}
+  {className: "CS 4241", assignmentName: "Assignment 2", dueDate:"2023-09-11", difficulty: 5, priority: "High"}
 ];
 
 // server variable that handles requests
@@ -23,9 +23,17 @@ const server = http.createServer( function( request,response ) {
 const handleGet = function(request, response) {
   const filename = dir + request.url.slice(1);
 
-  if(request.url === '/') {
+  if(request.url === '/')
+  {
     sendFile(response, 'public/index.html');
-  }else{
+  }
+  else if(request.url === '/assignment-data') // send app data
+  {
+    response.writeHead(200, "OK", {'Content-Type': 'text/json'});
+    response.end(JSON.stringify(appdata));
+  }
+  else
+  {
     sendFile(response, filename);
   }
 }
@@ -72,7 +80,6 @@ const handlePost = function(request, response) {
     }
   });
 }
-// response.end(JSON.stringify(appdata)); // old response TODO: probably good for sending data back
 /**
  * Ends POST request with a given result
  * @param response the post request response object

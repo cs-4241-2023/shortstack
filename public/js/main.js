@@ -41,26 +41,9 @@ const submitAssignment = async function(event) {
   }
   // un-hide element
   message.style.visibility = "visible"
-}
 
-/**
- * Displays all assignments in server memory
- */
-const showAllAssignments = async function (event) {
-  // stop form submission from trying to load a new .html page for displaying results
-  event.preventDefault();
-
-
-  // // put data response into HTML list
-  // const list = document.createElement("ul");
-  // dataResponse.forEach(d => {
-  //   const item = document.createElement("li");
-  //   item.innerHTML = `<b>Model:</b> ${d.model}, <b>MPG: ${d.mpg} </b>`; // format the JSON
-  //   list.appendChild(item);
-  // });
-  //
-  // // put list on the body of the page
-  // document.body.appendChild(list);
+  // update data table with new data
+  await getAllData();
 }
 
 /**
@@ -82,9 +65,39 @@ const clearTextBoxes = function() {
 }
 
 /**
+ * Get all app data from the Node.js server and populate a table with the information
+ * @returns {Promise<void>}
+ */
+const getAllData = async function () {
+  // clear table before data fetch
+  document.getElementById("show-information").innerHTML = "";
+
+  // get app data from server as JSON
+  const appResponse = await fetch('/assignment-data', {method: 'GET'});
+  const appDataJSON = await appResponse.json();
+
+  // create table element in HTML
+  const table = document.createElement("table");
+  table.innerHTML = "<th>Class Name</th> <th>Assignment Name</th> <th>Due Date</th> <th>Difficulty</th> <th>Priority</th>";
+
+  // add assignment information to corresponding row
+  appDataJSON.forEach((assignment) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${assignment.className}</td> 
+                     <td>${assignment.assignmentName}</td>
+                     <td>${assignment.dueDate}</td>
+                     <td>${assignment.difficulty} out of 10</td>
+                     <td>${assignment.priority} priority</td>`
+    table.appendChild(row);
+  });
+  document.getElementById("show-information").appendChild(table);
+}
+
+/**
  * Set up on-click event listeners once the window loads
  */
 window.onload = function() {
-  document.querySelector("#submit-button").onclick = submitAssignment;
-  document.querySelector("#show-assignments-button").onclick = showAllAssignments;
+  getAllData().then(() =>
+      document.querySelector("#submit-button").onclick = submitAssignment
+  );
 }
