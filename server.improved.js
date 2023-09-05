@@ -78,11 +78,10 @@ const handlePost = function (request, response) {
           response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
           response.end(JSON.stringify(foundElement))
         } else {
-          response.writeHead(404)
-          response.end('UUID Not Found')
+          console.log(`Delete Failed: UUID not found. (${data['uuid']})`)
 
-          console.log(`Object with UUID ${data['uuid']} could not be found.`)
-          console.log(foundElement)
+          response.writeHead(412)
+          response.end('Could not delete object: UUID Not Found')
         }
         break
 
