@@ -1,4 +1,40 @@
+/*Colors:
+/*#DFFF96
+/*#FAE9E6
+/*#B36C60
+/*#528EFF
+/*#AEB59E
+*/
+
 body {
-  background:white;
-  color:black;
+  background: #FAE9E6;
+  color: black;
+}
+
+nav {
+  
+}
+
+a {
+  color: blue;
+}
+
+header {
+
+}
+
+h1 {
+  
+}
+
+h2 {
+
+}
+
+form {
+
+}
+
+footer {
+  
 }
