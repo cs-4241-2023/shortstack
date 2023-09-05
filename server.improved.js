@@ -54,6 +54,7 @@ const handlePost = function (request, response) {
       case '/add':
         data['uuid'] = crypto.randomUUID()
         data['total_value'] = data['amount'] * data['unit_value']
+        inventory.push(data)
         console.log('ADD:', data)
 
         response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
@@ -61,7 +62,28 @@ const handlePost = function (request, response) {
         break
 
       case '/delete':
-        console.log('DELETE:', data)
+        let foundElement
+        inventory.forEach(element => {
+          if(element['uuid'] === data['uuid']) {
+            foundElement = element
+          }
+        });
+
+        if(foundElement !== undefined) {
+          // remove object from inventory
+          const index = inventory.indexOf(foundElement)
+          inventory.splice(index, 1)
+          console.log('DELETE:', foundElement)
+
+          response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
+          response.end(JSON.stringify(foundElement))
+        } else {
+          response.writeHead(404)
+          response.end('UUID Not Found')
+
+          console.log(`Object with UUID ${data['uuid']} could not be found.`)
+          console.log(foundElement)
+        }
         break
 
       default:

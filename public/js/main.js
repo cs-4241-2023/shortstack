@@ -49,15 +49,15 @@ const addTableRow = function(data) {
   newRow.appendChild(itemData)
 
   const amountData = document.createElement('td')
-  amountData.textContent = data['amount']
+  amountData.textContent = data['amount'].toLocaleString()
   newRow.appendChild(amountData)
 
   const unitValueData = document.createElement('td')
-  unitValueData.textContent = data['unit_value']
+  unitValueData.textContent = data['unit_value'].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
   newRow.appendChild(unitValueData)
 
   const totalValueData = document.createElement('td')
-  totalValueData.textContent = data['total_value']
+  totalValueData.textContent = data['total_value'].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
   newRow.appendChild(totalValueData)
 
   const deleteButtonData = document.createElement('td')
