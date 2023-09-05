@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "bracket_creator",
+  "version": "0.1.0",
+  "description": "WPI CS 4241 assignment 2",
+  "author": "Sean Arackal",
   "scripts": {
     "start": "node server.improved.js"
   },

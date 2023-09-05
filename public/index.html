@@ -3,14 +3,43 @@
   <head>
     <title>The Bracket Generator</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" href="https://media.discordapp.net/attachments/641632207634432010/1146941704289652796/transparentfavicon.png" type="image/x-icon"> 
   </head>
+  
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <div class = "general">
+      <label for="tourname">Enter the name of your tournament:</label>
+        <form>
+          <input type="text" id="playernum" value="">
+        </form>
+    </div>
+    <div class = "general">
+      <label for="playernum">Enter the number of players:</label>
+        <form>
+          <input type="number" id="playernum" value="2">
+        </form>
+    </div>
+    <br>
+
+    <label for="btypes">Choose a Bracket Type:</label>
+    <select id="btypes" name="Bracket Types">
+    <option value="Single Elimination">Single Elimination</option>
+    <option value="Double Elimination">Double Elimination</option>
+    <option value="Round Robin">Round Robin</option>
+    </select>
+
+    <br>
+    <div class = "general">
+      <p> Click to Generate your Bracket: <button>Generate Bracket</button></p>
+    </div>
+    <br>
   </body>
+  <footer>
+    <p>&copy; Copyright 2023: Sean Arackal
+    <p><a href="mailto:sarackal@wpi.edu">sarackal@wpi.edu</a></p>
+    <p><a href="https://www.linkedin.com/in/seanarackal/">LinkedIn</a></p>
+  </footer>
 </html>
