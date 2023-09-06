@@ -16,9 +16,17 @@ const submit = async function( event ) {
     body 
   })
 
-  const text = await response.text()
-
-  console.log( 'text:', text )
+  const data = await response.json()
+  
+  const list = document.createElement('ul')
+  
+  data.forEach( d => {
+    const item = document.createElement('li')
+    item.innerHTML = `<b>model</b>: ${d.model}, <b>mpg</b>: ${d.mpg}`
+    list.appendChild( item )
+  })
+  
+  document.body.appendChild( list )
 }
 
 window.onload = function() {
