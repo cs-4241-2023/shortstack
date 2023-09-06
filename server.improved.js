@@ -15,9 +15,9 @@ const appdata = [
 ]
 
 const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
+  if( request.method === 'GET' ) {  // retrieve info from server data
     handleGet( request, response )    
-  }else if( request.method === 'POST' ){
+  }else if( request.method === 'POST' ) {  // add info to server data 
     handlePost( request, response ) 
   }
 })
@@ -45,7 +45,7 @@ const handlePost = function( request, response ) {
     // ... do something with the data here!!!
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.end( JSON.stringify( appdata) ) 
   })
 }
 
