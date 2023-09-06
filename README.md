@@ -93,8 +93,10 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 ## Your Web Application Title
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
+For my derived field, I used the "creature type" and "creature age" to determine if the creature is: young, middle aged, or very old based on the avg and max lifespan of the creature.
+
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Tech Achievement 1**: Made a single page app, has the form and the data returned on the same page
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: 
