@@ -10,9 +10,9 @@ const http = require('http'),
   port = 3000
 
 const inventory = [
-  { 'uuid': '47ffd1bf-4bc4-4028-b1d0-4bb1f7212b0b', 'item': 'Baseball', 'amount': 25, 'unit_value': 2.10, 'total_value': 52.50 },
-  { 'uuid': '76fba967-baec-46f1-9fa2-2383b6c4f7d7', 'item': 'Shoes', 'amount': 20, 'unit_value': 150.00, 'total_value': 3000.00 },
-  { 'uuid': '46d67fca-9211-4fda-84a8-ac41a12cafc3', 'item': 'Table', 'amount': 7, 'unit_value': 25.03, 'total_value': 175.21 },
+  { 'item': 'Baseball', 'amount': 25, 'unit_value': 2.10, 'uuid': '47ffd1bf-4bc4-4028-b1d0-4bb1f7212b0b', 'total_value': 52.50 },
+  { 'item': 'Shoes', 'amount': 20, 'unit_value': 150.00, 'uuid': '76fba967-baec-46f1-9fa2-2383b6c4f7d7', 'total_value': 3000.00 },
+  { 'item': 'Table', 'amount': 7, 'unit_value': 25.03, 'uuid': '46d67fca-9211-4fda-84a8-ac41a12cafc3', 'total_value': 175.21 },
 ]
 
 const server = http.createServer(function (request, response) {
@@ -81,6 +81,22 @@ const handlePost = function (request, response) {
 
           response.writeHead(412)
           response.end('Could not delete object: UUID Not Found')
+        }
+        break
+
+      case '/modify':
+        for(let i = 0; i < inventory.length; i++) {
+          if(inventory[i]['uuid'] !== data['uuid']) {
+            continue
+          }
+
+          data['total_value'] = data['amount'] * data['unit_value']
+          inventory[i] = data
+          console.log('MODIFY:', data)
+
+          response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
+          response.end(JSON.stringify(data))
+          break
         }
         break
 
