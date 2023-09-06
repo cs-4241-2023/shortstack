@@ -9,9 +9,9 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+  { 'brand-name': 'Gucci', 'designer-name': 'Sultan Adedeji', 'phone-number': 4011231234, 'brand-type': 'Streetwear'},
+  { 'brand-name': 'Balenciaga', 'designer-name': 'Tevin Makoye', 'phone-number': 4011231235, 'brand-type': 'High Fashion'},
+  { 'brand-name': 'Vetements', 'designer-name': 'Anthony Titcombe', 'phone-number': 4011231236, 'brand-type': 'African'}
 ]
 
 const server = http.createServer( function( request,response ) {

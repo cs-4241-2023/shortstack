@@ -1,18 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
+<head>
     <meta charset="utf-8">
-    <script src="js/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Show Designer Interest</title>
     <link rel="stylesheet" href="css/main.css">
+    <script src="js/main.js"></script>
     
     <!-- get rid of favicon error -->
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+</head>
+<body>
+    <h1>Fashion Show Designer Interest</h1>
+    
+    <div class="toggle-switch">
+        <label for="formSwitch">Toggle View</label>
+        <input type="checkbox" id="formSwitch">
+    </div>
+    
+    <div id="add-designer-section" class="designer-form">
+        <form id="add-designer-form">
+            <h2>Add Designer</h2>
+            <label for="brand-name">Brand Name:</label><br>
+            <input type="text" id="brand-name" name="brand-name"/><br><br>
+            <label for="designer-name">Designer's Name:</label><br>
+            <input type="text" id="designer-name" name="designer-name"/><br><br>
+            <label for="phone-number">Phone Number:</label><br>
+            <input type="text" id="phone-number" name="phone-number"/><br><br>
+            <label for="brand-type">Brand Type:</label><br>
+            <input type="text" id="brand-type" name="brand-type"/><br><br>
+            <div class="buttons">
+              <button type="submit" id="addDesigner">Add Designer</button>
+              <button type="reset" id="reset">Reset</button>
+            </div>
+            
+        </form>
+    </div>
+
+    <div id="update-designer-section" style="display:none" class="designer-form">
+        <form id="update-designer-form">
+            <h2>Update Designer Info</h2>
+            <label for="old-phone-number">Old Phone Number:</label><br>
+            <input type="text" id="old-phone-number" name="old-phone-number"/><br><br>
+            <label for="new-brand-name">New Brand Name:</label><br>
+            <input type="text" id="new-brand-name" name="new-brand-name"/><br><br>
+            <label for="new-designer-name">New Designer's Name:</label><br>
+            <input type="text" id="new-designer-name" name="new-designer-name"/><br><br>
+            <label for="new-phone-number">New Phone Number:</label><br>
+            <input type="text" id="new-phone-number" name="new-phone-number"/><br><br>
+            <label for="new-brand-type">New Brand Type:</label><br>
+            <input type="text" id="new-brand-type" name="new-brand-type"/><br><br>
+            <div class="buttons">
+              <button type="submit" id="updateDesigner">Update Designer</button>
+              <button type="reset" id="reset">Reset</button>
+            </div>
+            
+        </form>
+    </div>
+
+    <div id="designer-list">
+        <h2>Designer List</h2>
+        <ul id="expense-list"></ul>
+    </div>
+</body>
 </html>

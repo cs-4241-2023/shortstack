@@ -1,4 +1,54 @@
 body {
-  background:black;
-  color:white;
+  background-color: #97BFF0;
+  display: block;
 }
+
+.designer-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+h1,h2 {
+  text-align: center;
+}
+
+form button {
+  background-color: #1E66A8;
+  color: white;
+  padding: 14px 0;
+  margin: 10px 0;
+  border: none;
+  cursor: grabbing;
+  width: 40%;
+  border-radius: 50px;
+}
+
+form {
+  width: 50%;
+  align-content: center;
+  background-color: #8AAFDB;
+  padding: 20px;
+  border-radius: 30px;
+}
+
+form label {
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 16px 8px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 5px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
