@@ -11,7 +11,7 @@ const http = require('http'),
 
 const inventory = [
   { 'item': 'Baseball', 'amount': 25, 'unit_value': 2.10, 'uuid': '47ffd1bf-4bc4-4028-b1d0-4bb1f7212b0b', 'total_value': 52.50 },
-  { 'item': 'Shoes', 'amount': 20, 'unit_value': 150.00, 'uuid': '76fba967-baec-46f1-9fa2-2383b6c4f7d7', 'total_value': 3000.00 },
+  { 'item': 'Shoes', 'amount': 2000, 'unit_value': 150.00, 'uuid': '76fba967-baec-46f1-9fa2-2383b6c4f7d7', 'total_value': 300000.00 },
   { 'item': 'Table', 'amount': 7, 'unit_value': 25.03, 'uuid': '46d67fca-9211-4fda-84a8-ac41a12cafc3', 'total_value': 175.21 },
 ]
 
@@ -52,7 +52,7 @@ const handlePost = function (request, response) {
     switch (request.url) {
       case '/add':
         data['uuid'] = crypto.randomUUID()
-        data['total_value'] = data['amount'] * data['unit_value']
+        data['total_value'] = parseFloat((data['amount'] * data['unit_value']).toFixed(2))
         inventory.push(data)
         console.log('ADD:', data)
 
@@ -90,7 +90,7 @@ const handlePost = function (request, response) {
             continue
           }
 
-          data['total_value'] = data['amount'] * data['unit_value']
+          data['total_value'] = parseFloat((data['amount'] * data['unit_value']).toFixed(2))
           inventory[i] = data
           console.log('MODIFY:', data)
 

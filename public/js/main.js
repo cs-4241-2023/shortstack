@@ -101,7 +101,7 @@ const deleteData = async function(event) {
 
   if(response.ok) {
     tableRow.remove()
-    document.querySelector('#form:'+uuid).remove()
+    document.getElementById('form:'+uuid).remove()
   } else {
     alert('Failed to delete data')
   }
@@ -115,6 +115,7 @@ const modifyData = function(event) {
   const itemInput = document.createElement('input')
   itemInput.value = itemData.textContent
   itemData.textContent = ''
+  itemData.className = 'modifyTD'
   itemData.appendChild(itemInput)
   itemInput.type = 'text'
   itemInput.name = 'item'
@@ -123,8 +124,9 @@ const modifyData = function(event) {
 
   const amountData = tableRow.children[1]
   const amountInput = document.createElement('input')
-  amountInput.value = amountData.textContent
+  amountInput.value = amountData.textContent.replace(',', '')
   amountData.textContent = ''
+  amountData.className = 'modifyTD'
   amountData.appendChild(amountInput)
   amountInput.type = 'number'
   amountInput.name = 'amount'
@@ -134,8 +136,9 @@ const modifyData = function(event) {
 
   const valueData = tableRow.children[2]
   const valueInput = document.createElement('input')
-  valueInput.value = valueData.textContent
+  valueInput.value = valueData.textContent.replace(',', '')
   valueData.textContent = ''
+  valueData.className = 'modifyTD'
   valueData.appendChild(valueInput)
   valueInput.type = 'number'
   valueInput.name = 'unit_value'
@@ -171,9 +174,13 @@ const saveData = async function(event) {
   tableRow = document.getElementById(uuid)
 
   tableRow.children[0].textContent = responseJson['item']
-  tableRow.children[1].textContent = responseJson['amount']
+  tableRow.children[0].className = ''
+  tableRow.children[1].textContent = responseJson['amount'].toLocaleString()
+  tableRow.children[1].className = ''
   tableRow.children[2].textContent = responseJson['unit_value'].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
+  tableRow.children[2].className = ''
   tableRow.children[3].textContent = responseJson['total_value'].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})
+  tableRow.children[3].className = ''
 
   // Hide 'Save', display 'Modify'
   tableRow.children[4].lastElementChild.hidden = true

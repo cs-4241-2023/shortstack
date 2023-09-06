@@ -10,6 +10,7 @@ body {
 
 #dataDiv {
   flex-grow: 1;
+  padding: 3rem;
 }
 
 #inputDiv {
@@ -43,6 +44,15 @@ th, td {
   border: 0;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.modifyTD {
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+td > input {
+  width: 90%;
 }
 
 #inputForm {
