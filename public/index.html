@@ -6,14 +6,20 @@
     <meta name="viewport" content="width=device-width">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="icon" href="https://media.discordapp.net/attachments/641632207634432010/1146941704289652796/transparentfavicon.png" type="image/x-icon"> 
+    <link rel="icon" href="https://cdn.discordapp.com/attachments/641632207634432010/1148806297106534491/trophyfavicon.png" type="image/x-icon"> 
   </head>
   
   <body>
+    <header id = "header">
+      <h1>A quick and easy bracket generator</h1>
+      <p>
+        <a href="https://github.com/ScribleSean/" target="_blank">by Sean Arackal</a>
+      </p>
+    </header>
     <div class = "general">
       <label for="tourname">Enter the name of your tournament:</label>
         <form>
-          <input type="text" id="playernum" value="">
+          <input type="text" id="tourname" value="">
         </form>
     </div>
     <div class = "general">
@@ -23,13 +29,14 @@
         </form>
     </div>
     <br>
-
+    <div class = "general">
     <label for="btypes">Choose a Bracket Type:</label>
     <select id="btypes" name="Bracket Types">
     <option value="Single Elimination">Single Elimination</option>
     <option value="Double Elimination">Double Elimination</option>
     <option value="Round Robin">Round Robin</option>
     </select>
+    </div>
 
     <br>
     <div class = "general">

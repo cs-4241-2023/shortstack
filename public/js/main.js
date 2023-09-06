@@ -7,8 +7,8 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
+  const input = document.querySelector( '#tourname' ),
+        json = { tourname: input.text },
         body = JSON.stringify( json )
 
   const response = await fetch( '/submit', {
@@ -22,6 +22,6 @@ const submit = async function( event ) {
 }
 
 window.onload = function() {
-   const button = document.querySelector("button");
+  const button = document.querySelector("button");
   button.onclick = submit;
 }
