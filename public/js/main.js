@@ -1,27 +1,48 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
-
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
-
-  const response = await fetch( '/submit', {
-    method:'POST',
-    body 
-  })
-
-  const text = await response.text()
-
-  console.log( 'text:', text )
+// Create function to get expenses
+function getExpenses() {
+  fetch("/expenses")
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      populateExpenseList(data);
+    });
 }
 
-window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
-}
+// Attach to the render function
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("expenseForm");
+  const fetchExpensesBtn = document.getElementById("fetchExpensesBtn");
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const item = document.getElementById("expense").value;
+    let cost = document.getElementById("cost").value;
+    cost = parseFloat(cost).toFixed(2);
+
+    fetch("/expenses", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ Item: item, Cost: cost }),
+    }).then(response => response.json());
+
+    // Re-fetch all data
+    getExpenses();
+  });
+
+  // Add delete event
+  window.deleteExpense = function (expense) {
+    fetch(`/deleteExpense/${expense.Id}`, {
+      method: "DELETE"
+    }).then(response => response.json());
+
+    getExpenses();
+  };
+
+  // Add refresh button click event
+  fetchExpensesBtn.addEventListener("click", getExpenses);
+
+  // On load populate the list
+  getExpenses();
+});

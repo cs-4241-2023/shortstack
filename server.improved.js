@@ -1,74 +1,124 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+const http = require('http'),
+  fs = require('fs'),
+  mime = require('mime'),
+  dir = 'public/',
+  port = 3000;
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+function getRandomDate(startDate, endDate) {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return randomDate.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
+}
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
+function getRandomCost(minCost, maxCost) {
+  return Math.floor(Math.random() * (maxCost - minCost + 1)) + minCost;
+}
+
+let lastID = 13;
+const expenseList = [
+  { 'Id': 1, 'Item': 'Rent', 'Cost': getRandomCost(500, 1500), 'Date': getRandomDate('2023-08-01', '2023-09-14') },
+  { 'Id': 2, 'Item': 'Groceries', 'Cost': getRandomCost(100, 300), 'Date': getRandomDate('2023-08-01', '2023-09-14') },
+  { 'Id': 3, 'Item': 'Electricity', 'Cost': parseFloat((Math.random() * 100).toFixed(2)), 'Date': getRandomDate('2023-08-01', '2023-09-14') },
+  { 'Id': 4, 'Item': 'Internet', 'Cost': getRandomCost(30, 90), 'Date': getRandomDate('2023-08-01', '2023-09-14') },
+  { 'Id': 5, 'Item': 'Gas', 'Cost': parseFloat((Math.random() * 50).toFixed(2)), 'Date': getRandomDate('2023-08-01', '2023-09-14') },
+  { 'Id': 6, 'Item': 'Dining Out', 'Cost': parseFloat((Math.random() * 100).toFixed(2)), 'Date': getRandomDate('2023-08-01', '2023-09-14') },
+  { 'Id': 7, 'Item': 'Gym Membership', 'Cost': parseFloat((Math.random() * 30).toFixed(2)), 'Date': getRandomDate('2023-08-01', '2023-09-14') },
+
+  // Last month
+  { 'Id': 8, 'Item': 'Rent', 'Cost': getRandomCost(500, 1500), 'Date': getRandomDate('2023-07-01', '2023-08-01') },
+  { 'Id': 9, 'Item': 'Groceries', 'Cost': getRandomCost(100, 300), 'Date': getRandomDate('2023-07-01', '2023-08-01') },
+  { 'Id': 10, 'Item': 'Electricity', 'Cost': getRandomCost(20, 80), 'Date': getRandomDate('2023-07-01', '2023-08-01') },
+  { 'Id': 11, 'Item': 'Internet', 'Cost': getRandomCost(30, 90), 'Date': getRandomDate('2023-07-01', '2023-08-01') },
+  { 'Id': 12, 'Item': 'Gas', 'Cost': getRandomCost(10, 40), 'Date': getRandomDate('2023-07-01', '2023-08-01') },
+  { 'Id': 13, 'Item': 'Gym Membership', 'Cost': getRandomCost(5, 25), 'Date': getRandomDate('2023-07-01', '2023-08-01') }
+];
+
+const server = http.createServer(function (request, response) {
+  //console.log("Received request:", request.url);
+
+  if (request.method === 'GET') {
+    if (request.url === '/expenses') {
+      response.writeHead(200, { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify(expenseList));
+    } else {
+      handleGet(request, response);
+    }
+  } else if (request.method === 'POST') {
+    handlePost(request, response);
+  } else if (request.method === 'DELETE') {
+    handleDelete(request, response);
   }
-})
+});
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+const handleGet = function (request, response) {
+  const filename = dir + request.url.slice(1);
 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }else{
-    sendFile( response, filename )
+  if (request.url === '/') {
+    sendFile(response, 'public/index.html');
+  } else {
+    sendFile(response, filename);
   }
-}
+};
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+const handlePost = function (request, response) {
+  let dataString = '';
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
+  request.on('data', function (data) {
+    dataString += data;
+  });
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+  request.on('end', function () {
+    const expense = JSON.parse(dataString);
 
-    // ... do something with the data here!!!
+    // Parse the cost and format it with two decimal places
+    if (typeof expense.Cost === 'string') {
+      expense.Cost = parseFloat(expense.Cost);
+      if (!isNaN(expense.Cost)) {
+        expense.Cost = expense.Cost.toFixed(2);
+      }
+    }
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
-  })
-}
+    // Add the id and current date to the expense object
+    lastID += 1;
+    expense.Id = lastID;
+    expense.Date = new Date().toISOString();
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+    expenseList.push(expense);
 
-   fs.readFile( filename, function( err, content ) {
+    response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(expenseList));
+  });
+};
 
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
+const handleDelete = function (request, response) {
+  let urlParts = request.url.split("/");
+  if (urlParts[1] === 'deleteExpense') {
+    const id = parseInt(urlParts[2]);
+    const index = expenseList.findIndex(expense => expense.Id === id);
+    if (index !== -1) {
+      expenseList.splice(index, 1);
+      response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify(expenseList));
+    } else {
+      response.writeHead(400, "Bad Request", { 'Content-Type': 'text/plain' });
+      response.end("Invalid Id");
+    }
+  }
+};
 
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
+const sendFile = function (response, filename) {
+  const type = mime.getType(filename);
 
-     }else{
+  fs.readFile(filename, function (err, content) {
+    if (err === null) {
+      response.writeHeader(200, { 'Content-Type': type });
+      response.end(content);
+    } else {
+      response.writeHeader(404);
+      response.end('404 Error: File Not Found');
+    }
+  });
+};
 
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
-
-     }
-   })
-}
-
-server.listen( process.env.PORT || port )
+server.listen(process.env.PORT || port);

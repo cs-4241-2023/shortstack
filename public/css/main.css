@@ -1,4 +1,68 @@
 body {
-  background:black;
-  color:white;
+  font-family: "Roboto", sans-serif;
+  margin: 20px;
+}
+
+/* Create scrollable table body */
+.scrollable-table {
+  max-height: 600px; /* Adjust the height as needed */
+  overflow-y: auto;
+  display: block;
+}
+
+/* Table row styling */
+tr {
+  border-bottom: 1px solid #ccc;
+}
+
+/* Table header styling */
+th {
+  font-weight: 600;
+  text-align: center;
+  padding: 12px 8px;
+  background-color: #f2f2f2;
+}
+
+/* Table data styling */
+td {
+  padding: 12px 8px;
+  text-align: center;
+}
+
+td:nth-child(4) button {
+  background-color: #f44336;
+  padding-top: 0px !important;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  padding: 8px;
+  border: none;
+}
+
+/* Sticky headers and rows */
+
+.table-container {
+  position: relative;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  background-color: #f2f2f2;
+  z-index: 40;
+}
+
+tbody tr:last-child {
+  position: sticky;
+  bottom: 0;
+  background-color: #f2f2f2;
+  z-index: 40;
 }
