@@ -1,27 +1,32 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+"use strict"; // Use strict mode for better practices
 
+// Import necessary modules
+const http = require( 'http' ), // to create an http server
+      fs   = require( 'fs' ), // work with files and directories on the server's file system
+      mime = require( 'mime' ), // determine the MIME type of a file, it is a library not included in node.js which required npm install on local machine
+      dir  = 'public/', // directory where server files are located
+      port = 3000 // port number the server will listen for requests on
+
+// Data which is hard-coded into the server (no database yet)
+// Client can access this data from the server with GET request
+// Or they can add to this data on the server with a POST request      
 const appdata = [
   { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
   { 'model': 'honda', 'year': 2004, 'mpg': 30 },
   { 'model': 'ford', 'year': 1987, 'mpg': 14} 
 ]
 
+// Create HTTP Server which handles both GET and POST requests
+// Every time a request is made to the server, this callback function is called
 const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
+  if( request.method === 'GET' ) { // GET - ask for content from server
     handleGet( request, response )    
-  }else if( request.method === 'POST' ){
+  }else if( request.method === 'POST' ){ // POST - send content to server
     handlePost( request, response ) 
   }
 })
 
+// GET request handler
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
@@ -32,6 +37,7 @@ const handleGet = function( request, response ) {
   }
 }
 
+// POST request handler
 const handlePost = function( request, response ) {
   let dataString = ''
 
@@ -71,4 +77,5 @@ const sendFile = function( response, filename ) {
    })
 }
 
+// Tell server Listen for requests on HTTP port 3000
 server.listen( process.env.PORT || port )

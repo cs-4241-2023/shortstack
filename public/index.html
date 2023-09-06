@@ -3,16 +3,60 @@
   <head>
     <title>a2-SmeeBoi</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
     
     <!-- get rid of favicon error -->
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
+
+
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+    <h1>Audio Visualizer Form</h1>
+
+    <form action="#" method="POST" enctype="multipart/form-data">
+      <label for="name">Username:</label>
+      <input type="text" id="name" name="name" required><br><br>
+
+      <label for="audio">Audio File (Max 30 seconds):</label>
+      <input type="file" id="audio" name="audio" accept=".mp3, .wav" required><br><br>
+
+      <label for="color">Color:</label>
+      <select id="color" name="color" required>
+          <option value="white">White</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+      </select><br><br>
+
+      <label for="style">Style:</label>
+      <input type="radio" id="lines" name="style" value="lines" required>
+      <label for="lines">Lines</label>
+      <input type="radio" id="dots" name="style" value="dots" required>
+      <label for="dots">Dots</label><br><br>
+
+      <input type="submit" value="Submit">
+  </form>
+
+  <p> When form is submitted, hide form and visualizer canvas takes its place. </p>
+
+  <p> AUDIO VISUALIZER OOOO </p>
+
+  <p> User can scroll down while it is playing to view the data section</p>
+  
+  <p> Audio Visualizer data</p>
+  <ul>
+
+    <li>Username: </li>
+    <li>File Name: </li>
+    <li>File Duration: </li>
+    <li>File Size: </li>
+    <li>Color Choice: </li>
+    <li>Style Choice: </li>
+
+
+  </ul>
+
+</body>
 </html>
