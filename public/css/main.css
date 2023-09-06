@@ -1,40 +1,43 @@
-/*Colors:
-/*#DFFF96
-/*#FAE9E6
-/*#B36C60
-/*#528EFF
-/*#AEB59E
-*/
+a {
+  font-family: "Courier New", Monospace;
+  color: darkslateblue;
+}
 
 body {
   background: #FAE9E6;
   color: black;
 }
 
-nav {
-  
-}
-
-a {
-  color: blue;
-}
-
-header {
-
-}
-
 h1 {
-  
+  font-family: "Arial Black", Sans-serif;
 }
 
 h2 {
-
+  font-family: "Arial", Sans-serif;
 }
 
-form {
+label {
+  font-family: "Georgia", serif;
+}
 
+input {
+  font-family: "Georgia", serif;
+}
+
+button {
+  font-family: "Georgia", Sans-serif;
+}
+
+p {
+  font-family: "Palatino", Sans-serif;
+}
+
+li {
+  font-family: "Palatino", Sans-serif;
 }
 
 footer {
-  
+  font-family: "Georgia", "serif";
 }
+
+
