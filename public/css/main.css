@@ -1,7 +1,6 @@
-/*Element selectors used to define all text fonts and website colors. Some positioning included here.*/
+/*Element selectors used to define all text fonts and website colors. Some dimensions and margins used here.*/
 
 a {
-  display: inline;
   margin-right: 10px;
   font-family: "Courier New", Monospace;
   color: darkslateblue;
@@ -12,6 +11,10 @@ body {
   color: black;
 }
 
+main {
+  min-height: 100vh; /*Sets the minimum height of the main tag (and the form container by association) to full height.*/
+}
+
 h1 {
   font-family: "Arial Black", Sans-serif;
 }
@@ -20,13 +23,13 @@ h2 {
   font-family: "Arial", Sans-serif;
 }
 
-label {
-  font-family: "Georgia", serif;
-}
-
 form {
   width: 1200px;
   height: 200px;
+}
+
+label {
+  font-family: "Georgia", serif;
 }
 
 input {
@@ -37,7 +40,7 @@ button {
   font-family: "Georgia", Sans-serif;
 }
 
-p {
+p { /* Ask about using flex for p tomorrow */
   font-family: "Palatino", Sans-serif;
 }
 
@@ -47,7 +50,7 @@ li {
 
 footer {
   font-family: "Georgia", "serif";
-  margin-top: 650px;
+  margin-top: auto; /*Since the footer is right below the main tag, the top margin of the footer will be automatically set so that the footer is located right below the form container's minimum height. This places the footer at the bottom fo each page*/
 }
 
 /*Class selectors used to implement flexbox*/
@@ -67,14 +70,13 @@ footer {
 .formContainer {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  margin-top: 50px;
-  margin-left: 200px;
+  place-items: center;
 }
 
-.setFormFieldColumnDirection {
+.setFormFieldColumnDirectionAndSpace {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .positionFooterCenterXAndEndY {

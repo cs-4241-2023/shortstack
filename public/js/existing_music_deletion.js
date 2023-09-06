@@ -1,4 +1,6 @@
 //FRONT-END (CLIENT) JAVASCRIPT FOR EXISTING MUSIC DELETIONS HERE
+const deletionInfo = document.getElementById("submissionForDeletionInfo")
+const deletionInfoParagraph = document.createElement('p')
 
 const deletionSubmit = async function(event)
 {
@@ -10,9 +12,6 @@ const deletionSubmit = async function(event)
     const bandInput = document.querySelector('#deletebandname') 
     const albumInput = document.querySelector('#deletealbumname')
     const releaseYearInput = document.querySelector('#deletereleaseyear')
-
-    const deletionInfo = document.getElementById("submissionForDeletionInfo")
-    const deletionInfoParagraph = document.createElement('p')
 
     let inputObj = {bandname: bandInput.value, albumname: albumInput.value, releaseyear: releaseYearInput.value}
     

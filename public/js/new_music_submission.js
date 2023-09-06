@@ -1,7 +1,32 @@
 //FRONT-END (CLIENT) JAVASCRIPT FOR NEW MUSIC SUBMISSIONS HERE
+const submissionInfo = document.getElementById("submissionInfo")
+const submissionInfoParagraph = document.createElement('p')
+const additionalInfoParagraph = document.createElement('p')
+
+function setSubmissionInfoID() {
+  submissionInfoParagraph.setAttribute('id', 'submissionInfoPresent')
+}
+
+function setAdditionalInfoID() {
+  additionalInfoParagraph.setAttribute('id', 'additionalInfoPresent') 
+}
+
+function removeChild(child) {
+  submissionInfo.removeChild(child)
+}
 
 const additionSubmit = async function(event) { //The async keyword here means that submit always returns a promise. It also means that one or more await keywords are allowed inside the function body.
   
+  if(document.getElementById("submissionInfoPresent") !== null) {
+    console.log("Child will be removed")
+    removeChild(submissionInfoParagraph)
+  }
+  
+  if(document.getElementById("additionalInfoPresent") !== null) {
+    console.log("child will be removed")
+    removeChild(additionalInfoParagraph)
+  }
+
   //preventDefault cancels an event as long as it is cancelable.
   //stop form submission from trying to load
   //a new .html page for displaying results...
@@ -19,10 +44,6 @@ const additionSubmit = async function(event) { //The async keyword here means th
   const albumInput = document.querySelector('#albumname')
   const releaseYearInput = document.querySelector('#releaseyear')
 
-  const submissionInfo = document.getElementById("submissionInfo")
-  const submissionInfoParagraph = document.createElement('p')
-  const additionalInfoParagraph = document.createElement('p')
-
   //Proper format of JSON when there is a list of objects: [{a1:o1}, {a2:o2}, {a3:o3}]
   //The structure of the object before stringification and parsing should match the structure of an object entry in the destination array.
   let inputObj = {bandname: bandInput.value, albumname: albumInput.value, releaseyear: releaseYearInput.value}
@@ -31,10 +52,12 @@ const additionSubmit = async function(event) { //The async keyword here means th
   if(inputObj.releaseyear < startingYear) {
     submissionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: ${inputObj.releaseyear} is not a valid year.`
     submissionInfo.appendChild(submissionInfoParagraph)
+    setSubmissionInfoID()
   }
   else if(inputObj.releaseyear > currentYear) {
     submissionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: ${inputObj.albumname} has not been released yet.`
     submissionInfo.appendChild(submissionInfoParagraph)
+    setSubmissionInfoID()
   }
   else {
     const body = JSON.stringify(inputObj)
@@ -62,7 +85,9 @@ const additionSubmit = async function(event) { //The async keyword here means th
     additionalInfoParagraph.innerHTML = `<strong>And here is the age of</strong> ${latestDataEntry.albumName}: ${latestDataEntry.albumAge}`
 
     submissionInfo.appendChild(submissionInfoParagraph)
-    submissionInfo.appendChild(additionalInfoParagraph)   
+    submissionInfo.appendChild(additionalInfoParagraph)
+    setSubmissionInfoID()  
+    setAdditionalInfoID()
   }
 }
 
