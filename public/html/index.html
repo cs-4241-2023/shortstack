@@ -6,17 +6,17 @@
     <link rel="stylesheet" href="css/main.css"> 
   </head>
   <body>
-    <nav>
+    <nav class = "positionNavCenterXAndStartY">
       <a href = "/">Home</a>
       <a href = "view_music_listening_list.html">View Music Listening List</a>
     </nav>
     <header>
-      <h1>Music Listening Tracker</h1>
+      <h1 class = "positionPageTitleCenterXAndStartY">Music Listening Tracker</h1>
     </header>
     <main>
       <section>
-        <h2>Submit New Music:</h2>
-          <form>
+        <h2 class = "">Submit New Music:</h2>
+          <form class = "setFormFieldColumnDirection">
             <label for="bandname">Band Name:</label>
             <input type="text" id="bandname" value="band name here">
             <label for="albumname">Album Name:</label>
@@ -29,7 +29,7 @@
       </section>
       <section>
         <h2>Delete Existing Music:</h2>
-          <form>
+          <form class = "setFormFieldColumnDirection">
             <label for="bandname">Band Name:</label>
             <input type="text" id="deletebandname" value="band name here">
             <label for="albumname">Album Name:</label>
@@ -41,7 +41,7 @@
           <div id = "submissionForDeletionInfo"></div>
       </section>
     </main>
-      <footer>
+      <footer class = "positionFooterCenterXAndEndY">
         Music Listening Tracker created by Matthew McAlarney
       </footer>
       <script src="js/new_music_submission.js"></script>

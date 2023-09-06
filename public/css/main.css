@@ -1,4 +1,8 @@
+/*Element selectors used to define all text fonts and website colors. Some positioning included here.*/
+
 a {
+  display: inline;
+  margin-right: 10px;
   font-family: "Courier New", Monospace;
   color: darkslateblue;
 }
@@ -38,6 +42,31 @@ li {
 
 footer {
   font-family: "Georgia", "serif";
+}
+
+/*Class selectors used to implement flexbox*/
+
+.positionNavCenterXAndStartY {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+.positionPageTitleCenterXAndStartY {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+.setFormFieldColumnDirection {
+  display: flex;
+  flex-direction: column;
+}
+
+.positionFooterCenterXAndEndY {
+  display: flex;
+  align-items: end;
+  justify-content: center;
 }
 
 
