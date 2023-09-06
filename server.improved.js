@@ -24,9 +24,10 @@ const server = http.createServer( function( request,response ) {
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
-
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
+  }else if(request.url === '/timeline'){
+    sendFile( response, 'public/timeline.html' )
   }else{
     sendFile( response, filename )
   }

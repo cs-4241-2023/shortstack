@@ -4,7 +4,14 @@
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <link rel="stylesheet" href="css/main.css">
+
+    <script>
+      $(function() {
+         $("#includeHtml").load("public/test.html");
+      });
+   </script>
     
     <!-- get rid of favicon error -->
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
@@ -14,5 +21,13 @@
       <input type="text" id="yourname" value="your name here">
       <button>submit</button>
     </form>
+    <table id="myTable">
+      <tr>
+      </tr>
+    </table>
+    <div class="firstdiv">
+      <p>Hello its my first HTML page</p>
+     </div>
+    <div id="includeHtml"></div>
   </body>
 </html>
