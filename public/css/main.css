@@ -1,4 +1,160 @@
-body {
-  background:black;
-  color:white;
+body {}
+
+.main-header {
+  background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.header-text {
+  color: black;
+  font-family: Rubik, Helvetica, sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.main-container {
+  margin-top: 95px;
+  margin-left: 12px;
+  margin-right: 12px;
+  background-color: rgb(240, 240, 240);
+  height: 100vh;
+  border-radius: 20px;
+}
+
+#content-title {
+  margin-top: 10px;
+  margin-left: 0.5em;
+  font-size: 30px;
+  font-family: Rubik, Helvetica, sans-serif;
+  border-bottom: 1px solid black;
+}
+
+.motor-sports-logo {
+  height: 65px;
+  margin-right: 7.5px;
+}
+
+.ctitle-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 15px;
+
+}
+
+.main-form {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border: solid;
+  border-width: 1px;
+  width: 500px;
+  border-radius: 20px;
+}
+
+.input-text-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.form__input {
+  height: 20px;
+  width: 100px;
+  padding: 5px;
+  margin-right: 10px;
+  margin-left: 15px;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+.input-text-container label {
+  font-family: Rubik, Arial;
+  font-size: larger;
+}
+
+b .ctitle-container,
+.input-text-container,
+.buttons-container,
+#appointment-heading {
+  margin-left: 15px;
+}
+
+.buttons-container {
+  /* background-color: green; */
+  display: flex;
+  flex-direction: column;
+  /* text-align: center; */
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 15px;
+}
+
+/* Style buttons here */
+.buttons-container button {
+  background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  padding: 1rem 1.75rem;
+  text-decoration: none;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.buttons-container button:hover {
+  background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+}
+
+@media (min-width: 768px) {
+  .buttons-container button {
+    padding: 1rem 2rem;
+  }
+}
+
+.instruction-info {
+  background-color: violet;
+  width: 500px;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.row-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.table-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: solid;
+  border-width: 1px;
+
+}
+
+.table-container th,
+td {
+  padding: 5px;
 }

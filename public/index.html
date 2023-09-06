@@ -1,18 +1,119 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+  <!-- get rid of favicon error -->
+  <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+</head>
+
+<body>
+  <div class="main-header">
+    <p class="header-text">Vehicle Service Log Book</p>
+  </div>
+
+  <div class="main-container">
+    <div class="ctitle-container">
+      <p id="content-title">Vehicle Maintenace Log</p>
+      <img class="motor-sports-logo" src="https://logos-world.net/wp-content/uploads/2022/03/BMW-M-Emblem.png">
+    </div>
+
+    <div class="row-content">
+      <form class="main-form">
+        <!-- <h1 id="appointment-heading"> Add Service Event</h1> -->
+        <div class="input-text-container">
+          <label for="year">Year:</label>
+          <input class="form__input" type="text" placeholder="Ex: 2014" id="year">
+        </div>
+
+        <div class="input-text-container" id="make">
+          <label for="make">Make:</label>
+          <input class="form__input" type="text" placeholder="Ex: BMW" id="make">
+        </div>
+
+        <div class="input-text-container">
+          <label for="model">Model:</label>
+          <input class="form__input" type="text" placeholder="Ex: 335i xDrive" id="model">
+        </div>
+
+        <div class="input-text-container">
+          <label for="service-type">Service Type:</label>
+          <input class="form__input" type="text" placeholder="Ex: 22000" id="service-type">
+        </div>
+
+        <div class="input-text-container">
+          <label for="appointment-date">Appointment Date:</label>
+          <input class="form__input" type="date" id="appointment-date">
+        </div>
+      </form>
+
+      <div class="buttons-container">
+        <button>submit</button>
+        <button>refresh</button>
+        <button>update</button>
+        <button>delete</button>
+      </div>
+      <div class="instruction-info">
+        <p>Instructions</p>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="vehicle-table">
+        <caption>
+          Vehicle Appointments
+        </caption>
+        <tr>
+          <th>Year</th>
+          <th>Make</th>
+          <th>Model</th>
+          <th>Service Type</th>
+          <th>Appointment Date</th>
+          <th>Days Until Appointment</th>
+        </tr>
+
+        <tr>
+          <td>
+            2014
+          </td>
+          <td>
+            BMW
+          </td>
+          <td>
+            335i xDrive
+          </td>
+          <td>
+            96000
+          </td>
+          <td>
+            99764
+          </td>
+          <td>
+            2000
+          </td>
+        </tr>
+
+      </table>
+    </div>
+
+  </div>
+
+
+</body>
+
 </html>
+
+
+<!-- Old Body Code-->
+
+<!-- <form>
+    <input type="text" id="yourname" value="your name here">
+    <button>submit</button>
+  </form> -->
