@@ -21,19 +21,14 @@ const submit = async function( event) {
     alert("Task is invalid");
   }
   if(!dateValid){
-    console.log(task);
     alert("Date is invalid");
   }
-
   if(!deadlineValid){
-    console.log(task);
     alert("Deadline is invalid");
   }
 
   if(taskValid && dateValid && deadlineValid){
-    let priority=JudgePriority(deadline);
-
-    let json = { task, creationDate, deadline, priority };
+    let json = { task, creationDate, deadline};
     let body = JSON.stringify( json );
     console.log(body);
     const response = await fetch( '/json', {
@@ -45,22 +40,18 @@ const submit = async function( event) {
     let firstRow=CreateFirstRow();
 
     table.append(firstRow);
-    data.forEach(item => {
-          let row=CreateRow(item["task"],item["creation_date"],item["deadline"],JudgePriority(item["deadline"]));
+    data.forEach((item,index) => {
+          let row=CreateRow(item["task"],item["creationDate"],item["deadline"],JudgePriority(item["deadline"]),index);
           table.append(row);
         });
     document.getElementById("task-table").append(table);
     ClearForm();
   }
-
-
 }
 
 function JudgePriority(deadline){
-  console.log("JudgePriority");
   let today=new Date();
   let dateDiff=DateDifference(today,new Date(deadline));
-  console.log(dateDiff);
   let priority="High Priority"
   if(dateDiff>2){
     priority="Low Priority";
@@ -94,20 +85,13 @@ function CreateHeaderCell(cellInfo){
   return cell;
 }
 
-function CreateRow(task,creationDate,deadline,priority){
+function CreateRow(task,creationDate,deadline,priority,index){
   let row=document.createElement("tr");
   row.append(CreateCell(task));
   row.append(CreateCell(creationDate));
   row.append(CreateCell(deadline));
   row.append(CreateCell(priority));
   return row;
-}
-
-function CreateDeleteButton(index){
-  const cell = document.createElement('td');
-  cell.className="delete";
-  cell.innerHTML='<button id="delete-button" class="delete-button" onclick="DeleteRow('+index+')"><i class="fa-solid fa-trash"></i></button>';
-  return cell;
 }
 
 async function DeleteRow(index){

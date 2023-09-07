@@ -76,11 +76,14 @@ input:invalid{
   text-decoration: underline dotted red;
 }
 
+body{
+  margin-bottom: 5%;
+}
+
 #task-table {
-  width: 90%;
   background: var(--mainColor);
   text-align: center;
-  margin: 3%;
+  margin: 5%;
   padding: 1%;
   border-radius: 25px;
 }
@@ -100,8 +103,8 @@ th, td {
 
 .addTask{
   text-align: center;
-  padding: 3% 0;
-  margin: 3%;
+  margin: 5%;
+  padding-top: 3%;
   background: var(--mainColor);
   border-radius: 25px;
 }

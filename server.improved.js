@@ -9,13 +9,12 @@ const http = require( 'http' ),
     port = 3000
 
 const appdata = [
-  { 'task': 'homework', 'creation_date': '9/01/2023', 'deadline': '9/08/2023'},
-  { 'task': 'taxes', 'creation_date': '9/01/2023', 'deadline': '9/09/2023' },
-  { 'task': 'chores', 'creation_date': '9/01/2023', 'deadline': '9/10/2023' }
+  { 'task': 'homework', 'creationDate': '9/01/2023', 'deadline': '9/08/2023'},
+  { 'task': 'taxes', 'creationDate': '9/01/2023', 'deadline': '9/09/2023' },
+  { 'task': 'chores', 'creationDate': '9/01/2023', 'deadline': '9/10/2023' }
 ]
 
 const server = http.createServer( function( request,response ) {
-  console.log("Request Received")
   if( request.method === 'GET' ) {
     handleGet( request, response )
   }else if( request.method === 'POST' ){
@@ -24,7 +23,6 @@ const server = http.createServer( function( request,response ) {
 })
 
 const handleGet = function( request, response ) {
-  console.log("Handle Get");
   const filename = dir + request.url.slice( 1 )
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
@@ -41,7 +39,6 @@ function handleGetData(request, response){
 }
 
 const handlePost = function( request, response ) {
-  console.log("Handle Post");
   let dataString = ''
 
   request.on( 'data', function( data ) {
@@ -51,10 +48,6 @@ const handlePost = function( request, response ) {
   request.on( 'end', function() {
     let data=JSON.parse( dataString );
 
-    for(let i = 0; i < appdata.length; i++){
-      console.log(appdata[i]);
-    }
-
     appdata.push(data);
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
@@ -62,13 +55,8 @@ const handlePost = function( request, response ) {
   })
 }
 
-function handlePostData(request, response){
-  console.log("Handle Post Data");
-}
-
 
 const sendFile = function( response, filename ) {
-  console.log("Send Get");
   const type = mime.getType( filename )
 
   fs.readFile( filename, function( err, content ) {
