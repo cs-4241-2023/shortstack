@@ -1,18 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
     <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+</head>
+<body>
+    <header>
+        <h1>Todo List</h1>
+    </header>
+    <main>
+        <form id="task-form">
+            <input type="text" id="task-input" placeholder="Add a new task">
+            <button type="submit">Add</button>
+        </form>
+        <ul id="task-list">
+            <!-- Todo tasks will be added here dynamically -->
+        </ul>
+    </main>
+    <script src="js/main.js"></script>
+</body>
 </html>
