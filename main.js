@@ -38,9 +38,9 @@ const playerTwoSubmit = async function( event ) {
   })
 
   const data = await response.text()
-
+  
   const list = document.createElement('ul')
-
+  
   let count = 0
   data.forEach( d => {
     count = count + 1
