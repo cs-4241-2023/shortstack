@@ -1,7 +1,7 @@
 // import node.js, mime, and other dependencies
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      mime = require( 'mime' ),
+const http = require('http'),
+      fs   = require('fs'),
+      mime = require('mime'),
       dir  = 'public/',
       port = 3000
 
@@ -12,10 +12,17 @@ const appdata = [
 
 // server variable that handles requests
 const server = http.createServer( function( request,response ) {
-  if(request.method === 'GET') {
+  if(request.method === 'GET')
+  {
     handleGet(request, response);
-  } else if(request.method === 'POST'){
+  }
+  else if(request.method === 'POST')
+  {
     handlePost(request, response);
+  }
+  else
+  {
+    console.error("Unknown Request");
   }
 });
 
