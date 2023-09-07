@@ -33,6 +33,10 @@ h1, h2, h3, h4, h5, h6, strong{
   font-size: 28px;
 }
 
+i{
+  color:white;
+}
+
 p, li {
   color: var(--mainText);
   font-family: Lato,Arial,Helvetica,sans-serif;
