@@ -12,11 +12,19 @@ ul {
 }
 
 ul li {
-  background-color: #28103b;
   padding: 10px;
   position: relative;
   width: auto;
   margin: 5px;
+}
+
+ul li:nth-child(even) {
+  background-color: #28103b;
+
+}
+
+ul li:nth-child(odd) {
+  background-color: rgb(124, 92, 150);
 }
 
 ul li button {
