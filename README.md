@@ -1,5 +1,9 @@
 ## Web Application Title: Expense Tracker
 
+### Live Demo
+
+Check out the live demo of the project hosted on Glitch: [Expense Tracker on Glitch](https://your-glitch-url.glitch.me)
+
 ### Project Description
 
 Expense Tracker is a comprehensive web application designed to simplify the task of managing daily expenses. Utilizing Material Design, the application offers a rich, user-friendly interface. Key features include:
