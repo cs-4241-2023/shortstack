@@ -25,10 +25,15 @@ const submit = async function( event) {
     alert("Date is invalid");
   }
 
-  if(taskValid && dateValid){
+  if(!deadlineValid){
+    console.log(task);
+    alert("Deadline is invalid");
+  }
+
+  if(taskValid && dateValid && deadlineValid){
     let priority=JudgePriority(deadline);
 
-    let json = { row: {task,creationDate,deadline,priority,} };
+    let json = { task, creationDate, deadline, priority };
     let body = JSON.stringify( json );
     console.log(body);
     const response = await fetch( '/json', {
@@ -41,9 +46,9 @@ const submit = async function( event) {
 
     table.append(firstRow);
     data.forEach(item => {
-            let row=CreateRow(item["task"],item["creation_date"],item["deadline"],JudgePriority(item["deadline"]));
-            table.append(row);
-          });
+          let row=CreateRow(item["task"],item["creation_date"],item["deadline"],JudgePriority(item["deadline"]));
+          table.append(row);
+        });
     document.getElementById("task-table").append(table);
     ClearForm();
   }
@@ -52,15 +57,26 @@ const submit = async function( event) {
 }
 
 function JudgePriority(deadline){
+  console.log("JudgePriority");
   let today=new Date();
-  let dateDiff=deadline-today;
+  let dateDiff=DateDifference(today,new Date(deadline));
+  console.log(dateDiff);
   let priority="High Priority"
-  if(dateDiff>3){
+  if(dateDiff>2){
     priority="Low Priority";
   }else if(dateDiff>1){
     priority="Medium Priority";
+  }else if(isNaN(dateDiff)){
+    priority="NaN";
   }
   return priority;
+}
+
+function DateDifference(day1,day2){
+  let date1=Date.UTC(day1.getFullYear(), day1.getMonth(), day1.getDate());
+  let date2= Date.UTC(day2.getFullYear(), day2.getMonth(), day2.getDate());
+
+  return Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
 }
 
 function CreateFirstRow(){
@@ -122,70 +138,7 @@ function CreateCell(cellInfo){
   return cell;
 }
 
-function CreateDeadline(creationDate, priority){
-  //let creationDate=creation_date;
-  let todaysDate=new Date();
-  let dateDifference=todaysDate-creationDate;
-
-  let deadline=new Date(todaysDate.getFullYear(),todaysDate.getMonth());
-
-
-  if(dateDifference===0){
-    deadline=creationDate;
-  }else if(priority==="High"){
-    deadline.day=todaysDate.getDate()+1;
-  }else if(priority==="Medium"){
-    deadline.day=todaysDate.getDate()+2;
-  }else if(priority==="Low"){
-    deadline.day=todaysDate.getDate()+3;
-  }
-
-  return deadline.toLocaleDateString();
-}
-
-const LoadDataFromServer=() => {
-  fetch( "/json", {
-    method:"GET",
-  })
-      .then(response => response.json())
-      .then(response => {
-        response.forEach((item, index) => {
-          addTableRow(entryCount);
-          setEntry(index, item);
-          entryCount++;
-        });
-      })
-}
-
-async function LoadData(response){
-  console.log("Load Data");
-  DeleteContents();
-
-  const data = await response.json();
-
-  LoadTable(data);
-}
-
-function LoadTable(data){
-  let table=document.getElementById('task-table');
-
-  data.forEach( d => {
-    const row = document.createElement('tr')
-    let deadline=CreateDeadline(d.creation_date,d.priority);
-    row.appendChild( CreateDeleteButton(data.indexOf(d)) );
-    row.appendChild( CreateCell(d.task) );
-    row.appendChild( CreateCell(d.creation_date) );
-    row.appendChild( CreateCell(deadline));
-    row.appendChild( CreateCell(d.priority) );
-    table.appendChild(row);
-  })
-}
-
 window.onload = async function() {
-  LoadDataFromServer();
-
-  //Load server data
-
   const addButton = document.querySelector(".add-button");
   addButton.onclick = submit;
 

@@ -9,22 +9,23 @@ const http = require( 'http' ),
     port = 3000
 
 const appdata = [
-  { 'task': 'homework', 'creation_date': '9/24/2020', 'deadline': '9/25/2020'},
-  { 'task': 'taxes', 'creation_date': '9/24/2020', 'deadline': '9/26/2020' },
-  { 'task': 'chores', 'creation_date': '9/24/2020', 'deadline': '9/27/2020' }
+  { 'task': 'homework', 'creation_date': '9/01/2023', 'deadline': '9/08/2023'},
+  { 'task': 'taxes', 'creation_date': '9/01/2023', 'deadline': '9/09/2023' },
+  { 'task': 'chores', 'creation_date': '9/01/2023', 'deadline': '9/10/2023' }
 ]
 
 const server = http.createServer( function( request,response ) {
+  console.log("Request Received")
   if( request.method === 'GET' ) {
     handleGet( request, response )
   }else if( request.method === 'POST' ){
-    handlePost( request, response )
+    handlePost( request, response );
   }
 })
 
 const handleGet = function( request, response ) {
+  console.log("Handle Get");
   const filename = dir + request.url.slice( 1 )
-
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
   }else if (request.url === '/json' ) {
@@ -35,8 +36,8 @@ const handleGet = function( request, response ) {
 }
 
 function handleGetData(request, response){
-  console.log("Handle Get Data");
-  //TODO: AAAAAAAAAAAAAAAAAA
+  response.setHeader('Content-Type', 'application/json');
+  response.end(JSON.stringify(appdata));
 }
 
 const handlePost = function( request, response ) {
@@ -48,9 +49,13 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-    appdata.push(JSON.parse( dataString ));
-    // TODO: do something with the data here!!!
+    let data=JSON.parse( dataString );
+
+    for(let i = 0; i < appdata.length; i++){
+      console.log(appdata[i]);
+    }
+
+    appdata.push(data);
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end( JSON.stringify( appdata ) )
@@ -63,6 +68,7 @@ function handlePostData(request, response){
 
 
 const sendFile = function( response, filename ) {
+  console.log("Send Get");
   const type = mime.getType( filename )
 
   fs.readFile( filename, function( err, content ) {
