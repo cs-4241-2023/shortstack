@@ -46,7 +46,7 @@ const playerTwoSubmit = async function( event ) {
     count = count + 1
     if(count === 1) {
       const item = document.createElement('li')
-      item.innerText = ( )
+      item.innerText = (d )
       list.appendChild(item)
     } else {
       
