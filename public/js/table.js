@@ -1,5 +1,9 @@
+// Get current date and first day of month
 const today = new Date();
 const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+// Set month names
+const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function populateExpenseList(data) {
     const tbody = document.querySelector("#expenseList tbody");
@@ -26,7 +30,7 @@ function populateExpenseList(data) {
 
         // Add a summary row for the previous month
         if (currentMonth !== '' && currentMonth !== expenseMonth) {
-            createSummaryRow(tbody, `Total for ${getMonthName(currentMonth)}`, thisMonthCost, null);
+            createSummaryRow(tbody, `Total for ${MONTH_NAMES[currentMonth]}`, thisMonthCost, null);
             thisMonthCost = 0;
         }
 
@@ -39,11 +43,40 @@ function populateExpenseList(data) {
 
     // Add a summary row for the last month
     if (currentMonth !== '') {
-        createSummaryRow(tbody, `Total for ${getMonthName(currentMonth)}`, thisMonthCost, null);
+        createSummaryRow(tbody, `Total for ${MONTH_NAMES[currentMonth]}`, thisMonthCost, null);
     }
 
     // Add a row for the total cost
     createSummaryRow(tbody, "Total", totalCost, timeElapsed);
+}
+
+// Helper function to put the row into an editable state
+function editExpense(expense, row) {
+    const cells = row.cells;
+
+    const itemInput = document.createElement("input");
+    itemInput.type = "text";
+    itemInput.value = expense.Item;
+
+    const costInput = document.createElement("input");
+    costInput.type = "number";
+    costInput.value = expense.Cost;
+
+    cells[0].innerHTML = "";
+    cells[0].appendChild(itemInput);
+
+    cells[1].innerHTML = "";
+    cells[1].appendChild(costInput);
+
+    const saveButton = document.createElement("button");
+    saveButton.className = "btn-small waves-effect waves-light save-button";
+    saveButton.textContent = "Save";
+    saveButton.onclick = function () {
+        window.saveExpense(expense, itemInput.value, costInput.value);
+    };
+
+    cells[3].innerHTML = "";
+    cells[3].appendChild(saveButton);
 }
 
 // Helper function to create an expense row
@@ -60,12 +93,21 @@ function createExpenseRow(tbody, expense) {
     cellCost.style.textAlign = "center";
 
     const deleteButton = document.createElement("button");
-    deleteButton.className = "btn-small waves-effect waves-light";
-    deleteButton.textContent = "Delete";
+    deleteButton.className = "btn-small waves-effect waves-light delete-button";
     deleteButton.style.fontWeight = "bold";
+    deleteButton.textContent = "Delete";
     deleteButton.onclick = function () {
         deleteExpense(expense);
     };
+
+    const editButton = document.createElement("button");
+    editButton.className = "btn-small waves-effect waves-light edit-button";
+    editButton.style.fontWeight = "bold";
+    editButton.textContent = "Edit";
+    editButton.onclick = function () {
+        editExpense(expense, row);
+    };
+    cellAction.appendChild(editButton);
     cellAction.appendChild(deleteButton);
     cellAction.style.textAlign = "center";
 }
@@ -111,13 +153,4 @@ function formatTimeElapsed(timeElapsed) {
 function formatDate(date) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(date).toLocaleDateString(undefined, options);
-}
-
-// Helper function to get the month name
-function getMonthName(month) {
-    const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-    return monthNames[month];
 }

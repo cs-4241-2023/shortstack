@@ -1,11 +1,12 @@
 // Create function to get expenses
-function getExpenses() {
-  fetch("/expenses")
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      populateExpenseList(data);
-    });
+async function getExpenses() {
+  try {
+    const response = await fetch("/expenses");
+    const data = await response.json();
+    populateExpenseList(data);
+  } catch (error) {
+    console.error("Error fetching expenses: ", error);
+  }
 }
 
 // Attach to the render function
@@ -36,6 +37,27 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(`/deleteExpense/${expense.Id}`, {
       method: "DELETE"
     }).then(response => response.json());
+
+    getExpenses();
+  };
+
+  // Add save event
+  window.saveExpense = function (expense, newItem, newCost) {
+    const updatedExpense = {
+      Id: expense.Id,
+      Item: newItem,
+      Cost: parseFloat(newCost).toFixed(2),
+      Date: expense.Date
+    };
+
+    fetch(`/updateExpense/${expense.Id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedExpense)
+    })
+      .then(response => response.json())
 
     getExpenses();
   };

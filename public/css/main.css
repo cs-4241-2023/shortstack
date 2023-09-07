@@ -1,36 +1,55 @@
+:root {
+  --delete-button-bg: #f44336;
+  --table-border-color: #ccc;
+  --header-bg-color: #f2f2f2;
+  --edit-button-bg: #2196f3;
+  --save-button-bg: #00bfa5;
+  --header-font-weight: 600;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   margin: 20px;
 }
 
-/* Create scrollable table body */
 .scrollable-table {
-  max-height: 600px; /* Adjust the height as needed */
+  max-height: 600px;
   overflow-y: auto;
   display: block;
 }
 
-/* Table row styling */
 tr {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--table-border-color);
 }
 
-/* Table header styling */
 th {
-  font-weight: 600;
+  font-weight: var(--header-font-weight);
   text-align: center;
   padding: 12px 8px;
-  background-color: #f2f2f2;
+  background-color: var(--header-bg-color);
 }
 
-/* Table data styling */
 td {
   padding: 12px 8px;
   text-align: center;
 }
 
-td:nth-child(4) button {
-  background-color: #f44336;
+td:nth-child(4) .edit-button {
+  background-color: var(--edit-button-bg);
+  padding-top: 0px !important;
+  border-radius: 4px;
+  margin-right: 16px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  padding: 8px;
+  border: none;
+}
+
+td:nth-child(4) .delete-button {
+  background-color: var(--delete-button-bg);
   padding-top: 0px !important;
   border-radius: 4px;
   text-align: center;
@@ -42,27 +61,15 @@ td:nth-child(4) button {
   border: none;
 }
 
-/* Sticky headers and rows */
-
-.table-container {
-  position: relative;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-thead {
-  position: sticky;
-  top: 0;
-  background-color: #f2f2f2;
-  z-index: 40;
-}
-
-tbody tr:last-child {
-  position: sticky;
-  bottom: 0;
-  background-color: #f2f2f2;
-  z-index: 40;
+td:nth-child(4) .save-button {
+  background-color: var(--save-button-bg);
+  padding-top: 0px !important;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  padding: 8px;
+  border: none;
 }

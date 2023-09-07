@@ -48,6 +48,8 @@ const server = http.createServer(function (request, response) {
     handlePost(request, response);
   } else if (request.method === 'DELETE') {
     handleDelete(request, response);
+  } else if (request.method === 'PUT') {
+    handlePut(request, response);
   }
 });
 
@@ -91,6 +93,35 @@ const handlePost = function (request, response) {
   });
 };
 
+const handlePut = function (request, response) {
+  let urlParts = request.url.split("/");
+  let dataString = '';
+
+  if (urlParts[1] === 'updateExpense') {
+    const id = parseInt(urlParts[2]);
+    const index = expenseList.findIndex(expense => expense.Id === id);
+
+    if (index === -1) {
+      response.writeHead(400, "Bad Request", { 'Content-Type': 'text/plain' });
+      response.end("Invalid Id");
+      return;
+    }
+
+    request.on('data', function (data) {
+      dataString += data;
+    });
+
+    request.on('end', function () {
+      const updatedExpense = JSON.parse(dataString);
+      updatedExpense.Id = id;
+      expenseList[index] = updatedExpense;
+
+      response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify(expenseList));
+    });
+  }
+};
+
 const handleDelete = function (request, response) {
   let urlParts = request.url.split("/");
   if (urlParts[1] === 'deleteExpense') {
@@ -121,4 +152,6 @@ const sendFile = function (response, filename) {
   });
 };
 
-server.listen(process.env.PORT || port);
+const PORT = 3000;
+server.listen(PORT);
+console.log(`Server is running on port ${PORT}`);
