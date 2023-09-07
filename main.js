@@ -37,7 +37,21 @@ const playerTwoSubmit = async function( event ) {
     body 
   })
 
-  const text = await response.text()
+  const data = await response.text()
+
+  const list = document.createElement('ul')
+
+  let count = 0
+  data.forEach( d => {
+    count = count + 1
+    if(count === 1) {
+      const item = document.createElement('li')
+      item.innerText = ( )
+      list.appendChild(item)
+    } else {
+      
+    }
+  })
 
   console.log( 'text:', text )
 }
