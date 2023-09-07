@@ -13,7 +13,7 @@ const submit = async function( event ) {
   const input = document.querySelector( 'form' ),
         json = { name: input.querySelector('#name').value,
                  type: input.querySelector('#type').value,
-                 age: input.querySelector('#age').value },
+                 age: input.querySelector('#age').value},
         body = JSON.stringify( json )
   if(json.name === '' || json.age === '' || json.age < 0){
     alert('ERROR! one or more invalid input')
@@ -30,8 +30,12 @@ const submit = async function( event ) {
       item.innerText = `${e.name} the ${e.type} is age ${e.age}
                         ${e.status}`
       list.appendChild(item)
-  
-      const delItem = document.createElement('button');
+
+      const image = `${e.picture}`
+      const imgHTML = `<img src=${image} width=100px height=100px>`
+      item.innerHTML += imgHTML
+
+      const delItem = document.createElement('button')
       delItem.innerText = 'X'
       item.appendChild(delItem)
     });

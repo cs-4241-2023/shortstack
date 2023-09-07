@@ -48,7 +48,8 @@ const handlePost = function( request, response ) {
     const json = { name: stuff.name,
                    type: stuff.type,
                    age: stuff.age,
-                   status: ''}
+                   status: '',
+                   picture: ''}
 
     if(stuff.age <= avgAges[stuff.type] / 2){
       json.status = "your creature is young!"
@@ -57,6 +58,8 @@ const handlePost = function( request, response ) {
     }else{
       json.status = "your creature is middle aged"
     }
+
+    json.picture = 'https://media.discordapp.net/attachments/1019236301423247444/1144700810366816287/20230824_210454.jpg?width=474&height=1026'
 
     console.log(json)
 
