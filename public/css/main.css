@@ -76,11 +76,17 @@ input:invalid{
   text-decoration: underline dotted red;
 }
 
-table {
+#task-table {
   width: 90%;
   background: var(--mainColor);
-  margin: 5%;
+  text-align: center;
+  margin: 3%;
+  padding: 1%;
   border-radius: 25px;
+}
+
+table{
+  width:100%;
 }
 
 th, td {
@@ -93,14 +99,11 @@ th, td {
 }
 
 .addTask{
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
+  text-align: center;
   padding: 3% 0;
   margin: 3%;
   background: var(--mainColor);
   border-radius: 25px;
-  align-items: center;
 }
 
 #addItemContainer{

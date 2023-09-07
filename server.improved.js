@@ -9,9 +9,9 @@ const http = require( 'http' ),
     port = 3000
 
 const appdata = [
-  { 'task': 'homework', 'creation_date': '9/24/2020', 'priority': 'high' },
-  { 'task': 'taxes', 'creation_date': '9/24/2020', 'priority': 'medium' },
-  { 'task': 'chores', 'creation_date': '9/24/2020', 'priority': 'low' }
+  { 'task': 'homework', 'creation_date': '9/24/2020', 'deadline': '9/25/2020'},
+  { 'task': 'taxes', 'creation_date': '9/24/2020', 'deadline': '9/26/2020' },
+  { 'task': 'chores', 'creation_date': '9/24/2020', 'deadline': '9/27/2020' }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -36,6 +36,7 @@ const handleGet = function( request, response ) {
 
 function handleGetData(request, response){
   console.log("Handle Get Data");
+  //TODO: AAAAAAAAAAAAAAAAAA
 }
 
 const handlePost = function( request, response ) {
@@ -48,7 +49,7 @@ const handlePost = function( request, response ) {
 
   request.on( 'end', function() {
     console.log( JSON.parse( dataString ) )
-
+    appdata.push(JSON.parse( dataString ));
     // TODO: do something with the data here!!!
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })

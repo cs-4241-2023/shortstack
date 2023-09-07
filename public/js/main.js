@@ -9,14 +9,15 @@ const submit = async function( event) {
 
   const form = document.querySelector('form')
 
-  let task=form["Task"];
-  let priority=form["Priority"];
-  let creationDate=form["CreationDate"];
+  let task=form["Task"].value;
+  let deadline=form["Deadline"].value;
+  let creationDate=form["CreationDate"].value;
 
   let taskValid=task!=="" && task!==undefined;
   let dateValid=creationDate.value !== "";
-  if(!taskValid){
+  let deadlineValid=deadline.value !== "";
 
+  if(!taskValid){
     alert("Task is invalid");
   }
   if(!dateValid){
@@ -25,23 +26,65 @@ const submit = async function( event) {
   }
 
   if(taskValid && dateValid){
-    let deadline=CreateDeadline(creationDate,priority);
-    json = { row: {task,priority,creationDate,deadline} };
-    body = JSON.stringify( json );
+    let priority=JudgePriority(deadline);
 
-    const response = await fetch( '/submit', {
+    let json = { row: {task,creationDate,deadline,priority,} };
+    let body = JSON.stringify( json );
+    console.log(body);
+    const response = await fetch( '/json', {
           method:'POST',
           body
         })
-    await LoadData(response);
+    const data = await response.json();
+    const table=document.createElement("table");
+    let firstRow=CreateFirstRow();
+
+    table.append(firstRow);
+    data.forEach(item => {
+            let row=CreateRow(item["task"],item["creation_date"],item["deadline"],JudgePriority(item["deadline"]));
+            table.append(row);
+          });
+    document.getElementById("task-table").append(table);
+    ClearForm();
   }
 
 
 }
 
-function onInvalidDate(){
-  alert("Date is invalid");
-  dateValid=false;
+function JudgePriority(deadline){
+  let today=new Date();
+  let dateDiff=deadline-today;
+  let priority="High Priority"
+  if(dateDiff>3){
+    priority="Low Priority";
+  }else if(dateDiff>1){
+    priority="Medium Priority";
+  }
+  return priority;
+}
+
+function CreateFirstRow(){
+  let row=document.createElement("tr");
+  row.append(CreateHeaderCell("Task"));
+  row.append(CreateHeaderCell("Creation Date"));
+  row.append(CreateHeaderCell("Deadline"));
+  row.append(CreateHeaderCell("Priority"));
+  return row;
+}
+
+function CreateHeaderCell(cellInfo){
+  const cell = document.createElement('th');
+  cell.innerHTML = `<p>${cellInfo}</p>`;
+  return cell;
+}
+
+function CreateRow(task,creationDate,deadline,priority){
+  let row=document.createElement("tr");
+  row.append(CreateCell(task));
+  row.append(CreateCell(creationDate));
+  row.append(CreateCell(deadline));
+  row.append(CreateCell(priority));
+  return row;
 }
 
 function CreateDeleteButton(index){
@@ -61,18 +104,11 @@ async function DeleteRow(index){
   data = await response.json()
 }
 
-function ValidateDate(dateString) {
-  let date=new Date(dateString);
-  if (isNaN(date)) {
-    return false;
-  }
-}
-
 function ClearForm(){
-  const form = document.querySelector( '.add-button' );
-  form.Task="Task";
-  form.Priority="High Priority";
-  form.CreationDate="Creation Date: MM/DD/YYYY";
+  const form = document.querySelector( '#addItemContainer' );
+  form.Task.value="";
+  form.Deadline.value="";
+  form.CreationDate.value="";
 }
 
 function DeleteContents(){
@@ -103,7 +139,8 @@ function CreateDeadline(creationDate, priority){
   }else if(priority==="Low"){
     deadline.day=todaysDate.getDate()+3;
   }
-  return CreateCell(deadline.toLocaleDateString());
+
+  return deadline.toLocaleDateString();
 }
 
 const LoadDataFromServer=() => {
@@ -121,6 +158,7 @@ const LoadDataFromServer=() => {
 }
 
 async function LoadData(response){
+  console.log("Load Data");
   DeleteContents();
 
   const data = await response.json();
@@ -133,10 +171,11 @@ function LoadTable(data){
 
   data.forEach( d => {
     const row = document.createElement('tr')
+    let deadline=CreateDeadline(d.creation_date,d.priority);
     row.appendChild( CreateDeleteButton(data.indexOf(d)) );
     row.appendChild( CreateCell(d.task) );
     row.appendChild( CreateCell(d.creation_date) );
-    row.appendChild( CreateDeadline(d.creation_date,d.priority));
+    row.appendChild( CreateCell(deadline));
     row.appendChild( CreateCell(d.priority) );
     table.appendChild(row);
   })
