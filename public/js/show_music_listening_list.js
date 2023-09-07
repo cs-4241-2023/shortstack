@@ -3,6 +3,14 @@ const listDivision = document.getElementById("musicList")
 const musicList = document.createElement('ul')
 const listEmptyMessage = document.createElement('p')
 
+function setUnorderedListID() {
+    musicList.setAttribute('id', 'unorderedListPresent')
+}
+
+function setListEmptyMessagePresentID() {
+    listEmptyMessage.setAttribute('id', 'listEmptyMessagePresent')
+}
+
 const showMusicListeningList = async function(event) {
 
     if(document.getElementById("unorderedListPresent") !== null) {
@@ -33,7 +41,7 @@ const showMusicListeningList = async function(event) {
     if(data.length === 0) {
         listEmptyMessage.innerHTML = '<strong>All music has been deleted from the server memory.</strong>'
         listDivision.appendChild(listEmptyMessage)
-        listEmptyMessage.setAttribute('id', 'listEmptyMessagePresent')
+        setListEmptyMessagePresentID()
     }
     else {
         data.forEach(d => {
@@ -44,7 +52,7 @@ const showMusicListeningList = async function(event) {
         })
     
         listDivision.appendChild(musicList)
-        musicList.setAttribute('id', 'unorderedListPresent')
+        setUnorderedListID()
     }
 }
 

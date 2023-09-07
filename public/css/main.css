@@ -85,6 +85,19 @@ footer {
   justify-content: center;
 }
 
+.musicListContainer {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+
+.getMusicButton {
+  width: 200px;
+}
+
+/*ID selectors*/
+
+
 
 
 
