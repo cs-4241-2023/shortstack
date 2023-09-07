@@ -1,4 +1,37 @@
 body {
-  background:black;
-  color:white;
+  background: black;
+  /* Remove default margin that comes with html */
+  margin: 0 auto;
 }
+
+main {
+  /* background: white; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 10px;
+}
+
+form {
+  background: white;
+  width: 85vh;
+  height: 50vh;
+}
+
+.notes-list--sidebar {
+  background: white;
+  width: 215px;
+  overflow-y: auto;
+}
+
+.notes-list--container {
+  height: 50vh;
+  width: 215px;
+  overflow-y: auto;
+  float: left;
+  position: relative;
+  margin-left: -5px;
+}
+
+
