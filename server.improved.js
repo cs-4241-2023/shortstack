@@ -5,30 +5,38 @@ const http = require('http'),
       dir  = 'public/',
       port = 3000
 
-// this is the data contained by the server, it will hold the assignments submitted by users
+// this is the data contained by the server, it will hold the assignments submitted by users. It is currently filled with example data.
 const appdata = [
-  {className: "CS 4241", assignmentName: "Assignment 2", dueDate:"2023-09-11", difficulty: 5, priority: "High"}
+  {className: "CS 4241", assignmentName: "Assignment 2", dueDate:"2023-09-11", difficulty: 5, priority: "Medium"},
+  {className: "CS 3013", assignmentName: "Homework 1", dueDate:"2023-09-05", difficulty: 3, priority: "Low"}
 ];
 
 // server variable that handles requests
 const server = http.createServer( function( request,response ) {
-  if(request.method === 'GET')
+  if(request.method === 'GET') // GET REQUEST
   {
     handleGet(request, response);
   }
-  else if(request.method === 'POST')
+  else if(request.method === 'POST') // POST REQUEST
   {
     handlePost(request, response);
   }
-  else if(request.method === "DELETE") {
+  else if(request.method === "DELETE") // DELETE REQUEST
+  {
     handleDelete(request, response);
   }
-  else
+  else if(request.method === "PUT") // PUT REQUEST
   {
-    console.error("Unknown Request");
+    handlePut(request, response);
   }
 });
 
+// handle PUT request
+const handlePut = function (request, response) {
+
+}
+
+// handle DELETE request
 const handleDelete = function (request, response) {
   let dataString = "";
 
@@ -68,7 +76,7 @@ const handleGet = function(request, response) {
   }
 }
 
-// handle post request
+// handle POST request
 const handlePost = function(request, response) {
   let dataString = "";
 
