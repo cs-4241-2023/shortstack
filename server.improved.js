@@ -20,11 +20,34 @@ const server = http.createServer( function( request,response ) {
   {
     handlePost(request, response);
   }
+  else if(request.method === "DELETE") {
+    handleDelete(request, response);
+  }
   else
   {
     console.error("Unknown Request");
   }
 });
+
+const handleDelete = function (request, response) {
+  let dataString = "";
+
+  request.on('data', function(data) {
+    dataString += data;
+  });
+
+  request.on('end', function() {
+    let dataToDelete = JSON.parse(dataString);
+
+    appdata.forEach(assignment => {
+      if(JSON.stringify(dataToDelete) === JSON.stringify(assignment)) {
+        appdata.splice(appdata.indexOf(assignment), 1);
+        response.writeHead(200, "OK", {'Content-Type': 'text/json'});
+        response.end(JSON.stringify({result: "success", message: ""}));
+      }
+    });
+  });
+}
 
 // handle GET request
 const handleGet = function(request, response) {
@@ -56,7 +79,6 @@ const handlePost = function(request, response) {
   request.on('end', function() {
     // get data sent on POST request
     let sentData = JSON.parse(dataString);
-    console.log(sentData);
 
     // verify data integrity, reject bad data
     let className = sentData.className;

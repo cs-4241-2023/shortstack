@@ -90,10 +90,33 @@ const getAllData = async function () {
                      <td>${assignment.assignmentName}</td>
                      <td>${assignment.dueDate}</td>
                      <td>${assignment.difficulty} out of 10</td>
-                     <td>${assignment.priority} priority</td>`
+                     <td>${assignment.priority} priority</td>
+                     `
+    // create delete button for table row
+    const button = document.createElement("button");
+    button.textContent = "Delete";
+    button.style.paddingLeft = "5px";
+    button.style.fontWeight = "light";
+    button.onclick = () => {
+      deleteAssignment(assignment);
+    }
+    row.appendChild(button);
     table.appendChild(row);
   });
   document.getElementById("show-information").appendChild(table);
+}
+
+/**
+ * Deletes a given assignment from the Node.js server
+ * @param assignment the assignment to be deleted
+ * @returns {Promise<void>}
+ */
+const deleteAssignment = async function(assignment) {
+  const response2 = await fetch("/" ,{
+    method: "DELETE",
+    body: JSON.stringify(assignment)});
+
+  await getAllData();
 }
 
 /**
