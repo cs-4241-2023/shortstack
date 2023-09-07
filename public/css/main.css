@@ -10,7 +10,12 @@ body {
 
 #dataDiv {
   flex-grow: 1;
-  padding: 3rem;
+  margin: 3rem;
+
+  max-height: 80vh;
+  overflow-y: auto;
+  max-width: 60%;
+  overflow-x: auto;
 }
 
 #inputDiv {
