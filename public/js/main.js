@@ -31,14 +31,14 @@ const submit = async function( event ) {
                         ${e.status}`
       list.appendChild(item)
   
-      const delItem = document.createElement('span');
+      const delItem = document.createElement('button');
       delItem.innerText = 'X'
       item.appendChild(delItem)
     });
   
-    document.body.appendChild(list)
+    document.getElementById('resultsDiv').appendChild(list)
   
-    const itemToDelete = document.querySelectorAll('span')
+    const itemToDelete = document.querySelectorAll('ul li button')
     itemToDelete.forEach(e => {
       e.addEventListener('click', ()=>{
         e.parentElement.remove()

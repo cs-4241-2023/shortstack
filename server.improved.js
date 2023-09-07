@@ -12,7 +12,7 @@ const avgAges = {"Chameleon": 7, "Gecko": 7,
                  "Frog": 10, "Snake": 15,
                  "Cat": 13, "Dog": 12,
                  "Rat": 2, "Capybara": 6,}
-const maxAges = {"Chameleon": 25, "Gecko": 20,
+const maxAges = {"Chameleon": 16, "Gecko": 20,
                  "Frog": 20, "Snake": 30,
                  "Cat": 20, "Dog": 15,
                  "Rat": 4, "Capybara": 12,}

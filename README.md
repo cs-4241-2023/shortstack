@@ -1,6 +1,8 @@
 Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
 ===
-
+Mirandi McCormick
+mlmccormick
+cabbag3
 
 ## Creature Creator
 on this webpage, you can name your creature, give it an age, and select the kind of creature it is from a dropdown.

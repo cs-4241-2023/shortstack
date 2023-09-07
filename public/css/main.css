@@ -1,6 +1,7 @@
 body {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
   background-color:#BCACC9;
   color:white;
   font-family:'Exo 2';
@@ -11,31 +12,30 @@ ul {
 }
 
 ul li {
-  background-color: rgb(41, 36, 58);
-  padding: 5px;
-  width: 500px;
+  background-color: #28103b;
+  padding: 10px;
   position: relative;
+  width: auto;
   margin: 5px;
 }
 
-ul li span {
+ul li button {
   position: absolute;
   right: 0;
   top: 0;
-  width: 20px;
-  padding: 14.5px;
+  padding: 19.5px;
   text-align: center;
   background-color: rgb(243, 70, 70);
 }
 
 .evenFormRow {
-  background-color: #4b2d63;
-  padding: 5px;
+  background-color: rgb(124, 92, 150);
+  padding: 10px;
 }
 
 .oddFormRow {
   background-color: #28103b;
-  padding: 5px;
+  padding: 10px;
 }
 
 #submitButton {
@@ -49,4 +49,14 @@ ul li span {
   border-radius: 10px;
   text-align: center;
   padding: 5px;
+  height: 40px;
+}
+
+#resultsTitle {
+  color: rgb(124, 92, 150);
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  padding: 5px;
+  height: 40px;
 }
