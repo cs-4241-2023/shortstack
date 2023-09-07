@@ -14,6 +14,10 @@ const appdata = [
   { 'model': 'ford', 'year': 1987, 'mpg': 14} 
 ]
 
+let timelineData = [
+  
+]
+
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
     handleGet( request, response )    
@@ -26,8 +30,6 @@ const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else if(request.url === '/timeline'){
-    sendFile( response, 'public/timeline.html' )
   }else{
     sendFile( response, filename )
   }
@@ -41,7 +43,13 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+
+    let value = JSON.parse( dataString );
+    
+    if(value.hasOwnProperty('era')){
+      timelineData.push(value);
+    }
+    let temp = timelineData[0];
 
     // ... do something with the data here!!!
 

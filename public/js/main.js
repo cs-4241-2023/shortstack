@@ -21,18 +21,33 @@ const submit = async function( event ) {
   console.log( 'text:', text )
 }
 
+function openTab(evt, tabName){
+
+  let i, tabContent, tabLinks;
+
+  //hide all content
+  tabContent = document.getElementsByClassName("tabContent");
+  for(i=0; i <tabContent.length; i++){
+    tabContent[i].style.display = "none";
+  }
+
+  //remove class active
+  tabLinks = document.getElementsByClassName("tabLinks");
+  for(i=0; i <tabLinks.length; i++){
+    tabLinks[i].className = tabLinks[i].className.replace("active", "");
+  }
+
+  //show current tab
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += "active";
+
+
+}
+
 window.onload = function() {
    const button = document.querySelector("button");
   button.onclick = submit;
 
-  //table test
-  let table = document.getElementById("myTable");
-  let row = table.insertRow(0);
-
-  let cell1 = row.insertCell(0);
-  let cell2 = row.insertCell(1);
-  cell1.innerHTML = "NEW CELL1";
-  cell2.innerHTML = "NEW CELL2"; 
 
 
 }

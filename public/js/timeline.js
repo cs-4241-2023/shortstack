@@ -1,4 +1,3 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const addTimelineItem = async function (event) {
 
@@ -31,7 +30,7 @@ const addTimelineItem = async function (event) {
 
 
 window.onload = function () {
-  const button = document.querySelector("button");
+  const button = document.getElementById("addTimelineItemButton");
   button.onclick = addTimelineItem;
 
 }

@@ -5,11 +5,17 @@
   }
   
   /* Set a background color */
-  body {
+  /* body {
     background-color: #474e5d;
     font-family: Helvetica, sans-serif;
-  }
+    color:#FF9F55
+  } */
   
+  #timelineSubmission {
+   width:100%;
+   text-align:left;
+ }
+
   /* The actual timeline (the vertical ruler) */
   .timeline {
     position: relative;

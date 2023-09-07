@@ -1,33 +1,83 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <link rel="stylesheet" href="css/main.css">
 
-    <script>
-      $(function() {
-         $("#includeHtml").load("public/test.html");
-      });
-   </script>
-    
-    <!-- get rid of favicon error -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
-  </head>
-  <body>
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <script src="js/timeline.js"></script>
+  
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/timeline.css">
+  
+
+ 
+ </script>
+  <!-- get rid of favicon error -->
+  <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+</head>
+
+<body>
+  <form>
+    <input type="text" id="yourname" value="your name here">
+    <button>submit</button>
+  </form>
+  <table id="myTable">
+    <tr>
+    </tr>
+  </table>
+  <!--Tab 1-->
+  <div class="tab">
+    <button class="tabLinks" onclick="openTab(event, 'About Me')" id="defaultOpen">About Me</button>
+    <button class="tabLinks" onclick="openTab(event, 'Cool Sites')">Cool Sites</button>
+    <button class="tabLinks" onclick="openTab(event, 'Contact Us')">Contact Us</button>
+  </div>
+
+  <div id="About Me" class="tabContent">
+    <h3>About Me</h3>
+  </div>
+
+  <div id="Cool Sites" class="tabContent">
+    <h3>Cool Sites</h3>
+  </div>
+
+  <div id="Contact Us" class="tabContent">
+    <h3>Contact Us</h3>
+  </div>
+
+  <script>
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+  </script>
+
+  
+  <!--Timeline Section-->
+  <div class="timelineContainer">
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <table id="timelineSubmission">
+        <tr>
+          <th>Era Name:</th>
+          <th>Start Date:</th>
+          <th>Description:</th>
+        </tr>
+      </table>
+      <input type="text" id="era" value="">
+      <input type="text" id="date" value="">
+      <input type="text" id="description" value="">
+      <button id="addTimelineItemButton">submit</button>
     </form>
-    <table id="myTable">
-      <tr>
-      </tr>
-    </table>
-    <div class="firstdiv">
-      <p>Hello its my first HTML page</p>
-     </div>
-    <div id="includeHtml"></div>
-  </body>
+    <div class="timeline" id="myTimeline">
+      <div class="container">
+        <div class="content">
+          <h2>2017</h2>
+          <p>Lorem ipsum..</p>
+        </div>
+      </div>
+    </div> 
+  </div>
+  <!--End Timeline Section-->
+  
+
+</body>
+
 </html>
