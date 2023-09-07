@@ -36,15 +36,7 @@ const submit = async function( event) {
           body
         })
     const data = await response.json();
-    const table=document.createElement("table");
-    let firstRow=CreateFirstRow();
-
-    table.append(firstRow);
-    data.forEach((item,index) => {
-          let row=CreateRow(item["task"],item["creationDate"],item["deadline"],JudgePriority(item["deadline"]),index);
-          table.append(row);
-        });
-    document.getElementById("task-table").append(table);
+    LoadFromServer(data);
     ClearForm();
   }
 }
@@ -122,16 +114,7 @@ function CreateCell(cellInfo){
   return cell;
 }
 
-window.onload = async function() {
-  const addButton = document.querySelector(".add-button");
-  addButton.onclick = submit;
-
-  const deleteButton = document.querySelector(".delete-button");
-
-  const response = await fetch( '/json', {
-    method:'GET'
-  })
-  const data = await response.json();
+function LoadFromServer(data){
   const table=document.createElement("table");
   let firstRow=CreateFirstRow();
 
@@ -140,5 +123,19 @@ window.onload = async function() {
     let row=CreateRow(item["task"],item["creationDate"],item["deadline"],JudgePriority(item["deadline"]),index);
     table.append(row);
   });
-  document.getElementById("task-table").append(table);
+
+  let htmlTable=document.getElementById("task-table");
+  htmlTable.replaceChildren();
+  htmlTable.append(table);
+}
+
+window.onload = async function() {
+  const addButton = document.querySelector(".add-button");
+  addButton.onclick = submit;
+
+  const response = await fetch( '/json', {
+    method:'GET'
+  })
+  const data = await response.json();
+  LoadFromServer(data);
 }
