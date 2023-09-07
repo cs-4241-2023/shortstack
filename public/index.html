@@ -26,47 +26,48 @@
     </div>
 
     <div class="row-content">
-      <form class="main-form">
+      <form class="main-form" action="">
         <!-- <h1 id="appointment-heading"> Add Service Event</h1> -->
         <div class="input-text-container">
           <label for="year">Year:</label>
-          <input class="form__input" type="text" placeholder="Ex: 2014" id="year">
+          <input class="form__input" type="text" placeholder="Ex: 2014" id="year" required>
         </div>
 
         <div class="input-text-container" id="make">
-          <label for="make">Make:</label>
-          <input class="form__input" type="text" placeholder="Ex: BMW" id="make">
+          <label for="car_make">Make:</label>
+          <input class="form__input" type="text" placeholder="Ex: BMW" id="car_make" required>
         </div>
 
         <div class="input-text-container">
           <label for="model">Model:</label>
-          <input class="form__input" type="text" placeholder="Ex: 335i xDrive" id="model">
+          <input class="form__input" type="text" placeholder="Ex: 335i xDrive" id="model" required>
         </div>
 
         <div class="input-text-container">
           <label for="service-type">Service Type:</label>
-          <input class="form__input" type="text" placeholder="Ex: 22000" id="service-type">
+          <input class="form__input" type="text" placeholder="Ex: 22000" id="service-type" required>
         </div>
 
         <div class="input-text-container">
           <label for="appointment-date">Appointment Date:</label>
-          <input class="form__input" type="date" id="appointment-date">
+          <input class="form__input" type="date" id="appointment-date" required>
         </div>
       </form>
 
       <div class="buttons-container">
-        <button>submit</button>
-        <button>refresh</button>
-        <button>update</button>
-        <button>delete</button>
+        <button id="submit">submit</button>
+        <button id="refresh">refresh</button>
+        <button id="update">update</button>
+        <button id="delete">delete</button>
       </div>
+
       <div class="instruction-info">
         <p>Instructions</p>
       </div>
     </div>
 
     <div class="table-container">
-      <table class="vehicle-table">
+      <table id="myTable" class="vehicle-table">
         <caption>
           Vehicle Appointments
         </caption>
@@ -78,33 +79,10 @@
           <th>Appointment Date</th>
           <th>Days Until Appointment</th>
         </tr>
-
-        <tr>
-          <td>
-            2014
-          </td>
-          <td>
-            BMW
-          </td>
-          <td>
-            335i xDrive
-          </td>
-          <td>
-            96000
-          </td>
-          <td>
-            99764
-          </td>
-          <td>
-            2000
-          </td>
-        </tr>
-
       </table>
-    </div>
+    </div> <!-- End of table-container tag -->
 
   </div>
-
 
 </body>
 
