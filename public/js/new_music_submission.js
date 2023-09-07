@@ -11,20 +11,16 @@ function setAdditionalInfoID() {
   additionalInfoParagraph.setAttribute('id', 'additionalInfoPresent') 
 }
 
-function removeChild(child) {
-  submissionInfo.removeChild(child)
-}
-
 const additionSubmit = async function(event) { //The async keyword here means that submit always returns a promise. It also means that one or more await keywords are allowed inside the function body.
   
   if(document.getElementById("submissionInfoPresent") !== null) {
     console.log("Child will be removed")
-    removeChild(submissionInfoParagraph)
+    submissionInfo.removeChild(submissionInfoParagraph)
   }
   
   if(document.getElementById("additionalInfoPresent") !== null) {
     console.log("child will be removed")
-    removeChild(additionalInfoParagraph)
+    submissionInfo.removeChild(additionalInfoParagraph)
   }
 
   //preventDefault cancels an event as long as it is cancelable.
