@@ -2,7 +2,7 @@
 
 ### Live Demo
 
-Check out the live demo of the project hosted on Glitch: [Expense Tracker on Glitch](https://your-glitch-url.glitch.me)
+Check out the live demo of the project hosted on Glitch: [Expense Tracker on Glitch](https://thunder-awesome-catshark.glitch.me)
 
 ### Project Description
 
