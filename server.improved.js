@@ -7,7 +7,7 @@ const http = require( 'http' ),
       mime = require( 'mime' ),
       dir  = 'public/',
       port = 3000
-
+//store all data here 
 const appdata = [
   { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
   { 'model': 'honda', 'year': 2004, 'mpg': 30 },
@@ -40,12 +40,12 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    console.log( JSON.parse( dataString ).yourname )
 
     // ... do something with the data here!!!
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end( JSON.stringify( appdata ) )
   })
 }
 
