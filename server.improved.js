@@ -43,14 +43,12 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( dataString )
     const stuff = JSON.parse(dataString)
     // ... do something with the data here!!!
     const json = { name: stuff.name,
                    type: stuff.type,
                    age: stuff.age,
                    status: ''}
-    console.log(json)
 
     if(stuff.age <= avgAges[stuff.type] / 2){
       json.status = "your creature is young!"
