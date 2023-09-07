@@ -8,11 +8,24 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const data = [
+  {item: "Apple", rating: 73, image: "https://www.applesfromny.com/wp-content/uploads/2020/05/20Ounce_NYAS-Apples2.png"},
+  {item: "Orange", rating: 92, image: "https://img.freepik.com/premium-photo/orange-crop-isolated_90839-212.jpg"},
+];
+
+const tiers = {
+  0: "F",
+  1: "F",
+  2: "F",
+  3: "F",
+  4: "F",
+  5: "F",
+  6: "F",
+  7: "D",
+  8: "C",
+  9: "B",
+  10: "A",
+}
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -40,12 +53,31 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    body = JSON.parse(dataString);
+    
+    if (request.url.includes("delete")) {
+      let idx = data.findIndex((row) => row.item == body.item);
+      if (idx !== -1) {
+        data.splice(idx, 1);
+      }
+    } else if (request.url.includes("submit")) {
+      let idx = data.findIndex((row) => row.item == body.item);
+      if (idx !== -1) {
+        data[idx] = body;
+      } else {
+        data.push(body);
+      }
+    }
 
-    // ... do something with the data here!!!
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.writeHead(200, "OK", {'Content-Type': 'application/json'})
+    let processedData = [];
+    data.forEach((row) => {
+      let newRow = {...row};
+      newRow.tier = tiers[Math.ceil((row.rating + 1) / 10)];
+      processedData.push(newRow);
+    })
+    response.end(JSON.stringify(processedData));
   })
 }
 

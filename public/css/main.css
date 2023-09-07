@@ -1,4 +1,77 @@
 body {
-  background:black;
-  color:white;
+  background:#EEEEEE;
+  color: #222222;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0 auto;
+  max-width: 50em;
+  padding-top: 2em;
+}
+
+table, td, th {
+  border: 1px solid #222222;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+td {
+  text-align: center;
+}
+
+#wide {
+  width: 100%;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+}
+
+ul {
+  list-style: none;
+}
+
+label {
+  text-align: right;
+  width: 250px;
+  display: inline-block;
+}
+
+input {
+  width: 300px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid #DDDDDD;
+}
+
+#submit {
+  border: 1px solid #222222;
+  background-color: #CCCCCC;
+  border-radius: 4px;
+}
+
+.red {
+  background-color: #ffb3ba
+}
+
+.orange {
+  background-color: #ffdfba
+}
+
+.yellow {
+  background-color: #ffffba
+}
+
+.green {
+  background-color: #baffc9
+}
+
+.blue {
+  background-color: #bae1ff
+}
+
+.purple {
+  background-color: #ffc6ff
 }
