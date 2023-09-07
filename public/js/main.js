@@ -10,8 +10,8 @@ const submit = async function( event) {
   const form = document.querySelector('form')
 
   let task=form["Task"].value;
-  let deadline=form["Deadline"].value;
-  let creationDate=form["CreationDate"].value;
+  let deadline=new Date(form["Deadline"].value).toLocaleDateString("en-US");
+  let creationDate=new Date(form["CreationDate"].value).toLocaleDateString("en-US");
 
   let taskValid=task!=="" && task!==undefined;
   let dateValid=creationDate.value !== "";
@@ -127,4 +127,18 @@ window.onload = async function() {
   addButton.onclick = submit;
 
   const deleteButton = document.querySelector(".delete-button");
+
+  const response = await fetch( '/json', {
+    method:'GET'
+  })
+  const data = await response.json();
+  const table=document.createElement("table");
+  let firstRow=CreateFirstRow();
+
+  table.append(firstRow);
+  data.forEach((item,index) => {
+    let row=CreateRow(item["task"],item["creationDate"],item["deadline"],JudgePriority(item["deadline"]),index);
+    table.append(row);
+  });
+  document.getElementById("task-table").append(table);
 }

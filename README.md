@@ -13,6 +13,8 @@ I used id selectors with my addItemContainer and task-table, and class selectors
 - **Tech Achievement 4**: Will implement ability to modify existing data.
 - **Tech Achievement 5**: Used specialized inputs to collect dates
 - **Tech Achievement 5**: Implemented a reset button that will clear the form
+- **Tech Achievement 6**: Sorts the data based on the deadline (Happens in the server)
+- **Tech Achievement 6**: Automatically loads the server data
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: Used a table to neatly organize task data

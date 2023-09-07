@@ -23,6 +23,7 @@ const server = http.createServer( function( request,response ) {
 })
 
 const handleGet = function( request, response ) {
+  SortData();
   const filename = dir + request.url.slice( 1 )
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
@@ -49,10 +50,18 @@ const handlePost = function( request, response ) {
     let data=JSON.parse( dataString );
 
     appdata.push(data);
-
+    SortData();
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end( JSON.stringify( appdata ) )
   })
+}
+
+function SortData(){
+    appdata.sort(function(a, b){
+      var c = new Date(a.deadline);
+      var d = new Date(b.deadline);
+      return c-d;
+    });
 }
 
 
