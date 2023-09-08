@@ -19,8 +19,30 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )
   }else if( request.method === 'POST' ){
     handlePost( request, response );
+  }else if( request.method === 'DELETE' ){
+    handleDelete( request, response );
   }
 })
+
+const handleDelete = function( request, response ) {
+  console.log("Handle Delete");
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+    dataString += data
+  })
+
+  console.log(dataString);
+
+  request.on( 'end', function() {
+    let data = JSON.parse(dataString);
+    console.log(data);
+    console.log(appdata.indexOf(data));
+    if (appdata.indexOf(data) > -1) {
+      appdata.splice(appdata.indexOf(data), 1);
+    }
+  });
+}
 
 const handleGet = function( request, response ) {
   SortData();
