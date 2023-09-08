@@ -1,3 +1,7 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
 body {
   background: black;
   /* Remove default margin that comes with html */
@@ -13,12 +17,33 @@ main {
   gap: 10px;
 }
 
+/* 
+=====================================
+  Form Styling                      |
+=====================================
+*/
 form {
   background: white;
   width: 85vh;
-  height: 50vh;
 }
 
+textarea {
+  resize: none;
+}
+
+.note--container {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+/* 
+=====================================
+  Sidebar Styling                   |
+=====================================
+*/
 .notes-list--sidebar {
   background: white;
   width: 215px;
@@ -26,12 +51,26 @@ form {
 }
 
 .notes-list--container {
-  height: 50vh;
   width: 215px;
   overflow-y: auto;
   float: left;
   position: relative;
-  margin-left: -5px;
 }
 
+.notes-list--note {  
+  background-color: blue;
+  padding: 10px;
+  margin: 10px;
+}
 
+.notes-list--note:hover {
+  cursor: pointer;
+}
+
+.notes-list--note.selected {
+  background-color: white;
+}
+
+form, .notes-list--container {
+  height: 85vh;
+}

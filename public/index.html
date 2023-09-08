@@ -7,6 +7,10 @@
   <script src="js/main.js"></script>
   <link rel="stylesheet" href="css/main.css">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;900&display=swap" rel="stylesheet">
+
   <!-- get rid of favicon error -->
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
@@ -15,36 +19,73 @@
   <main>
     <div class="notes-list--sidebar">
       <div class="notes-list--container">
-        <ul>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-          <li>test</li>
-        </ul>
+        <div class="notes-list--note selected">note1</div>
+        <div class="notes-list--note">note2</div>
+        <div class="notes-list--note">note3</div>
+        <div class="notes-list--note">note4</div>
+        <div class="notes-list--note">note5</div>
+        <div class="notes-list--note">note6</div>
+        <div class="notes-list--note">note7</div>
+        <div class="notes-list--note">note8</div>
+        <div class="notes-list--note">note9</div>
+        <div class="notes-list--note">note10</div>
+        <div class="notes-list--note">note11</div>
+        <div class="notes-list--note">note12</div>
+        <div class="notes-list--note">note13</div>
+        <div class="notes-list--note">note14</div>
+        <div class="notes-list--note">note15</div>
+        <div class="notes-list--note">note16</div>
+        <div class="notes-list--note">note17</div>
+        <div class="notes-list--note">note18</div>
+        <div class="notes-list--note">note19</div>
+        <div class="notes-list--note">note20</div>
+        <div class="notes-list--note">note21</div>
+        <div class="notes-list--note">note22</div>
+        <div class="notes-list--note">note23</div>
+        <div class="notes-list--note">note24</div>
+        <div class="notes-list--note">note25</div>
+        <div class="notes-list--note">note26</div>
+        <div class="notes-list--note">note27</div>
+        <div class="notes-list--note">note28</div>
+        <div class="notes-list--note">note29</div>
+        <div class="notes-list--note">note30</div>
+        <div class="notes-list--note">note31</div>
+        <div class="notes-list--note">note32</div>
+        <div class="notes-list--note">note33</div>
+        <div class="notes-list--note">note34</div>
+        <div class="notes-list--note">note35</div>
+        <div class="notes-list--note">note36</div>
+        <div class="notes-list--note">note37</div>
+        <div class="notes-list--note">note38</div>
+        <div class="notes-list--note">note39</div>
+        <div class="notes-list--note">note40</div>
+        <div class="notes-list--note">note41</div>
+        <div class="notes-list--note">note42</div>
+        <div class="notes-list--note">note43</div>
+        <div class="notes-list--note">note44</div>
+        <div class="notes-list--note">note45</div>
+        <div class="notes-list--note">note46</div>
+        <div class="notes-list--note">note47</div>
+        <div class="notes-list--note">note48</div>
+        <div class="notes-list--note">note49</div>
+        <div class="notes-list--note">note50</div>
       </div>
     </div>
     <form>
+      <div class="note--container">
+        <div class="note-info--input">
+          <div class="note-title">
+            <label for="note-title">Title:</label>
+            <input type="text" id="note-title" class="note-title">
+          </div>
+          <div class="date">
+            <label for="note-date">Date:</label>
+            <input type="text" id="note-date" class="note-date">
+          </div>
+        </div>
+        <textarea name="note-body" id="note-body" cols="30" rows="10" placeholder="Type note here..."></textarea>
+        <input type="submit" value="Save">
+      </div>
     </form>
   </main>
 </body>
