@@ -7,13 +7,18 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
+  const taskName= document.querySelector( '#taskName' ),
+        dueDate= document.querySelector('#dueDate'),
+        taskPriority= document.querySelector('#taskPriority')
+        json = { tasks: taskName.value , date: dueDate.value , priority: taskPriority.value },
         body = JSON.stringify( json )
-
-  const response = await fetch( '/submit', {
+  fetch( '/submit', {
     method:'POST',
     body 
+  }).then(async function (response){ //console.log(response)
+    console.log("hello world")
+    let data= await response.json()
+    console.log(data)
   })
 
   const text = await response.text()

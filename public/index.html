@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 2</title>
+    <title>Grocery List Generator</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
@@ -10,9 +10,26 @@
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+    <h1> To Do List Form</h1>
+
+
+    <form action="/generate" method="post">
+      <label for="taskName">Enter Task to do: </label>
+      <input type="text" id="taskName" name="taskName" required>
+
+      <label for="dueDate">Enter Due Date: </label>
+      <input type="date" id="dueDate" name="dueDate" required>
+
+      <label for="taskPriority">Enter Task Priority (1 low to 10 high): </label>
+      <input type="number" id="taskPriority" name="taskPriority" min="1" max="10" required>
+
+      <button type="submit"> Generate Priority List</button>
     </form>
+
+    <table>
+      
+    </table>
+
+
   </body>
 </html>
