@@ -6,6 +6,8 @@
   <meta charset="utf-8">
   <script src="js/main.js"></script>
   <script src="js/timeline.js"></script>
+  <script src="js/characterSheet.js"></script>
+  
   
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/timeline.css">
@@ -22,26 +24,25 @@
     <input type="text" id="yourname" value="your name here">
     <button>submit</button>
   </form>
-  <table id="myTable">
-    <tr>
-    </tr>
-  </table>
   <!--Tab 1-->
   <div class="tab">
-    <button class="tabLinks" onclick="openTab(event, 'About Me')" id="defaultOpen">About Me</button>
-    <button class="tabLinks" onclick="openTab(event, 'Cool Sites')">Cool Sites</button>
-    <button class="tabLinks" onclick="openTab(event, 'Contact Us')">Contact Us</button>
+    <button class="tabLinks" onclick="openTab(event, 'InformationDoc')" id="defaultOpen">About This Site</button>
+    <button class="tabLinks" onclick="openTab(event, 'CharacterSheet')">Characters</button>
+    <button class="tabLinks" onclick="openTab(event, 'LocationsSheet')">Locations</button>
   </div>
 
-  <div id="About Me" class="tabContent">
+  <div id="InformationDoc" class="tabContent">
     <h3>About Me</h3>
   </div>
 
-  <div id="Cool Sites" class="tabContent">
-    <h3>Cool Sites</h3>
+  <div id="CharacterSheet" class="tabContent">
+    <h3>Character Table</h3>
+    <table id="characterTable">
+
+    </table>
   </div>
 
-  <div id="Contact Us" class="tabContent">
+  <div id="LocationsSheet" class="tabContent">
     <h3>Contact Us</h3>
   </div>
 
@@ -57,7 +58,7 @@
       <table id="timelineSubmission">
         <tr>
           <th>Era Name:</th>
-          <th>Start Date:</th>
+          <th>Starting Year:</th>
           <th>Description:</th>
         </tr>
       </table>
@@ -65,6 +66,7 @@
       <input type="text" id="date" value="">
       <input type="text" id="description" value="">
       <button id="addTimelineItemButton">submit</button>
+      <label id="timelineErrorMessage">Please enter a numerical year</label>
     </form>
     <div class="timeline" id="myTimeline">
      
@@ -72,7 +74,7 @@
   </div>
   <!--End Timeline Section-->
   
-
+  
 </body>
 
 </html>

@@ -4,12 +4,12 @@ body {
 }
 
 .timelineContainer{
-  background: green;
+  background: black;
   position: absolute;
   top: 200px;
-  right:500px;
-    max-width: 500px;
-    margin: 0 right;
+  right:100px;
+  max-width: 500px;
+  margin: 0 right;
 }
 
 .tab{

@@ -15,11 +15,13 @@ const appdata = [
 ]
 
 let characterData =[
-  
+  {'name': 'Aragorn', 'start': 1065, 'end' : 1403, 'era':""}
 ]
 
 let timelineData = [
-  {'era': 'First Age', 'date': 1000, 'description': 'The beginning'}
+  {'era': 'First Age', 'date': 1000, 'description': 'The beginning'},
+  {'era': 'Second Age', 'date': 1567, 'description': 'The defeat of the witch-king of Angmar'},
+  {'era': 'The Space Age', 'date': 2552, 'description': 'The Fall of Reach'}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -58,9 +60,20 @@ const handlePost = function( request, response ) {
       timelineData.push(value)
       SortTimeline()
 
+      //TODO: redo all characters with timeline
+
       response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
       response.end(JSON.stringify(timelineData))
-    } else{
+    } else if(value.hasOwnProperty('name')){
+
+      let character = AssignEra(value)
+      characterData.push(character);
+
+
+
+      response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+      response.end(JSON.stringify(characterData))
+    }  else{
       response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end('test')
     }
@@ -70,6 +83,26 @@ const handlePost = function( request, response ) {
   })
 }
 
+//passed a json object with date and era, assigns era based on given timeline info, returns new json object
+function AssignEra(value){
+  let era = "";
+  if(timelineData.isEmpty()){
+    value.era = "unknown"
+    return value;
+  }
+  for(let i = 0; i < timelineData.length;  i++){
+    if(timelineData[i].date < value.start || timelineData[i].date < value.end){
+      if(era === ""){
+        value.era += timelineData[i].era;
+      } else{
+        value.era += ", " + timelineData[i].era;
+      }
+    }
+  }
+  return value;
+}
+
+//sorts timeline by date
 function SortTimeline(){
   timelineData.sort(function(a, b){
     return a.date - b.date;
