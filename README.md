@@ -3,7 +3,7 @@ This website allows users to connect to an https server and load in data about p
 
 Fill out all input fields at the top and click the 'submit' button to add that data to the server. Clicking the 'reset' button will clear the forms. Click the trash icon to delete its corresponding row.
 
-Glitch:
+Glitch: https://glitch.com/~nettle-chisel-banjo
 
 ### CSS Requirements
 I used a flexbox to layout my 'Add Task' form. My layout uses the row flex-direction and justifies the content in the center of the window. I also used a table to neatly organize my data, which uses a element selector. 
