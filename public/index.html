@@ -11,6 +11,7 @@
   
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/timeline.css">
+  <link rel="stylesheet" href="css/characterSheet.css">
   
 
  
@@ -20,27 +21,37 @@
 </head>
 
 <body>
-  <form>
-    <input type="text" id="yourname" value="your name here">
-    <button>submit</button>
-  </form>
-  <!--Tab 1-->
+  
+  
   <div class="tab">
     <button class="tabLinks" onclick="openTab(event, 'InformationDoc')" id="defaultOpen">About This Site</button>
     <button class="tabLinks" onclick="openTab(event, 'CharacterSheet')">Characters</button>
     <button class="tabLinks" onclick="openTab(event, 'LocationsSheet')">Locations</button>
   </div>
 
+  <!--Tab 1-->
   <div id="InformationDoc" class="tabContent">
     <h3>About Me</h3>
   </div>
 
+  <!--End Tab 1-->
+
+  <!--Tab 2-->
   <div id="CharacterSheet" class="tabContent">
     <h3>Character Table</h3>
+
+    <form>
+      <input type="text" id="characterName" value="name">
+      <input type="text" id="characterStart" value="birth">
+      <input type="text" id="characterEnd" value="death">
+      <button id="addCharacterButton">submit</button>
+      <label id="characterErrorMessage">Please enter a numerical birth and death</label>
+    </form>
     <table id="characterTable">
 
     </table>
   </div>
+  <!--End Tab 2-->
 
   <div id="LocationsSheet" class="tabContent">
     <h3>Contact Us</h3>

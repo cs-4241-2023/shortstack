@@ -39,6 +39,10 @@ const handleGet = function( request, response ) {
   }else if (request.url === '/timelineData' ) {
     response.setHeader('Content-Type', 'application/json');
     response.end(JSON.stringify(timelineData));
+  }else if (request.url === '/characterData' ) {
+    RecheckCharacters();
+    response.setHeader('Content-Type', 'application/json');
+    response.end(JSON.stringify(characterData));
   }else{
     sendFile( response, filename )
   }
@@ -56,11 +60,11 @@ const handlePost = function( request, response ) {
 
     let value = JSON.parse( dataString );
     
-    if(value.hasOwnProperty('era')){
+    if(value.hasOwnProperty('date')){
       timelineData.push(value)
       SortTimeline()
 
-      //TODO: redo all characters with timeline
+      RecheckCharacters()
 
       response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
       response.end(JSON.stringify(timelineData))
@@ -68,7 +72,7 @@ const handlePost = function( request, response ) {
 
       let character = AssignEra(value)
       characterData.push(character);
-
+      RecheckCharacters();
 
 
       response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
@@ -84,15 +88,19 @@ const handlePost = function( request, response ) {
 }
 
 //passed a json object with date and era, assigns era based on given timeline info, returns new json object
-function AssignEra(value){
-  let era = "";
-  if(timelineData.isEmpty()){
-    value.era = "unknown"
-    return value;
+
+function RecheckCharacters(){
+  for(let i = 0; i < characterData.length; i++){
+    AssignEra(characterData[i]);
   }
+}
+
+function AssignEra(value){
+  value.era = "unknown"
   for(let i = 0; i < timelineData.length;  i++){
     if(timelineData[i].date < value.start || timelineData[i].date < value.end){
-      if(era === ""){
+      if(value.era === "unknown"){
+        value.era = "";
         value.era += timelineData[i].era;
       } else{
         value.era += ", " + timelineData[i].era;

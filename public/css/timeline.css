@@ -23,7 +23,7 @@
   overflow-y: auto;
 }
 
-/* the vertical ruler */
+/* the vertical ruler
 .timeline::after {
   content: '';
   position: absolute;
@@ -33,7 +33,7 @@
   bottom: 0;
   left: 50%;
   margin-left: -3px;
-}
+} */
 
 /* Container around content */
 .container {
@@ -58,11 +58,6 @@
   z-index: 1;
 }
 
-/* Place the container to the left */
-.left {
-  left: 0;
-}
-
 
 
 /* The actual content */
@@ -71,4 +66,18 @@
   background-color: white;
   position: relative;
   border-radius: 6px;
+}
+
+/* the vertical ruler */
+.content::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  background-color: white;
+  top: 0;
+  bottom: 0;
+  left: 210px;
+  margin-top: 10px;
+  margin-bottom: -30px;
+  margin-left: -3px;
 }
