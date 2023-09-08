@@ -20,10 +20,6 @@ const submit = async function( event ) {
     let data= await response.json()
     console.log(data)
   })
-
-  const text = await response.text()
-
-  console.log( 'text:', text )
 }
 
 window.onload = function() {
