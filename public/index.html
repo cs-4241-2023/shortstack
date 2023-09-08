@@ -14,12 +14,12 @@
       <form class="inputs">
         <div id="taskInput" class="input-type">
           <label for="taskName">Task:</label>
-          <input type="text" id="taskName" name="taskname" placeholder="Enter task...">
+          <input type="text" id="taskName" name="taskname" placeholder="Enter task..." required>
         </div>
 
         <div id="dateInput" class="input-type">
           <label for="dueDate">Due Date:</label>
-          <input type="date" id="dueDate" name="duedate" placeholder="MM-DD-YYYY">  
+          <input type="date" id="dueDate" name="duedate" placeholder="MM-DD-YYYY" required>  
         </div>
 
         <div id="priorityInput" class="input-type">
@@ -32,7 +32,7 @@
           </select>
         </div>
 
-        <button disabled>Add</button>
+        <button id="addTaskButton" disabled>Add</button>
       </form>
       <p id="logo">TO-DO APP</p>
     </header>

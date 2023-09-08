@@ -1,5 +1,16 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+let form, taskInput, dateInput, submitButton;
+
+function checkValidity() {
+  if (taskInput.validity.valid && dateInput.validity.valid) {
+    submitButton.removeAttribute('disabled');
+  }
+  else {
+    submitButton.setAttribute('disabled', 'true');
+  }
+}
+
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -24,4 +35,12 @@ const submit = async function( event ) {
 window.onload = function() {
   const button = document.querySelector("button");
   button.onclick = submit;
+
+  form = document.querySelector('.inputs');
+  taskInput = document.querySelector('#taskName');
+  dateInput = document.querySelector('#dueDate');
+  submitButton = document.querySelector('#addTaskButton');
+
+  taskInput.addEventListener('input', checkValidity);
+  dateInput.addEventListener('input', checkValidity);
 }
