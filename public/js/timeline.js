@@ -14,23 +14,38 @@ const addTimelineItem = async function (event) {
     body
   })
 
-  const text = await response.text()
+  const data = await response.json()
 
-  console.log( 'text:', text )
+  console.log( 'text:', data )
+  CreateTimeline(data);
+  
+  
+}
 
+function CreateTimeline(data){
   const timeline = document.getElementById("myTimeline")
 
-  const timelineItem = document.createElement("div");
-  timelineItem.className = "container";
-  timelineItem.innerHTML = "<div class=\"content\"><h1>" + eraInput.value + "</h1><h2>" + dateInput.value + "</h2><p>" + descriptionInput.value  + "</p></div>"
+  timeline.innerHTML = "";
 
-  timeline.appendChild(timelineItem);
+  for(let i = 0; i < data.length; i++){
+    const timelineItem = document.createElement("div");
+    timelineItem.className = "container";
+    timelineItem.innerHTML = "<div class=\"content\"><h1>" + data[i].era + "</h1><h2>" + data[i].date + "</h2><p>" + data[i].description  + "</p></div>"
+
+    timeline.appendChild(timelineItem);
+  }
 }
 
 
 
-window.onload = function () {
+window.onload = async function () {
   const button = document.getElementById("addTimelineItemButton");
   button.onclick = addTimelineItem;
 
+  const response = await fetch( '/timelineData', {
+    method:'GET'
+  })
+
+  const data = await response.json();
+  CreateTimeline(data);
 }

@@ -14,8 +14,12 @@ const appdata = [
   { 'model': 'ford', 'year': 1987, 'mpg': 14} 
 ]
 
-let timelineData = [
+let characterData =[
   
+]
+
+let timelineData = [
+  {'era': 'First Age', 'date': 1000, 'description': 'The beginning'}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -30,10 +34,14 @@ const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
+  }else if (request.url === '/timelineData' ) {
+    response.setHeader('Content-Type', 'application/json');
+    response.end(JSON.stringify(timelineData));
   }else{
     sendFile( response, filename )
   }
 }
+
 
 const handlePost = function( request, response ) {
   let dataString = ''
@@ -47,14 +55,24 @@ const handlePost = function( request, response ) {
     let value = JSON.parse( dataString );
     
     if(value.hasOwnProperty('era')){
-      timelineData.push(value);
+      timelineData.push(value)
+      SortTimeline()
+
+      response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+      response.end(JSON.stringify(timelineData))
+    } else{
+      response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end('test')
     }
-    let temp = timelineData[0];
 
     // ... do something with the data here!!!
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+  })
+}
+
+function SortTimeline(){
+  timelineData.sort(function(a, b){
+    return a.date - b.date;
   })
 }
 

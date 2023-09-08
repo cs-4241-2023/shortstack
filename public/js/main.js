@@ -47,7 +47,4 @@ function openTab(evt, tabName){
 window.onload = function() {
    const button = document.querySelector("button");
   button.onclick = submit;
-
-
-
 }
