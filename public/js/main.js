@@ -9,12 +9,22 @@ const submit = async function( event ) {
   //id associated w/ input is how you get the value of the input
   //querySelector links to html using ID, tag name or class name; assign html tag an ID, 
   //also getElementByID
-  const input = document.querySelector( '#yourname' ), //# is in front of ID name 
-        json = { yourname: input.value }, //json is how you want to package data before sending it to front end
-        //{attribute : value}
-        body = JSON.stringify( json ) 
+  //# is in front of ID name 
+        
   
-  const response = await fetch( '/submit', {
+const titleInput = document.querySelector('#title');
+const authorInput = document.querySelector('#author');
+const startInput = document.querySelector('#startDate');
+const finishInput = document.querySelector('#dateFinished');
+const json = { title: titleInput.value,
+         author: authorInput.value, 
+         startDate: startInput.value,
+         dateFinished: finishInput.value
+}; //json is how you want to package data before sending it to front end
+  //{attribute : value}
+const body = JSON.stringify( json ); 
+
+const response = await fetch( '/submit', {
     method:'POST', 
     body
   })
@@ -22,19 +32,23 @@ const submit = async function( event ) {
   const data = await response.json()
 
   const list = document.createElement('ul')
+
 //map runs through every item you pass through it and performs an operation, creates a new array + populates
 //it with all the items from the previous array with some operation applied to it
-
-  
-  data.forEach( d => {
-    const item = document.createElement('li')
-    item.innerHTML = `<b>model</b> : ${d.model}, <b>mpg</b>: ${d.mpg}`
-    list.appendChild( item )
+  console.log(data)
+  //data.map( d => d.title) 
+  //.map(d => d.toUpperCase()+d.slice(1))
+  data.forEach(d => {
+    const li = document.createElement('li')
+    li.innerText = "Title: " + d.title + "\nAuthor: " + d.author + "\nStart Date: " + d.startDate + "\nFinish Date: " + d.dateFinished
+    
+    list.appendChild(li)
   })
-  
   document.body.appendChild( list )
-  
+
 }
+
+
 
 window.onload = function() {
   const button = document.querySelector("button");
