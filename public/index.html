@@ -10,9 +10,31 @@
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <header>
+      <form class="inputs">
+        <div id="taskInput" class="input-type">
+          <label for="taskName">Task:</label>
+          <input type="text" id="taskName" name="taskname" placeholder="Enter task...">
+        </div>
+
+        <div id="dateInput" class="input-type">
+          <label for="dueDate">Due Date:</label>
+          <input type="date" id="dueDate" name="duedate" placeholder="MM-DD-YYYY">  
+        </div>
+
+        <div id="priorityInput" class="input-type">
+          <label for="priorityFlag">Priority:</label>
+          <select id="priorityFlag" name="priority">
+            <option value="none">None</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+
+        <button disabled>Add</button>
+      </form>
+      <p id="logo">TO-DO APP</p>
+    </header>
   </body>
 </html>
