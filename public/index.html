@@ -7,12 +7,34 @@
     <link rel="stylesheet" href="css/main.css">
     
     <!-- get rid of favicon error -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <div id="inputDiv">
+      <form id="taskForm">
+        <label>Task Key</label>
+        <input type="text" id="key-input" placeholder="Task Key" required>
+        <label>Start Date</label>
+        <input type="date" id="start-date-input" required>
+        <label>Due Date</label>
+        <input type="date" id="end-date-input" required>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+    <div id="tableDiv">
+      <table id="results">
+        <thead>
+          <tr>
+            <th>Task Key</th>
+            <th>Start Date</th>
+            <th>Due Date</th>
+            <th>Days Left</th>
+          </tr>
+        </thead>
+        <tbody id="data">
+
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>
