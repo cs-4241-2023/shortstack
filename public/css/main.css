@@ -2,8 +2,10 @@
 
 a {
   margin-right: 10px;
+  margin-left: 10px;
   font-family: "Courier New", Monospace;
   color: darkslateblue;
+  text-decoration: none;
 }
 
 body {
@@ -38,10 +40,16 @@ input {
 
 button {
   font-family: "Georgia", Sans-serif;
+  border-radius: 10px;
+  box-shadow: 0 5px #999;
 }
 
 p { /* Ask about using flex for p tomorrow */
   font-family: "Palatino", Sans-serif;
+}
+
+ul {
+  list-style-type: none;
 }
 
 li {
@@ -95,9 +103,21 @@ footer {
   width: 200px;
 }
 
-/*ID selectors*/
+/*ID selectors for buttons and navbar links*/
 
+#submitMusic:active {
+  transform: translateY(5px);
+}
 
+#submitMusicForDeletion:active {
+  transform: translateY(5px);
+}
 
+#getMusic:active {
+  transform: translateY(5px);
+}
 
-
+#onNavLink:hover {
+  color: darkviolet;
+  box-shadow: 0 5px darkslateblue;
+}

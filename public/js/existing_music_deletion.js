@@ -5,21 +5,17 @@ const deletionInfoParagraph = document.createElement('p')
 function setDeletionInfoID() {
     deletionInfoParagraph.setAttribute('id', 'deletionInfoPresent')
 }
-  
-function removeChild(child) {
-    deletionInfo.removeChild(child)
-}
 
 const deletionSubmit = async function(event)
 {
     if(document.getElementById("deletionInfoPresent") !== null) {
         console.log("Child will be removed")
-        removeChild(deletionInfoParagraph)
+        deletionInfo.removeChild(deletionInfoParagraph)
     }
       
     if(document.getElementById("deletionInfoPresent") !== null) {
         console.log("child will be removed")
-        removeChild(deletionInfoParagraph)
+        deletionInfo.removeChild(deletionInfoParagraph)
     }
 
     event.preventDefault()
@@ -33,7 +29,17 @@ const deletionSubmit = async function(event)
 
     let inputObj = {bandname: bandInput.value, albumname: albumInput.value, releaseyear: releaseYearInput.value}
     
-    if(inputObj.releaseyear < startingYear) {
+    if(inputObj.bandname.trim().length === 0 || inputObj.albumname.trim().length === 0 || inputObj.releaseyear.trim().length === 0) {
+        deletionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing at least one input field.`
+        deletionInfo.appendChild(deletionInfoParagraph)
+        setDeletionInfoID()
+    }
+    else if(inputObj.bandname === 'band name here' || inputObj.albumname === 'album name here' || inputObj.releaseyear === 'release year here') {
+        deletionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing at least one input field.`
+        deletionInfo.appendChild(deletionInfoParagraph)
+        setDeletionInfoID()
+    }
+    else if(inputObj.releaseyear < startingYear) {
         deletionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: ${inputObj.releaseyear} is not a valid year.`
         deletionInfo.appendChild(deletionInfoParagraph)
         setDeletionInfoID()
