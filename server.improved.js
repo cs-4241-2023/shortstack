@@ -1,9 +1,9 @@
 // import node.js, mime, and other dependencies
 const http = require('http'),
-      fs   = require('fs'),
-      mime = require('mime'),
-      dir  = 'public/',
-      port = 3000
+    fs   = require('fs'),
+    mime = require('mime'),
+    dir  = 'public/',
+    port = 3000
 
 // this is the data contained by the server, it will hold the assignments submitted by users. It is currently filled with example data.
 const appdata = [
@@ -33,7 +33,24 @@ const server = http.createServer( function( request,response ) {
 
 // handle PUT request
 const handlePut = function (request, response) {
+  let dataString = "";
 
+  request.on('data', function(data) {
+    dataString += data;
+  });
+
+
+  request.on('end', function(data) {
+    let editedData = JSON.parse(dataString);
+
+    appdata.forEach(assignment => {
+      if(JSON.stringify(editedData) === JSON.stringify(assignment)) {
+        appdata[appdata.indexOf(assignment)] = editedData;
+        response.writeHead(200, "OK", {'Content-Type': 'text/json'});
+        response.end(JSON.stringify({result: "success", message: ""}));
+      }
+    });
+  });
 }
 
 // handle DELETE request
@@ -81,7 +98,7 @@ const handlePost = function(request, response) {
   let dataString = "";
 
   request.on('data', function(data) {
-      dataString += data;
+    dataString += data;
   });
 
   request.on('end', function() {
@@ -153,22 +170,22 @@ const calculatePriority = function (dueDate, difficulty) {
 
 // sends a file to the server
 const sendFile = function(response, filename) {
-   const type = mime.getType(filename);
+  const type = mime.getType(filename);
 
-   fs.readFile(filename, function( err, content) {
+  fs.readFile(filename, function( err, content) {
 
-     // if the error = null, then we've loaded the file successfully
-     if(err === null) {
-       // status code: https://httpstatuses.com
-       response.writeHeader(200, { 'Content-Type': type });
-       response.end(content);
+    // if the error = null, then we've loaded the file successfully
+    if(err === null) {
+      // status code: https://httpstatuses.com
+      response.writeHeader(200, { 'Content-Type': type });
+      response.end(content);
 
-     } else {
-       // file not found, error code 404
-       response.writeHeader(404);
-       response.end('404 Error: File Not Found');
-     }
-   });
+    } else {
+      // file not found, error code 404
+      response.writeHeader(404);
+      response.end('404 Error: File Not Found');
+    }
+  });
 }
 
 // set up server to listen on port 3000

@@ -37,7 +37,20 @@ th {
     outline: thin solid grey;
     background-color: lightgray;
 }
+
 table {
     margin-left: auto;
     margin-right: auto;
+}
+
+#edit-window {
+    position: fixed;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    border: 2px solid black;
+    z-index: auto;
+    width: 50%;
+    margin-left: 75px;
+    visibility: hidden;
 }

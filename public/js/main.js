@@ -93,14 +93,26 @@ const getAllData = async function () {
                      <td>${assignment.priority} priority</td>
                      `
     // create delete button for table row
-    const button = document.createElement("button");
-    button.textContent = "Delete";
-    button.style.paddingLeft = "5px";
-    button.style.fontWeight = "light";
-    button.onclick = () => {
+    const deleteButton = document.createElement("button");
+    const editButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    editButton.textContent = "Edit";
+
+    deleteButton.style.paddingLeft = "5px";
+    deleteButton.style.fontWeight = "light";
+    editButton.style.paddingLeft = "5px";
+    editButton.style.fontWeight = "light";
+
+    deleteButton.onclick = () => {
       deleteAssignment(assignment);
     }
-    row.appendChild(button);
+
+    editButton.onclick = () => {
+      editPopUp(assignment);
+    }
+
+    row.appendChild(editButton)
+    row.appendChild(deleteButton);
     table.appendChild(row);
   });
   document.getElementById("show-information").appendChild(table);
@@ -112,9 +124,43 @@ const getAllData = async function () {
  * @returns {Promise<void>}
  */
 const deleteAssignment = async function(assignment) {
-  const response2 = await fetch("/" ,{
+  const response = await fetch("/" ,{
     method: "DELETE",
     body: JSON.stringify(assignment)});
+
+  await getAllData();
+}
+const editPopUp = function (assignment) {
+  // hide original form and show pop-up
+  document.querySelector("#assignment-form").style.visibility = "hidden";
+  document.querySelector("#edit-window").style.visibility = "visible";
+
+  // populate text boxes with existing data
+  document.querySelector("#class-name-edit").value = assignment.className;
+  document.querySelector("#assignment-name-edit").value = assignment.assignmentName;
+  document.querySelector("#due-date-edit").value = assignment.dueDate;
+  document.querySelector("#difficulty-edit").value = assignment.difficulty;
+
+  document.querySelector("#submit-button-edit").onclick = () => editAssignment(assignment);
+
+  document.querySelector("#cancel-edit-button").onclick = () => {
+    // hide pop-up and restore normal form
+    document.querySelector("#assignment-form").style.visibility = "visible";
+    document.querySelector("#edit-window").style.visibility = "hidden";
+  }
+}
+
+/**
+ * Edits a given assignment on the Node.js server
+ * @param assignment the assignment that needs to be edited
+ * @returns {Promise<void>}
+ */
+const editAssignment = async function(assignment) {
+
+  const response = await fetch("/" ,{
+    method: "PUT",
+    body: JSON.stringify(assignment)
+  })
 
   await getAllData();
 }
