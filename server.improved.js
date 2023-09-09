@@ -8,11 +8,7 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+let appdata = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -40,12 +36,16 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    console.log( dataString )
 
     // ... do something with the data here!!!
+    //push your JSON into the array
+    //appdata.push(dataString)
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    appdata.push(JSON.parse( dataString )) //changed this to JSON.parse so that we can send the correct kind of JSON object
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end(JSON.stringify(appdata))
   })
 }
 

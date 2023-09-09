@@ -7,12 +7,24 @@
     <link rel="stylesheet" href="css/main.css">
     
     <!-- get rid of favicon error -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+    <!-- <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">  -->
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+    <!-- add input fields for name and surname-->
+      <!-- <input type="text" id="Task" value="Write your task"> -->
+    <form method="post">
+    <!--  
+      <input type="text" id="name" placeholder="Add your First Name"> <br/>
+      <input type="text" id="surname" placeholder="Add your Surname"> <br/>
+      <button>submit</button> -->
+  
+    <div class="todo-container">
+      <h1>My To-Do List</h1>
+      <input type="text" id="newTodoInput" placeholder="Add a new task...">
+      <!-- <button onclick="addTodo()">Add</button> -->
+      <button type = "submit" id="submitForm">Submit</button> 
     </form>
+      <ul id="todoList"></ul>
+  </div>
   </body>
 </html>
