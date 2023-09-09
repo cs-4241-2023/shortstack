@@ -1,37 +1,39 @@
 document.addEventListener("DOMContentLoaded", function () {
   // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-
-  // Submit Button Functionality
-  // TODO:
-  // Make POST request based on input data
-  // Add to appdata const in sever js
   const submit = async function (event) {
-    // stop form submission from trying to load
-    // a new .html page for displaying results...
-    // this was the original browser behavior and still
-    // remains to this day
-    event.preventDefault()
-    let body = user_form_data();
+    event.preventDefault();
+    const body = user_form_data();
 
+    console.log("Data being added to the table: " + body);
     if (body !== "") {
+
+      var form = document.getElementById("user-inputs");
+      form.reset();
+
       const response = await fetch('/submit', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
         body
-      })
-
-      const text = await response.text()
-
-      console.log('Post Request Status:', text)
+      });
+      const responseData = await response.text()
+      build_table();
+      console.log('Post Request Status:', responseData)
+    } else {
+      if (!validateYear()) {
+        alert("Please enter a valid year");
+      } else {
+        alert("Please fill out all fields");
+      }
     }
   }
 
   window.onload = function () {
     const submitButton = document.getElementById("submit");
     submitButton.onclick = submit;
-
-    const refreshButton = document.getElementById("refresh");
-    refreshButton.onclick = build_table;
+    build_table();
   }
 
   const year_input = document.getElementById("year");
@@ -39,9 +41,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const model_input = document.getElementById("model");
   const service_type_input = document.getElementById("service-type");
   const appointment_data_input = document.getElementById("appointment-date");
+  var vehicle_data_table = document.getElementById("myTable");
 
   function user_form_data() {
-    if (validate_form_input) {
+    if (validate_form_input()) {
       user_vehicle_json_data = {
         year: year_input.value,
         car_make: make_input.value,
@@ -49,55 +52,80 @@ document.addEventListener("DOMContentLoaded", function () {
         service_type: service_type_input.value,
         appointment_date: appointment_data_input.value,
       }
-      let body = JSON.stringify(user_vehicle_json_data)
-      return body;
+      let body_val = JSON.stringify(user_vehicle_json_data)
+      return body_val;
     } else {
-      alert("Please fill out all fields");
       return "";
     }
   }
 
   function validate_form_input() {
-    if (year_input.value === "" || make_input.value === ""
-      || model_input.value === "" || service_type_input.value === ""
-      || appointment_data_input.value === "") {
-
-      // Add additional validation checks here
-      // for the different input fields
-
-      return false;
-    } else {
+    const inputs = [year_input, make_input, model_input, service_type_input, appointment_data_input];
+    for (const input of inputs) {
+      if (input.value === "") {
+        return false;
+      }
+    }
+    // Add additional validation checks here for the different input fields
+    if (validateYear()) {
       return true;
+    }
+    return false;
+  }
+
+  function validateYear() {
+    var yearInput = document.getElementById("year");
+    var yearValue = yearInput.value;
+
+    // Check if the input is a 4-digit number using a regular expression
+    var yearPattern = /^\d{4}$/;
+
+    if (yearPattern.test(yearValue)) {
+      return true
+    } else {
+      return false;
     }
   }
 
   // Makes a 'GET' request to server data and adds elements to client table
-  const build_table = async function (event) {
-    event.preventDefault();
+  const build_table = async function () {
     try {
       fetch('/req-server-data', {
         method: 'GET',
       }).then((response) => response.json())
         .then((server_data) => {
+          console.log("Current Server Data:");
+          console.log(server_data)
           // check if there is available data on the server
           if (server_data.length === 0) {
             console.log("No table data available to display");
+            vehicle_data_table.getElementsByTagName("tbody")[0].innerHTML = vehicle_data_table.rows[0].innerHTML; // clear table
           } else {
-            console.log(server_data);
-            var vehicle_data_table = document.getElementById("myTable");
-            vehicle_data_table.getElementsByTagName("tbody")[0].innerHTML = vehicle_data_table.rows[0].innerHTML; // clear current table elements
+            vehicle_data_table.getElementsByTagName("tbody")[0].innerHTML = vehicle_data_table.rows[0].innerHTML; // clear table
 
             // TRAVERSE THROUGH JSON OBJECTS STORED ON SERVER
-            for (var i = 0; i < Object.entries(server_data).length; i++) {
-              var data_row = vehicle_data_table.insertRow(-1);
-              var prop_index = 0;
-              for (var prop_name in server_data[i]) {
+            for (let i = 0; i < Object.entries(server_data).length; i++) {
+              let prop_index = 0;
+              let data_row = vehicle_data_table.insertRow(-1);
+
+              for (let prop_name in server_data[i]) {
                 // build rows
-                var cell = data_row.insertCell(prop_index);
-                cell.innerHTML = server_data[i][prop_name];
+                let table_cell = data_row.insertCell(prop_index);
+                table_cell.innerHTML = server_data[i][prop_name];
                 prop_index++;
-                console.log(server_data[i][prop_name]);
               }
+
+              let btnCell = data_row.insertCell(prop_index); // delete button
+              let removeButton = btnCell.appendChild(document.createElement("button"));
+
+              removeButton.className = 'table-btn';
+              removeButton.id = server_data[i].uuid;
+
+              removeButton.innerHTML = "Remove"; // name of delete button
+              removeButton.onclick = function () {
+                removeEntry(removeButton.id);
+              };
+
             }
 
           }
@@ -106,4 +134,26 @@ document.addEventListener("DOMContentLoaded", function () {
       alert('An error occurred while fetching server data!');
     }
   }
+
+  async function removeEntry(UUID) {
+    try {
+      const response = await fetch('/delete-frm-table', {
+        method: 'POST',
+        body: UUID,
+      });
+
+      if (response.ok) {
+        console.log(`Data ${UUID} was removed`);
+        build_table();
+      } else {
+        console.error(`Failed to remove data ${UUID}`);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  }
+
+
+
 });
+

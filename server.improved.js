@@ -5,6 +5,7 @@ const http = require('http'),
   // However, Glitch will install it automatically by looking in your package.json
   // file.
   mime = require('mime'),
+  crypto = require('crypto'),
   dir = 'public/',
   port = 3000
 
@@ -41,18 +42,56 @@ const handlePost = function (request, response) {
   })
 
   request.on('end', function () {
-    const user_data_json = JSON.parse(dataString);
-    console.log(user_data_json)
-    // Add user vehice service appointment data to appdata
-    // Before adding it to the array of JSON objects, add new derived field 
-    // user_data_json['day-until-appointment'] = addNewDataField(user_data_json)
-    appdata.push(user_data_json);
+    if (request.url === '/submit') {
+      const user_data_json = JSON.parse(dataString);
+      console.log("Data being added: ");
+      console.log(user_data_json);
 
-    // Log new appdata
-    console.log(appdata);
-    response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
-    response.end('Success')
+      // Add user vehice service appointment data to appdata
+      // Before adding it to the array of JSON objects, add new derived field 
+      user_data_json['day-until-appointment'] = addNewDataField(user_data_json);
+      user_data_json['uuid'] = crypto.randomUUID();
+
+      appdata.push(user_data_json);
+
+      console.log("Server Data after submission: ");
+      console.log(appdata);
+      response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
+      response.end('Success')
+
+    } else if (request.url === '/delete-frm-table') {
+
+      const unique_identifier = dataString;
+      console.log(`Server: Removing UUID ${unique_identifier}`);
+      const index = appdata.findIndex(entry => entry.uuid === unique_identifier);
+
+      if (index !== -1) {
+        appdata.splice(index, 1);
+      }
+
+      response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
+      response.end('Success');
+
+    }
   })
+
+}
+
+function addNewDataField(json_data) {
+  const currentDate = new Date();
+  const appointment_date = new Date(json_data['appointment_date']) // 2023-09-23
+
+  if (appointment_date >= currentDate) {
+    // Calculate the time difference in milliseconds
+    const timeDifference = appointment_date - currentDate;
+
+    // Convert the time difference to days
+    const daysDifference = timeDifference / (1000 * 3600 * 24);
+
+    return daysDifference;
+  } else {
+    return 0;
+  }
 }
 
 const sendFile = function (response, filename) {

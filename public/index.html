@@ -17,17 +17,17 @@
 <body>
   <div class="main-header">
     <p class="header-text">Vehicle Service Log Book</p>
+    <img class="motor-sports-logo" src="https://logos-world.net/wp-content/uploads/2022/03/BMW-M-Emblem.png">
   </div>
 
   <div class="main-container">
     <div class="ctitle-container">
       <p id="content-title">Vehicle Maintenace Log</p>
-      <img class="motor-sports-logo" src="https://logos-world.net/wp-content/uploads/2022/03/BMW-M-Emblem.png">
     </div>
 
     <div class="row-content">
-      <form class="main-form" action="">
-        <!-- <h1 id="appointment-heading"> Add Service Event</h1> -->
+      <form id="user-inputs" class="main-form">
+
         <div class="input-text-container">
           <label for="year">Year:</label>
           <input class="form__input" type="text" placeholder="Ex: 2014" id="year" required>
@@ -45,30 +45,45 @@
 
         <div class="input-text-container">
           <label for="service-type">Service Type:</label>
-          <input class="form__input" type="text" placeholder="Ex: 22000" id="service-type" required>
+          <input class="form__input" type="text" placeholder="Ex: Oil Change" id="service-type" required>
         </div>
 
         <div class="input-text-container">
           <label for="appointment-date">Appointment Date:</label>
           <input class="form__input" type="date" id="appointment-date" required>
         </div>
+
+        <div class="buttons-container">
+          <button type="submit" id="submit">Submit</button>
+        </div>
       </form>
 
-      <div class="buttons-container">
+      <!-- <div class="buttons-container">
         <button id="submit">submit</button>
-        <button id="refresh">refresh</button>
         <button id="update">update</button>
-        <button id="delete">delete</button>
-      </div>
+      </div> -->
 
       <div class="instruction-info">
         <p>Instructions</p>
+        <div class="list-container">
+          <ul class="unordered-list">
+            <li>
+              <strong>To add an appointment: </strong>Fill out the form completely and click the
+              'submit' button.
+            </li>
+            <li>
+              <strong>To remove an appointment: </strong>Click the 'remove' button for the
+              vehicle appointment you want to remove.
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <div class="table-container">
       <table id="myTable" class="vehicle-table">
-        <caption>
+        <caption
+          style="border-radius: 20px; border: 1px solid black; margin-top: 20px; margin-bottom: 20px; padding: 5px;">
           Vehicle Appointments
         </caption>
         <tr>
@@ -78,12 +93,14 @@
           <th>Service Type</th>
           <th>Appointment Date</th>
           <th>Days Until Appointment</th>
+          <th>UUID</th>
+          <th>Action</th>
+
         </tr>
       </table>
     </div> <!-- End of table-container tag -->
 
   </div>
-
 </body>
 
 </html>

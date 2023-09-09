@@ -1,160 +1,201 @@
-body {}
+/* Reset default margin and padding body, */
+h1,
+h2,
+p,
+ul,
+li,
+button {
+  margin: 0;
+  padding: 0;
+}
 
+/* Set a background color for the body */
+body {
+  font-family: 'Rubik', Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+/* Header styles */
 .main-header {
-  background-color: lightblue;
+  background-color: #0077b6;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 75px;
-  position: absolute;
+  position: fixed;
   top: 0;
-  right: 0;
   left: 0;
+  right: 0;
+  z-index: 100;
 }
 
 .header-text {
-  color: black;
-  font-family: Rubik, Helvetica, sans-serif;
-  font-size: 30px;
+  color: white;
+  font-size: 24px;
   font-weight: bold;
+  margin-left: 20px;
 }
 
+/* Main container styles */
 .main-container {
   margin-top: 95px;
-  margin-left: 12px;
-  margin-right: 12px;
-  background-color: rgb(240, 240, 240);
-  height: 100vh;
-  border-radius: 20px;
+  margin: 0 auto;
+  max-width: 900px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #content-title {
-  margin-top: 10px;
-  margin-left: 0.5em;
-  font-size: 30px;
-  font-family: Rubik, Helvetica, sans-serif;
-  border-bottom: 1px solid black;
+  font-size: 24px;
+  border-bottom: 2px solid #0077b6;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .motor-sports-logo {
-  height: 65px;
-  margin-right: 7.5px;
+  height: 50px;
+  margin-right: 10px;
 }
 
-.ctitle-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-right: 15px;
-
-}
-
+/* Form styles */
 .main-form {
-  margin-left: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  border: solid;
-  border-width: 1px;
-  width: 500px;
-  border-radius: 20px;
+  padding: 15px;
+  border-right: 1px solid black;
 }
 
 .input-text-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  margin-bottom: 15px;
 }
 
 .form__input {
-  height: 20px;
-  width: 100px;
-  padding: 5px;
-  margin-right: 10px;
-  margin-left: 15px;
-  border: 1px solid black;
-  border-radius: 2px;
+  height: 15px;
+  padding: 10px;
+  margin-left: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .input-text-container label {
-  font-family: Rubik, Arial;
-  font-size: larger;
-}
-
-b .ctitle-container,
-.input-text-container,
-.buttons-container,
-#appointment-heading {
-  margin-left: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .buttons-container {
-  /* background-color: green; */
   display: flex;
-  flex-direction: column;
-  /* text-align: center; */
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  margin-right: 15px;
+  justify-content: space-around;
+  margin-top: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-/* Style buttons here */
+/* Button styles */
 .buttons-container button {
-  background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-  border-radius: .5rem;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  display: flex;
+  background-color: #525455;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
   font-size: 16px;
-  justify-content: center;
-  padding: 1rem 1.75rem;
-  text-decoration: none;
-  width: 100%;
-  border: 0;
   cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
 }
 
 .buttons-container button:hover {
-  background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
+  background-color: #005691;
 }
 
-@media (min-width: 768px) {
-  .buttons-container button {
-    padding: 1rem 2rem;
-  }
-}
-
+/* Instruction info styles */
 .instruction-info {
-  background-color: violet;
-  width: 500px;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+
+  color: white;
+  width: 450px;
   text-align: center;
-  border-radius: 20px;
+
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-left: 15px;
+}
+
+.instruction-info p {
+  background-color: #00a896;
+  color: black;
+}
+
+/* Table styles */
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.vehicle-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vehicle-table caption {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.vehicle-table th,
+.vehicle-table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-form {
+    max-width: 100%;
+  }
 }
 
 .row-content {
   display: flex;
   flex-direction: row;
+  margin-top: 40px;
   justify-content: space-between;
 }
 
-.table-container {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: solid;
-  border-width: 1px;
+.table-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  height: 75px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.unordered-list li {
+  color: black;
+  margin-left: 10px;
+  list-style: square;
+}
+
+.list-container {
+  text-align: center;
+  margin-top: 100px;
 
 }
 
-.table-container th,
-td {
-  padding: 5px;
+.bck-img {
+  height: 100vh;
 }
