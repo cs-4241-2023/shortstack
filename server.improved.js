@@ -8,9 +8,7 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  
-
+let appdata = [
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -39,12 +37,12 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    //console.log( JSON.parse( dataString ) )
+    console.log( dataString )
 
     // ... do something with the data here!!!
     
-    let newData= JSON.parse(dataString)
-    appdata.push (newData)
+    //let newData= JSON.parse(dataString)
+    //appdata.push (newData)
    // console.log(appdata)
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.write(JSON.stringify(appdata))
