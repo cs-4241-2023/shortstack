@@ -39,19 +39,19 @@ Glitch Project: https://a2-maccode7110.glitch.me/
 - No technical achievements addressed in this assignment.
 
 ### Design/Evaluation Achievements
-- **Testing the user interface with other students.**: 
- - I tested my user interface with two other students: _ and _
- - I assigned and stated the following task for both students to complete individually on Music Listening Tracker:
-    - 1. Submit new music; submit new music for album Hybrid Theory by band Linkin Park released in year 2000.
-    - 2. View the full list of music saved in server memory. Make sure that album Hybrid Theory by band Linkin Park released in year 2000 is included in the list.
-    - 3. Delete existing music; submit a deletion for album Hybrid Theory by band Linkin Park released in year 2000.
-    - 4. View the full list of music saved in server memory. Make sure that album Hybrid Theory by band Linkin Park released in year 2000 is no longer included in the list.
+- **Testing the user interface with other students**: 
+    - I tested my user interface with two other students: _ and _
+    - I assigned and stated the following task for both students to complete individually on Music Listening Tracker:
+        - 1. Submit new music; submit new music for album Hybrid Theory by band Linkin Park released in year 2000.
+        - 2. View the full list of music saved in server memory. Make sure that album Hybrid Theory by band Linkin Park released in year 2000 is included in the list.
+        - 3. Delete existing music; submit a deletion for album Hybrid Theory by band Linkin Park released in year 2000.
+        - 4. View the full list of music saved in server memory. Make sure that album Hybrid Theory by band Linkin Park released in year 2000 is no longer included in the list.
 
- - Study 1 with _
-    1. What problems did the user have with your design?
-    2. What comments did they make that surprised you?
-    3. What would you change about the interface based on their feedback?
- - Study 2 with _
-    1. What problems did the user have with your design?
-    2. What comments did they make that surprised you?
-    3. What would you change about the interface based on their feedback?
+    - Study 1 with _
+        1. What problems did the user have with your design?
+        2. What comments did they make that surprised you?
+        3. What would you change about the interface based on their feedback?
+    - Study 2 with _
+        1. What problems did the user have with your design?
+        2. What comments did they make that surprised you?
+        3. What would you change about the interface based on their feedback?
