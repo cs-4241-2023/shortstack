@@ -40,18 +40,39 @@ Glitch Project: https://a2-maccode7110.glitch.me/
 
 ### Design/Evaluation Achievements
 - **Testing the user interface with other students**: 
-    - I tested my user interface with two other students: _ and _
+    - I tested my user interface with two other students: Daniel Onyema and Sultan Adedeji
+
     - I assigned and stated the following task for both students to complete individually on Music Listening Tracker:
         - 1. Submit new music; submit new music for album Hybrid Theory by band Linkin Park released in year 2000.
         - 2. View the full list of music saved in server memory. Make sure that album Hybrid Theory by band Linkin Park released in year 2000 is included in the list.
         - 3. Delete existing music; submit a deletion for album Hybrid Theory by band Linkin Park released in year 2000.
         - 4. View the full list of music saved in server memory. Make sure that album Hybrid Theory by band Linkin Park released in year 2000 is no longer included in the list.
 
-    - Study 1 with _
+    - Study 1 with Sultan Adedeji
         1. What problems did the user have with your design?
-        2. What comments did they make that surprised you?
+            
+            Sultan had no notable problems completing the task above or with the design of the application. He was able to use the form input fields, buttons, and Get Music button correctly to send the music submission (Linkin Park, Hybrid Theory, 2000) to the server to be saved, delete this music data entry from the server, and view the updated list of music stored in server memory after both the music addition and deletion respectively.
+
+        2. What comments did they make that surprised you? 
+            
+            Sultan praised the Get Music button on the View Music Listening List page as it makes the application more interactive and allows the user to take a moment to trigger the display of all music data instead of seeing a nusic list (and a potenitally long one) automatically displayed on the page. He emphasized that it is easier to the eye to see the full list of music displayed after the click of a button instead of seeing that list immediately displayed on the page.
+            
+            Sultan also praised the color scheme of the application (pink, purple, and black) and the CSS text underline animation applied to the navigation bar.
+
         3. What would you change about the interface based on their feedback?
-    - Study 2 with _
+            
+            Sultan mentioned that it would be an easier experience for the user if the forms did not have the default input values (such as "band name here", "album name here", and "release year here") already displayed in the input fields. This way, a user can begin typing a band name, album name, and release year into the input fields immediately without having to delete the default input values first. I would change the application in the future to exclude these default input values in both forms.
+            
+
+    - Study 2 with Daniel Onyema
         1. What problems did the user have with your design?
+            
+            Daniel had no notable problems completing the task above or with the design of the application. He was able to use the form input fields, buttons, and Get Music button correctly to send the music submission (Linkin Park, Hybrid Theory, 2000) to the server to be saved, delete this music data entry from the server, and view the updated list of music stored in server memory after both the music addition and deletion respectively.
+
         2. What comments did they make that surprised you?
+            
+            Daniel really liked my choice of fonts in the applicaton for each piece of text. He commented that the fonts that I used were well-balanced and allowed for proper emphasis of the h1 and h2 tags. He also thought that the fonts for the a, input, label, li, button, and footer tags were well-chosen and ensured that the content of each page was visually appealing and easy to the user's eye. 
+
         3. What would you change about the interface based on their feedback?
+            
+            Daniel recommended having an additional client-side (instead of exclusively having a server-side check) message to inform the user if the music they have submitted for deletion does not match any music data entries currently stored in the server. This client-side check would allow the user to know immediately after submitting music for deletion if there was indeed a successful deletion of a matching music data entry from the server.
