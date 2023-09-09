@@ -1,6 +1,8 @@
 Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
 ===
 
+Matthew McAlarney
+
 Glitch Project: https://a2-maccode7110.glitch.me/ 
 
 ## Music Listening Tracker
