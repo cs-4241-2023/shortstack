@@ -38,9 +38,13 @@ body {
 
 /* Main container styles */
 .main-container {
+  /* display: flex;
+  flex-direction: column; */
+  /* align-items: center; */
+  text-align: center;
   margin-top: 95px;
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 1000px;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -65,27 +69,37 @@ body {
 .main-form {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 15px 50px 15px 15px;
   border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .input-text-container {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
 }
 
 .form__input {
   height: 15px;
   padding: 10px;
   margin-left: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: none;
+  outline: none;
+  border-bottom: solid 1px black;
   font-size: 16px;
+}
+
+.form__input:focus {
+  border-color: #0077b6;
 }
 
 .input-text-container label {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 5px;
+  margin-right: 7px;
 }
 
 .buttons-container {
@@ -100,39 +114,125 @@ body {
 
 /* Button styles */
 .buttons-container button {
-  background-color: #525455;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
   cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s, transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
+}
+
+.buttons-container button:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
 }
 
 .buttons-container button:hover {
-  background-color: #005691;
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.buttons-container button:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
 }
 
 /* Instruction info styles */
 .instruction-info {
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
-
-  color: white;
+  color: #333;
+  background-color: white;
   width: 450px;
   text-align: center;
-
+  justify-content: space-around;
   padding: 20px;
   border-radius: 10px;
-  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1);
+  transition: transform 0.3s ease;
   margin-left: 15px;
+}
+
+.instruction-info:hover {
+  transform: scale(1.05);
 }
 
 .instruction-info p {
   background-color: #00a896;
-  color: black;
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px;
+  margin: 0;
+  border-radius: 5px;
 }
+
+.list-container {
+  margin-top: 20px;
+}
+
+.list-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-container ul li {
+  margin-bottom: 25px;
+  transition: transform 0.3s ease;
+  /* Add transition for rotation */
+}
+
+.list-container ul li:hover {
+  transform: rotate(-2deg);
+  /* Rotate the list items on hover */
+}
+
+.add-instruction {
+  color: #33a0d1;
+  font-weight: bold;
+}
+
+.modify-instruction {
+  color: #373485;
+  font-weight: bold;
+}
+
+.remove-instruction {
+  color: #c52b30;
+  font-weight: bold;
+}
+
+.list-container ul li::before {
+  content: "\2022";
+  /* Use a bullet point as a list marker */
+  color: #00a896;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
 
 /* Table styles */
 .table-container {
@@ -170,18 +270,70 @@ body {
   display: flex;
   flex-direction: row;
   margin-top: 40px;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
-.table-btn {
-  background-color: red;
-  color: white;
-  border: none;
+.rm-table-btn,
+.md-table-btn {
   height: 75px;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
+  appearance: none;
+  border-radius: 6px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #000000;
   cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -.24px;
+  margin: 0;
+  outline: none;
+  padding: 1rem 1.3rem;
+  quotes: auto;
+  text-align: center;
+  text-decoration: none;
+  transition: all .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+}
+
+.rm-table-btn {
+  background-color: #e74c3c;
+  box-shadow: 0 0 8px rgba(231, 76, 60, 0.7);
+}
+
+.md-table-btn {
+  background-color: #14ae26;
+  box-shadow: 0 0 8px rgba(20, 174, 38, 0.7);
+}
+
+.rm-table-btn:hover {
+  background-color: #ff5733;
+  /* Red background color */
+  box-shadow: 0 0 8px 0 rgba(255, 87, 51, 0.7);
+  /* Red shadow with some transparency */
+  transform: scale(1.125);
+  /* Slightly larger on hover */
+}
+
+.rm-table-btn:active {
+  transform: scale(1.025);
+}
+
+.md-table-btn:hover {
+  background-color: #2ecc71;
+  /* Green background color */
+  box-shadow: 0 0 8px 0 rgba(46, 204, 113, 0.7);
+  /* Green shadow with some transparency */
+  transform: scale(1.125);
+  /* Slightly larger on hover */
+}
+
+.md-table-btn:active {
+  transform: scale(1.025);
 }
 
 .unordered-list li {
@@ -190,12 +342,14 @@ body {
   list-style: square;
 }
 
-.list-container {
-  text-align: center;
-  margin-top: 100px;
-
-}
-
 .bck-img {
   height: 100vh;
+}
+
+.empty-table-text {
+  text-align: center;
+  color: red;
+  padding-top: 35px;
+  font-family: Rubik;
+  font-size: larger;
 }

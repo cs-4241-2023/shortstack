@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   // FRONT-END (CLIENT) JAVASCRIPT HERE
-
   const submit = async function (event) {
     event.preventDefault();
     const body = user_form_data();
@@ -48,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const appointment_data_input = document.getElementById("appointment-date");
   const form = document.getElementById("user-inputs");
   var vehicle_data_table = document.getElementById("myTable");
+  var emptyDataText = document.getElementById("empty-text");
 
   function user_form_data() {
     if (validate_form_input()) {
@@ -107,7 +107,9 @@ document.addEventListener("DOMContentLoaded", function () {
           if (server_data.length === 0) {
             console.log("No table data available to display");
             vehicle_data_table.getElementsByTagName("tbody")[0].innerHTML = vehicle_data_table.rows[0].innerHTML; // clear table
+            emptyDataText.textContent = "Appointment list is EMPTY. Go ahead and add an appointment!";
           } else {
+            emptyDataText.textContent = "";
             vehicle_data_table.getElementsByTagName("tbody")[0].innerHTML = vehicle_data_table.rows[0].innerHTML; // clear table
 
             // TRAVERSE THROUGH JSON OBJECTS STORED ON SERVER
@@ -128,10 +130,10 @@ document.addEventListener("DOMContentLoaded", function () {
               let modifyBtnCell = data_row.insertCell(prop_index + 1); // modify button
               let modifyButton = modifyBtnCell.appendChild(document.createElement("button"));
 
-              removeButton.className = 'table-btn';
+              removeButton.className = 'rm-table-btn';
               removeButton.id = server_data[i].uuid;
 
-              modifyButton.className = 'table-btn';
+              modifyButton.className = 'md-table-btn';
               modifyButton.id = server_data[i].uuid;
 
               removeButton.innerHTML = "Remove"; // name of delete button
@@ -207,8 +209,6 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error('An error occurred:', error);
     }
   }
-
-
 
 });
 
