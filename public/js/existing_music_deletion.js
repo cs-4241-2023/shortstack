@@ -60,7 +60,7 @@ const deletionSubmit = async function(event)
         const data = await response.json()
         console.log(data)
 
-        deletionInfoParagraph.innerHTML = `<strong>Here is the music that has been sent to the server to compare against existing data. Go to View Music Listening List to see if your submitted music has been deleted:</strong>: Band Name: ${inputObj.bandname}, Album Name: ${inputObj.albumname}, Release Year: ${inputObj.releaseyear}`
+        deletionInfoParagraph.innerHTML = `<strong>Here is the music that has been sent to the server to compare against existing data</strong>: Band Name: ${inputObj.bandname}, Album Name: ${inputObj.albumname}, Release Year: ${inputObj.releaseyear}`
         deletionInfo.appendChild(deletionInfoParagraph)
         setDeletionInfoID()
     }
