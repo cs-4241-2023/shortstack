@@ -8,11 +8,7 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const taskList = [];
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -23,29 +19,35 @@ const server = http.createServer( function( request,response ) {
 })
 
 const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+  const filename = dir + request.url.slice(1); 
 
   if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }else{
-    sendFile( response, filename )
+    sendFile(response, 'public/index.html');
+  }
+  else if (request.url === '/tasks') {
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(taskList));
+  }
+  else{
+    sendFile(response, filename);
   }
 }
 
 const handlePost = function( request, response ) {
-  let dataString = ''
+  let dataString = '';
 
-  request.on( 'data', function( data ) {
-      dataString += data 
+  request.on( 'data', function(data) {
+      dataString += data;
   })
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+  request.on('end', function() {
+    console.log(JSON.parse(dataString));
+    let info = JSON.parse(dataString);
 
-    // ... do something with the data here!!!
+    taskList.push(info);
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.writeHead(200, "OK", {'Content-Type': 'text/plain' });
+    response.end('test');
   })
 }
 

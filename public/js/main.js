@@ -11,29 +11,66 @@ function checkValidity() {
   }
 }
 
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+function loadTasks(taskList) {
+  let currentTasks = document.querySelectorAll('.task-item');
+  let previousList = Array.from(currentTasks);
 
-  const response = await fetch( '/submit', {
+  previousList.forEach(t => t.remove());
+
+  let list = document.querySelector('ul');
+
+  taskList.forEach(t => {
+    let item = document.createElement('li');
+    item.className = 'task-item'
+
+    let taskLabel = document.createElement('label');
+    taskLabel.innerHTML = t.taskName;
+    taskLabel.className = 'list-label';
+
+    let dateLabel = document.createElement('label');
+    dateLabel.innerHTML = t.dueDate;
+    dateLabel.className = 'list-label';
+
+    let priorityLabel = document.createElement('label');
+    priorityLabel.innerHTML = t.priority;
+    priorityLabel.className = 'list-label';
+
+    item.appendChild(taskLabel);
+    item.appendChild(dateLabel);
+    item.appendChild(priorityLabel);
+    list.appendChild(item);
+  });
+}
+
+const submit = async function( event ) {
+  event.preventDefault()
+
+  const taskInput = document.querySelector('#taskName').value,
+        dateInput = document.querySelector('#dueDate').value,
+        priorityInput = document.querySelector('#priorityFlag').value;
+
+  const json = { taskName: taskInput, dueDate: dateInput, priority: priorityInput};
+  const body = JSON.stringify(json);
+
+  const postResponse = await fetch( '/submit', {
     method:'POST',
     body 
   })
 
-  const text = await response.text()
+  const getResponse = await fetch('/tasks', {
+    method: 'GET',
+  })
+
+  const text = await getResponse.text();
+  const tasks = JSON.parse(text);
+
+  loadTasks(tasks);
 
   console.log( 'text:', text )
 }
 
 window.onload = function() {
-  const button = document.querySelector("button");
+  const button = document.querySelector("#addTaskButton");
   button.onclick = submit;
 
   form = document.querySelector('.inputs');
