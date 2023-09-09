@@ -1,27 +1,21 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
+document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const bookName = document.getElementById('bookName').value;
+  const reviewerName = document.getElementById('reviewerName').value;
+  const rating = document.getElementById('rating').value;
 
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+  const response = await fetch('/addReview', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ bookName, reviewerName, rating })
+  });
 
-  const response = await fetch( '/submit', {
-    method:'POST',
-    body 
-  })
-
-  const text = await response.text()
-
-  console.log( 'text:', text )
-}
-
-window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
-}
+  const result = await response.json();
+  if (result.success) {
+      alert('Review added successfully!');
+  } else {
+      alert('Error adding review.');
+  }
+});
