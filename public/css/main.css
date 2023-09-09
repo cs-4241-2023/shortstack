@@ -1,10 +1,16 @@
 body, html {
   padding: 0;
   margin: 0;
+  height: 100%;
 }
 
 html {
   background-color: lightgray;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -95,4 +101,16 @@ form button {
   padding-right: 15px;
   border: 1px solid rgb(51, 51, 51);
   border-radius: 5px 5px 5px 5px;
+}
+
+section {
+  display: grid;
+  place-items: center;
+  flex: 1;
+}
+
+#listBox {
+  background-color: white;
+  width: 50%;
+  height: 400px;
 }
