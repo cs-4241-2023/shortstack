@@ -31,12 +31,17 @@ function loadTasks(taskList) {
     dateLabel.innerHTML = t.dueDate;
     dateLabel.className = 'list-label';
 
+    let daysRemainingLabel = document.createElement('label');
+    daysRemainingLabel.innerHTML = t.daysRemaining;
+    daysRemainingLabel.className = 'list-label';
+
     let priorityLabel = document.createElement('label');
     priorityLabel.innerHTML = t.priority;
     priorityLabel.className = 'list-label';
 
     item.appendChild(taskLabel);
     item.appendChild(dateLabel);
+    item.appendChild(daysRemainingLabel);
     item.appendChild(priorityLabel);
     list.appendChild(item);
   });

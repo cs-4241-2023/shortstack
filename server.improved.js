@@ -41,9 +41,21 @@ const handlePost = function( request, response ) {
   })
 
   request.on('end', function() {
-    console.log(JSON.parse(dataString));
     let info = JSON.parse(dataString);
 
+    const currentDate = new Date();
+    const objDate = new Date(info.dueDate);
+    if (currentDate <= objDate) {
+      const timeDifferenceInMilliseconds = objDate - currentDate;
+      const daysDifference = Math.ceil(timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24));
+
+      info.daysRemaining = daysDifference > 1 ? `${daysDifference} days` : "1 day";
+    }
+    else {
+      info.daysRemaining = "Overdue";
+    }
+
+    console.log(info);
     taskList.push(info);
 
     response.writeHead(200, "OK", {'Content-Type': 'text/plain' });
