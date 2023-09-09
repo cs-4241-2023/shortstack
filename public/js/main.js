@@ -6,7 +6,7 @@ const submit = async function (event) {
   const finished = document.querySelector("#finished");
   const rating = document.querySelector("#rating");
 
-  if (title.value == '' || author.value == '' || started.value == '' || finished.value == '' || rating.value == '' || summary.value == '') {
+  if (title.value == '' || author.value == '' || started.value == '' || finished.value == '' || rating.value == '') {
     alert('Please fill in all fields');
     return false;
   }
