@@ -3,6 +3,10 @@ body {
   color:black;
 }
 
+#lotr_map {
+  background-color: transparent;
+}
+
 .timelineContainer{
   background: black;
   position: absolute;

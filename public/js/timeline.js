@@ -39,8 +39,25 @@ function CreateTimeline(data) {
 
   for (let i = 0; i < data.length; i++) {
     const timelineItem = document.createElement("div");
+    timelineItem.id= "timelineItem" + i; 
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "X";
+    
+    //edit button appearance
+    deleteButton.onclick= () => {
+      let text = "timelineItem" + i;
+      const tempButton = document.getElementById(text).outerHTML="";
+      //account for in backend
+      console.log(tempButton.id);
+    }
+    timelineItem.appendChild(deleteButton);
+
     timelineItem.className = "container";
-    timelineItem.innerHTML = "<div class=\"content\"><h1>" + data[i].era + "</h1><h2>" + data[i].date + "</h2><p>" + data[i].description + "</p></div>"
+    const innerItemText = document.createElement("div");
+    innerItemText.className = "content";
+    innerItemText.innerHTML = "<h1>" + data[i].era + "</h1><h2>" + data[i].date + "</h2><p>" + data[i].description + "</p>"
+    timelineItem.appendChild(innerItemText);
+    
 
     timeline.appendChild(timelineItem);
   }
