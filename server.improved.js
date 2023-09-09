@@ -72,7 +72,36 @@ const handlePost = function (request, response) {
       response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
       response.end('Success');
 
+    } else if (request.url === '/modify-table-entry') {
+
+      const data_to_modify = JSON.parse(dataString);
+      console.log("Modified Data: ");
+      console.log(data_to_modify);
+
+      const modify_uuid = data_to_modify[0];
+      const modify_form_data = JSON.parse(data_to_modify[1]);
+
+      // Locate entry we want to modify using the UUID
+      const modify_index = appdata.findIndex(entry => entry.uuid === modify_uuid);
+
+      // modify appdata
+      appdata[modify_index]['year'] = modify_form_data['year'];
+      appdata[modify_index]['car_make'] = modify_form_data['car_make'];
+      appdata[modify_index]['model'] = modify_form_data['model'];
+      appdata[modify_index]['service_type'] = modify_form_data['service_type'];
+      appdata[modify_index]['appointment_date'] = modify_form_data['appointment_date'];
+
+      const new_days_until_apt = addNewDataField(appdata[modify_index])
+      appdata[modify_index]['day-until-appointment'] = new_days_until_apt;
+
+      console.log("App data after modification");
+      console.log(appdata);
+
+      response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
+      response.end('Modify Success');
     }
+
+
   })
 
 }

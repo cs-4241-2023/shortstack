@@ -7,26 +7,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Data being added to the table: " + body);
     if (body !== "") {
-
-      var form = document.getElementById("user-inputs");
       form.reset();
-
-      const response = await fetch('/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'text/plain',
-        },
-        body
-      });
-      const responseData = await response.text()
-      build_table();
-      console.log('Post Request Status:', responseData)
-    } else {
-      if (!validateYear()) {
-        alert("Please enter a valid year");
-      } else {
-        alert("Please fill out all fields");
+      try {
+        const response = await fetch('/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body
+        });
+        const responseData = await response.text()
+        build_table();
+        console.log('Post Request Status:', responseData)
+      } catch (error) {
+        console.error('Error submitting data:', error);
       }
+    } else {
+      handleValidationError();
+    }
+  }
+
+  function handleValidationError() {
+    if (!validateYear()) {
+      alert("Please enter a valid year");
+    } else {
+      alert("Please fill out all fields");
     }
   }
 
@@ -41,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const model_input = document.getElementById("model");
   const service_type_input = document.getElementById("service-type");
   const appointment_data_input = document.getElementById("appointment-date");
+  const form = document.getElementById("user-inputs");
   var vehicle_data_table = document.getElementById("myTable");
 
   function user_form_data() {
@@ -70,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (validateYear()) {
       return true;
     }
+
     return false;
   }
 
@@ -115,16 +122,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 prop_index++;
               }
 
-              let btnCell = data_row.insertCell(prop_index); // delete button
-              let removeButton = btnCell.appendChild(document.createElement("button"));
+              let rmBtnCell = data_row.insertCell(prop_index); // delete button
+              let removeButton = rmBtnCell.appendChild(document.createElement("button"));
+
+              let modifyBtnCell = data_row.insertCell(prop_index + 1); // modify button
+              let modifyButton = modifyBtnCell.appendChild(document.createElement("button"));
 
               removeButton.className = 'table-btn';
               removeButton.id = server_data[i].uuid;
+
+              modifyButton.className = 'table-btn';
+              modifyButton.id = server_data[i].uuid;
 
               removeButton.innerHTML = "Remove"; // name of delete button
               removeButton.onclick = function () {
                 removeEntry(removeButton.id);
               };
+
+              modifyButton.innerHTML = "Modify";
+              modifyButton.onclick = function () {
+                let form_data = user_form_data();
+                if (form_data !== "") {
+                  modifyEntry(modifyButton.id, form_data);
+                } else {
+                  handleValidationError();
+                }
+              }
 
             }
 
@@ -133,6 +156,38 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
       alert('An error occurred while fetching server data!');
     }
+  }
+
+  async function modifyEntry(UUID, user_data) {
+    const req_data = [];
+
+    req_data.push(UUID);
+    req_data.push(user_data);
+
+    console.log("Post Req Data Frm Modify: ");
+    console.log(req_data);
+
+    try {
+      const response = await fetch('/modify-table-entry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(req_data),
+      });
+
+      if (response.ok) {
+        console.log(`Data ${UUID} was modified`);
+        form.reset();
+        build_table();
+      } else {
+        console.error(`Failed to modify data ${UUID}`);
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+
+
   }
 
   async function removeEntry(UUID) {
