@@ -8,6 +8,7 @@ const http = require('http'),
   crypto = require('crypto'),
   dir = 'public/',
   port = 3000
+  start_time = Date.now()
 
 const inventory = [
   { 'item': 'Baseball', 'amount': 25, 'unit_value': 2.10, 'uuid': '47ffd1bf-4bc4-4028-b1d0-4bb1f7212b0b', 'total_value': 52.50 },
@@ -29,6 +30,10 @@ const handleGet = function (request, response) {
   if (request.url === '/') {
     sendFile(response, 'public/index.html')
   } 
+  else if (request.url === '/start_time') {
+    response.writeHeader(200, { 'Content-Type': 'text/plain' })
+    response.end(JSON.stringify({ start_time }))
+  }
   else if (request.url === '/data') {
     response.writeHeader(200, { 'Content-Type': 'text/plain' })
     response.end(JSON.stringify(inventory))

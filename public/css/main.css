@@ -9,17 +9,21 @@ body {
 }
 
 #dataDiv {
+  box-sizing: border-box;
+
   flex-grow: 1;
-  margin: 3rem;
+  margin: 2rem;
+  padding: 1rem;
 
   max-height: 80vh;
   overflow-y: auto;
-  max-width: 60%;
+  max-width: 65%;
   overflow-x: auto;
 }
 
 #inputDiv {
   width: 30%;
+  min-width: 30%;
   height: 80vh;
 
   margin: 10vh 0;

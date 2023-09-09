@@ -1,15 +1,21 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+let last_start_time
 window.onload = function() {
   document.querySelector("#inputForm").onsubmit = addData;
 
-  fetch( '/data' )
+  loadData()
+
+  fetch( '/start_time' )
     .then((response) => response.json())
-    .then((json) => json.forEach(element => addTableRow(element)))
+    .then((json) => last_start_time = json['start_time'])
 }
 
 const addData = async function(event) {
   event.preventDefault()
+  if(await reloadIfRequired()) {
+    return
+  }
 
   const data = new FormData(event.target)
 
@@ -85,6 +91,9 @@ const addTableRow = function(data) {
 
 const deleteData = async function(event) {
   event.preventDefault()
+  if(await reloadIfRequired()) {
+    return
+  }
   
   const tableRow = this.parentElement.parentElement
   const uuid = tableRow.id
@@ -107,7 +116,11 @@ const deleteData = async function(event) {
   }
 }
 
-const modifyData = function(event) {
+const modifyData = async function(event) {
+  if(await reloadIfRequired()) {
+    return
+  }
+
   const tableRow = this.parentElement.parentElement
   const uuid = tableRow.id
 
@@ -124,7 +137,7 @@ const modifyData = function(event) {
 
   const amountData = tableRow.children[1]
   const amountInput = document.createElement('input')
-  amountInput.value = amountData.textContent.replace(',', '')
+  amountInput.value = amountData.textContent.replaceAll(',', '')
   amountData.textContent = ''
   amountData.className = 'modifyTD'
   amountData.appendChild(amountInput)
@@ -136,7 +149,7 @@ const modifyData = function(event) {
 
   const valueData = tableRow.children[2]
   const valueInput = document.createElement('input')
-  valueInput.value = valueData.textContent.replace(',', '')
+  valueInput.value = valueData.textContent.replaceAll(',', '')
   valueData.textContent = ''
   valueData.className = 'modifyTD'
   valueData.appendChild(valueInput)
@@ -154,6 +167,9 @@ const modifyData = function(event) {
 
 const saveData = async function(event) {
   event.preventDefault()
+  if(await reloadIfRequired()) {
+    return
+  }
 
   const data = new FormData(event.target)
   const uuid = event.target.id.slice(5)
@@ -185,4 +201,33 @@ const saveData = async function(event) {
   // Hide 'Save', display 'Modify'
   tableRow.children[4].lastElementChild.hidden = true
   tableRow.children[4].firstElementChild.hidden = false
+}
+
+const clearTable = function() {
+  document.querySelectorAll('table > tr').forEach((element) => element.remove())
+  document.querySelectorAll('body > form').forEach((element) => element.remove())
+}
+
+const reloadIfRequired = async function() {
+  const response = await fetch( '/start_time' )
+  const json = await response.json()
+  let reloadRequired = json['start_time'] > last_start_time
+
+  if(reloadRequired) {
+    alert('Table data is out of date. Reloading data.')
+    clearTable()
+    loadData()
+
+    fetch( '/start_time' )
+      .then((response) => response.json())
+      .then((json) => last_start_time = json['start_time'])
+  }
+
+  return reloadRequired //true if reloaded, false otherwise
+}
+
+const loadData = function() {
+  fetch( '/data' )
+    .then((response) => response.json())
+    .then((json) => json.forEach(element => addTableRow(element)))
 }
