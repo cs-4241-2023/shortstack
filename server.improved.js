@@ -44,6 +44,7 @@ const handlePost = function( request, response ) {
 
     // ... do something with the data here!!!
     appdata.push(JSON.parse(dataString))
+    //console.log(appdata.stringify)
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end( JSON.stringify( appdata ) )
   })

@@ -6,24 +6,39 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Cormorant+Garamond">    
     
     <!-- get rid of favicon error -->
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
+  <h1>Book Tracker</h1>
+
   <body>
+    
     <form> <!--makes an object that takes inputs and returns data -->
-      <input type="text" id="title" value="Book Title">
-      <input type="text" id="author" value="Author">
-      <br><br>
+      <div class="userInput">
+        <label for="title">Enter book title: </label>
+      <input type="text" id="title" value="">
+      <label for="author">Enter author's name: </label>
+      <input type="text" id="author" value="">
       <label for="startDate">Date started: </label>
       <input type="date" id="startDate">
-      <br> <br> 
       <label for="dateFinished"> Date completed: </label> 
       <input type="date" id="dateFinished">
-      <br><br>
+    
+    </div>
       <!-- derived field: number of books completed in a year/per month -->
-      
+      <br> 
       <button>submit</button>
+      <h1>My Library</h1>
+      <div class="userLibrary" id="library">
+        <button>delete</button>
+
+        <!-- User input will be displayed here -->
+    </div>
+
+    
     </form>
   </body>
 </html>

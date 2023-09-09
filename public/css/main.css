@@ -1,7 +1,45 @@
+/* styles.css */
 body {
-  background:black;
-  color:white;
+  background: white;
+  color: black; 
+  font-family: 'Cormorant Garamond', serif;
 }
-ul{
-  color: white; 
+h1{
+  color:black;
+}
+
+
+.userInput{
+  display:grid; 
+ gap:1rem;
+  grid-template-columns: repeat(4, 20%);
+} 
+
+button {
+	background: #8d8686;
+	border: 5px;
+  border-radius: 5px;
+	color: white;
+	font-size: 15px;
+	width: 60px;
+	margin: 10px 0 0;
+  font-family: 'Cormorant Garamond', serif;
+	cursor: pointer;
+}
+
+
+button:hover {
+	color: #971e1e;
+}
+input[type="text"] {
+	margin: 0;
+	font-size: 15px;
+	line-height: 15px;
+	height: 15px;
+	padding: 5px;
+	border: 1px solid #ddd;
+	background: #fff;
+	border-radius: 6px;
+  font-family: 'Cormorant Garamond', serif;
+	color: #888;
 }

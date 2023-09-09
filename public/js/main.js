@@ -16,6 +16,7 @@ const titleInput = document.querySelector('#title');
 const authorInput = document.querySelector('#author');
 const startInput = document.querySelector('#startDate');
 const finishInput = document.querySelector('#dateFinished');
+
 const json = { title: titleInput.value,
          author: authorInput.value, 
          startDate: startInput.value,
@@ -38,11 +39,24 @@ const response = await fetch( '/submit', {
   console.log(data)
   //data.map( d => d.title) 
   //.map(d => d.toUpperCase()+d.slice(1))
+const addedItems = []; 
+
   data.forEach(d => {
-    const li = document.createElement('li')
-    li.innerText = "Title: " + d.title + "\nAuthor: " + d.author + "\nStart Date: " + d.startDate + "\nFinish Date: " + d.dateFinished
+
+    let itemIdentifier = d.title + d.author + d.startDate + d.dateFinished
+    if (!addedItems.includes(itemIdentifier)){
+      const li = document.createElement('li')
+     
     
-    list.appendChild(li)
+      
+      li.innerText = "Title: " + d.title + "\nAuthor: " + d.author + "\nStart Date: " + d.startDate + "\nFinish Date: " + d.dateFinished 
+      
+      
+      list.appendChild(li)
+
+      addedItems.push(itemIdentifier)
+   }
+    
   })
   document.body.appendChild( list )
 
