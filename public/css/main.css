@@ -133,6 +133,17 @@ li {
 }
 
 .list-label {
-  flex: 1;
+  width: 24%;
   text-align: center;
+}
+
+li button {
+  width: 4%;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+li button:hover {
+  background-color: red;
 }

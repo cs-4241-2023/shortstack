@@ -8,7 +8,7 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const taskList = [];
+let taskList = [];
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -33,7 +33,16 @@ const handleGet = function( request, response ) {
   }
 }
 
-const handlePost = function( request, response ) {
+const handlePost = function(request, response) {
+  if (request.url === '/submit') {
+    submitTasks(request, response);
+  }
+  else if (request.url === '/deleteTask') {
+    deleteTask(request, response);
+  }
+}
+
+const submitTasks = function( request, response ) {
   let dataString = '';
 
   request.on( 'data', function(data) {
@@ -57,6 +66,27 @@ const handlePost = function( request, response ) {
 
     console.log(info);
     taskList.push(info);
+
+    response.writeHead(200, "OK", {'Content-Type': 'text/plain' });
+    response.end('test');
+  })
+}
+
+const deleteTask = function(request, response) {
+  let dataString = '';
+
+  request.on( 'data', function(data) {
+      dataString += data;
+  })
+
+  request.on('end', function() {
+    let info = JSON.parse(dataString);
+    for (let i = 0; i < taskList.length; i++) {
+      if (parseInt(info.id) === taskList[i].id) {
+        taskList.splice(i, 1);
+        break;
+      }
+    }
 
     response.writeHead(200, "OK", {'Content-Type': 'text/plain' });
     response.end('test');
