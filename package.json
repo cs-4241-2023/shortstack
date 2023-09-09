@@ -1,12 +1,12 @@
 {
-  "name": "",
+  "name": "a2-sarahaolson",
   "version": "",
   "description": "",
-  "author": "",
+  "author": "Sarah Olson",
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
+    "mime": "^2.6.0"
   }
 }

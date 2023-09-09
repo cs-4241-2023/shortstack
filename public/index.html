@@ -10,9 +10,47 @@
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+    <h1>Welcome to WPI Badminton Club Hour Tracker</h1>
+
+    <p>If you are taking Badminton Club for Gym Credit you receive your grade based on the amount of 
+      hours you attend. 
+    </p>
+
+    <ul class="gradeList">
+      <li class="A">A: 28 Hours</li>
+      <li class="B">B: 24 Hours</li>
+      <li class="C">C: 21 Hours</li>
+      <li class="NR">NR: under 21 Hours</li>
+    </ul>
+
+    <p>Enter Below the Grade you would like to receive</p>
+
+    <form> 
+      <input type="text" id="desiredGoal" placeholder="eg. A">
+      <button id="setGoal">Set Grade Goal</button>
     </form>
+
+    <p id="termGradeGoal">Grade Goal for this Term: </p>
+
+
+    <p>This tool is used to help track your progress toward your grading goal!</p>
+
+    <p class="border">Enter the day you last attended with the amount of hours you logged</p>
+
+    <form>
+      <input type="text" id="date" placeholder="Date">
+      <input type="number" id="hours" placeholder="Hours">
+      <button id="enter">Enter Data</button>
+    </form>
+
+    <table id="badmintonDisplay">
+      <tr>
+        <th>Date</th>
+        <th>Hours</th>
+        <th>Time Remaining Until Goal!</th>
+      </tr>
+
+    </table>
+
   </body>
 </html>

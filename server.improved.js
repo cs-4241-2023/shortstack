@@ -8,11 +8,21 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
+/*const appdata = [
   { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
   { 'model': 'honda', 'year': 2004, 'mpg': 30 },
   { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+]*/
+
+const appdata = [
+  { 'date': '-', 'hours': '-', 'remaining': '28' }
 ]
+
+let hoursTilGoal = 0
+
+let hoursTilA = 28
+let hoursTilB = 24
+let hoursTilC = 21
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -38,15 +48,40 @@ const handlePost = function( request, response ) {
   request.on( 'data', function( data ) {
       dataString += data 
   })
+  
+  if( request.url === '/setGoal'){
+    request.on( 'end', function() {
+      const currGoal = JSON.parse( dataString )
+      console.log(currGoal)
+    
+      if(currGoal.goal === 'A')
+        hoursTilGoal = hoursTilA
+      else if(currGoal.goal === 'B')
+        hoursTilGoal = hoursTilB
+      else
+        hoursTilGoal = hoursTilC
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
-    // ... do something with the data here!!!
-
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+      response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+      response.end( JSON.stringify( currGoal ) )
   })
+ }
+
+  else if ( request.url === '/addHours' ){
+    request.on( 'end', function() {
+      const currentData = JSON.parse( dataString ) 
+  
+      hoursTilGoal -= currentData.hours
+      currentData.remaining = hoursTilGoal
+  
+      console.log(currentData)
+      appdata.push(currentData)
+  
+      
+  
+      response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+      response.end( JSON.stringify(currentData) )
+    })
+  }
 }
 
 const sendFile = function( response, filename ) {
