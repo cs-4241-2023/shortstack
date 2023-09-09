@@ -46,12 +46,12 @@ const additionSubmit = async function(event) { //The async keyword here means th
   console.log(inputObj.releaseyear)
 
   if(inputObj.bandname.trim().length === 0 || inputObj.albumname.trim().length === 0 || inputObj.releaseyear.trim().length === 0) {
-    submissionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing at least one input field.`
+    submissionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing information in at least one input field.`
     submissionInfo.appendChild(submissionInfoParagraph)
     setSubmissionInfoID()
   }
   else if(inputObj.bandname === 'band name here' || inputObj.albumname === 'album name here' || inputObj.releaseyear === 'release year here') {
-    submissionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing at least one input field.`
+    submissionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing information in at least one input field.`
     submissionInfo.appendChild(submissionInfoParagraph)
     setSubmissionInfoID()
   }

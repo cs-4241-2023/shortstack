@@ -57,11 +57,11 @@ li {
 }
 
 footer {
-  font-family: "Georgia", "serif";
+  font-family: "Georgia", serif;
   margin-top: auto; /*Since the footer is right below the main tag, the top margin of the footer will be automatically set so that the footer is located right below the form container's minimum height. This places the footer at the bottom fo each page*/
 }
 
-/*Class selectors used to implement flexbox*/
+/*Class selectors used to implement flexbox positioning and Get Music Button width*/
 
 .positionNavCenterXAndStartY {
   display: flex;
@@ -103,7 +103,7 @@ footer {
   width: 200px;
 }
 
-/*ID selectors for buttons and navbar links*/
+/*Animations: ID selectors for buttons and an element selector for navbar links*/
 
 #submitMusic:active {
   transform: translateY(5px);
@@ -117,7 +117,7 @@ footer {
   transform: translateY(5px);
 }
 
-#onNavLink:hover {
+a:hover {
   color: darkviolet;
   box-shadow: 0 5px darkslateblue;
 }

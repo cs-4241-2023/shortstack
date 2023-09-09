@@ -30,12 +30,12 @@ const deletionSubmit = async function(event)
     let inputObj = {bandname: bandInput.value, albumname: albumInput.value, releaseyear: releaseYearInput.value}
     
     if(inputObj.bandname.trim().length === 0 || inputObj.albumname.trim().length === 0 || inputObj.releaseyear.trim().length === 0) {
-        deletionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing at least one input field.`
+        deletionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing information in at least one input field.`
         deletionInfo.appendChild(deletionInfoParagraph)
         setDeletionInfoID()
     }
     else if(inputObj.bandname === 'band name here' || inputObj.albumname === 'album name here' || inputObj.releaseyear === 'release year here') {
-        deletionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing at least one input field.`
+        deletionInfoParagraph.innerHTML = `<strong>The music you submitted cannot be sent to the server</strong>: Missing information in at least one input field.`
         deletionInfo.appendChild(deletionInfoParagraph)
         setDeletionInfoID()
     }
@@ -60,7 +60,7 @@ const deletionSubmit = async function(event)
         const data = await response.json()
         console.log(data)
 
-        deletionInfoParagraph.innerHTML = `<strong>Here is the music that has been sent to the server to compare against existing data</strong>: Band Name: ${inputObj.bandname}, Album Name: ${inputObj.albumname}, Release Year: ${inputObj.releaseyear}`
+        deletionInfoParagraph.innerHTML = `<strong>Here is the music that has been sent to the server to compare against existing data. Go to View Music Listening List to see if your submitted music has been deleted:</strong>: Band Name: ${inputObj.bandname}, Album Name: ${inputObj.albumname}, Release Year: ${inputObj.releaseyear}`
         deletionInfo.appendChild(deletionInfoParagraph)
         setDeletionInfoID()
     }
