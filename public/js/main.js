@@ -16,11 +16,13 @@ const titleInput = document.querySelector('#title');
 const authorInput = document.querySelector('#author');
 const startInput = document.querySelector('#startDate');
 const finishInput = document.querySelector('#dateFinished');
+let itemIdentifier = titleInput.value + authorInput.value + startInput.value + finishInput.value;
 
 const json = { title: titleInput.value,
          author: authorInput.value, 
          startDate: startInput.value,
-         dateFinished: finishInput.value
+         dateFinished: finishInput.value,
+         identifier: itemIdentifier
 }; //json is how you want to package data before sending it to front end
   //{attribute : value}
 const body = JSON.stringify( json ); 
@@ -33,38 +35,76 @@ const response = await fetch( '/submit', {
   const data = await response.json()
 
   const list = document.createElement('ul')
+  const existingList = document.querySelector('ul');
+  if (existingList) {
+    existingList.parentNode.removeChild(existingList);
+  }
+  
 
-//map runs through every item you pass through it and performs an operation, creates a new array + populates
-//it with all the items from the previous array with some operation applied to it
   console.log(data)
-  //data.map( d => d.title) 
-  //.map(d => d.toUpperCase()+d.slice(1))
-const addedItems = []; 
+  
+const addedItems = []
+
 
   data.forEach(d => {
 
-    let itemIdentifier = d.title + d.author + d.startDate + d.dateFinished
+   itemIdentifier = d.title + d.author + d.startDate + d.dateFinished
     if (!addedItems.includes(itemIdentifier)){
       const li = document.createElement('li')
-     
-    
+      li.className = "userLibrary"
+      const deleteButton = document.createElement("button")
+      deleteButton.innerText = "Delete";
+      deleteButton.className = "delete";
       
       li.innerText = "Title: " + d.title + "\nAuthor: " + d.author + "\nStart Date: " + d.startDate + "\nFinish Date: " + d.dateFinished 
       
       
       list.appendChild(li)
-
+      list.appendChild(deleteButton)
       addedItems.push(itemIdentifier)
+      deleteButton.onclick = () => deleteBook(itemIdentifier, li, deleteButton);
+
+   
+
    }
     
   })
+
   document.body.appendChild( list )
 
 }
 
 
+async function deleteBook(itemID, listItemElem, delButton) {
+  console.log("Delete book...")
+  console.log(itemID)
+
+  
+    const response = await fetch(`/delete/${itemID}`, {
+      method: 'DELETE', 
+
+    }); 
+    console.log(`/delete/${itemID}`)
+    console.log("Response status:", response.status); // Log the response status code
+
+  //sucessful
+  if (response.status  === 200){
+      let ul = listItemElem.parentNode;
+
+    ul.removeChild(listItemElem)
+    ul.removeChild(delButton)
+    console.log("Success")
+
+  }
+  else {
+    console.error("Error deleting item on server")
+  }
+  
+
+}
 
 window.onload = function() {
   const button = document.querySelector("button");
   button.onclick = submit;
 }
+

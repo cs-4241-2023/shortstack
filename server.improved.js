@@ -2,8 +2,7 @@ const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
       // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
+     
       mime = require( 'mime' ),
       dir  = 'public/',
       port = 3000
@@ -20,6 +19,10 @@ const server = http.createServer( function( request,response ) {
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
   }
+   else if (request.method === 'DELETE') { 
+  handleDeleteRequest(request, response);
+}
+  
 })
 
 const handleGet = function( request, response ) {
@@ -47,8 +50,40 @@ const handlePost = function( request, response ) {
     //console.log(appdata.stringify)
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end( JSON.stringify( appdata ) )
+    console.log(JSON.stringify( appdata ) )
+
   })
 }
+
+const handleDeleteRequest = function(request, response){
+
+  console.log("handleDeleteRequest called....")
+  if (request.url.startsWith('/delete/')){
+    const itemIdentifier  = request.url.replace('/delete/','')
+    console.log("Received DELETE request for itemID:", itemIdentifier)
+
+    const i = appdata.findIndex(item => item.identifier === itemIdentifier);
+    console.log("Current appdata:", appdata);
+
+    if (i !== -1){
+      appdata.splice(i,1)
+      response.writeHead(200, {'Content-Type': 'text/json'})
+      response.end(JSON.stringify({message: 'Item deleted successfully'}))
+    }
+    else{
+
+      response.writeHead(404, { 'Content-Type': 'text/json' });
+      response.end(JSON.stringify({ message: 'Item not found' }));
+
+    }
+  }
+  else {
+    console.log("Invalid DELETE request:", request.url)
+
+    response.writeHead(400, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify({ message: 'Invalid DELETE request' }));
+  }
+} 
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 

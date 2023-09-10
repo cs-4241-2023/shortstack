@@ -15,6 +15,14 @@ h1{
   grid-template-columns: repeat(4, 20%);
 } 
 
+.userLibrary{
+  display: grid; 
+  gap: 5rem; 
+  grid-template-columns: repeat(4, 30%);
+
+
+}
+
 button {
 	background: #8d8686;
 	border: 5px;
@@ -43,3 +51,4 @@ input[type="text"] {
   font-family: 'Cormorant Garamond', serif;
 	color: #888;
 }
+
