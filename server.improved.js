@@ -58,7 +58,25 @@ const handlePost = function( request, response ) {
       response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
       response.end('test')
     })
-  } else {
+  }  
+  // else if( request.url === '/edit' ) {
+  //   //Implement edit function here.
+  //   request.on( 'data', function( data ) {
+  //     dataString += data
+  //     console.log(JSON.parse( dataString ))
+  //     //This deserves to be pee. Don't debate with me.
+  //     const pee = JSON.parse( dataString )  
+  //     const num = Number(pee.index)
+  //     console.log(num)
+  //       appdata[num] = updateTable(data)
+  //   })
+
+  //   request.on( 'end', function() {
+  //     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+  //     response.end('test')
+  //   })
+  // }
+  else {
     request.on( 'data', function( data ) {
       dataString += data 
       console.log(dataString)
@@ -76,17 +94,7 @@ const handlePost = function( request, response ) {
 
 }
 
-// const handleDelete = function( request, response ) {
-//   request.on( 'data', function( data ) {
-//     console.log(request)
-//       appdata.splice(data.index, 1)
-//   })
 
-//   request.on( 'end', function() {
-//     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-//     response.end('test')
-//   })
-// }
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 

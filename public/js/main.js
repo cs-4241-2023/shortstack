@@ -92,16 +92,16 @@ const deletePlayer = async function() {
 };
 
 // Function to edit a player in the table.
-const editPlayer = async function() {
-  const index = document.querySelector('input[name="delete"]:checked').value;
-  console.log('Editing player with index:', index);
-  const response = await fetch('/edit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ index: index })
-  })
-  updateTable();
-};
+// const editPlayer = async function() {
+//   const index = document.querySelector('input[name="delete"]:checked').value;
+//   console.log('Editing player with index:', index);
+//   const response = await fetch('/edit', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ index: index })
+//   })
+//   updateTable();
+// };
 
 
 window.onload = function() {
