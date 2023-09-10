@@ -15,14 +15,13 @@ const http = require( 'http' ),
 ]*/
 
 const appdata = [
-  { 'date': '-', 'hours': '-', 'remaining': '28' }
+  
 ]
 
-let hoursTilGoal = 0
+const hoursTilGrade = [ {'A': 28} , {'B': 24}, {'C': 21}]
 
-let hoursTilA = 28
-let hoursTilB = 24
-let hoursTilC = 21
+let hoursTilGoal = 0
+let currentGoal = ''
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -53,33 +52,73 @@ const handlePost = function( request, response ) {
     request.on( 'end', function() {
       const currGoal = JSON.parse( dataString )
       console.log(currGoal)
-    
-      if(currGoal.goal === 'A')
-        hoursTilGoal = hoursTilA
-      else if(currGoal.goal === 'B')
-        hoursTilGoal = hoursTilB
-      else
-        hoursTilGoal = hoursTilC
+
+      hoursTilGrade.forEach( d => {
+        for(let g in d){
+          if(g === currGoal.goal){
+            hoursTilGoal = d[g]
+          }
+        }
+      })
+        currentGoal = hoursTilGoal
 
       response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
       response.end( JSON.stringify( currGoal ) )
   })
  }
 
+ else if( request.url === '/editGoal' ){
+  request.on( 'end', function() {
+    const newGoal = JSON.parse( dataString )
+    console.log(newGoal)
+
+    let newGoalNum = 0
+
+    let differenceToChange = 0
+    
+    hoursTilGrade.forEach( d => {
+      for(let g in d){
+        if(g === newGoal.goal){
+          newGoalNum = d[g]
+          differenceToChange = newGoalNum - currentGoal 
+          console.log(d[g], differenceToChange, currentGoal)
+        }
+      }
+    })
+
+    console.log(newGoalNum, differenceToChange)
+    
+    hoursTilGoal += differenceToChange
+    currentGoal = newGoalNum
+
+    //go thru and edit all of the remianings
+    appdata.forEach( d => {
+      d.remaining += differenceToChange
+    })
+
+    console.log(appdata)
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end( JSON.stringify( newGoal ) )
+})
+ }
+
   else if ( request.url === '/addHours' ){
     request.on( 'end', function() {
       const currentData = JSON.parse( dataString ) 
-  
+
       hoursTilGoal -= currentData.hours
       currentData.remaining = hoursTilGoal
   
       console.log(currentData)
+
       appdata.push(currentData)
-  
       
   
       response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
-      response.end( JSON.stringify(currentData) )
+      response.end( JSON.stringify(appdata) )
+
+      //response.end( JSON.stringify(currentData) )
     })
   }
 }

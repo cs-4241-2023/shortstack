@@ -86,3 +86,7 @@ p {
   border-color: #d2d1fd;
   text-align: center
 }
+
+.editGoalForm {
+  visibility: hidden;
+}

@@ -64,10 +64,46 @@ const setGoal = async function( event ) {
 
   const displayGoal = document.querySelector( '#termGradeGoal' )
   
+  displayGoal.innerText = res.goal
+  displayGoal.className = res.goal
+  /*
   const termGoal = document.createElement('p')
   termGoal.innerText = res.goal
   termGoal.className = res.goal
   displayGoal.appendChild(termGoal)
+  */
+  const editGoalButton = document.createElement('button')
+  editGoalButton.onclick = editGoal
+  editGoalButton.innerText = "Change Goal"
+
+  goal.style.visibility = "hidden"
+  document.querySelector( '#setGoal' ).style.visibility = "hidden"
+  
+  const editGoalForm = document.querySelector( '#editGoalForm' )
+  editGoalForm.style.visibility = "visible"
+  editGoalForm.appendChild(editGoalButton)
+
+}
+
+const editGoal = async function( event ) {
+  event.preventDefault()
+
+  const goal = document.querySelector( '#newDesiredGoal' ),
+        json = { goal: goal.value }
+        body = JSON.stringify( json )
+  
+  const response = await fetch( '/editGoal' , {
+    method:'POST',
+    body
+  })
+
+  const res = await response.json()
+  console.log("res", res, res.goal)
+
+  const displayGoal = document.querySelector( '#termGradeGoal' )
+  
+  displayGoal.innerText = res.goal
+  displayGoal.className = res.goal
 }
 
 
@@ -87,25 +123,34 @@ const addHours = async function( event ) {
 
   const res = await response.json()
   console.log("res: ", res)
+  console.log("lOL")
 
   const table = document.querySelector( '#badmintonDisplay' )
 
-  const newRow = document.createElement('tr')
+  document.querySelector("#badmintonDisplay tr").remove
+  //table.innerHTML = ''
 
-  for(let d in res){
-    const element = document.createElement('td')
-    
-    //handling having negative time remaining
-    if(d === 'remaining' && res[d] <= 0){
-      element.innerText = 0
-    } else {
-      element.innerText = res[d]
+  res.forEach( d => {
+
+    const newRow = document.createElement('tr')
+
+    for(let r in d){
+      const element = document.createElement('td')
+      
+      //handling having negative time remaining
+      if(d === 'remaining' && d[r] <= 0){
+        element.innerText = 0
+      } else {
+        element.innerText = d[r]
+      }
+  
+  
+      newRow.appendChild(element) 
     }
 
-
-    newRow.appendChild(element) 
-  }
-
     table.appendChild(newRow)
+  })
+
+
 
 }
