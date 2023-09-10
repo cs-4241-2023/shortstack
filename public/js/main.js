@@ -1,27 +1,64 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+const submit = async function (event) {
+  event.preventDefault();
 
-  const response = await fetch( '/submit', {
-    method:'POST',
-    body 
-  })
+  const form = document.querySelector("#task-form");
 
-  const text = await response.text()
+  let task = document.getElementById("task").value;
+  let desc = document.getElementById("description").value;
+  let date = document.getElementById("dueDate").value;
+  let priority = document.getElementById("priority").value;
 
-  console.log( 'text:', text )
-}
+  let json = { task, desc, date, priority };
+  let body = JSON.stringify(json);
 
-window.onload = function() {
-   const button = document.querySelector("button");
+  console.log("text:", body);
+
+  const response = await fetch("/submit", {
+    method: "POST",
+    body,
+  });
+
+  const data = await response.json();
+  getTasks(data);
+};
+
+const createRow = (task, desc, date, priority) => {
+  let row = document.createElement("tr");
+  row.append(createCell(task));
+  row.append(createCell(desc));
+  row.append(createCell(date));
+  row.append(createCell(priority));
+
+  return row;
+};
+
+const createCell = data => {
+  const cell = document.createElement("td");
+  cell.textContent = data;
+  return cell;
+};
+
+const getTasks = async function (data) {
+  const table = document.querySelector("table");
+  table.replaceChildren();
+
+  data.forEach(task => {
+    let row = createRow(task.task, task.desc, task.date, task.priority);
+    table.append(row);
+  });
+};
+
+window.onload = async function () {
+  const button = document.querySelector("button");
   button.onclick = submit;
-}
+
+  const response = await fetch("/tasks", {
+    method: "GET",
+  });
+
+  const data = await response.json();
+
+  getTasks(data);
+};

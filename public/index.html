@@ -3,7 +3,6 @@
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8" />
-    <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css" />
 
     <!-- get rid of favicon error -->
@@ -11,9 +10,46 @@
   </head>
 
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here" />
-      <button>submit</button>
-    </form>
+    <div class="container">
+      <h1>To-do List</h1>
+
+      <form id="task-form">
+        <div class="input-grid">
+          <div class="input-container">
+            <label for="task">Task</label>
+            <input type="text" id="task" placeholder="Enter Task" />
+          </div>
+
+          <div class="input-container">
+            <label for="description">Description</label>
+            <input type="text" id="description" placeholder="Do thing" />
+          </div>
+
+          <div class="input-container">
+            <label for="dueDate">Due Date</label>
+            <input type="text" id="dueDate" placeholder="03/30/2024" />
+          </div>
+
+          <div class="input-container">
+            <label for="priority">Priority</label>
+            <input type="text" id="priority" placeholder="P1" />
+          </div>
+        </div>
+        <button>Submit Task</button>
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script src="js/main.js"></script>
   </body>
 </html>
