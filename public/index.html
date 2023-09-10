@@ -8,10 +8,12 @@
   <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 </head>
 <body>
-<h1>WPI School Work Tracker</h1>
-<p>This application allows you to track assignments for your WPI classes. Please input information about the assignment
-  below and this web application will store it for you! The application will also calculate a relative priority for the
-  assignment based on the difficulty and due date of the inputted assignment.</p>
+<div id="header-and-text">
+  <h1>WPI School Work Tracker</h1>
+  <p>This application allows you to track assignments for your WPI classes. Please input information about the assignment
+    below and this web application will store it for you! The application will also calculate a relative priority for the
+    assignment based on the difficulty and due date of the inputted assignment.</p>
+</div>
 
 <div id="edit-window">
   <h3>Edit Assignment Information:</h3>
@@ -31,8 +33,6 @@
   <button id="submit-button">Submit</button>
   <p id="submission-message">Text</p>
 </form>
-
-<h3>Tracked Assignments Stored on Node.js Server</h3>
-<div id="show-information"> </div>
+<h3 id="table-title">Tracked Assignments Stored on Node.js Server</h3>
 </body>
 </html>

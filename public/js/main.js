@@ -72,8 +72,10 @@ const clearTextBoxes = function() {
  * @returns {Promise<void>}
  */
 const getAllData = async function () {
-  // clear table before data fetch
-  document.getElementById("show-information").innerHTML = "";
+  // clear table before data fetch if it exists
+  if(document.querySelector("table") !== null) {
+    document.querySelector("table").remove();
+  }
 
   // get app data from server as JSON
   const appResponse = await fetch('/assignment-data', {method: 'GET'});
@@ -115,7 +117,7 @@ const getAllData = async function () {
     row.appendChild(deleteButton);
     table.appendChild(row);
   });
-  document.getElementById("show-information").appendChild(table);
+  document.querySelector("body").appendChild(table);
 }
 
 /**
