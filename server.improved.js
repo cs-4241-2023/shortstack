@@ -53,7 +53,6 @@ const handlePost = function( request, response ) {
     json.id = nextId
     nextId += 1
     appdata.push(json);
-    console.log(appdata)
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end('added new student!')
   })
@@ -69,12 +68,10 @@ const handleDelete = function( request, response ) {
     response.end('deleted all users!')
     return
   }
-  
+
   request.on( 'data', function( data ) {
     dataString += data
   })
-
-  console.log(dataString);
 
   request.on( 'end', function() {
 

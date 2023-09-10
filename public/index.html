@@ -10,51 +10,54 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form method="post">
-      <ul>
-        <p>
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="user_name"value="alex marrinan" />
-        </p>
-        <p>
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="user_email"value="alex@balroe.com" />
-        </p>
-        <p>
-          <label for="msg">Type:</label>
-          <input type="text" id="type" name="user_type"value="student" />
-        </p>
-        <p>
-          <label for="msg">Major:</label>
-          <input type="text" id="major" name="user_major"value="cs/imgd" />
-        </p>
-<!-- 
-        <form>
-          <input type="file" id="myFile" name="filename">
-          <input type="submit">
-        </form> -->
-          <button id="submitButton">Create new user</button>
-          <button id="clearTableButton">Clear all users</button>
-        <!-- <li class="button">
-          <button type="get">Get text file</button>
-        </li> -->
-      </ul>
-    </form>
-    <div>
-      <p>-----REGISTERED USERS -----</p>
-          <table id="usertable">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Type</th>
-                <th>Dept.</th>
-              </tr>
-            </thead>
-            <tbody id="usertablebody">
-
-            </tbody>
-          </table>
-      </div>
+    <div class="flex-container">
+      <form method="post">
+        <ul>
+          <p>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="user_name"value="alex marrinan" />
+          </p>
+          <p>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="user_email"value="alex@balroe.com" />
+          </p>
+          <p>
+            <label for="msg">Type:</label>
+            <input type="text" id="type" name="user_type"value="student" />
+          </p>
+          <p>
+            <label for="msg">Major:</label>
+            <input type="text" id="major" name="user_major"value="cs/imgd" />
+          </p>
+  <!-- 
+          <form>
+            <input type="file" id="myFile" name="filename">
+            <input type="submit">
+          </form> -->
+            <button id="submitButton">Create new user</button>
+            <button id="clearTableButton">Clear all users</button>
+          <!-- <li class="button">
+            <button type="get">Get text file</button>
+          </li> -->
+        </ul>
+      </form>
+      <span></span>
+      <div>
+        <p class="flex-text">------------ REGISTERED USERS ------------</p>
+            <table id="usertable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Type</th>
+                  <th>Dept.</th>
+                </tr>
+              </thead>
+              <tbody id="usertablebody">
+  
+              </tbody>
+            </table>
+        </div>
+    </div>
   </body>
 </html>

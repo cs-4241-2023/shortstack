@@ -1,4 +1,35 @@
 body {
-  background:black;
+  background:gray;
   color:white;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+.flex-text {
+  display: flex;
+  justify-content: center;
+}
+
+table, th, td {
+  border: 1px solid;
+  padding: 8px;
+  border-collapse: collapse;
+}
+
+th {
+  height: 70px;
+}
+
+td {
+  text-align: center;
+}
+
+span {
+  width: 50px;
+  height: 50px;
 }
