@@ -7,8 +7,8 @@ const http = require('http'),
 
 // this is the data contained by the server, it will hold the assignments submitted by users. It is currently filled with example data.
 const appdata = [
-  {className: "CS 4241", assignmentName: "Assignment 2", dueDate:"2023-09-11", difficulty: 5, priority: "Medium"},
-  {className: "CS 3013", assignmentName: "Homework 1", dueDate:"2023-09-05", difficulty: 3, priority: "Low"}
+  {id: 100000 , className: "CS 4241", assignmentName: "Assignment 2", dueDate:"2023-09-11", difficulty: 5, priority: "Medium"},
+  {id: 200000 , className: "CS 3013", assignmentName: "Homework 1", dueDate:"2023-09-05", difficulty: 3, priority: "Low"}
 ];
 
 // server variable that handles requests
@@ -39,17 +39,39 @@ const handlePut = function (request, response) {
     dataString += data;
   });
 
-
-  request.on('end', function(data) {
+  request.on('end', function() {
+    // parse edited data into JSON
     let editedData = JSON.parse(dataString);
 
+    // track if assignment is found
+    let found = false;
+
     appdata.forEach(assignment => {
-      if(JSON.stringify(editedData) === JSON.stringify(assignment)) {
+      if(assignment.id === editedData.id && !found)
+      {
+        // assignment found
+        found = true;
+
+        // recalculate the priority
+        editedData.priority = calculatePriority(editedData.dueDate, editedData.difficulty);
+
+        // replace assignment with the same ID
         appdata[appdata.indexOf(assignment)] = editedData;
-        response.writeHead(200, "OK", {'Content-Type': 'text/json'});
-        response.end(JSON.stringify({result: "success", message: ""}));
       }
     });
+
+    if(found)
+    {
+      // successful PUT request
+      response.writeHead(200, "OK", {'Content-Type': 'text/json'});
+      response.end(JSON.stringify({result: "success", message: ""}));
+    }
+    else
+    {
+      // should not be possible but
+      response.writeHead(200, "OK", {'Content-Type': 'text/json'});
+      response.end(JSON.stringify({result: "failure", message: `ID ${editedData.id} not found.`}));
+    }
   });
 }
 

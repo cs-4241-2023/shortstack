@@ -10,6 +10,7 @@ const submitAssignment = async function(event) {
 
   // get information from input text boxes and parse into a JSON
   const inputJSON = JSON.stringify({
+    id: Date.now(), // timestamp id
     className: document.querySelector("#class-name").value,
     assignmentName: document.querySelector("#assignment-name").value,
     dueDate: document.querySelector("#due-date").value,
@@ -33,7 +34,7 @@ const submitAssignment = async function(event) {
   {
     // show success message
     message.style.color = "green";
-    message.textContent = "Success!";
+    message.textContent = "Success";
     clearTextBoxes();
 
     // update data table with new data
@@ -43,7 +44,7 @@ const submitAssignment = async function(event) {
   {
     // show failure message
     message.style.color = "red";
-    message.textContent = "Failure! " + dataResponse.message;
+    message.textContent = "Failure: " + dataResponse.message;
   }
   // un-hide element
   message.style.visibility = "visible"
@@ -136,6 +137,7 @@ const editPopUp = function (assignment) {
   // hide original form and show pop-up
   document.querySelector("#assignment-form").style.visibility = "hidden";
   document.querySelector("#edit-window").style.visibility = "visible";
+  document.querySelector("#edit-message").style.visibility = "hidden";
 
   // populate text boxes with existing data
   document.querySelector("#class-name-edit").value = assignment.className;
@@ -143,7 +145,7 @@ const editPopUp = function (assignment) {
   document.querySelector("#due-date-edit").value = assignment.dueDate;
   document.querySelector("#difficulty-edit").value = assignment.difficulty;
 
-  document.querySelector("#submit-button-edit").onclick = () => editAssignment(assignment);
+  document.querySelector("#submit-button-edit").onclick = () => editAssignment(assignment.id);
 
   document.querySelector("#cancel-edit-button").onclick = () => {
     // hide pop-up and restore normal form
@@ -154,17 +156,49 @@ const editPopUp = function (assignment) {
 
 /**
  * Edits a given assignment on the Node.js server
- * @param assignment the assignment that needs to be edited
+ * @param assignmentId the assignmentID of the original assignment
  * @returns {Promise<void>}
  */
-const editAssignment = async function(assignment) {
+const editAssignment = async function(assignmentId) {
+
+  // generate new assignment JSON with the same original ID
+  const editedJSON = JSON.stringify({
+    id: assignmentId, // timestamp id
+    className: document.querySelector("#class-name-edit").value,
+    assignmentName: document.querySelector("#assignment-name-edit").value,
+    dueDate: document.querySelector("#due-date-edit").value,
+    difficulty: document.querySelector("#difficulty-edit").value,
+    priority: "" // priority will be re-calculated on the server
+  });
 
   const response = await fetch("/" ,{
     method: "PUT",
-    body: JSON.stringify(assignment)
-  })
+    body: editedJSON
+  });
 
-  await getAllData();
+  const dataResponse = await response.json();
+  let message = document.querySelector("#edit-message");
+
+  if(dataResponse.result === "success")
+  {
+    // show success message
+    message.style.color = "green";
+    message.textContent = "Edit Successful!";
+
+    // update data table with new data
+    await getAllData();
+  }
+  else
+  {
+    // show failure message
+    message.style.color = "red";
+    message.textContent = "Edit Failure:  " + dataResponse.message;
+  }
+  // un-hide element
+  message.style.visibility = "visible"
+
+  document.querySelector("#assignment-form").style.visibility = "visible";
+  document.querySelector("#edit-window").style.visibility = "hidden";
 }
 
 /**
