@@ -1,7 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 let form, taskInput, dateInput, submitButton;
-let taskId = 0;
 
 function checkValidity() {
   if (taskInput.validity.valid && dateInput.validity.valid) {
@@ -23,7 +22,7 @@ function loadTasks(taskList) {
   taskList.forEach(t => {
     let item = document.createElement('li');
     item.className = 'task-item'
-    item.id = t.id;
+    item.id = t.taskId;
 
     let taskLabel = document.createElement('label');
     taskLabel.innerHTML = t.taskName;
@@ -76,10 +75,10 @@ function updateTasks(taskList) {
   let previousList = Array.from(currentTasks);
 
   let ids = [];
-  taskList.forEach(t => { ids.push(t.id) });
+  taskList.forEach(t => { ids.push(t.taskId) });
 
   for (let i = 0; i < previousList.length; i++) {
-    if (!ids.includes(previousList[i].id)) {
+    if (!ids.includes(parseInt(previousList[i].id))) {
       previousList[i].remove();
       break;
     }
@@ -93,8 +92,7 @@ const submit = async function( event ) {
         dateInput = document.querySelector('#dueDate').value,
         priorityInput = document.querySelector('#priorityFlag').value;
 
-  const json = { taskName: taskInput, dueDate: dateInput, priority: priorityInput, id: taskId};
-  taskId++;
+  const json = { taskName: taskInput, dueDate: dateInput, priority: priorityInput};
   const body = JSON.stringify(json);
 
   const postResponse = await fetch( '/submit', {

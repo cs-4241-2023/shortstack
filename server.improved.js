@@ -8,6 +8,7 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
+let taskId = 0;
 let taskList = [];
 
 const server = http.createServer( function( request,response ) {
@@ -63,6 +64,8 @@ const submitTasks = function( request, response ) {
     else {
       info.daysRemaining = "Overdue";
     }
+    info.taskId = taskId;
+    taskId = taskId + 1;
 
     console.log(info);
     taskList.push(info);
@@ -82,7 +85,7 @@ const deleteTask = function(request, response) {
   request.on('end', function() {
     let info = JSON.parse(dataString);
     for (let i = 0; i < taskList.length; i++) {
-      if (parseInt(info.id) === taskList[i].id) {
+      if (parseInt(info.id) === taskList[i].taskId) {
         taskList.splice(i, 1);
         break;
       }
