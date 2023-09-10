@@ -47,11 +47,11 @@ To remove an appointment, click the "Remove" button corresponding to the appoint
 - **Student Name: Justin Santiago Wonoski**:
 - Task: The user was asked to modify an existing vehicle appointment in the log using the provided form.
 
-- Problems: Justin initially had difficulty figuring out how to edit an existing appointment. He mentioned that the "Modify" and "Remove" buttons were not very prominent and suggested making them more visually distinct.
+- Problems: The user initially had difficulty figuring out how to edit an existing appointment. He mentioned that the "Modify" and "Remove" buttons were not very prominent and suggested making them more visually distinct.
 
-- Surprising Comments: Justin appreciated the responsive design, particularly how the web page adapted to his mobile device. He also mentioned that the use of UUIDs for appointments was a smart choice for data management.
+- Surprising Comments: The user appreciated the responsive design, particularly how the web page adapted to his mobile device. He also mentioned that the use of UUIDs for appointments was a smart choice for data management.
 
-- Changes Based on Feedback: Based on Justin's feedback, I would consider making the "Modify" and "Remove" buttons more prominent, either by using contrasting colors or larger buttons. This would make it easier for users to interact with and modify existing appointments.
+- Changes Based on Feedback: Based on the user's feedback, I would consider making the "Modify" and "Remove" buttons more prominent, either by using contrasting colors or larger buttons. This would make it easier for users to interact with and modify existing appointments.
 
 - **Student Name: Ryan Kornitsky**:
 - Task: The user was asked to add a new vehicle appointment to the service log using the provided form.
