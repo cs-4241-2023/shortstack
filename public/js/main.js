@@ -36,21 +36,43 @@ const submit = async function( event ) {
   addToTable(json)
 }
 
+const deleteUser = async function ( json, event ){  
+  body = JSON.stringify( json )
+  const response = await fetch( "/deleteUser", {
+    method:"DELETE",
+    body:body
+  })
+  const text = await response.text()
+  console.log( 'text:', text)
+  location.reload()
+}
+
+const clearAll = async function ( event ){  
+  body = {all: true}
+  const response = await fetch( "/clearUsers", {
+    method:"DELETE",
+    body: body
+  })
+  const text = await response.text()
+  console.log( 'text:', text)
+  location.reload()
+}
+
 const getUsersData = async function ( event ){  
   const response = await fetch( '/getUsers' )
 
   const text = await response.text()
-  addJsonToTable(JSON.parse(text))
+  updateTable(JSON.parse(text))
 }
 
-function addJsonToTable(newData){
+function updateTable(newData){
   for (let i = 0; i < Object.keys(newData).length; i++){
     addToTable(newData[i])
   }
 }
 
 function addToTable(newRow){
-    const table=document.getElementById("usertable");
+    const table = document.getElementById('usertable').getElementsByTagName('tbody')[0]
     var row = table.insertRow(-1);
     // var x = row.insertCell(0;
     // x.innerHTML = "<p>new cell</p>";
@@ -59,15 +81,26 @@ function addToTable(newRow){
     var emailCell = row.insertCell(1);
     var typeCell = row.insertCell(2);
     var majorCell = row.insertCell(3);
+    var xCell = row.insertCell(4);
 
     nameCell.innerHTML = newRow["name"]
     emailCell.innerHTML = newRow["email"]
     typeCell.innerHTML = newRow["type"]
     majorCell.innerHTML = newRow["department"]
+
+    const xButton = document.createElement('button');
+    xButton.className = 'deleteButton'
+    xButton.onclick=() => {
+      deleteUser(newRow);
+    }
+    xButton.innerHTML = "X"
+    xCell.append(xButton)
 }
 
 window.onload = function() {
-  const button = document.querySelector("button");
+  const submitButton = document.getElementById("submitButton");
+  const clearTableButton = document.getElementById("clearTableButton");
   getUsersData()
-  button.onclick = submit;
+  submitButton.onclick = submit;
+  clearTableButton.onclick = clearAll
 }

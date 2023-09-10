@@ -9,15 +9,20 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  {'name':'Alex Marrinan', 'email': 'ammarrinan@wpi.edu','type': 'student', 'department': 'CS/IMGD'},
-  {'name':'Charlie Roberts', 'email': 'croberts@wpi.edu','type': 'professor', 'department': 'CS/IMGD'}
+  {'name':'Alex Marrinan', 'email': 'ammarrinan@wpi.edu','type': 'student', 'department': 'CS/IMGD', 'id': 0},
+  {'name':'Charlie Roberts', 'email': 'croberts@wpi.edu','type': 'professor', 'department': 'CS/IMGD', 'id': 1}
 ]
+
+var nextId = 2
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
+  }
+  else if( request.method === 'DELETE' ){
+    handleDelete( request, response ) 
   }
 })
 
@@ -37,7 +42,6 @@ const handleGet = function( request, response ) {
 const handlePost = function( request, response ) {
   let dataString = ''
   if (request.url !== '/newUser'){
-    console.log("Unknown POST request!")
     return
   }
   request.on( 'data', function( data ) {
@@ -45,14 +49,48 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-
-    appdata.push(JSON.parse(dataString));
+    const json = JSON.parse(dataString)
+    json.id = nextId
+    nextId += 1
+    appdata.push(json);
     console.log(appdata)
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end('added new student!')
   })
 }
 
+const handleDelete = function( request, response ) {
+    
+  let dataString = ''
+  if (request.url === '/clearUsers'){
+    var len = appdata.length
+    appdata.splice(0, len)
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end('deleted all users!')
+    return
+  }
+  
+  request.on( 'data', function( data ) {
+    dataString += data
+  })
+
+  console.log(dataString);
+
+  request.on( 'end', function() {
+
+    let data = JSON.parse(dataString);
+    for (var i = 0; i < appdata.length; i++){
+      if (appdata[i].id === data.id){
+        appdata.splice(i, 1)
+        response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+        response.end('deleted user!')
+        return
+      }
+    }
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end('user not found!')
+  });
+} 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
 
@@ -65,12 +103,11 @@ const sendFile = function( response, filename ) {
        response.writeHeader( 200, { 'Content-Type': type })
        response.end( content )
 
-     }else{
+     }else{      
 
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
-
+      //  // file not found, error code 404
+      //  response.writeHeader( 404 )
+      //  response.end( '404 Error: File Not Found' )
      }
    })
 }

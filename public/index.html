@@ -33,23 +33,27 @@
           <input type="file" id="myFile" name="filename">
           <input type="submit">
         </form> -->
-        <li>
-          <button class="submitButton">Create new user</button>
-        </li>
+          <button id="submitButton">Create new user</button>
+          <button id="clearTableButton">Clear all users</button>
         <!-- <li class="button">
           <button type="get">Get text file</button>
         </li> -->
       </ul>
     </form>
     <div>
-      <p> *** REGISTERED USERS ***</p>
+      <p>-----REGISTERED USERS -----</p>
           <table id="usertable">
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Type</th>
-              <th>Dept.</th>
-            </tr>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th>Dept.</th>
+              </tr>
+            </thead>
+            <tbody id="usertablebody">
+
+            </tbody>
           </table>
       </div>
   </body>
