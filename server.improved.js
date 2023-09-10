@@ -59,6 +59,7 @@ const handlePost = function( request, response ) {
       response.end('test')
     })
   }  
+  // Implementation for Edit: If I got time. 
   // else if( request.url === '/edit' ) {
   //   //Implement edit function here.
   //   request.on( 'data', function( data ) {

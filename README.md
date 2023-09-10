@@ -94,7 +94,13 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Tech Achievement 1**: Created a single page app that will constantly show the user the data within the table. It can be added or removed just through the button on the left.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- **Design Achievement 1**: I got some new colors for this assignment via a pallet picker. (If I need to link this let me know). 
+
+- **Design Achievement 2**: I used google fonts for a Open Sans font. 
+
+- **Design Achievement 3**: Used the flexboxes to keep things centered and organized. 
+
+
