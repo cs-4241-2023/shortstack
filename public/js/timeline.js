@@ -8,8 +8,9 @@ const addTimelineItem = async function (event) {
   const dateInput = document.querySelector('#date');
   const descriptionInput = document.querySelector('#description');
   console.log(dateInput.value);
+  const errorMsg = document.getElementById("timelineErrorMessage")
   if (isNaN(dateInput.value)) {
-    document.getElementById("timelineErrorMessage").style.display = "block";
+    errorMsg.style.display = "block";
   } else {
 
     document.getElementById("timelineErrorMessage").style.display = "none";
@@ -41,16 +42,48 @@ function CreateTimeline(data) {
     const timelineItem = document.createElement("div");
     timelineItem.id= "timelineItem" + i; 
     const deleteButton = document.createElement("button");
+    deleteButton.id = "timelineDeleteButton";
     deleteButton.innerHTML = "X";
+
+    const modifyButton = document.createElement("button");
+    modifyButton.id = "timelineModifyButton";
+    modifyButton.innerHTML = "Modify"
     
     //edit button appearance
     deleteButton.onclick= () => {
       let text = "timelineItem" + i;
       const tempButton = document.getElementById(text).outerHTML="";
+      let json = JSON.stringify(data[i]);
+      fetch( "/timelineData", {
+        method:"DELETE",
+        body: json
+      })
       //account for in backend
       console.log(tempButton.id);
+      window.dispatchEvent(updateCharactersEvent)
+
+    }
+
+    modifyButton.onclick = () => {
+      
+      //TODO: create error checking features
+      let text = "timelineItem" + i;
+      const tempButton = document.getElementById(text).outerHTML="";
+      let json = JSON.stringify(data[i]);
+      fetch( "/timelineData", {
+        method:"DELETE",
+        body: json
+      })
+      //account for in backend
+      console.log(tempButton.id);
+      window.dispatchEvent(updateCharactersEvent)
+      
+
+      
+
     }
     timelineItem.appendChild(deleteButton);
+    timelineItem.appendChild(modifyButton);
 
     timelineItem.className = "container";
     const innerItemText = document.createElement("div");
@@ -76,3 +109,5 @@ window.onload = async function () {
   const data = await response.json();
   CreateTimeline(data);
 }
+
+const updateCharactersEvent = new CustomEvent('updateCharacters', { });

@@ -1,3 +1,5 @@
+const { time } = require('console')
+
 const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
@@ -29,8 +31,60 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
+  } else if(request.method === 'DELETE'){
+    handleDelete( request, response)
   }
 })
+
+const handleDelete = function( request, response) {
+  if(request.url === '/timelineData'){
+    console.log("Handle Delete");
+    let dataString = ''
+
+    request.on( 'data', function( data ) {
+      dataString += data
+     })
+
+    console.log(dataString);
+
+    request.on( 'end', function() {
+      let data = JSON.parse(dataString);
+      let index = -1;
+
+
+      index = timelineData.findIndex(item => 
+        item.era === data.era && item.date === data.date && item.description === data.description
+      );
+
+      if (index > -1) {
+        timelineData.splice(index, 1);
+      }
+      RecheckCharacters();
+    })
+  } else if(request.url === '/characterData'){
+    console.log("Handle Delete");
+    let dataString = ''
+
+    request.on( 'data', function( data ) {
+      dataString += data
+     })
+
+    console.log(dataString);
+
+    request.on( 'end', function() {
+      let data = dataString
+
+
+      index = characterData.findIndex(item => 
+        item.name === data );
+
+      if (index > -1) {
+        characterData.splice(index, 1);
+      }
+      console.log(characterData);
+    })
+  } 
+}
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
@@ -82,10 +136,11 @@ const handlePost = function( request, response ) {
     response.end('test')
     }
 
-    // ... do something with the data here!!!
 
   })
 }
+
+
 
 //passed a json object with date and era, assigns era based on given timeline info, returns new json object
 
@@ -97,14 +152,29 @@ function RecheckCharacters(){
 
 function AssignEra(value){
   value.era = "unknown"
-  for(let i = 0; i < timelineData.length;  i++){
-    if(timelineData[i].date < value.start || timelineData[i].date < value.end){
+
+  if(timelineData.length === 0){
+    return;
+  }
+  for(let i = 0; i < timelineData.length - 1;  i++){
+    //check if incoming character is contained in each age
+    let total = value.end - value.start;
+    if( (value.start >= timelineData[i].date && value.start <= timelineData[i+1].date - 1) || (timelineData[i].date >= value.start && timelineData[i+1].date - 1 <= value.end) || (value.end >= timelineData[i].date && value.end <= timelineData[i+1].date - 1)){
       if(value.era === "unknown"){
         value.era = "";
         value.era += timelineData[i].era;
       } else{
         value.era += ", " + timelineData[i].era;
       }
+    }
+  }
+
+  if((value.start >= timelineData[timelineData.length - 1].date) || (value.end >= timelineData[timelineData.length - 1].date)){
+    if(value.era === "unknown"){
+      value.era = "";
+      value.era += timelineData[timelineData.length - 1].era;
+    } else{
+      value.era += ", " + timelineData[timelineData.length - 1].era;
     }
   }
   return value;
