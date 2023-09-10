@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Data being added to the table: " + body);
     if (body !== "") {
-      form.reset();
+      clearForm();
       try {
         const response = await fetch('/submit', {
           method: 'POST',
@@ -32,6 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       alert("Please fill out all fields");
     }
+  }
+
+  function clearForm() {
+    form.reset();
   }
 
   window.onload = function () {

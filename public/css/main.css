@@ -11,8 +11,9 @@ button {
 
 /* Set a background color for the body */
 body {
+  background-image: linear-gradient(to right, #ffefba, #ffffff);
   font-family: 'Rubik', Helvetica, Arial, sans-serif;
-  color: #333;
+
 }
 
 /* Header styles */
@@ -36,11 +37,23 @@ body {
   margin-left: 20px;
 }
 
+#content-title {
+  font-size: 24px;
+  border-bottom: 2px solid #0077b6;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+#middle-line {
+  width: 1px;
+  display: flex;
+  background-color: black;
+}
+
 /* Main container styles */
 .main-container {
-  /* display: flex;
-  flex-direction: column; */
-  /* align-items: center; */
   text-align: center;
   margin-top: 95px;
   margin: 0 auto;
@@ -49,15 +62,6 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#content-title {
-  font-size: 24px;
-  border-bottom: 2px solid #0077b6;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
 }
 
 .motor-sports-logo {
@@ -70,8 +74,8 @@ body {
   display: flex;
   flex-direction: column;
   padding: 15px 50px 15px 15px;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .input-text-container {
@@ -113,23 +117,21 @@ body {
 }
 
 /* Button styles */
-.buttons-container button {
+#submit,
+#clear {
   align-items: center;
   appearance: none;
-  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
-  border: 0;
   border-radius: 6px;
   box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
   box-sizing: border-box;
-  color: #fff;
   cursor: pointer;
   display: inline-flex;
   font-family: "JetBrains Mono", monospace;
-  height: 40px;
   justify-content: center;
   line-height: 1;
   list-style: none;
   overflow: hidden;
+  height: 40px;
   padding-left: 16px;
   padding-right: 16px;
   position: relative;
@@ -144,17 +146,30 @@ body {
   font-size: 18px;
 }
 
+#submit {
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  color: #fff;
+  height: 40px;
+}
+
+#clear {
+  background-color: #f17b57;
+  border-width: 0;
+  color: #fff;
+}
+
 .buttons-container button:focus {
-  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
 }
 
 .buttons-container button:hover {
-  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
   transform: translateY(-2px);
 }
 
 .buttons-container button:active {
-  box-shadow: #3c4fe0 0 3px 7px inset;
+  box-shadow: #D6D6E7 0 3px 7px inset;
   transform: translateY(2px);
 }
 
@@ -172,7 +187,6 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transform: scale(1);
   transition: transform 0.3s ease;
-  margin-left: 15px;
 }
 
 .instruction-info:hover {
@@ -190,6 +204,7 @@ body {
 
 .list-container {
   margin-top: 20px;
+  margin-left: 10px;
 }
 
 .list-container ul {
@@ -199,9 +214,8 @@ body {
 }
 
 .list-container ul li {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   transition: transform 0.3s ease;
-  /* Add transition for rotation */
 }
 
 .list-container ul li:hover {
@@ -226,13 +240,12 @@ body {
 
 .list-container ul li::before {
   content: "\2022";
-  /* Use a bullet point as a list marker */
+  font-size: 30px;
   color: #00a896;
   display: inline-block;
   width: 1em;
   margin-left: -1em;
 }
-
 
 /* Table styles */
 .table-container {
@@ -336,20 +349,11 @@ body {
   transform: scale(1.025);
 }
 
-.unordered-list li {
-  color: black;
-  margin-left: 10px;
-  list-style: square;
-}
-
-.bck-img {
-  height: 100vh;
-}
-
 .empty-table-text {
   text-align: center;
   color: red;
-  padding-top: 35px;
+  margin-top: 35px;
+  margin-bottom: 20px;
   font-family: Rubik;
   font-size: larger;
 }
