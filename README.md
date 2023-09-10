@@ -90,11 +90,17 @@ You'll need to use sometype of collaborative software that will enable you both 
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## a2-tRaymodn
+My project is a web application that serves as a database for one's favorite music artists. Using the provided HTML form, the user
+can input the name, genre, and their rating of that artist into the database. The artists entered will then be given a leadership ranking and sort the artist based on that on the web page, showing the user what their favorite music artists are. A user can also enter the name and genre of an existing artist and input a new rating value to edit the entry in the database. A "delete" form is included, so that users can input the name of the artist they would like to delete and remove that artist from the database.
+All of my CSS was done using relative positioning, and I used flexboxes to arrange the elements in the <main> tag
+
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Create a Single-Page Application**: When the client sends data to the server such as an artist that needs to be removed from the database, or one that needs to be added to it using the HTML forms, that same page is updated when it receives the response from the server, in the form of the complete list of data to display from the database. This makes it such that the page can respond immedietly when the response from the server is received and edit the appropriate HTML elements.
+
+- **Be Able to Modify Existing Data in the Database**: My application implements this functionality in that if the name and genre of an artist that already exists in the database is entered into the submit form with an updated rating, the value on the server, and displayed on the screen will be updated with the new value
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: 

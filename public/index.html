@@ -5,17 +5,53 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Chakra+Petch:wght@500&family=Cinzel:wght@600&family=Gruppo&family=Handjet:wght@600&family=Poiret+One&family=Rye&display=swap" rel="stylesheet">
     <!-- get rid of favicon error -->
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <input type="text" id="artistname" value="Artist Name">
-      <input type="text" id="genre" value="Genre">
-      <input type="text" id="rating" value="Rating (1-10)">
-      <button>submit</button>
+    <div id="head">
+      <h1>Favorite Artists Database</h1>
+      <p style="text-align: center">This is a place where you can input your favorite artists and see how they stack up against one another based on your ratings!</p>
+      <p style="text-align: center">You can also edit existing entries by retyping their name and the updated information in the provided fields!</p>
+    </div>
+    <form id="createform">
+      <p style="text-align: center">Submit artist to the database here!</p>
+      <br>
+      <input type="text" id="artistname" class="grayed-out-input" placeholder="Artist Name">
+      <input type="text" id="genre" class="grayed-out-input" placeholder="Genre">
+      <input type="text" id="rating" class="grayed-out-input" placeholder="Rating (1-10)">
+      <button id="submitbutton">Submit</button>
     </form>
+    <main>
+      <div id="deleteaside">
+        <div class="divheader" id="deldivheader">
+          <h2 class="secondheader">Delete Artist</h2>
+        </div>
+        <p>Type the name of an artist in the database to delete</p>
+        <form id="deleteform">
+          <input type="text" id="delArtist" class="grayed-out-input" placeholder="Artist">
+          <button id="deletebutton">Delete</button>
+        </form>
+        <br><br>
+        <span id="errorzone"></span>
+      </div>
+      <div id="leaderboard">
+        <div class="divheader" id="rankdivheader">
+          <h2 class="secondheader">Ranking Leaderboard</h2>
+        </div>
+        <ol id="artistList"></ol>
+      </div>
+      <div id="favshowcase">
+        <div class="divheader" id="favdivheader">
+          <h2 class="secondheader">Favorite Artist</h2>
+        </div>
+        <div id="favartistinfo">
+          <h2 id="favartistlabel">No artists currently in database</h2>
+          <h3 id="favrating"></h3>
+        </div>
+      </div>
+    </main>
+    
   </body>
 </html>
