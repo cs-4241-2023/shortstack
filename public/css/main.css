@@ -66,8 +66,9 @@ textarea#task-body {
   padding: 0;
 }
 
-input[type=submit] {
-  width: 90%;
+.input-buttons {
+  display:flex;
+  gap: 10px;
 }
 
 /* 
