@@ -1,12 +1,12 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "task-management-app",
+  "version": "1.0",
+  "description": "A task management applicaiton",
+  "author": "Nathan Wong",
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
+    "mime": "^2.6.0"
   }
 }

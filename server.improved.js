@@ -8,11 +8,8 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+let taskId = 0;
+let taskList = [];
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -23,29 +20,79 @@ const server = http.createServer( function( request,response ) {
 })
 
 const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+  const filename = dir + request.url.slice(1); 
 
   if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }else{
-    sendFile( response, filename )
+    sendFile(response, 'public/index.html');
+  }
+  else if (request.url === '/tasks') {
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(taskList));
+  }
+  else{
+    sendFile(response, filename);
   }
 }
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+const handlePost = function(request, response) {
+  if (request.url === '/submit') {
+    submitTasks(request, response);
+  }
+  else if (request.url === '/deleteTask') {
+    deleteTask(request, response);
+  }
+}
 
-  request.on( 'data', function( data ) {
-      dataString += data 
+const submitTasks = function( request, response ) {
+  let dataString = '';
+
+  request.on( 'data', function(data) {
+      dataString += data;
   })
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+  request.on('end', function() {
+    let info = JSON.parse(dataString);
 
-    // ... do something with the data here!!!
+    const currentDate = new Date();
+    const objDate = new Date(info.dueDate);
+    if (currentDate <= objDate) {
+      const timeDifferenceInMilliseconds = objDate - currentDate;
+      const daysDifference = Math.ceil(timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24));
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+      info.daysRemaining = daysDifference > 1 ? `${daysDifference} days` : "1 day";
+    }
+    else {
+      info.daysRemaining = "Overdue";
+    }
+    info.taskId = taskId;
+    taskId = taskId + 1;
+
+    console.log(info);
+    taskList.push(info);
+
+    response.writeHead(200, "OK", {'Content-Type': 'text/plain' });
+    response.end('test');
+  })
+}
+
+const deleteTask = function(request, response) {
+  let dataString = '';
+
+  request.on( 'data', function(data) {
+      dataString += data;
+  })
+
+  request.on('end', function() {
+    let info = JSON.parse(dataString);
+    for (let i = 0; i < taskList.length; i++) {
+      if (parseInt(info.id) === taskList[i].taskId) {
+        taskList.splice(i, 1);
+        break;
+      }
+    }
+
+    response.writeHead(200, "OK", {'Content-Type': 'text/plain' });
+    response.end('test');
   })
 }
 
