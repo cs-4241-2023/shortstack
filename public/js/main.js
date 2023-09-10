@@ -27,7 +27,7 @@ window.onload = function() {
 }
 
 
-function updateTaskRows() {
+function initializeTaskRows() {
   const table = document.getElementById("task-table");
 
   for (let i = 1; i <= 5; i++) {
@@ -39,17 +39,37 @@ function updateTaskRows() {
 
     const doneButton = document.createElement("button");
     doneButton.className = "Completion-Button";
+    doneButton.title = "Complete The Task";
 
-    const taskText = document.createTextNode(`Task ${i}`);
+    const taskText = document.createElement("input");
+    taskText.type = "text";
+    taskText.value = `Task ${i}`;
+    taskText.title = "Click To Rename The Task";
 
     const rightContainer = document.createElement("div");
     rightContainer.className = "right-container";
 
+
+    const lowPriority = document.createElement("button");
+    lowPriority.className = "LowPriority-Button";
+    lowPriority.title = "Low Priority";
+    const mediumPriority = document.createElement("button");
+    mediumPriority.className = "MediumPriority-Button";
+    mediumPriority.title = "Medium Priority";
+    const highPriority = document.createElement("button");
+    highPriority.className = "HighPriority-Button";
+    highPriority.title = "High Priority";
+
     const myDayButton = document.createElement("button");
     myDayButton.className = "MyDay-Button";
+    myDayButton.title = "Remove From My Day";
 
     leftContainer.appendChild(doneButton);
     leftContainer.appendChild(taskText);
+
+    rightContainer.appendChild(lowPriority);
+    rightContainer.appendChild(mediumPriority);
+    rightContainer.appendChild(highPriority);
     rightContainer.appendChild(myDayButton);
 
     taskCell.appendChild(leftContainer);
@@ -61,5 +81,5 @@ function updateTaskRows() {
 }
 
 window.onload = function (){
-  updateTaskRows();
+  initializeTaskRows();
 }
