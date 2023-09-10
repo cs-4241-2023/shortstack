@@ -9,9 +9,9 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+  { 'index': 1, 'yourname': 'Justin', 'username': 'Sombero', 'email': 'jwonoski2@wpi.edu', 'position': 'DPS'},
+  { 'index': 2,'yourname': 'Mason', 'username': 'Sneke', 'email': 'mSneke@wpi.edu', 'position': 'Support'},
+  { 'index': 3,'yourname': 'Tim', 'username': 'Robo', 'email': 'tRobo@wpi.edu', 'position': 'Tank'} 
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -20,6 +20,9 @@ const server = http.createServer( function( request,response ) {
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
   }
+  else if( request.method === 'DELETE' ){
+    handleDelete( request, response ) 
+  }
 })
 
 const handleGet = function( request, response ) {
@@ -27,27 +30,63 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else{
+  }  else if( request.url === '/get' ) {
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(appdata))
+  }
+  else{
     sendFile( response, filename )
   }
+
 }
 
 const handlePost = function( request, response ) {
   let dataString = ''
 
-  request.on( 'data', function( data ) {
+  if( request.url === '/delete' ) {
+    request.on( 'data', function( data ) {
+      dataString += data
+      console.log(JSON.parse( dataString ))
+      //This deserves to be pee. Don't debate with me.
+      const pee = JSON.parse( dataString )  
+      const num = Number(pee.index)
+      console.log(num)
+        appdata.splice(num - 1, 1)
+    })
+
+    request.on( 'end', function() {
+      response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+      response.end('test')
+    })
+  } else {
+    request.on( 'data', function( data ) {
       dataString += data 
+      console.log(dataString)
   })
 
-  request.on( 'end', function() {
+    request.on( 'end', function() {
     console.log( JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
-
+    appdata.push( JSON.parse( dataString ) )
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end('test')
   })
+  }
+
 }
+
+// const handleDelete = function( request, response ) {
+//   request.on( 'data', function( data ) {
+//     console.log(request)
+//       appdata.splice(data.index, 1)
+//   })
+
+//   request.on( 'end', function() {
+//     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+//     response.end('test')
+//   })
+// }
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
