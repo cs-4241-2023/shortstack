@@ -32,6 +32,12 @@ body {
   gap: 4px;
 }
 
+.button-container {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
 label {
   font-size: 1.2rem;
 }
@@ -52,6 +58,11 @@ button {
   padding: 6px 10px;
 }
 
+.editButton {
+  text-align: center;
+  padding: 4px 14px;
+}
+
 table {
   background-color: gray;
   border-collapse: collapse;
@@ -63,6 +74,7 @@ th,
 td {
   border: 1px solid black;
   padding: 10px;
+  text-align: center;
 }
 
 td {

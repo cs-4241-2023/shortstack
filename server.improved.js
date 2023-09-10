@@ -9,10 +9,12 @@ const http = require("http"),
   port = 3000;
 
 const appdata = [
-  { task: "toyota", desc: "thing", date: 23, priority: "P1" },
-  { task: "toyota", desc: "thing", date: 23, priority: "P1" },
-  { task: "toyota", desc: "thing", date: 23, priority: "P1" },
-  { task: "toyota", desc: "thing", date: 23, priority: "P1" },
+  {
+    task: "Brush teeth",
+    desc: "Grab toothbrush and toothpaste",
+    date: "03/20/23",
+    priority: "P1",
+  },
 ];
 
 const server = http.createServer(function (request, response) {
@@ -55,7 +57,26 @@ const handlePost = function (request, response) {
   });
 };
 
-const handleDelete = function (request, response) {};
+const handleDelete = function (request, response) {
+  let dataString = "";
+
+  request.on("data", function (data) {
+    dataString += data;
+  });
+
+  request.on("end", function () {
+    let data = JSON.parse(dataString);
+    const index = appdata.findIndex(task => task.task === data.task);
+    if (index > -1) {
+      appdata.splice(index, 1);
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(JSON.stringify(appdata));
+    } else {
+      response.writeHead(404, { "Content-Type": "text/plain" });
+      response.end("Task not found");
+    }
+  });
+};
 
 const handlePut = function (request, response) {};
 
