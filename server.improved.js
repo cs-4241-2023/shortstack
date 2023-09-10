@@ -9,9 +9,8 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+  {'name':'Alex Marrinan', 'email': 'ammarrinan@wpi.edu','type': 'student', 'department': 'CS/IMGD'},
+  {'name':'Charlie Roberts', 'email': 'croberts@wpi.edu','type': 'professor', 'department': 'CS/IMGD'}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -24,9 +23,12 @@ const server = http.createServer( function( request,response ) {
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
-
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
+  }
+  if( request.url === '/getUsers' ) {
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end(JSON.stringify(appdata));
   }else{
     sendFile( response, filename )
   }
@@ -34,18 +36,20 @@ const handleGet = function( request, response ) {
 
 const handlePost = function( request, response ) {
   let dataString = ''
-
+  if (request.url !== '/newUser'){
+    console.log("Unknown POST request!")
+    return
+  }
   request.on( 'data', function( data ) {
       dataString += data 
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
-
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    appdata.push(JSON.parse(dataString));
+    console.log(appdata)
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end('added new student!')
   })
 }
 

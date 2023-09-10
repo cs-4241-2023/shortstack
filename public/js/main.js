@@ -7,21 +7,67 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+  const form = document.querySelector('form')
 
-  const response = await fetch( '/submit', {
+
+  const inputName = form["name"],
+        inputEmail = form["email"],
+        inputType = form["type"],
+        inputDepartment = form["major"]
+
+  console.log(inputName)
+  console.log(inputEmail)
+  console.log(inputType)
+  console.log(inputDepartment)
+      
+  const json = { 'name': inputName.value, 'email': inputEmail.value, 'type': inputType.value, 'department': inputDepartment.value }, //whatever: "whatever" },
+        body = JSON.stringify( json )
+        console.log(body)
+  
+  const response = await fetch( '/newUser', {
     method:'POST',
-    body 
+    body
   })
 
-  const text = await response.text()
 
-  console.log( 'text:', text )
+  const text = await response.text()
+  
+  console.log( 'text:', text)
+  addToTable(json)
+}
+
+const getUsersData = async function ( event ){  
+  const response = await fetch( '/getUsers' )
+
+  const text = await response.text()
+  addJsonToTable(JSON.parse(text))
+}
+
+function addJsonToTable(newData){
+  for (let i = 0; i < Object.keys(newData).length; i++){
+    addToTable(newData[i])
+  }
+}
+
+function addToTable(newRow){
+    const table=document.getElementById("usertable");
+    var row = table.insertRow(-1);
+    // var x = row.insertCell(0;
+    // x.innerHTML = "<p>new cell</p>";
+    // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+    var nameCell = row.insertCell(0);
+    var emailCell = row.insertCell(1);
+    var typeCell = row.insertCell(2);
+    var majorCell = row.insertCell(3);
+
+    nameCell.innerHTML = newRow["name"]
+    emailCell.innerHTML = newRow["email"]
+    typeCell.innerHTML = newRow["type"]
+    majorCell.innerHTML = newRow["department"]
 }
 
 window.onload = function() {
-   const button = document.querySelector("button");
+  const button = document.querySelector("button");
+  getUsersData()
   button.onclick = submit;
 }
