@@ -1,62 +1,45 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>a2-SmeeBoi</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
+<head>
+  <title>a2-SmeeBoi</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
 
 
-  <body>
-    <h1>Audio Visualizer Form</h1>
+<body>
+  <h1>Spacebar Game</h1>
 
-    <form action="#" method="POST" enctype="multipart/form-data">
-      <label for="name">Username:</label>
-      <input type="text" id="name" name="name" required><br><br>
+  <form>
+    <label for="yourname">Your name:</label>
+    <input type="text" id="yourname">
 
-      <label for="audio">Audio File (Max 30 seconds):</label>
-      <input type="file" id="audio" name="audio" accept=".mp3, .wav" required><br><br>
+    <label for="color">Color:</label>
+    <input type="text" id="color">
+<!-- 
+    <label for="colorPick">Choose a color:</label>
+    <select id="colorPick" name="colorPick">
+      <option value="red">Red</option>
+      <option value="white">White</option>
+      <option value="blue">Blue</option>
+    </select>
 
-      <label for="color">Color:</label>
-      <select id="color" name="color" required>
-          <option value="white">White</option>
-          <option value="blue">Blue</option>
-          <option value="green">Green</option>
-      </select><br><br>
+    <label for="image">Upload an image:</label>
+    <input type="file" id="image" name="image" accept="image/png, image/jpeg"> -->
 
-      <label for="style">Style:</label>
-      <input type="radio" id="lines" name="style" value="lines" required>
-      <label for="lines">Lines</label>
-      <input type="radio" id="dots" name="style" value="dots" required>
-      <label for="dots">Dots</label><br><br>
-
-      <input type="submit" value="Submit">
+    <button id="playbutton">PLAY</button>
   </form>
-
-  <p> When form is submitted, hide form and visualizer canvas takes its place. </p>
-
-  <p> AUDIO VISUALIZER OOOO </p>
-
-  <p> User can scroll down while it is playing to view the data section</p>
   
-  <p> Audio Visualizer data</p>
-  <ul>
-
-    <li>Username: </li>
-    <li>File Name: </li>
-    <li>File Duration: </li>
-    <li>File Size: </li>
-    <li>Color Choice: </li>
-    <li>Style Choice: </li>
-
-
-  </ul>
+  <p> Player Results</p>
+  
 
 </body>
+
 </html>

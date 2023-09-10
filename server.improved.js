@@ -1,60 +1,57 @@
-"use strict"; // Use strict mode for better practices
+const http = require( 'http' ), // http server core module
+      fs   = require( 'fs' ), // needed for loading static files
+      // IMPORTANT: you must run `npm install` in the directory for this assignment
+      // to install the mime library if you're testing this on your local machine.
+      // However, Glitch will install it automatically by looking in your package.json
+      // file.
+      mime = require( 'mime' ), // mime to determine file type from file name extension
+      dir  = 'public/', // directory where static files are stored
+      port = 3000 // 3000 is the port where the server is listening
 
-// Import necessary modules
-const http = require( 'http' ), // to create an http server
-      fs   = require( 'fs' ), // work with files and directories on the server's file system
-      mime = require( 'mime' ), // determine the MIME type of a file, it is a library not included in node.js which required npm install on local machine
-      dir  = 'public/', // directory where server files are located
-      port = 3000 // port number the server will listen for requests on
-
-// Data which is hard-coded into the server (no database yet)
-// Client can access this data from the server with GET request
-// Or they can add to this data on the server with a POST request      
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+// appdata is the test data that will be sent to the client
+let appdata = [
+ {name: 'serverDefault', color: 'red'}
 ]
 
-// Create HTTP Server which handles both GET and POST requests
-// Every time a request is made to the server, this callback function is called
+// Create http server
 const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) { // GET - ask for content from server
+  if( request.method === 'GET' ) { // client requests a resource
     handleGet( request, response )    
-  }else if( request.method === 'POST' ){ // POST - send content to server
+  }else if( request.method === 'POST' ){ // client is adding data to server
     handlePost( request, response ) 
   }
 })
 
-// GET request handler
+// Client requests a resource
 const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+  const filename = dir + request.url.slice( 1 )  // remove leading '/' from URL
 
   if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
+    sendFile( response, 'public/index.html' ) // send index.html to client
   }else{
-    sendFile( response, filename )
+    sendFile( response, filename ) // send requested file to client
   }
 }
 
-// POST request handler
+// Client is adding data to server
 const handlePost = function( request, response ) {
   let dataString = ''
 
-  request.on( 'data', function( data ) {
+  request.on( 'data', function( data ) { // add data to dataString as it comes in
       dataString += data 
   })
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
+  request.on( 'end', function() { // end when client is done sending data
+    console.log( JSON.parse( dataString ))
+    appdata.push(JSON.parse(dataString))
     // ... do something with the data here!!!
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' }) // send response to client
+    response.end( JSON.stringify( appdata ) )
   })
 }
 
+// Send file to client (called by handleGet when client requests a resource)
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
 
@@ -77,5 +74,4 @@ const sendFile = function( response, filename ) {
    })
 }
 
-// Tell server Listen for requests on HTTP port 3000
 server.listen( process.env.PORT || port )
