@@ -8,10 +8,10 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+let appdata = [
+  { 'todo': 'Do CS4241 A2', 'date': '2023-09-11', 'urgency': 'Done', 'done': true },
+  { 'todo': 'CS4241 Readings', 'date': '2023-09-07', 'urgency': 'Late', 'done': false },
+  { 'todo': 'Attend Office Hours', 'date': 'TBD', 'urgency': 'Not Urgent', 'done': false} 
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -40,12 +40,56 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
     // ... do something with the data here!!!
+    const requestData = JSON.parse(dataString);
+    if(requestData.action === "add"){
+      if(requestData.date === ""){
+        requestData.date = "TBD";
+      }
+      if(requestData.todo !== ""){
+      appdata.push({
+                todo: requestData.todo,
+                date: requestData.date,
+                urgency: requestData.urgency,
+                done: requestData.done
+            })
+      }
+    }
+    else if(requestData.action === "edit"){
+      let objIndex = appdata.findIndex((item => item.todo === requestData.todoOld));
+      appdata[objIndex].todo = requestData.todoNew;
+    }
+    else if(requestData.action === "update"){
+      let objIndex = appdata.findIndex((item => item.todo === requestData.todo));
+      let boolValue = (requestData.done.toLowerCase() === "true"); 
+      appdata[objIndex].done = !boolValue;
+      if(!boolValue){
+        appdata[objIndex].urgency = "Done";
+      }
+      else{
+        let urgency = "Not Urgent";
+        console.log(requestData.date);
+        if(requestData.date !== "TBD"){
+          const currentDate = new Date();
+          const targetDate = new Date(requestData.date);
+          const timeDifference = targetDate.getTime() - currentDate.getTime();
+          const daysDifference = timeDifference / (1000 * 3600 * 24);
+          if(daysDifference < 0){
+            urgency = "Late"
+          }
+          else if(daysDifference <= 7){
+            urgency = "Urgent"
+          }
+        }
+        appdata[objIndex].urgency = urgency;
+      }
+    }
+    else if(requestData.action === "delete"){
+      appdata = appdata.filter(item => item.todo !== requestData.todo);
+    }
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end( JSON.stringify( appdata ))
   })
 }
 
