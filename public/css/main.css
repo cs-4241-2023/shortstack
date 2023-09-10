@@ -57,6 +57,7 @@ table, th, td {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-right: 30px;
 }
 .button-container {
   display: flex;

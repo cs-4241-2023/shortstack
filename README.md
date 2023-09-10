@@ -103,4 +103,7 @@ Include a very brief summary of your project here. Be sure to include the CSS po
 
 - **Design Achievement 3**: Used the flexboxes to keep things centered and organized. 
 
+- **Design Achievement 4**: I conducted a study with Niralya Sundararajan, The user said that the deleting and adding data was simple. The issues laid within glitch where if we tried to restart glitch remembers our data. So the sample information would not appear. I would not change my design UI wise because I think it's pretty simple conceptually to most users. Though I only have the access of asking one person at the time being. 
+
+- **Design Achievement 5?**: Second User: Daniel Onyema who seemed to have a easy time being able to add and delete data. They mentioned they liked the color scheme of it and said it looks good. The only comment that was made was the delete entry button wasn't aligned. And I think now that I realize that I would change it (I may change it before uploading.)
 
