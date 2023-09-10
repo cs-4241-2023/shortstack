@@ -82,6 +82,8 @@ const handleDelete = function( request, response) {
         characterData.splice(index, 1);
       }
       console.log(characterData);
+      response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+      response.end(JSON.stringify(characterData));
     })
   } 
 }
@@ -133,7 +135,7 @@ const handlePost = function( request, response ) {
       response.end(JSON.stringify(characterData))
     }  else{
       response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+      response.end('test')
     }
 
 

@@ -4,6 +4,14 @@
 
 }
 
-table, th, td {
+table {
   border: 1px solid;
+
+}
+
+th,
+td {
+  border: 1px solid black;
+  width: 150px;
+  overflow: clip;
 }

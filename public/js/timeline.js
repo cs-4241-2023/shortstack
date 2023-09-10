@@ -11,11 +11,12 @@ const addTimelineItem = async function (event) {
   const errorMsg = document.getElementById("timelineErrorMessage")
   if (isNaN(dateInput.value)) {
     errorMsg.style.display = "block";
+    return false;
   } else {
 
     document.getElementById("timelineErrorMessage").style.display = "none";
 
-    const json = { era: eraInput.value, date: dateInput.value, description: descriptionInput.value }, body = JSON.stringify(json)
+    const json = { era: eraInput.value, date: parseInt(dateInput.value), description: descriptionInput.value }, body = JSON.stringify(json)
 
     const response = await fetch('/submit', {
       method: 'POST',
@@ -26,12 +27,10 @@ const addTimelineItem = async function (event) {
 
     console.log('text:', data)
     CreateTimeline(data);
+    return true;
   }
-
-
-
-
 }
+
 
 function CreateTimeline(data) {
   const timeline = document.getElementById("myTimeline")
@@ -68,6 +67,15 @@ function CreateTimeline(data) {
       
       //TODO: create error checking features
       let text = "timelineItem" + i;
+
+      const eraInput = document.querySelector('#era');
+      const dateInput = document.querySelector('#date');
+      const descriptionInput = document.querySelector('#description');
+  
+      const errorMsg = document.getElementById("timelineErrorMessage")
+      if (isNaN(dateInput.value)) {
+        errorMsg.style.display = "block";
+    } else{
       const tempButton = document.getElementById(text).outerHTML="";
       let json = JSON.stringify(data[i]);
       fetch( "/timelineData", {
@@ -77,6 +85,9 @@ function CreateTimeline(data) {
       //account for in backend
       console.log(tempButton.id);
       window.dispatchEvent(updateCharactersEvent)
+      addTimelineItem(event);
+    }
+      
       
 
       

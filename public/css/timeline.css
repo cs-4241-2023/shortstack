@@ -23,21 +23,11 @@
   position: relative;
   max-width: 500px;
   margin: 0 auto;
-  max-height: 600px;
+  min-height: 500px;
+  max-height: 500px;
   overflow-y: auto;
 }
 
-/* the vertical ruler
-.timeline::after {
-  content: '';
-  position: absolute;
-  width: 6px;
-  background-color: white;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  margin-left: -3px;
-} */
 
 /* Container around content */
 .container {
