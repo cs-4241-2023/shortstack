@@ -13,6 +13,7 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+
 <!--    <form>-->
 <!--      <input type="text" id="yourname" value="your name here">-->
 <!--      <button>submit</button>-->
@@ -20,9 +21,9 @@
 
     <div class="container">
       <div class="left-div">
-<!--        <h1>LEFT</h1>-->
       </div>
       <div class="right-div">
+        <!--My Day Header-->
         <h1>My Day</h1>
         <div id="current-date">
           <script>
@@ -33,55 +34,17 @@
           </script>
         </div>
 
+        <!--Task Table-->
         <div class="tasks-div">
           <table id="task-table">
           </table>
         </div>
 
-
-        <script>
-          function addTaskRows() {
-            const table = document.getElementById("task-table");
-
-            for (let i = 1; i <= 5; i++) {
-              const newRow = document.createElement("tr");
-              const taskCell = document.createElement("td");
-
-              const leftContainer = document.createElement("div");
-              leftContainer.className = "left-container";
-
-              const doneButton = document.createElement("button");
-              doneButton.className = "Completion-Button";
-
-              const taskText = document.createTextNode(`Task ${i}`);
-
-              const rightContainer = document.createElement("div");
-              rightContainer.className = "right-container";
-
-              const myDayButton = document.createElement("button");
-              myDayButton.className = "MyDay-Button";
-
-              leftContainer.appendChild(doneButton);
-              leftContainer.appendChild(taskText);
-              rightContainer.appendChild(myDayButton);
-
-              taskCell.appendChild(leftContainer);
-              taskCell.appendChild(rightContainer);
-
-              newRow.appendChild(taskCell);
-              table.appendChild(newRow);
-            }
-          }
-          addTaskRows();
-        </script>
-
-
+        <!--Create Task-->
         <div class="create-task-div">
           <input type="text" placeholder="Type Here To Add A New Task" id="task-input">
         </div>
-
       </div>
     </div>
-
   </body>
 </html>
