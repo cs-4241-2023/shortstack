@@ -1,100 +1,63 @@
-Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
-===
+## Vehicle Service Log
+The "Vehicle Service Log" web application is designed to help users manage and track their scheduled vehicle appointments. This single-page web app provides a user-friendly interface that allows users to input and manage their vehicle service appointments effectively. The application utilizes CSS positioning techniques, a clean and intuitive layout, and interactive design elements to enhance the user experience.
 
-Due: September 11th, by 11:59 AM.
+## Glitch: https://a2-ngrozdani.glitch.me
 
-This assignment aims to introduce you to creating a prototype two-tiered web application. 
-Your application will include the use of HTML, CSS, JavaScript, and Node.js functionality, with active communication between the client and the server over the life of a user session.
+## CSS Positioning Technique:
+The CSS positioning technique used in this web application primarily relies on Flexbox. I used Flexbox to create a responsive and dynamic layout that adapts to different screen sizes, ensuring a consistent and visually pleasing experience for users on various devices. 
 
-Baseline Requirements
----
+## CSS Styling Techniques:
 
-There is a large range of application areas and possibilities that meet these baseline requirements. 
-Try to make your application do something useful! A todo list, storing / retrieving high scores for a very simple game... have a little fun with it.
+- **Targeted Specific Elements with ID Selectors:** I utilized ID selectors, such as #content-title, to precisely style individual elements. This allowed me to control aspects like font size, border-bottom, and margin for elements like the content title.
+- **Global Styling with HTML Element Selectors:** To apply styles universally across various HTML elements, I used element selectors. This involved styling elements like headings (h1, h2), paragraphs (p), unordered lists (ul), list items (li), and buttons (button) to maintain a consistent design throughout the webpage.
+- **Styled Main Header Section with Class Selectors:** By using class selectors, such as '.main-header,' I focused on styling specific sections of my webpage. This included customization of attributes like background color and positioning for the main header.
+- **Interactive Element Styling with Pseudo-Classes:** For enhancing user interactions, I used pseudo-classes. For instance, I defined styles for the :focus state of form inputs and buttons to modify border colors and introduce box shadows when these elements received focus. I also utilized :hover and :active pseudo-classes to add hover and click effects onto buttons for an engaging user experience.
 
-Your application is required to implement the following functionalities:
+## Application Usage Instructions:
+To use the application effectively, users can follow these instructions:
 
-- a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
-- a `Results` functionality which shows the entire dataset residing in the server's memory
-- a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
-- a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset
-- the `Derived field` for a new row of data must be computed based on fields already existing in the row. 
-For example, a `todo` dataset with `task`, `priority`, and `creation_date` may generate a new field `deadline` by looking at `creation_date` and `priority`
+## Adding an Appointment: 
+To add a vehicle service appointment, simply fill out the form in the main section of the page. Input the year, make, model, service type, and appointment date. Click the "Submit" button to log the appointment.
 
-Your application is required to demonstrate the use of the following concepts:
+## Modifying an Appointment: 
+If you need to modify an existing appointment, update the form with the new information and then click the "Modify" button for the specific appointment you want to update.
 
-HTML:
-- One or more [HTML Forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms), with any combination of form tags appropriate for the user input portion of the application
-- A results page displaying all data currently available on the server. You will most likely use a `<table>` tag for this, but `<ul>` or `<ol>` could also work and might be simpler to work with. Alternatively, you can create a single-page app (see Technical Acheivements) but this is not a requirement.
-- All pages should [validate](https://validator.w3.org)
-- If your app contains multple pages, they should all be accessible from the homepage (index.html)
-
-CSS:
-- CSS styling of the primary visual elements in the application
-- Various CSS Selector functionality must be demonstrated:
-    - Element selectors
-    - ID selectors
-    - Class selectors
-- CSS positioning and styling of the primary visual elements in the application:
-    - Use of either a CSS grid or flexbox for layout
-    - Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
-
-- CSS defined in a maintainable, readable form, in external stylesheets 
-
-JavaScript:
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server; a sample is provided in this repository.
-
-Node.js:
-- An HTTP Server that delivers all necessary files and data for the application, and also creates the required `Derived Fields` in your data. 
-A starting point is provided in this repository.
-
-Deliverables
----
-
-Do the following to complete this assignment and acheive a base grade of 85%:
-
-1. Fork the starting project code (make sure to fork the 2023 repo!). This repo contains some starter code that may be used or discarded as needed.
-2. Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page, it displays correctly.
-4. Deploy your project to Glitch, and fill in the appropriate fields in your package.json file.
-5. Ensure that your project has the proper naming scheme `a2-yourGithubUsername` so we can find it.
-6. Modify the README to the specifications below, and delete all of the instructions originally found in this README.
-7. Create and submit a Pull Request to the original repo. Label the pull request as follows: a2-gitusername-firstname-lastname
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the assignment to your personal interests. These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README and why it was challenging. ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM. Remember, the highest grade you can get on any individual assignment is a 100%.
-
-*Technical*
-- (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
-
-- (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
-
-*Design/UX*
-- (5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the [think-aloud protocol](https://en.wikipedia.org/wiki/Think_aloud_protocol) to obtain feedback on your design (talk-aloud is also fine). Important considerations when designing your study:
-
-1. Make sure you start the study by clearly stating the task that you expect your user to accomplish.
-2. You shouldn't provide any verbal instructions on how to use your interface / accomplish the task you give them. Make sure that your interface is clear enough that users can figure it out without any instruction, or provide text instructions from within the interface itself. 
-3. If users get stuck to the point where they give up, you can then provde instruction so that the study can continue, but make sure to discuss this in your README. You won't lose any points for this... all feedback is good feedback!
-
-You'll need to use sometype of collaborative software that will enable you both to see the test subject's screen and listen to their voice as they describe their thoughts, or conduct the studies in person. After completing each study, briefly (one to two sentences for each question) address the following in your README:
-
-1. Provide the last name of each student you conduct the evaluation with.
-2. What problems did the user have with your design?
-3. What comments did they make that surprised you?
-4. What would you change about the interface based on their feedback?
-
-*You do not need to actually make changes based on their feedback*. This acheivement is designed to help gain experience testing user interfaces. If you run two user studies, you should answer two sets of questions. 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+## Removing an Appointment: 
+To remove an appointment, click the "Remove" button corresponding to the appointment you wish to delete.
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+## Tech Achievement 1: Single-Page App with Real-Time Data Handling
+- This web application operates as a single-page app, eliminating the need for page reloads or redirection to other pages. Users can interact with the form, and the application dynamically updates the table to reflect changes. 
+- Real-time data handling ensures that the current state of server-side data is always displayed to the user. When users submit new appointments or modify/delete existing ones, the table is instantly updated without requiring a page refresh.
+- The client-side code is responsible for fetching data stored on the server, and submitting new appointment data to the server. This seamless interaction with the server enhances the user's experience by providing real-time feedback and data synchronization.
+## Tech Achievement 2: Modification of Existing Appointments
+- In addition to adding and deleting data on the server, the web application allows users to modify existing vehicle appointments. Users can update appointment details such as the year, make, model, service type, and appointment date with ease.
+- The "Modify" button provides a straightforward way to edit and save changes to existing appointments, ensuring that users have full control over their appointment data.
 
-### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+## Design/Evaluation Achievements
+
+- **Design Achievement 1**: Flexbox Layout: I used Flexbox to create a flexible and efficient layout system. 
+- **Design Achievement 2**: Interactive Buttons: I incorporated interactive buttons with captivating hover and active effects, offering users clear visual cues during their interactions.
+- **Design Achievement 3**: Responsive Design: I implemented responsive design principles using media queries to ensure that my web page adapts effortlessly to various screen sizes.
+- **Design Achievement 4**: Table Design: I structured the vehicle appointment table with captions and borders, and a clear header to enhance the table's purpose and content clarity.
+- **Design Achievement 5**: Consistent Typography: I used the 'Rubik' font for the text, providing a sleek and uniform typography throughout the page. 
+
+## User Study Evaluation
+
+- **Student Name: Justin Santiago Wonoski**:
+- Task: The user was asked to modify an existing vehicle appointment in the log using the provided form.
+
+- Problems: Justin initially had difficulty figuring out how to edit an existing appointment. He mentioned that the "Modify" and "Remove" buttons were not very prominent and suggested making them more visually distinct.
+
+- Surprising Comments: Justin appreciated the responsive design, particularly how the web page adapted to his mobile device. He also mentioned that the use of UUIDs for appointments was a smart choice for data management.
+
+- Changes Based on Feedback: Based on Justin's feedback, I would consider making the "Modify" and "Remove" buttons more prominent, either by using contrasting colors or larger buttons. This would make it easier for users to interact with and modify existing appointments.
+
+- **Student Name: Ryan Kornitsky**:
+- Task: The user was asked to add a new vehicle appointment to the service log using the provided form.
+
+- Problems Encountered: The user found the error handling a bit unclear, mistaking it for referring to the appointment year instead of vehicle year. They also recommended changing the date format under "vehicle appointments" to mm/dd/year to match the format used in the appointment date field.
+
+- Surprising Comments: The user commented that they appreciated the clear labels for each input field but expected a tooltip or brief description when hovering over them to provide additional context.
+
+- Interface Changes: Based on the feedback, I would consider enhancing error messages for clarity, specifying the nature of errors more explicitly; Ensure consistency in date formatting, making it mm/dd/year under "vehicle appointments" to match the appointment date field; Use "appointment ID" instead of "UUID" for user-friendliness.
