@@ -138,6 +138,7 @@ const editPopUp = function (assignment) {
   document.querySelector("#assignment-form").style.visibility = "hidden";
   document.querySelector("#edit-window").style.visibility = "visible";
   document.querySelector("#edit-message").style.visibility = "hidden";
+  document.querySelector("#submission-message").textContent = "";
 
   // populate text boxes with existing data
   document.querySelector("#class-name-edit").value = assignment.className;
