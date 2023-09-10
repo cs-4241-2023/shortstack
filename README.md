@@ -26,4 +26,6 @@ I used all 3 CSS selectors
 - **Tech Achievement 1**: Made a single page app, has the form and the data returned on the same page
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- **Design Achievement 1**:
+- Yi: had a little confusion on if the first field of name meant creature type, could make it so you select the creature type first. Could also specifiy that age is in full years, no months or decimals. Nothing really surprised me from the feedback, but i could definitly make the change of making sure it says creature ages (years)
+- Blanchard: mentioned the photos took a bit long to load (30 seconds) that kind of surprised me since on my end it was pretty instant when I tested. Noticed the font of the submission button is different. I would change that and may do so before submitting.
