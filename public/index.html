@@ -18,8 +18,7 @@
 <body>
   <main>
     <div class="tasks-list--sidebar">
-      <div class="tasks-list--container">
-
+      <div class="tasks-list--container" id="sidebar">
       </div>
     </div>
     <form id="form">
@@ -32,6 +31,10 @@
         <input name="date" type="date" id="task-date" class="task-date">
       </div>
       <div class="task-info--input">
+        <label for="due-date">Due Date</label>
+        <input name="due" type="date" id="due-date" class="task-date" readonly>
+      </div>
+      <div class="task-info--input">
         <label for="task-priority">Priority:</label>
         <select name="priority" id="task-priority">
           <option value="Low">Low</option>
@@ -40,11 +43,10 @@
         </select>
       </div>
       <textarea name="description" id="task-body" cols="30" rows="25" placeholder="Type task here..."></textarea>
-
       <div class="input-buttons">
         <input type="submit" id="save" value="Save Note">
-        <button id="new-note" type="button" onclick="newTask()">New Note</button>
-        <button id="delete-note">Delete Note</button>
+        <button id="new-note" type="button" onclick="loadTasks()">New Note</button>
+        <button id="delete-note" type="button" onclick="deleteTask()">Delete Note</button>
       </div>
     </form>
   </main>
