@@ -1,18 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
+    <link rel="stylesheet" href="css/main.css" />
+
     <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <div class="con">
+      <div class="todoHeading">
+        <h1>To Do List</h1>
+      </div>
+      <div class="addItem">
+        <form>
+          <div>
+            <label for="addItemInput">Add Item</label>
+            <input type="text" id="addItemInput" name="addItemInput" /><br>
+          </div>
+          <div>
+            <label for = "addDateInput">Due Date</label>
+            <input type="text" id="addDateInput" name="addDateInput" /><br>
+          </div>
+          <div>
+            <label for = "addTimeInput">Time Due</label>
+            <input type="text" id="addTimeInput" name="addimeInput" /><br>
+          </div>
+          <div class = "addButton">
+            <button id="addItemButton" onclick="addListItem()">Add Item</button>
+          </div>
+        </form>
+      </div>
+      <div class="todoList">
+        <ul id="list">
+        </ul>
+      </div>
+    </div>
   </body>
 </html>
