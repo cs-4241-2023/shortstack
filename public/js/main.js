@@ -56,6 +56,15 @@ const updateTaskTable = function (tasks) {
   const tasksTableRowsContainer = document.getElementsByClassName(
     "tasks-table-rows-container"
   );
+  // clear the current rows
+  let rows = document.querySelectorAll("table tr");
+
+  rows.forEach(function (row) {
+    if (row !== rows[0]) {
+      row.remove();
+    }
+  });
+
   for (let i = 0; i < tasks.length; i++) {
     const currentTask = tasks[i];
     // create a new cell for each field
@@ -92,7 +101,20 @@ const updateTaskTable = function (tasks) {
   }
 };
 
+const initializeTable = async function () {
+  const response = await fetch("/getTasks", {
+    method: "GET",
+  });
+
+  const text = await response.text();
+
+  tasks = JSON.parse(text);
+  updateTaskTable(tasks);
+  console.log("tasks list: ", tasks);
+};
+
 window.onload = function () {
+  initializeTable();
   const button = document.getElementById("addTaskFormSubmitBtn");
   button.onclick = submit;
 };
