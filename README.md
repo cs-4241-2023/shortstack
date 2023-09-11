@@ -2,7 +2,7 @@
 # a2-SmeeBoi: 
 Sameer Desai glitchURL
 
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+Text form with name and color inputs. Sends json to server. Can delete players with delete button.
 
 ## Technical Achievements
 - **Tech Achievement 1**: Using a combination of...

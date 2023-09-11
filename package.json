@@ -1,8 +1,8 @@
 {
-  "name": "",
+  "name": "a2-SmeeBoi",
   "version": "",
-  "description": "",
-  "author": "",
+  "description": "Spacebar Game",
+  "author": "Sameer Desai",
   "scripts": {
     "start": "node server.improved.js"
   },

@@ -10,7 +10,7 @@ const http = require( 'http' ), // http server core module
 
 // appdata is the test data that will be sent to the client
 let appdata = [
- {name: 'serverDefault', color: 'red'}
+ {name: 'defaultplayer', color: 'red', score: 0, rank: 0}
 ]
 
 // Create http server
@@ -19,6 +19,10 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){ // client is adding data to server
     handlePost( request, response ) 
+  }else if( request.method === 'DELETE' ){ // client is deleting data
+    handleDelete( request, response )
+  }else if( request.method === 'PUT' ){ // client is updating data
+    handlePut( request, response )
   }
 })
 
@@ -42,7 +46,12 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() { // end when client is done sending data
-    console.log( JSON.parse( dataString ))
+    let clientData = JSON.parse( dataString ) // parse dataString into JSON object
+    console.log( clientData)
+
+    clientData.highscore
+
+    let finalData = { }// create new object with data from client
     appdata.push(JSON.parse(dataString))
     // ... do something with the data here!!!
 
@@ -50,6 +59,21 @@ const handlePost = function( request, response ) {
     response.end( JSON.stringify( appdata ) )
   })
 }
+
+// Client is deleting data from server
+const handleDelete = function( request, response ){
+  // request is playerName string from client to delete
+  // delete that player from appdata
+  // send appdata back to client
+  let playerName = request
+  if (appdata.name === playerName) {
+    // delete player entry in appdata
+    delete appdata.name
+    
+  }
+}
+
+
 
 // Send file to client (called by handleGet when client requests a resource)
 const sendFile = function( response, filename ) {
