@@ -12,7 +12,7 @@ Need to scroll down to see results. not enough time to fix
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**:
-Used Jost Google Font
-CSS animate header to move up and down
+Used Jost Google Font,
+CSS animate header to move up and down,
 Button outline on hover
 
