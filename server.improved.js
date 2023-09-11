@@ -24,13 +24,15 @@ const appdata = [
       "Throw away old junk in the trash. Reorganize items to clear up more floor space.",
     taskDeadline: "2023-09-22",
     taskPriority: "Medium",
+    taskCreated: "2023-09-05",
   },
   {
     taskName: "Wash the dishes",
     taskDescription:
       "Wash the dishes in the sink. Put them away in the cabinets.",
-    taskDeadline: "2023-09-14",
+    taskDeadline: "2023-09-10",
     taskPriority: "High",
+    taskCreated: "2023-09-03",
   },
   {
     taskName: "Do the laundry",
@@ -38,6 +40,7 @@ const appdata = [
       "Wash the clothes in the washing machine. Dry them in the dryer. Fold them and put them away.",
     taskDeadline: "2023-09-20",
     taskPriority: "Low",
+    taskCreated: "2023-09-02",
   },
 ];
 
@@ -55,6 +58,17 @@ const handleGet = function (request, response) {
   if (request.url === "/") {
     sendFile(response, "public/index.html");
   } else if (request.url === "/getTasks") {
+    // calculating derived fields
+    for (let i = 0; i < appdata.length; i++) {
+      appdata[i].timeRemaining = duration(
+        new Date(),
+        new Date(appdata[i].taskDeadline)
+      );
+      appdata[i].totalTime = duration(
+        new Date(appdata[i].taskCreated),
+        new Date(appdata[i].taskDeadline) // this is the deadline
+      );
+    }
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
     response.end(JSON.stringify(appdata));
   } else {
@@ -75,6 +89,18 @@ const handlePost = function (request, response) {
     // ... do something with the data here!!!
     newTask = JSON.parse(dataString);
     appdata.push(newTask);
+
+    // calculating derived fields
+    for (let i = 0; i < appdata.length; i++) {
+      appdata[i].timeRemaining = duration(
+        new Date(),
+        new Date(appdata[i].taskDeadline)
+      );
+      appdata[i].totalTime = duration(
+        new Date(appdata[i].taskCreated),
+        new Date(appdata[i].taskDeadline) // this is the deadline
+      );
+    }
 
     // sending back the updated appdata
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
@@ -98,5 +124,12 @@ const sendFile = function (response, filename) {
     }
   });
 };
+
+// calculate the duration between two dates
+function duration(date1, date2) {
+  const diffTime = date2 - date1;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+}
 
 server.listen(process.env.PORT || port);

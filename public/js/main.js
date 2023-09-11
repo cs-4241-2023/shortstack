@@ -14,12 +14,15 @@ const submit = async function (event) {
   const taskDescription = formData.get("taskDescription");
   const taskDeadline = formData.get("taskDeadline");
   const taskPriority = formData.get("taskPriority");
+  const taskCreated = new Date().toISOString().slice(0, 10);
+  console.log("taskCreated: ", taskCreated);
 
   const json = {
     taskName,
     taskDescription,
     taskDeadline,
     taskPriority,
+    taskCreated,
   };
   const body = JSON.stringify(json);
 
@@ -45,6 +48,10 @@ const submit = async function (event) {
   // const text = await response.text();
 
   // console.log("text:", text);
+};
+
+const updateTaskTable = function (tasks) {
+  const table = document.getElementById("tasksTable");
 };
 
 window.onload = function () {
