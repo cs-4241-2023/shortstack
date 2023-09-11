@@ -1,8 +1,8 @@
 {
-  "name": "",
+  "name": "a2-ethancatania",
   "version": "",
   "description": "",
-  "author": "",
+  "author": "Ethan Catania",
   "scripts": {
     "start": "node server.improved.js"
   },
