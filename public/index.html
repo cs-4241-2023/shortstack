@@ -1,60 +1,18 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>The Bracket Generator</title>
+    <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="icon" href="https://cdn.discordapp.com/attachments/641632207634432010/1148806297106534491/trophyfavicon.png" type="image/x-icon"> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.js"></script>
-
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  
   <body>
-    <header id = "header">
-      <h1>A quick and easy bracket generator</h1>
-      <p>
-        <a href="https://github.com/ScribleSean/" target="_blank">by Sean Arackal</a>
-      </p>
-    </header>
-    <div class = "general">
-      <label for="tourname">Enter the name of your tournament:</label>
-        <form id="tourname">
-          <input type="text" value="" id="tourname">
-        </form>
-    </div>
-    <div class = "general">
-      <label for="playernum">Enter the number of players:</label>
-        <form id="playernum">
-          <input type="number" value="" id="playernum" min="2" max="64" onchange="updatePlayerForm()">
-        </form>
-    </div>
-
-    <div class = "general">
-      <div id="playerNames">
-        <!-- Player name inputs will be added here -->
-      </div>
-    </div>
-
-    <br>
-    <div class = "general">
-    <label for="btypes">Choose a Bracket Type:</label>
-    <select id="btypes" name="Bracket Types" form = "btypes" onchange="editOptions()">
-    <option value="Single Elimination">Single Elimination</option>
-    <option value="Double Elimination">Double Elimination</option>
-    <option value="Round Robin" selected>Round Robin</option>
-    </select>
-    </div>
-
-    <br>
-    <div class = "general">
-      <p> Click to Generate your Bracket: <button>Generate Bracket</button></p>
-    </div>
-    <br>
+    <form>
+      <input type="text" id="yourname" value="your name here">
+      <button>submit</button>
+    </form>
   </body>
-  <footer>
-    <p>&copy; Copyright 2023: Sean Arackal
-  </footer>
 </html>
