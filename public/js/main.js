@@ -39,6 +39,8 @@ const submit = async function( event ) {
       const li = document.createElement('li');
       li.innerText = `${key}: ${data[key]}`;
       list.appendChild(li);
+      console.log(data)
+      console.log(key)
     }
   }
   const resultContainer = document.querySelector('#result');
