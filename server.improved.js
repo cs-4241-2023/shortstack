@@ -9,7 +9,7 @@ const http = require("http"),
   port = 3000;
 
 let currentId = 3;
-const appdata = [
+let appdata = [
   {
     id: 0,
     taskName: "Clean the garage",
@@ -85,6 +85,8 @@ const handlePost = function (request, response) {
 
     // ... do something with the data here!!!
     newTask = JSON.parse(dataString);
+    newTask.id = currentId;
+    currentId++;
     appdata.push(newTask);
 
     // calculating derived fields
@@ -97,8 +99,6 @@ const handlePost = function (request, response) {
         new Date(appdata[i].taskCreated),
         new Date(appdata[i].taskDeadline)
       );
-      appdata[i].id = currentId;
-      currentId++;
     }
 
     // sending back the updated appdata

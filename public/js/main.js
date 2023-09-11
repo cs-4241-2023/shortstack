@@ -88,7 +88,7 @@ const updateTaskTable = function (tasks) {
     } else {
       taskTimeRemainingCell.innerText = currentTask.timeRemaining;
     }
-    taskDeleteCell.innerHTML = `<button class="delete-btn" onclick="deleteTask(${currentTask.id})">Delete</button>`;
+    taskDeleteCell.innerHTML = `<button class="delete-btn" onclick="deleteTask(${currentTask.id})">X</button>`;
     // append each cell to the row
     const currentRow = document.createElement("tr");
     currentRow.appendChild(taskNameCell);
