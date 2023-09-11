@@ -58,6 +58,8 @@ function parseForm(formData) {
 
 function loadTasks() {
   const sidebar = document.getElementById("sidebar");
+
+  // Clear the sidebar so we don't get any side effects
   sidebar.innerHTML = "";
   const title = document.getElementById("task-title");
   const date = document.getElementById("task-date");
@@ -65,10 +67,14 @@ function loadTasks() {
   const priority = document.getElementById("task-priority");
   const description = document.getElementById("task-body");
 
+  // Iterate through the new data recieved
   taskData.forEach((task) => {
+    // Create a new div object
     let newTask = document.createElement("div");
 
+    // If program was just initialized/we are changing task, as we iterate keep the same task highlighted
     if (currentNote === 0 || task.id === currentNote) {
+      // When we get to the currently selected task, populate form with the data of the task
       newTask.className = "tasks-list--task selected";
       currentNote = task.id;
       title.value = task.title;
@@ -77,13 +83,22 @@ function loadTasks() {
       priority.value = task.priority;
       description.value = task.description;
     } else {
+      // Else we style the non-selected buttons the same
       newTask.className = "tasks-list--task";
     }
+    // Add title and id to the html-object (definitely not the best way of doing this)
     newTask.innerText = task.title;
     newTask.id = task.id;
+
+    // Add an event listener to swap notes
     newTask.addEventListener("click", async (event) => {
+      // Get the current task and change its class so it isn't selected
       document.getElementById(currentNote).className = "tasks-list--task";
+
+      // Make the form fields match the values of the task in the database
       currentNote = event.target.id;
+
+      // Make the new selected task look selected
       event.target.className = "tasks-list--task selected";
       const taskID = await findTask(currentNote);
       title.value = taskID.title;
@@ -92,14 +107,33 @@ function loadTasks() {
       priority.value = taskID.priority;
       description.value = taskID.description;
     });
+
+    // Add the task to the sidebar
     sidebar.appendChild(newTask);
+
+    console.log(currentNote);
   });
+
+  // // Finally add the add note button to the sidebar
+  // const form = document.querySelector("form");
+  // let newTask = document.createElement("div");
+  // newTask.addEventListener("click", async (event) => {
+  //   const response = await fetch("/new", {
+  //     method: "POST",
+  //     body: JSON.stringify(noteToDelete),
+  //   });
+
+  //   form.reset();
+  // });
+  // newTask.className = "tasks-list--task";
+  // sidebar.appendChild(newTask);
 }
 
 async function findTask(id) {
   let returnTask = null;
+  console.log(id);
   taskData.forEach((task) => {
-    if (task.id === parseInt(id)) {
+    if (task.id === id) {
       returnTask = task;
     }
   });
@@ -116,17 +150,17 @@ async function deleteTask() {
 
   const text = await response.text();
   taskData = JSON.parse(text);
-  
+
   loadTasks();
 }
 
 async function editNote() {
   const noteToEdit = await findTask(currentNote);
-  
+
   const response = await fetch("/edit", {
     method: "POST",
     body: JSON.stringify(noteToEdit),
-  })
+  });
 
   const text = await response.text();
   taskData = JSON.parse(text);

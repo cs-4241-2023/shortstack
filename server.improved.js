@@ -13,7 +13,7 @@ let appdata = [
     priority: "Medium",
     description: "Webware assignment 1",
     dueDate: "2023-09-18",
-    id: 1,
+    id: nanoid(),
   },
   {
     title: "Assignment 2",
@@ -21,9 +21,18 @@ let appdata = [
     priority: "High",
     dueDate: "2023-09-18",
     description: "Webware assignment 2",
-    id: 2,
+    id: nanoid(),
   },
 ];
+
+const starterTask = {
+  title: "",
+  date: new Date().toISOString().split("T")[0],
+  priority: "Low",
+  description: "",
+  dueDate: "",
+  id: nanoid(),
+};
 
 const server = http.createServer(function (request, response) {
   if (request.method === "GET") {
@@ -77,7 +86,7 @@ const handlePost = function (request, response) {
       appdata.push({
         ...parsedData,
         dueDate: due,
-        id: appdata.length + 1,
+        id: nanoid(),
       });
     } else if (request.url === "/init") {
     } else if (request.url === "/delete") {
