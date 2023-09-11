@@ -32,6 +32,10 @@ body {
   gap: 4px;
 }
 
+.single {
+  grid-column: 1 / 3;
+}
+
 .button-container {
   display: flex;
   gap: 10px;

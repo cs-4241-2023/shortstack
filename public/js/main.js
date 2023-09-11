@@ -22,9 +22,8 @@ const submit = async event => {
     (inputDate.getDate() + 1) +
     "-" +
     inputDate.getFullYear();
-  const priority = document.getElementById("priority").value;
 
-  const json = { task, desc, dueDate, priority };
+  const json = { task, desc, dueDate };
   const body = JSON.stringify(json);
 
   try {
@@ -112,12 +111,12 @@ const getTasks = data => {
   const table = document.querySelector("table");
   table.replaceChildren();
   table.append(createHeaderRow());
-  data.forEach(task => {
+  data.forEach((task, index) => {
     let row = createRow(
       task.task,
       task.desc,
       task.dueDate,
-      task.priority,
+      `P${index + 1}`,
       task
     );
     table.append(row);
