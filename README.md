@@ -1,11 +1,24 @@
-Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
+Samuel Karkache - Assignment 2  
 ===
-
 # WPI School Work Tracker
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+The web application acts as a school work tracker that allows users to input assignments into the website. Each assignment has an associated class name, an assignment name, a due date, a 
+difficulty (on a scale from 1 to 10) and a priority (Low, Medium, or High). The Node.js server automatically calculates the priority of the assignment based on the inputted values for 
+difficulty and the due date. Users are also able to edit and delete the inputted assignments in the server. Each assignment is put into an HTML table and has its own edit and delete buttons
+that users can press to use this functionality. 
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **DELETE Request Assignment Delete Functionality**: The DELETE HTTP request was implemented in order to allow users to delete assignments that they add to the server. Each assignment
+has a delete button that will run the DELETE HTTP request when pressed. The server will remove the assignment specified in the body of the DELETE request by search the `appData` array and removing
+the specified assignment.
+- **PUT Request Assignment Edit Functionality**: Edit functionality, via implementing the HTTP PUT request, was added to the web application as well. In order to differentiate each
+assignment in the Node.js server, the assignment object is given an ID field that is specified via a unique timestamp. The JSON assignment object that is sent to the server in the
+body of the PUT request maintains the same ID as the assignment object that is being edited. In this was the server is able to determine which assignment object to update. 
+- **Single-page app that always shows the current state of the server-side data**: An HTML table is used to show the status of the Node.js server data. Each time the page load or
+data is modified by the user (adding, deleting, or editing) the data in the HTML table is updated such that the current state of the server is always displayed in the index.html
+page. 
+
 
 ## Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- **HTML Pop-Up**: The edit functionality includes an HTML pop-up that lets users edit the assignment. This pop-up is visually distinct and its text fields are filled in automatically
+with the existing data. The desired edits can be made by pressing the submit button which will close the window and run the HTTP PUT request. If the user changes their mind, the cancel button
+can be pressed to close the window and discard any changes.
