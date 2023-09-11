@@ -8,11 +8,7 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-let appdata = [
-  {'phoneNumber': 4011231234, 'brandName':'DBlock', 'designerName': 'Sultan Adedeji', 'brandType': 'streetwear'},
-  {'phoneNumber': 4011221222, 'brandName':'Gompei', 'designerName': 'tev Adedeji', 'brandType': 'croc'},
-  {'phoneNumber': 4015415411, 'brandName':'Morgan', 'designerName': 'man Adedeji', 'brandType': 'fish'}
-]
+let appdata = []
 let recordCount;
 
 const server = http.createServer( function( request,response ) {
@@ -20,9 +16,6 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
-  }
-  else if(request.method === 'DELETE'){
-    handleDelete(request, response);
   }
 })
 
@@ -49,45 +42,16 @@ const handlePost = function( request, response ) {
   
     if (request.url == '/delete'){
       let index = appdata.indexOf(dString)
-      appdata.slice(index, 1)
-      console.log('deleted', index, dString)
+      appdata.slice(1)
     }
     else {
       appdata.push(dString)
     }
-
+    console.log(appdata)
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end(JSON.stringify({recordCount: appdata.length , data: JSON.stringify( appdata )}))
   })
 }
-
-const handleDelete = function (request, response) {
-  let dataString = '';
-
-  request.on('data', function (data) {
-    dataString += data;
-  });
-
-  request.on('end', function () {
-    const designerToDelete = JSON.parse(dataString);
-
-    // Find and remove the designer from the appdata array
-    const index = appdata.findIndex((designer) => {
-      return (
-        designer.phoneNumber === designerToDelete.phoneNumber
-      );
-    });
-
-    if (index !== -1) {
-      appdata.splice(index, 1);
-      response.writeHead(200, 'OK', { 'Content-Type': 'text/plain' });
-      response.end(JSON.stringify({ success: true }));
-    } else {
-      response.writeHead(404, 'Not Found', { 'Content-Type': 'text/plain' });
-      response.end(JSON.stringify({ success: false, error: 'Designer not found' }));
-    }
-  });
-};
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 

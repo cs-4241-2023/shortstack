@@ -13,15 +13,15 @@ const submit = async function (event) {
     let phoneNumber = document.getElementById("phone-number");
     let brandType = document.getElementById("brand-type");
     json = {
-      brandName: brandName.value,
-      designerName: designerName.value,
-      phoneNumber: parseInt(phoneNumber.value),
-      brandType: brandType.value,
+      'phoneNumber': phoneNumber.value,
+      'brandName': brandName.value,
+      'designerName': designerName.value,
+      'brandType': brandType.value,
     }
   } else {
     json = appdata[evt.getAttribute('id')]
   }
-
+  console.log(json)
   const response = await fetch(evt.getAttribute('formaction'), {
     method: 'POST',
     body: JSON.stringify(json),
