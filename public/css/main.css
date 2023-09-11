@@ -1,11 +1,11 @@
 * {
   font-family: "Ubuntu", sans-serif;
-  background-color:  #FCF5E5;
-  background: #FCF5E5;
+  background-color: #fcf5e5;
+  background: #fcf5e5;
 }
 
 body {
-  color:black;
+  color: black;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,14 +14,23 @@ body {
 
 h1 {
   text-align: center;
-    text-shadow: -4px 4px #ef3550,
-               -8px 8px #43a047,
-               -12px 12px #2196f3
+  text-shadow: -4px 4px #ef3550, -8px 8px #43a047, -12px 12px #2196f3;
+}
+
+.todo_add {
+  font-family: "Exo", sans-serif;
+}
+
+#fancy-line {
+  border: 1;
+  width: 100vw;
+  border-bottom-style: dotted;
+  
 }
 
 hr {
-  color: #FCF5E5;
-  background-color: #FCF5E5;
+  color: #fcf5e5;
+  background-color: #fcf5e5;
 }
 
 table,

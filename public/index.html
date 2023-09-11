@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Ubuntu"
+    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Exo" />
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8" />
     <script src="js/main.js"></script>
@@ -10,11 +14,11 @@
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
-  
+
   <body>
     <h1>The Easy Todo List</h1>
 
-    <hr style="width: 90%" />
+    <hr id="fancy-line" style="width: 90%" />
 
     <br />
 
@@ -22,47 +26,48 @@
 
     <form>
       <!--    Potential for adding an email field if necessary, if so use type="email"   -->
-        <label>Insert Something Todo:</label>
-        <input
-          class="todo_add"
-          type="text"
-          id="todo_list_item"
-          name="todo_list_item"
-          value="Get Groceries"
-        />
+      <label>Insert Something Todo:</label>
+      <input
+        class="todo_add"
+        type="text"
+        id="todo_list_item"
+        name="todo_list_item"
+        value="Get Groceries"
+      />
 
-      <br>
-        <label>Insert the Time the Item was Added:</label>
-        <input
-          class="todo_add"
-          type="datetime-local"
-          id="datetime"
-          value="2023-09-10T11:30"
-        />
-      
-      <br>
+      <br />
+      <label>Insert the Time the Item was Added:</label>
+      <input
+        class="todo_add"
+        type="datetime-local"
+        id="datetime"
+        value="2023-09-10T11:30"
+      />
 
-        <label>Insert the Priority of the Item (1 to 10):</label>
-        <input
-          class="todo_add"
-          type="number"
-          id="priority"
-          min="1"
-          max="10"
-          name="priority"
-          value="2"
-        />
+      <br />
 
-    
+      <label>Insert the Priority of the Item (1 to 10):</label>
+      <input
+        class="todo_add"
+        type="number"
+        id="priority"
+        min="1"
+        max="10"
+        name="priority"
+        value="2"
+      />
+
       <button id="submit_to_todo">Submit</button>
 
       <hr style="width: 50%" />
 
       <h2>Delete Something from the Todo List</h2>
 
-  
-        <label>Insert the Name of the Item in the Todo List (Deletes duplicates)</label>
-<br>
+      <label
+        >Insert the Name of the Item in the Todo List (Deletes
+        duplicates)</label
+      >
+      <br />
       <input
         class="todo_add"
         type="text"
