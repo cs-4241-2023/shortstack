@@ -1,34 +1,5 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-/*const submit = async function (event) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault();
-
-  const input = document.querySelector("#title"),
-    json = { title: input.value },
-    body = JSON.stringify(json);
-
-  const response = await fetch("/submit", {
-    method: "POST",
-    body,
-  });
-
-  const data = await response.json();
-
-  const list = document.createElement("ul");
-
-  data.forEach((d) => {
-    const item = document.createElement("li");
-    item.innerHTML = `<b>season</b> : ${d.season}, <b>title</b> : ${d.title}, <b>artist</b> : ${d.artist}`;
-    list.appendChild(item);
-  });
-
-  document.body.appendChild(list);
-};*/
-
 const add = async function (event) {
   event.preventDefault();
 
@@ -53,65 +24,72 @@ const add = async function (event) {
   createPlaylist(data);
 };
 
-
- function createPlaylist(data) {
-   
+function createPlaylist(data) {
   const list = document.getElementById("output");
   const header = document.getElementById("header");
-   
-    list.innerHTML = "";
-    data.forEach((d) => {
-      let current_season = document.getElementById("season").value;
-      const item = document.createElement("p1");
-      const pop = document.createElement("button");
-      if (current_season === d.season) {
-        item.innerHTML = `${d.title} by ${d.artist}: ${d.length}`;
-        list.appendChild(item);
 
-        pop.innerHTML = `Delete`;
-        pop.onclick = async function (event) {
-          event.preventDefault();
-          const removeJson = {
-              season: d.season,
-              title: d.title,
-              artist: d.artist,
-              length: d.length,
-            },
-            removeBody = JSON.stringify(removeJson);
+  list.innerHTML = "";
+  data.forEach((d) => {
+    let current_season = document.getElementById("season").value;
+    const item = document.createElement("p1");
+    const pop = document.createElement("button");
+    pop.style.cssText = "margin:0 auto 0 25%;display:grid;";
+    if (current_season === d.season) {
+      item.innerHTML = `${d.title} by ${d.artist}: ${d.length}`;
+      list.appendChild(item);
 
-          const removeResponse = await fetch("/remove", {
-            method: "POST",
-            body: removeBody,
-          });
+      pop.innerHTML = `Delete`;
+      pop.onclick = async function (event) {
+        event.preventDefault();
+        const removeJson = {
+            season: d.season,
+            title: d.title,
+            artist: d.artist,
+            length: d.length,
+          },
+          removeBody = JSON.stringify(removeJson);
 
-          const responseData = await removeResponse.json();
-          createPlaylist(responseData);
-        };
-        item.appendChild(pop);
-      } else {
-        document.getElementById("output").innerHTML = "";
-      }
+        const removeResponse = await fetch("/remove", {
+          method: "POST",
+          body: removeBody,
+        });
 
-      header.innerHTML = `${d.season} playlist`;
-    });
+        const responseData = await removeResponse.json();
+        createPlaylist(responseData);
+      };
+      item.appendChild(pop);
+    } else {
+      document.getElementById("output").innerHTML = "";
+    }
 
-    document.body.appendChild(list);
+    header.innerHTML = `${d.season} playlist`;
+    changeHeaderColor(current_season);
+  });
+
+  document.body.appendChild(list);
+}
+
+function changeHeaderColor(season) {
+  const header = document.querySelector("h1");
+
+  if (season === "fall") {
+    header.setAttribute("style", "background-color:#F5BB91;");
+  } else if (season === "spring") {
+    header.setAttribute("style", "background-color:#F0BFD9;");
+  } else if (season === "winter") {
+    header.setAttribute("style", "background-color:#D2E3F3;");
+  } else if (season === "summer") {
+    header.setAttribute("style", "background-color:#FAF1D0;");
   }
-
-
+}
 
 window.onload = async function () {
+  const current_season = document.getElementById("season").value;
   const addButton = document.getElementById("add");
   addButton.onclick = add;
-  
-  
-   const doesNothing = await fetch("/nothing", {
-            method: "POST",
-            body: JSON.stringify({})
-          });
-  
 
-  // similar logic to add - not appending/replacing
+  const doesNothing = await fetch("/nothing", {
+    method: "POST",
+    body: JSON.stringify({}),
+  });
 };
-
-//send data
