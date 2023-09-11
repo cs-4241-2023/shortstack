@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Plant-Watering-Tracker",
+  "version": "1.0",
+  "description": "CS4241-A2",
+  "author": "Juliana-Porto",
   "scripts": {
     "start": "node server.improved.js"
   },
