@@ -1,4 +1,72 @@
 body {
-  background:black;
-  color:white;
+  background:#2e2c42;
+  font-family: 'Lato', sans-serif;
+  color: white;
+}
+
+.container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1{
+  text-align:center;
+}
+
+form {
+  border-style: solid;
+  border-color: black;
+  background: #363a46;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  font-weight: bold;
+}
+
+label, .addButton {
+  display: flex;
+  margin-top: 10px;
+}
+
+.textbox{
+  width:98%;
+}
+
+.button {
+  text-align: right;
+}
+
+.addButton {
+  display: inline-block;
+}
+
+#todoList{
+  border-style: solid;
+  border-color: black;
+  list-style: none;
+  padding: 0;
+  background: #363a46;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.listItem{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  flex-wrap: nowrap;
+}
+
+.todo{
+  flex:3;
+  text-align:center;
+}
+
+.date, .delete, .check, .urgency{
+  padding:5px;
+  flex:1;
+  text-align:center;
 }
