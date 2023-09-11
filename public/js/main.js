@@ -21,7 +21,7 @@ const submit = async function( event ) {
   
         const json = { tasks: taskName.value , date: dueDate.value , priority: taskPriority.value };
 
-        console.log(json);
+        //console.log(json);
 
   fetch( '/submit', {
     method:'POST',
@@ -29,7 +29,7 @@ const submit = async function( event ) {
 
   }).then(async function (response){ //console.log(response)
     let data= await response.json()
-    console.log(data)
+    //console.log(data)
 
 
     //const list = document.createElement('ul')
@@ -47,10 +47,10 @@ const submit = async function( event ) {
 */
 
   for (const key in data) {
-    console.log(key);
+    //console.log(key);
     if (data.hasOwnProperty(key)) {
       const li = document.createElement('li');
-      resultListHTML += `<li>${key}: ${data[key]}</li>`;
+      resultListHTML += `<li>${key['tasks']}</li>`;
       list.appendChild(li);
       console.log(data)
     }
@@ -61,8 +61,6 @@ const submit = async function( event ) {
   resultContainer.appendChild(list);
       })
   }
-
-
 
 window.onload = function() {
    const button = document.querySelector("button");
