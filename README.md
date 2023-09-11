@@ -4,7 +4,7 @@ http://a2-bman4.glitch.me
 This project shows:
 
 ## Cars
-The project is a basic page form for inputting and modifyingcar data. It uses a flex grid to organize parts of the page. The user can modify and delete any car data they enter.
+The project is a basic page form for inputting and modifying car data. It uses a flex grid to organize the form part of the page. The user can modify and delete any car data they enter.
 
 ## Technical Achievements
 - **Single Page App Always Showing Server-Data**: This one page form starts out empty but everytime data is entered it will always appear as a new row on the table on the screen. From there each row on the screen can also be 
