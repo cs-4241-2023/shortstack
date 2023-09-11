@@ -2,6 +2,7 @@
 ## Todo List
 
 My app is a Todo list which allows that user to create and delete tasks. Based on the due date and current date the server assigns a priority to the task. I used a grid for my CSS for my table headings. I also used CSS to make my Todo list have a free form flow as well. 
+Glitch: https://rambunctious-gratis-port.glitch.me/
 
 ## Technical Achievements
 
