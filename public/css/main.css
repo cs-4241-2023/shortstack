@@ -1,71 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
 body {
-  background: #f99b8f;
-  color: white;
+  background: #d09a94;
+  font-family: "Montserrat", sans-serif;
+  align-content: center;
 }
 
 h1 {
   color: #752d23;
   text-align: center;
 }
-body {
-  text-align: center;
-}
 
 p {
   color: #750f01;
+  font-size: 12px;
 }
+
+/*Grid and Label CSS */
 form {
-  position: relative;
-  margin: 2 auto;
-  padding-right: 3em;
-  display: inline-block;
   padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  margin-left: 35%;
+  margin-right: 35%;
 }
 
 label {
   color: #750f01;
   padding: 2px;
+  align-content: center;
 }
 
-.button {
-  padding: 5px;
-  font: bold 0.6em sans-serif;
-  border: 2px solid #ba3744;
-  border-radius: 5px;
-  background: none;
+/* Buttons CSS */
+.submit {
+  padding: 4px;
+  width: 100px;
+  margin: 3px;
+  border: 2px solid #750f01;
+  border-radius: 2px;
+  background: #925d57;
   cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  color: #fcfcfc;
 }
-
 button {
-  padding: 5px;
-  font: bold 0.6em sans-serif;
-  border: 2px solid #333;
-  border-radius: 5px;
-  background: none;
+  padding: 7px;
+  border: 2px solid #750f01;
+  border-radius: 4px;
   cursor: pointer;
+  color: #750f01;
 }
 
+/*Input CSS */
+input {
+  padding: 2px;
+  width: 150px;
+}
+input[type="text"],
+input[type="date"] {
+  color: #752d23;
+}
 input[type="text"]:focus {
   background-color: rgb(214, 162, 175);
 }
+
+/* Table CSS */
 table {
   margin: 0 auto;
   font-size: large;
   border: 2px solid black;
   margin-top: 3px;
+  background-color: #925d57;
 }
 
 td {
-  border: 1px solid black;
+  border: 1px solid rgb(255, 255, 255);
+  font-size: small;
+  color: white;
+  text-align: center;
+  padding: 8px;
 }
 
-th,
-td {
+th {
   font-weight: bold;
-  border: 1px solid black;
+  border: 1px solid rgb(255, 255, 255);
   padding: 10px;
   text-align: center;
+  color: white;
 }
-td {
-  font-weight: lighter;
+/*  Slider CSS */
+.slider {
+  width: 110px;
+  height: 3px;
+  padding: 10px;
+  background: #fcfcfc;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  accent-color: #752d23;
+  box-shadow: 0px 15px 40px #c2a57f66;
+}
+.slider label {
+  font-size: 12px;
+  font-family: Open Sans;
+  padding-left: 8px;
+  color: black;
+}
+.slider input[type="range"] {
+  width: 100px;
+  height: 2px;
+  background: black;
+  border: none;
+  outline: none;
 }
