@@ -53,7 +53,7 @@ form {
   padding: var(--global-padding-left);
   max-width: 60vw;
   min-width: 50vw;
-  margin-bottom: 2vh;
+  margin-bottom: 3vh;
   min-height: auto;
   max-height: auto;
 }
@@ -76,4 +76,14 @@ button[form="addTaskForm"] {
     cursor: pointer;
     border-radius: 5px;
     font-size: 1rem;
+}
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th {
+  padding: var(--global-padding-left);
 }
