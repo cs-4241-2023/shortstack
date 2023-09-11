@@ -1,5 +1,6 @@
 ## MY TODO LIST
 https://a2-jamesstaryi.glitch.me/
+
 This is a pretty simple and straightforward website to keep track of one's todo list.
 A user can input a todo item and also the corresponding due date(or leave it blank). It then adds it the the list at the bottom of the page.
 The user can then check off completed actions, inline edit the todo item, view the item's urgency, or delete the todo item.
