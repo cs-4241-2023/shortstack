@@ -53,7 +53,6 @@ const handlePost = function( request, response ) {
     let duplicate = appdata.some(item => item.title === newItem.title && item.author === newItem.author)
     if (duplicate){
       response.writeHead(409, { 'Content-Type': 'application/json' });
-      response.end(JSON.stringify({ message: 'Duplicate item found' }));
       response.end(JSON.stringify(appdata));
 
 
