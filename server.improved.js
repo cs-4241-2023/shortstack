@@ -8,17 +8,10 @@ const http = require("http"),
   dir = "public/",
   port = 3000;
 
-/* 
-      // This is the general structure of the data:
-       taskObject = {
-          taskName: "name",
-          taskDescription: "description",
-          taskDeadline: "deadline",
-          taskPriority: "priority",
-        }; 
-      */
+let currentId = 3;
 const appdata = [
   {
+    id: 0,
     taskName: "Clean the garage",
     taskDescription:
       "Throw away old junk in the trash. Reorganize items to clear up more floor space.",
@@ -27,6 +20,7 @@ const appdata = [
     taskCreated: "2023-09-05",
   },
   {
+    id: 1,
     taskName: "Wash the dishes",
     taskDescription:
       "Wash the dishes in the sink. Put them away in the cabinets.",
@@ -35,6 +29,7 @@ const appdata = [
     taskCreated: "2023-09-03",
   },
   {
+    id: 2,
     taskName: "Do the laundry",
     taskDescription:
       "Wash the clothes in the washing machine. Dry them in the dryer. Fold them and put them away.",
@@ -49,6 +44,8 @@ const server = http.createServer(function (request, response) {
     handleGet(request, response);
   } else if (request.method === "POST") {
     handlePost(request, response);
+  } else if (request.method === "DELETE") {
+    handleDelete(request, response);
   }
 });
 
@@ -66,7 +63,7 @@ const handleGet = function (request, response) {
       );
       appdata[i].totalTime = duration(
         new Date(appdata[i].taskCreated),
-        new Date(appdata[i].taskDeadline) // this is the deadline
+        new Date(appdata[i].taskDeadline)
       );
     }
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
@@ -98,7 +95,43 @@ const handlePost = function (request, response) {
       );
       appdata[i].totalTime = duration(
         new Date(appdata[i].taskCreated),
-        new Date(appdata[i].taskDeadline) // this is the deadline
+        new Date(appdata[i].taskDeadline)
+      );
+      appdata[i].id = currentId;
+      currentId++;
+    }
+
+    // sending back the updated appdata
+    response.writeHead(200, "OK", { "Content-Type": "text/plain" });
+    response.end(JSON.stringify(appdata));
+  });
+};
+
+const handleDelete = function (request, response) {
+  let dataString = "";
+
+  request.on("data", function (data) {
+    dataString += data;
+  });
+
+  request.on("end", function () {
+    console.log(JSON.parse(dataString));
+
+    const id = JSON.parse(dataString).id;
+    // console.log("delete id: ", id);
+
+    // filter out the task with the given id
+    appdata = appdata.filter((task) => task.id !== id);
+
+    // calculating derived fields
+    for (let i = 0; i < appdata.length; i++) {
+      appdata[i].timeRemaining = duration(
+        new Date(),
+        new Date(appdata[i].taskDeadline)
+      );
+      appdata[i].totalTime = duration(
+        new Date(appdata[i].taskCreated),
+        new Date(appdata[i].taskDeadline)
       );
     }
 
