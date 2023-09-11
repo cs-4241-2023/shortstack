@@ -24,54 +24,50 @@ const submit = async function( event ) {
   })
 
   const data = await response.json()
-  let list;
-  let tmp;
-  if(document.getElementById("groceryList") === null)
-  {
-    list = document.createElement('ul')
-    list.setAttribute("id", "groceryList")
-  }
-  else{
-    list = document.getElementById("groceryList")
-    tmp = [].slice.call(list.children);
-  }
-  console.log(tmp)
-  if(tmp[1].innerText ==  "Item Name: Price($)")
-  {
-    console.log(tmp[1])
-    list.removeChild(tmp[1])
-    const li = document.createElement('li')
-    const myIn = document.createElement('input')
-    const checkLabel = document.createElement("label")
-    checkLabel.appendChild(document.createTextNode(data.groceryList[0].itemName[0].toUpperCase() + data.groceryList[0].itemName.slice(1) + `: $${data.groceryList[0].price}`))
-    myIn.setAttribute("type", "checkbox")
-    myIn.className = "giBox" 
-    li.className = "groceryItem"
-    li.appendChild(myIn);
-    li.appendChild(checkLabel);
-    list.appendChild( li )
-  }
-    for(let i = 0; i < data.groceryList.length; i++)
+
+  addList(data);
+
+}
+
+const modify = async function (event){
+  event.preventDefault()
+  let idxs = [];
+  let idx = 0;
+  let list = [].slice.call(document.getElementById("groceryList").children)
+  list = list.splice(1)
+  list.forEach(element => {
+    if(element.getElementsByClassName("modbox").length === 1)
     {
-      console.log(i, tmp.length)
-      if(i >= (tmp.length - 1))
-      {
-        const li = document.createElement('li')
-        const myIn = document.createElement('input')
-        const checkLabel = document.createElement("label")
-        checkLabel.appendChild(document.createTextNode(data.groceryList[i].itemName[0].toUpperCase() + data.groceryList[i].itemName.slice(1) + `: $${data.groceryList[i].price}`))
-        myIn.setAttribute("type", "checkbox")
-        myIn.className = "giBox" 
-        li.className = "groceryItem"
-        li.appendChild(myIn);
-        li.appendChild(checkLabel);
-        list.appendChild( li )
+      if(element.getElementsByClassName("modbox")[0].checked){
+        idxs.push(idx);
       }
     }
-    let tp = document.getElementById("tpNum");
-    tp.innerText = `$${data.totalPrice.totalPrice.toFixed(2)}`
-    total = parseFloat(data.totalPrice.totalPrice.toFixed(2))
-  
+    idx+= 1;
+  });
+
+  let err = document.getElementsByClassName("errorMsg")[0];
+  const pricein = document.querySelector("#price"),
+        json = { items: idxs, price: pricein.value},
+        body = JSON.stringify( json )
+  if(isNaN(parseFloat(json.price)))
+  {
+    err.style.display = "flex"
+    err.style.visibility = "visible"
+    return false;
+  }
+  else{
+    err.style.display = "none"
+    err.style.visibility = "hidden"
+  }
+
+  const response = await fetch( '/modify', {
+    method:'POST',
+    body 
+  })
+
+  const data = await response.json()
+
+  updateList(data);
 }
 
 const reset = async function( event )
@@ -111,6 +107,125 @@ const reset = async function( event )
   document.getElementById("cartList").innerHTML = ""
   document.getElementById("cartList").appendChild(cartLabel)
 }
+const addList = function(data){
+  let list;
+  let tmp;
+  if(document.getElementById("groceryList") === null)
+  {
+    list = document.createElement('ul')
+    list.setAttribute("id", "groceryList")
+  }
+  else{
+    list = document.getElementById("groceryList")
+    tmp = [].slice.call(list.children);
+  }
+  //console.log(tmp)
+  if(tmp[1].innerText ==  "Item Name: Price($)")
+  {
+    console.log(tmp[1])
+    list.removeChild(tmp[1])
+    const li = document.createElement('li')
+    const myIn = document.createElement('input')
+    const inTwo = document.createElement('input')
+    const checkLabel = document.createElement("label")
+    checkLabel.appendChild(document.createTextNode(data.groceryList[0].itemName[0].toUpperCase() + data.groceryList[0].itemName.slice(1) + `: $${data.groceryList[0].price}`))
+    myIn.setAttribute("type", "checkbox")
+    myIn.className = "giBox" 
+    inTwo.setAttribute("type", "checkbox")
+    inTwo.className = "modbox" 
+    li.className = "groceryItem"
+    li.appendChild(myIn);
+    li.appendChild(checkLabel);
+    li.appendChild(inTwo)
+    li.id = "item-0"
+    list.appendChild( li )
+  }
+    for(let i = 0; i < data.groceryList.length; i++)
+    {
+      console.log(i, tmp.length)
+      if(i >= (tmp.length - 1))
+      {
+        const li = document.createElement('li')
+        const myIn = document.createElement('input')
+        const inTwo = document.createElement('input')
+        const checkLabel = document.createElement("label")
+        checkLabel.appendChild(document.createTextNode(data.groceryList[i].itemName[0].toUpperCase() + data.groceryList[i].itemName.slice(1) + `: $${data.groceryList[i].price}`))
+        myIn.setAttribute("type", "checkbox")
+        myIn.className = "giBox" 
+        inTwo.setAttribute("type", "checkbox")
+        inTwo.className = "modbox" 
+        li.className = "groceryItem"
+        li.id = `item-${i}`
+        li.appendChild(myIn);
+        li.appendChild(checkLabel);
+        li.appendChild(inTwo)
+        list.appendChild( li )
+      }
+    }
+    let tp = document.getElementById("tpNum");
+    tp.innerText = `$${data.totalPrice.totalPrice.toFixed(2)}`
+    total = parseFloat(data.totalPrice.totalPrice.toFixed(2))
+}
+
+const updateList = function(data){
+  let list;
+  let tmp;
+  if(document.getElementById("groceryList") === null)
+  {
+    list = document.createElement('ul')
+    list.setAttribute("id", "groceryList")
+  }
+  else{
+    list = document.getElementById("groceryList")
+    tmp = [].slice.call(list.children);
+  }
+  //console.log(tmp)
+  if(tmp[1].innerText ==  "Item Name: Price($) ")
+  {
+    console.log(tmp[1])
+    list.removeChild(tmp[1])
+    const li = document.createElement('li')
+    const myIn = document.createElement('input')
+    const inTwo = document.createElement('input')
+    const checkLabel = document.createElement("label")
+    checkLabel.appendChild(document.createTextNode(data.groceryList[0].itemName[0].toUpperCase() + data.groceryList[0].itemName.slice(1) + `: $${data.groceryList[0].price}`))
+    myIn.setAttribute("type", "checkbox")
+    myIn.className = "giBox" 
+    inTwo.setAttribute("type", "checkbox")
+    inTwo.className = "modbox" 
+    li.className = "groceryItem"
+    li.appendChild(myIn);
+    li.appendChild(checkLabel);
+    li.appendChild(inTwo)
+    li.id = "item-0"
+    list.appendChild( li )
+  }
+    for(let i = 0; i < data.groceryList.length; i++)
+    {
+        const li = document.createElement('li')
+        const myIn = document.createElement('input')
+        const inTwo = document.createElement('input')
+        const checkLabel = document.createElement("label")
+        checkLabel.appendChild(document.createTextNode(data.groceryList[i].itemName[0].toUpperCase() + data.groceryList[i].itemName.slice(1) + `: $${data.groceryList[i].price}`))
+        myIn.setAttribute("type", "checkbox")
+        myIn.className = "giBox"
+        console.log(tmp[i + 1].getElementsByClassName("giBox")[0].checked)
+        myIn.checked = tmp[i + 1].getElementsByClassName("giBox")[0].checked
+        inTwo.setAttribute("type", "checkbox")
+        inTwo.className = "modbox" 
+        li.className = "groceryItem"
+        li.id = `item-${i}`
+        li.appendChild(myIn);
+        li.appendChild(checkLabel);
+        li.appendChild(inTwo)
+        list.removeChild(tmp[i+1])
+        list.appendChild( li )
+      
+    }
+    let tp = document.getElementById("tpNum");
+    tp.innerText = `$${data.totalPrice.totalPrice.toFixed(2)}`
+    total = parseFloat(data.totalPrice.totalPrice.toFixed(2))
+}
 
 const defaultListItem = document.createElement("li");
 const defaultIn = document.createElement('input')
@@ -134,6 +249,8 @@ window.onload = function() {
 
   const button = document.getElementById("submit");
   const resetBut = document.getElementById("reset");
+  const modBut = document.getElementById("modify");
+  modBut.onclick = modify;
   button.onclick = submit;
   resetBut.onclick = reset;
 

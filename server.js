@@ -63,6 +63,13 @@ const calcTotalPrice = function () {
     }
   })};
 };
+
+const modifyPrice = function (data){
+  data.items.forEach(idx => {
+    console.log(groceryList[idx])
+    groceryList[idx].price = data.price;
+  })
+}
 const handlePost = function (request, response) {
     let dataString = "";
 
@@ -70,16 +77,30 @@ const handlePost = function (request, response) {
       dataString += data;
     });
 
-    request.on("end", function () {
-      const newItem = JSON.parse(dataString).item;
-      groceryList.push(newItem);
-      calcTotalPrice();
-      //console.log(totalPrice);
-      retObject = { groceryList, totalPrice };
-      console.log(retObject)
-      response.writeHead(200, "OK", { "Content-Type": "text/json" });
-      response.end(JSON.stringify(retObject));
-    });
+    if(request.url ==="/submit")
+    {
+      request.on("end", function () {
+        const newItem = JSON.parse(dataString).item;
+        groceryList.push(newItem);
+        calcTotalPrice();
+        //console.log(totalPrice);
+        retObject = { groceryList, totalPrice };
+        console.log(retObject)
+        response.writeHead(200, "OK", { "Content-Type": "text/json" });
+        response.end(JSON.stringify(retObject));
+      });
+    }
+    else{
+      request.on("end", function () {
+        modifyPrice(JSON.parse(dataString))
+        calcTotalPrice();
+        retObject = { groceryList, totalPrice };
+        console.log(retObject)
+        response.writeHead(200, "OK", { "Content-Type": "text/json" });
+        response.end(JSON.stringify(retObject));
+      });
+    }
+
 
 };
 
