@@ -1,3 +1,7 @@
+Isabella Pabon
+https://a2-isabellapabon.glitch.me/
+
+
 ## Baseline Requirments
 - I used a HTML form and a "ul and p" tags to display the data from the server on to my webpage.
 - I used all kinds of selectors for my css, including: element selectors, id selectors, and class selectors.
