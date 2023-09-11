@@ -1,18 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
+
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <div class="empty-space"></div>
+    <header>
+      <!-- Main header and description -->
+      <h1>Plant Watering Tracker</h1>
+      <p>
+        Welcome to the <b>Plant Watering Tracker</b>! Input your plant
+        information below and the Tracker will tell you the next date that your
+        plant must be watered. You can update plant information using the 'edit'
+        button on the right or delete a plant using the 'delete' button.
+      </p>
+    </header>
+    <div class="empty-space"></div>
+    <main>
+      <form id="newPlantForm">
+        <div id="formBox">
+          <div id="fieldBox">
+            <!-- New Plant Form -->
+            <h2>Add a New Plant</h2>
+
+            <!-- User inputs plant name -->
+            <label for="plantName">Plant name</label>
+            <input
+              type="text"
+              required
+              id="plantName"
+              name="plantName"
+              placeholder="plant name here"
+            />
+
+            <!-- User selects plant type -->
+            <label for="plantType">Choose a plant type</label>
+            <select name="plantType" id="plantType" required>
+              <option value="Flowering Plant">Flowering Plant</option>
+              <option value="Succulent or Cactus">Succulent or Cactus</option>
+              <option value="Indoor Foliage">Indoor Foliage</option>
+              <option value="Herb">Herb</option>
+              <option value="Fruit Tree">Fruit Tree</option>
+              <option value="Shrub or Bush">Shrub or Bush</option>
+              <option value="Vegetable">Vegetable</option>
+              <option value="Tropical">Tropical</option>
+              <option value="Aquatic">Aquatic</option>
+              <option value="Bamboo">Bamboo</option>
+              <option value="Groundcover">Groundcover</option>
+              <option value="Air Plant">Air Plant</option>
+              <option value="Climbing or Vine">Climbing or Vine</option>
+              <option value="Bonsai Tree">Bonsai Tree</option>
+              <option value="Fern">Fern</option>
+            </select>
+
+            <!-- User selects last date of watering -->
+            <label for="lastWatered">Last Date of Watering</label>
+            <input type="date" required id="lastWatered" name="lastWatered" />
+
+            <br />
+            <!-- Submit button -->
+            <button id="submitButton">Submit</button>
+          </div>
+          <div id="picBox">
+            <img
+              id="plantPic"
+              src="https://cdn.glitch.global/dbbea459-e62d-47ac-a80c-1c15a81d2df6/pawel-czerwinski-lWBZ01XRRoI-unsplash.jpg?v=1694391398454"
+              alt="plant"
+            />
+          </div>
+        </div>
+      </form>
+
+      <div class="empty-space"></div>
+      <div id="plantArchive">
+        <!-- Plant Archive -->
+        <h2>Plant Archive and Watering Dates</h2>
+
+        <!-- Table of Data -->
+        <table id="plantTable">
+          <thead>
+            <tr>
+              <!-- Plant Number Column (index) -->
+              <th>Plant Number</th>
+              <!-- Plant Name -->
+              <th>Plant Name</th>
+              <!-- Plant Type -->
+              <th>Plant Type</th>
+              <!-- Date of Last Watering -->
+              <th>Last Watered</th>
+              <!-- Date of Next Watering -->
+              <th>Next Water</th>
+              <!-- Edit button - not done -->
+              <!-- <th>Edit</th> -->
+              <!-- Delete button -->
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody id="plantTableBody"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer id="copyright">&copy; Copyright 2023 Juliana Porto</footer>
   </body>
 </html>
