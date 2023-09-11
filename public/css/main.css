@@ -1,4 +1,64 @@
+/* Element Selector */
 body {
   background:black;
   color:white;
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', sans-serif;
 }
+
+h1 {
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+/* Use flex to layout form*/
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+/* ID Selector */
+#theTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Class Selector */
+.button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+th {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+}
+
+tbody tr {
+  background-color: #fff;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  color: #333; 
+}
+
+/* Make rating color blue */
+td:nth-child(4) {
+  font-weight: bold;
+  color: #007bff; 
+}
+
+
+
