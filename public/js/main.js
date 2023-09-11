@@ -109,16 +109,16 @@ const updateList = function (data) {
     p.forEach(p => {
       let color = 'black'
       if (p.textContent === 'Done') {
-        color = '#b5d6a7';
+        color = '#5BFF91';
       }
       else if (p.textContent === 'Urgent') {
-        color= '#f55d1e';
+        color= '#FF5E53';
       }
       else if (p.textContent === 'Not Urgent') {
-        color= '#fef99b';
+        color= '#6078FF';
       }
       else if (p.textContent === 'Late') {
-        color= '#fd9800';
+        color= '#FFB226';
       }
       p.style.backgroundColor = color;
     });
