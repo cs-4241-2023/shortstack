@@ -31,6 +31,8 @@ my form, and button for submit. (Some other elements I created in the JS using c
 
 For my css, I implemented a flexbox and styled each element using the commands for a flexbox.
 
+My derived field is that I take the song length in seconds and return it in the format: minutes:seconds.
+
 ## Technical Achievements
 - **Tech Achievement 1** - I created a single page application that updates according to this achievement. When information
 is submited to the server, it automatically displays the updated data and this is all done with a single page.
