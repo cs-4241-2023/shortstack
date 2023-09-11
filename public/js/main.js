@@ -1,4 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
+document.addEventListener('DOMContentLoaded', function () {
+
 
 const submit = async function( event ) {
   // stop form submission from trying to load
@@ -16,6 +18,16 @@ const titleInput = document.querySelector('#title');
 const authorInput = document.querySelector('#author');
 const startInput = document.querySelector('#startDate');
 const finishInput = document.querySelector('#dateFinished');
+const submitButton = document.querySelector('button');
+
+if (!titleInput.value.trim() || !authorInput.value.trim() || !startInput.value.trim() || !finishInput.value.trim()) {
+  submitButton.disabled = true;
+
+  console.log('Please fill in all fields');
+}
+submitButton.disabled = false;
+
+
 const itemIdentifier = titleInput.value + authorInput.value + startInput.value + finishInput.value;
 
 const startDate = new Date(startInput.value);
@@ -126,7 +138,33 @@ async function deleteBook(itemID, listItemElem, delButton) {
 
 }
 
-window.onload = function() {
-  const button = document.querySelector("button");
-  button.onclick = submit;
+document.querySelector('#title').addEventListener('input', checkForm);
+document.querySelector('#author').addEventListener('input', checkForm);
+document.querySelector('#startDate').addEventListener('input', checkForm);
+document.querySelector('#dateFinished').addEventListener('input', checkForm);
+
+
+async function checkForm() {
+  const titleInput = document.querySelector('#title');
+  const authorInput = document.querySelector('#author');
+  const startInput = document.querySelector('#startDate');
+  const finishInput = document.querySelector('#dateFinished');
+  const submitButton = document.querySelector('button');
+
+  if (titleInput.value.trim() && authorInput.value.trim() && startInput.value.trim() && finishInput.value.trim()) {
+    submitButton.disabled = false;
+  } 
+  else {
+    submitButton.disabled = true;
+  }
 }
+
+
+
+window.onload = function() {
+  
+  const submitButton = document.querySelector("#submit");
+  submitButton.disabled = true;
+  submitButton.onclick = submit;
+}
+})

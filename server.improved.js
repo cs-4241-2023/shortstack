@@ -67,10 +67,16 @@ const handleDeleteRequest = function(request, response){
     const itemIdentifier  = request.url.replace('/delete/','')
     console.log("Received DELETE request for itemID:", itemIdentifier)
 
-    const i = appdata.findIndex(item => item.identifier === itemIdentifier);
+    let index = -1
+    for (let i = 0; i < appdata.length;i ++){
+      if (appdata[i].identifier === itemIdentifier) {
+        index = i;
+        break;
+      }
+    }
     console.log("Current appdata:", appdata);
 
-    if (i !== -1){
+    if (index !== -1){
       appdata.splice(i,1)
       response.writeHead(200, {'Content-Type': 'text/json'})
       response.end(JSON.stringify({message: 'Item deleted successfully'}))
