@@ -8,7 +8,7 @@ const http = require("http"),
   dir = "public/",
   port = 3000;
 
-let reviews = [];
+let tasks = [];
 
 const server = http.createServer(function (request, response) {
   if (request.method === "GET") {
@@ -23,15 +23,18 @@ const handleGet = function (request, response) {
 
   if (request.url === "/") {
     sendFile(response, "public/index.html");
-  } else if (request.url === "/getReviews") {
+  } else if (request.url === "/getTasks") {
     response.writeHead(200, { "Content-Type": "application/json" });
-    response.end(JSON.stringify(reviews));
+    response.end(JSON.stringify(tasks));
   } else {
+    console.log("Sending File", filename);
     sendFile(response, filename);
   }
 };
 
 const handlePost = function (request, response) {
+  console.log("Received POST request for:", request.url);
+
   let dataString = "";
 
   request.on("data", function (data) {
@@ -41,20 +44,37 @@ const handlePost = function (request, response) {
   request.on("end", function () {
     const data = JSON.parse(dataString);
 
-    if (request.url === "/addReview") {
-      reviews.push(data);
+    if (request.url === "/addTask") {
+      const currentDate = new Date();
+      switch (data.priority) {
+        case "high":
+          currentDate.setDate(currentDate.getDate() + 1);
+          break;
+        case "medium":
+          currentDate.setDate(currentDate.getDate() + 3);
+          break;
+        case "low":
+          currentDate.setDate(currentDate.getDate() + 7);
+          break;
+      }
+      data.dueDate = currentDate.toISOString().slice(0, 10); // Format as YYYY-MM-DD
 
-      // Calculate average rating for the book
-      const totalRating = reviews
-        .filter((r) => r.bookName === data.bookName)
-        .reduce((acc, curr) => acc + parseInt(curr.rating), 0);
-      const count = reviews.filter((r) => r.bookName === data.bookName).length;
-      const averageRating = totalRating / count;
+      tasks.push(data);
 
       response.writeHead(200, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ success: true, averageRating }));
+      response.end(JSON.stringify({ success: true }));
+    } else if (request.url === "/deleteTask") {
+        const taskIndex = tasks.findIndex(t => t.task === data.task && t.dueDate === data.dueDate);
+        if (taskIndex !== -1) {
+            tasks.splice(taskIndex, 1);
+            response.writeHead(200, { "Content-Type": "application/json" });
+            response.end(JSON.stringify({ success: true }));
+        } else {
+            response.writeHead(404, { "Content-Type": "text/plain" });
+            response.end("Task not found.");
+        }
     } else {
-      response.writeHead(200, "OK", { "Content-Type": "text/plain" });
+      response.writeHead(404, { "Content-Type": "text/plain" });
       response.end("Endpoint not recognized.");
     }
   });
