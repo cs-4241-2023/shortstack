@@ -13,7 +13,7 @@ const submit = async function( event ) {
   const inputName = form["name"],
         inputEmail = form["email"],
         inputType = form["type"],
-        inputDepartment = form["major"]
+        inputDepartment = form["department"]
 
   console.log(inputName)
   console.log(inputEmail)
@@ -33,6 +33,8 @@ const submit = async function( event ) {
   const text = await response.text()
   
   console.log( 'text:', text)
+
+  form.reset();
   addToTable(json)
 }
 
