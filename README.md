@@ -1,100 +1,58 @@
-Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
-===
+Colin Fyock https://a2-cfyock.glitch.me/
 
-Due: September 11th, by 11:59 AM.
+## Technical Achievements
 
-This assignment aims to introduce you to creating a prototype two-tiered web application. 
-Your application will include the use of HTML, CSS, JavaScript, and Node.js functionality, with active communication between the client and the server over the life of a user session.
+- **Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data.**: I used the .map function in javascript to dynamically create the table rows whenever something is deleted
+  or added to the database. This is then pushed to the table through the id that the table has, id="todo_table". The page updates without the user having to refresh the page.
 
-Baseline Requirements
----
+## Design/UX Achievements
 
-There is a large range of application areas and possibilities that meet these baseline requirements. 
-Try to make your application do something useful! A todo list, storing / retrieving high scores for a very simple game... have a little fun with it.
+- **Test your user interface with other students**:
 
-Your application is required to implement the following functionalities:
-
-- a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
-- a `Results` functionality which shows the entire dataset residing in the server's memory
-- a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
-- a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset
-- the `Derived field` for a new row of data must be computed based on fields already existing in the row. 
-For example, a `todo` dataset with `task`, `priority`, and `creation_date` may generate a new field `deadline` by looking at `creation_date` and `priority`
-
-Your application is required to demonstrate the use of the following concepts:
-
-HTML:
-- One or more [HTML Forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms), with any combination of form tags appropriate for the user input portion of the application
-- A results page displaying all data currently available on the server. You will most likely use a `<table>` tag for this, but `<ul>` or `<ol>` could also work and might be simpler to work with. Alternatively, you can create a single-page app (see Technical Acheivements) but this is not a requirement.
-- All pages should [validate](https://validator.w3.org)
-- If your app contains multple pages, they should all be accessible from the homepage (index.html)
-
-CSS:
-- CSS styling of the primary visual elements in the application
-- Various CSS Selector functionality must be demonstrated:
-    - Element selectors
-    - ID selectors
-    - Class selectors
-- CSS positioning and styling of the primary visual elements in the application:
-    - Use of either a CSS grid or flexbox for layout
-    - Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
-
-- CSS defined in a maintainable, readable form, in external stylesheets 
-
-JavaScript:
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server; a sample is provided in this repository.
-
-Node.js:
-- An HTTP Server that delivers all necessary files and data for the application, and also creates the required `Derived Fields` in your data. 
-A starting point is provided in this repository.
-
-Deliverables
----
-
-Do the following to complete this assignment and acheive a base grade of 85%:
-
-1. Fork the starting project code (make sure to fork the 2023 repo!). This repo contains some starter code that may be used or discarded as needed.
-2. Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page, it displays correctly.
-4. Deploy your project to Glitch, and fill in the appropriate fields in your package.json file.
-5. Ensure that your project has the proper naming scheme `a2-yourGithubUsername` so we can find it.
-6. Modify the README to the specifications below, and delete all of the instructions originally found in this README.
-7. Create and submit a Pull Request to the original repo. Label the pull request as follows: a2-gitusername-firstname-lastname
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the assignment to your personal interests. These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README and why it was challenging. ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM. Remember, the highest grade you can get on any individual assignment is a 100%.
-
-*Technical*
-- (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
-
-- (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
-
-*Design/UX*
-- (5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the [think-aloud protocol](https://en.wikipedia.org/wiki/Think_aloud_protocol) to obtain feedback on your design (talk-aloud is also fine). Important considerations when designing your study:
-
-1. Make sure you start the study by clearly stating the task that you expect your user to accomplish.
-2. You shouldn't provide any verbal instructions on how to use your interface / accomplish the task you give them. Make sure that your interface is clear enough that users can figure it out without any instruction, or provide text instructions from within the interface itself. 
-3. If users get stuck to the point where they give up, you can then provde instruction so that the study can continue, but make sure to discuss this in your README. You won't lose any points for this... all feedback is good feedback!
-
-You'll need to use sometype of collaborative software that will enable you both to see the test subject's screen and listen to their voice as they describe their thoughts, or conduct the studies in person. After completing each study, briefly (one to two sentences for each question) address the following in your README:
-
-1. Provide the last name of each student you conduct the evaluation with.
+1. Provide the last name of each student you conduct the evaluation with: Dufault
 2. What problems did the user have with your design?
 3. What comments did they make that surprised you?
 4. What would you change about the interface based on their feedback?
 
-*You do not need to actually make changes based on their feedback*. This acheivement is designed to help gain experience testing user interfaces. If you run two user studies, you should answer two sets of questions. 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
 ## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
-## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+-**The Easy Todo List:** This website uses a todo list as a frontend to send information to a backend server that stores the information.
 
-### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- Basic Requirements:
+- The Server in my application is located in the server.improved.js file. 
+It handles the two post requests, one being /submit which is whenever a user adds an item to the todo list.
+The other request is /delete or when the user deletes something from the todo list.
+The file also handles the derived field, which is created through taking the created date and adding on 7 days for every tier of priority. 
+If the priority is 1, then it adds 7 days to the created time in order to create a deadline for the todo item.
+This file also handles deletes, if the user deletes a todo item, I use the js filter function on the array that stores the todo items (appdata).
+This filters the array to remove all items that share the name of the item we are removing.
+I originally used a for loop and splice(), but it had came up with weird errors where it would remove two at a time from the list.
+This was most likely because it would remove one item from the list and truncate the list but the for loop would continue to index forward creating an error.
+- A results functionality that shows the whole dataset. The dataset is stored in the array appdata within the server.improved.js file. 
+It is then read to the page using the javascript map function that shows the whole array as a table with rows at the bottom of the page.
+This table updates automatically when something is added or removed, more information located in the technical achievements category.
+- A Form/Entry functionality: The forms I use are located within the index.html file and I use four forms.
+They include date forms, text forms, and number forms. The date is for the insertion of a creation date for the todo list, the number is the priority form, and the text is the text of the item that needs doing.
+A second text form is used for the delete form that takes in the name of the item that should be deleted.
+- A Server Logic: The server logic was previously explained in the server category, but it contains the routine for addition and deletion of items in the todo list, along with creating the derived field.
+- The Derived Field: Also mentioned in the first server category: The derived field is the combination of priority and the creation date to create a deadline that scales with the importance of priority. 
+The lower the priority (the higher the number) the further away the deadline becomes.
+
+**HTML**
+- Forms: The HTML forms I use are two text forms for the name of a todo list item, one number form for priority and one date form to make the creation date of a todo list item. All located in the index.html file
+- Results: A results page located at the bottom of the main page titled Your Current Todo List
+- Validate: The page does validate
+- The app does not contain multiple pages
+**CSS**
+- CSS Styling of Primary Elements: The titles, body, and table are all styling to make them different from the default.
+The background has a custom parchment color. The font is custom in different text fields, this includes three different fonts.
+- CSS Selectors: A element selector is used for h1, body, table, and more. An ID selector (#fancy_text) is used to change the font of the title to Josefin Sans.
+A class selector (.todo_add) is used to change the text within the input tag to the font Exo.
+- CSS Positioning: I used a flex within the body tag and turned it into a column, as that is how the website is arranged. 
+I used multiple fonts and left no text as the default font.
+- CSS is all located and ordered in the main.css file
+**JavaScript**
+- Get and Fetch are located in the main.js and server.improved.js files and I used array manipulation and simple arithmatic to create a derived field within the server.improved.js file.
+**Node.js**
+- The server.improved.js acts as my HTTP server and creates a dervied field out of the created time date along with the priority field to create a deadline field.
+

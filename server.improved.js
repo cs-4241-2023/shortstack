@@ -37,32 +37,30 @@ const handlePost = function (request, response) {
 
   request.on("end", function () {
     let todo_entry = JSON.parse(dataString);
-    
+
     // Processing the data to add a new field that combines priority and the creation date
     // The new string should be a due date which is:
     // The current date + 1 week per priority
-    if(request.url === "/submit") {
-      let date = new Date(todo_entry["datetime"])
+    if (request.url === "/submit") {
+      let date = new Date(todo_entry["datetime"]);
 
-      let due_date = new Date(date.setDate(date.getDate() + todo_entry["priority"]*7));
+      let due_date = new Date(
+        date.setDate(date.getDate() + todo_entry["priority"] * 7)
+      );
 
       todo_entry["due_date"] = due_date;
 
-      appdata.push(todo_entry)
+      appdata.push(todo_entry);
+    } else {
+      let temp_array = appdata;
+      appdata = temp_array.filter(
+        (index) => index["todo_list_item"] != todo_entry["item_to_delete"]
+      );
     }
-    
-    else {
-      let temp_array = appdata
-      appdata = temp_array.filter((index) => index["todo_list_item"] != todo_entry["item_to_delete"])
-      
-    }
-    
-    console.log(appdata)
+
+    console.log(appdata);
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
     response.end(JSON.stringify(appdata));
-    
-
-
   });
 };
 
