@@ -1,4 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sigmar&display=swap");
+
+/* class selector */
+.empty-space {
+  padding: 1.5%;
+}
+
+/* element selector */
+header {
+  background: #344e41;
+  padding: 2.5%;
+}
+
 body {
-  background:black;
-  color:white;
+  font-family: "Barlow", sans-serif;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  color: #dad7cd;
+}
+
+/* example of grid & flex */
+footer {
+  display: grid;
+  place-items: center;
+  margin-top: auto;
+  margin-bottom: 2.5%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Sigmar", cursive;
+  letter-spacing: 0.15%;
+}
+
+h1 {
+  font-size: 38px;
+  color: #dad7cd;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+b {
+  font-weight: bold;
+  color: #a3b18a;
+  text-shadow: #dad7cd 1px 0 10px;
+}
+
+/* id selector */
+/* uses grid to format image and form boxes */
+#formBox {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5%;
+}
+
+#newPlantForm {
+  background: #344e41;
+  padding: 2.5%;
+}
+
+label {
+  color: #a3b18a;
+  font-weight: bold;
+  display: block;
+}
+
+label:after {
+  content: ": ";
+}
+
+input,
+select {
+  padding: 0.3%;
+  width: 100%;
+  font: inherit;
+}
+
+#submitButton {
+  margin-top: 3%;
+}
+
+#plantPic {
+  width: 100%;
+}
+
+button {
+  padding: 1%;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
+  border: none;
+  background-color: #dad7cd;
+  border-radius: 10px;
+  font: inherit;
+}
+
+#plantArchive {
+  background: #344e41;
+  padding: 2.5%;
+}
+
+th {
+  font-weight: bold;
+  background-color: #a3b18a;
+  color: white;
+}
+
+th,
+td {
+  padding: 1%;
+  text-align: center;
+  vertical-align: center;
+}
+
+td {
+  word-wrap: break-word;
+  background-color: white;
+  color: black;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin-top: 1.5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table,
+th,
+td {
+  border-bottom: 1px solid #dad7cd;
+}
+
+.delete-button {
+  padding: 7.5%;
+  padding-left: 10%;
+  padding-right: 10%;
 }
