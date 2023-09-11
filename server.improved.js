@@ -81,7 +81,7 @@ const handleDeleteRequest = function(request, response){
     console.log("Current appdata:", appdata);
 
     if (index !== -1){
-      appdata.splice(i,1)
+      appdata.splice(index,1)
       response.writeHead(200, {'Content-Type': 'text/json'})
       response.end(JSON.stringify(appdata));
 
