@@ -1,4 +1,4 @@
-let dte, list, appdata = [];
+let list, appdata = [];
 
 // Function to handle form submission
 const submit = async function (event) {
@@ -12,16 +12,11 @@ const submit = async function (event) {
     let designerName = document.getElementById("designer-name");
     let phoneNumber = document.getElementById("phone-number");
     let brandType = document.getElementById("brand-type");
-    json = {
-      'phoneNumber': phoneNumber.value,
-      'brandName': brandName.value,
-      'designerName': designerName.value,
-      'brandType': brandType.value,
-    }
+    json = {phoneNumber: phoneNumber.value, brandName: brandName.value, designerName: designerName.value, brandType: brandType.value}
   } else {
     json = appdata[evt.getAttribute('id')]
   }
-  console.log(json)
+
   const response = await fetch(evt.getAttribute('formaction'), {
     method: 'POST',
     body: JSON.stringify(json),
@@ -34,11 +29,12 @@ const submit = async function (event) {
   }
 
   let data = await response.json();
-  dte = await JSON.parse(data.data);
+  data = data.data;
+  let dte = data.map(jsonString => JSON.parse(jsonString))
   document.getElementById('reset').click();
 
   // Update the designer list
-  updateDesignerList(data);
+  updateDesignerList(dte);
 };
 
 // Function to update the designer list
@@ -56,7 +52,7 @@ function updateDesignerList(data) {
   document.getElementById('recordCount').innerHTML = "Designer List - " + data.recordCount;
 
   // Append designer information and buttons
-  dte.forEach(d => {
+  data.forEach(d => {
     const listItem = document.createElement('li');
 
     // const designerInfoDiv = document.createElement('div');

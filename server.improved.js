@@ -34,22 +34,20 @@ const handlePost = function( request, response ) {
   let dataString = ''
 
   request.on( 'data', function( data ) {
-      dataString += data 
+      dataString += data   
+      if (request.url == '/delete'){
+        let index = appdata.indexOf(dataString)
+        appdata.slice(index, 1)
+        console.log(index, dataString, appdata[0])
+      }
+      else {
+        appdata.push(dataString)
+      }
   })
 
   request.on( 'end', function() {
-    let dString = JSON.parse(dataString)
-  
-    if (request.url == '/delete'){
-      let index = appdata.indexOf(dString)
-      appdata.slice(1)
-    }
-    else {
-      appdata.push(dString)
-    }
-    console.log(appdata)
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end(JSON.stringify({recordCount: appdata.length , data: JSON.stringify( appdata )}))
+    response.end(JSON.stringify({recordCount: appdata.length , data: appdata}))
   })
 }
 
