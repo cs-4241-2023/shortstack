@@ -13,8 +13,10 @@ const submit = async function( event ) {
         json = { frags: frags.value, assists: assists.value, deaths: deaths.value },
         body = JSON.stringify( json )
 
-  if (!frags.value || !deaths.value || !deaths.value) {
+  if (!(frags.value && deaths.value && deaths.value)) {
     alert("Please fill out all input boxes before submitting.")
+  } else if (parseInt(frags.value) < 0 || parseInt(assists.value) < 0 || parseInt(deaths.value) < 0) {
+    alert("Please ensure that all values are not negative.")
   } else {
     const response = await fetch( '/submit', {
       method:'POST',
