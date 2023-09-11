@@ -16,7 +16,7 @@ const titleInput = document.querySelector('#title');
 const authorInput = document.querySelector('#author');
 const startInput = document.querySelector('#startDate');
 const finishInput = document.querySelector('#dateFinished');
-let itemIdentifier = titleInput.value + authorInput.value + startInput.value + finishInput.value;
+const itemIdentifier = titleInput.value + authorInput.value + startInput.value + finishInput.value;
 
 const json = { title: titleInput.value,
          author: authorInput.value, 
@@ -27,12 +27,18 @@ const json = { title: titleInput.value,
   //{attribute : value}
 const body = JSON.stringify( json ); 
 
+
 const response = await fetch( '/submit', {
     method:'POST', 
     body
   })
 
-  const data = await response.json()
+let data = ""; 
+  if (response.status === 200){
+     data = await response.json()
+
+
+  }
 
   const list = document.createElement('ul')
   const existingList = document.querySelector('ul');
@@ -40,15 +46,15 @@ const response = await fetch( '/submit', {
     existingList.parentNode.removeChild(existingList);
   }
   
-
   console.log(data)
+
   
 const addedItems = []
 
 
   data.forEach(d => {
 
-   itemIdentifier = d.title + d.author + d.startDate + d.dateFinished
+   const itemIdentifier = d.title + d.author + d.startDate + d.dateFinished
     if (!addedItems.includes(itemIdentifier)){
       const li = document.createElement('li')
       li.className = "userLibrary"
@@ -107,4 +113,3 @@ window.onload = function() {
   const button = document.querySelector("button");
   button.onclick = submit;
 }
-

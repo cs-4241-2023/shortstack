@@ -43,15 +43,20 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    //console.log( JSON.parse( dataString ).title )
+    const newItem = JSON.parse(dataString)
+    let duplicate = appdata.some(item => item.title === newItem.title && item.author === newItem.author)
+    if (duplicate){
+      response.writeHead(409, { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify({ message: 'Duplicate item found' }));
+      console.log(JSON.stringify( appdata ) )
 
-    // ... do something with the data here!!!
+    }
+    else{
     appdata.push(JSON.parse(dataString))
-    //console.log(appdata.stringify)
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end( JSON.stringify( appdata ) )
     console.log(JSON.stringify( appdata ) )
-
+    }
   })
 }
 
