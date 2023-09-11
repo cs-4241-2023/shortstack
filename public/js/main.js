@@ -21,7 +21,23 @@ const submit = async function( event ) {
     headers: { 'Content-Type': 'application/json' },
     body: body
   });
+  
+  function validate_input() {
+    console.log("Validating input...");
+    if (index === "" || name === "" || username === "" || email === "" || position === "") {
+      return false;
+    }
+  return true;
+  }
 
+  if(validate_input() === false) {
+    alert("Please fill out all fields.");
+    return;
+  }
+  else
+  {
+    console.log("Input validated.");
+  }
 
 if (response.ok) {
   // Data was successfully submitted
@@ -29,10 +45,10 @@ if (response.ok) {
   console.log('Server response:', text);
 
   // Clear form fields after submission
-  document.querySelector('#yourname').value = 'Your real name here.';
-  document.querySelector('#username').value = 'Your gamertag here.';
-  document.querySelector('#email').value = 'Your email here.';
-  document.querySelector('#position').value = 'What\'s your position?';
+  document.querySelector('#yourname').placeholder = 'Your real name here.';
+  document.querySelector('#username').placeholder = 'Your gamertag here.';
+  document.querySelector('#email').placeholder = 'Your email here.';
+  document.querySelector('#position').placeholder = 'What\'s your position?';
 
   // Refresh the table to display updated data
   updateTable();
@@ -40,6 +56,7 @@ if (response.ok) {
   console.error('Error submitting data to the server');
 }
 };
+
 
 
 // Function to update the table with data from the server
