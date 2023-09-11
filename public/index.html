@@ -5,14 +5,51 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+    <div class="centered">
+      <h1>Tier List Generator</h1>
+    </div>  
+    <div class="centered">
+      <h3>Michael Oliveira</h3>
+    </div>
+    <table id="data-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th id="wide">Item</th>
+          <th>Rating</th>
+          <th>Tier</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="centered">
+      <h3>Add/edit data</h3>
+    </div>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <ul>
+        <li>
+          <label for="item">Item: </label>
+          <input type="text" id="item" name="item">
+        </li>
+        <li>
+          <label for="rating">Rating (out of 100): </label>
+          <input type="text" id="rating" name="rating">
+        </li>
+        <li>
+          <label for="image">Image URL: </label>
+          <input type="text" id="image" name="image">
+        </li>
+      </ul>
+      <div class="centered">
+        <button id="submit">Submit</button>
+      </div>
     </form>
   </body>
 </html>

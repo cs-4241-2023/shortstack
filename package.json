@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Tier List Generator",
+  "version": "1.0",
+  "description": "Generate tier lists",
+  "author": "Michael Oliveira",
   "scripts": {
     "start": "node server.improved.js"
   },
