@@ -9,9 +9,36 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+  { 
+    'playerName': 'LeBron James', 
+    'games': 55, 
+    'totalPoints': 1590,
+    'totalRebounds': 457,
+    'totalAssists': 375,
+    'pointsPerGame': 28.9,
+    'reboundsPerGame': 8.3,
+    'assistsPerGame': 6.8
+  },
+  { 
+    'playerName': 'Jayson Tatum', 
+    'games': 74, 
+    'totalPoints': 2225,
+    'totalRebounds': 649,
+    'totalAssists': 342,
+    'pointsPerGame': 30.1,
+    'reboundsPerGame': 8.8,
+    'assistsPerGame': 4.6
+  },
+  { 
+    'playerName': 'Nikola Jokic', 
+    'games': 69, 
+    'totalPoints': 1690,
+    'totalRebounds': 817,
+    'totalAssists': 678,
+    'pointsPerGame': 24.5,
+    'reboundsPerGame': 11.8,
+    'assistsPerGame': 9.8
+  }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -40,7 +67,7 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    console.log(JSON.parse(dataString))
 
     // ... do something with the data here!!!
 
