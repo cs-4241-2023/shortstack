@@ -14,7 +14,6 @@ const data = [
 ];
 
 const tiers = {
-  0: "F",
   1: "F",
   2: "F",
   3: "F",
@@ -25,6 +24,7 @@ const tiers = {
   8: "C",
   9: "B",
   10: "A",
+  11: "A",
 }
 
 const server = http.createServer( function( request,response ) {
@@ -53,7 +53,7 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    body = JSON.parse(dataString);
+    let body = JSON.parse(dataString);
     
     if (request.url.includes("delete")) {
       let idx = data.findIndex((row) => row.item == body.item);
