@@ -62,6 +62,7 @@ const showData = data => {
     for (const key in d) {
       const cell = document.createElement('td');
       cell.innerText = d[key];
+      cell.id = key + rowNum;
       row.appendChild(cell);
     }
 
@@ -72,12 +73,13 @@ const showData = data => {
     deleteCell.appendChild(deleteButton);
     row.appendChild(deleteCell);
 
-    // const modifyCell = document.createElement('td');
-    // const modifyButton = document.createElement('button');
-    // modifyButton.innerText = "Modify";
-    // modifyButton.onclick = function(event) {modifyData(event, rowNum)};
-    // modifyCell.appendChild(modifyButton);
-    // row.appendChild(modifyCell);
+    const modifyCell = document.createElement('td');
+    const modifyButton = document.createElement('button');
+    modifyButton.innerText = "Modify";
+    let num = rowNum;
+    modifyButton.onclick = function() {modifyData(num, d)};
+    modifyCell.appendChild(modifyButton);
+    row.appendChild(modifyCell);
     tbody.appendChild(row);
     rowNum++;
   });
@@ -96,14 +98,46 @@ const deleteData = async function(event, obj) {
   showData(data);
 }
 
-const modifyData = function(event, rowNum) {
+const modifyData = function(rowNum, obj) {
   const tbody = document.querySelector('#tbody');
   const rows = tbody.children;
-  for (let row in rows) {
-    if (row.id === rowNum) {
-
+  for (let row of rows) {
+    if (parseInt(row.id) === rowNum) {
+      const cells = row.children;
+      for (let i = 0; i < 3; i++) {
+        let cell = cells.item(i);
+        const input = document.createElement('input');
+        input.type = "number";
+        input.min = '0';
+        input.value = cell.innerText;
+        input.className = "table-input";
+        cell.innerHTML = '';
+        cell.appendChild(input);
+      }
+      const button = row.lastElementChild.lastElementChild;
+      button.innerText = "Apply";
+      button.onclick = function(event) {applyModification(event, rowNum, obj)};
     }
   }
+}
+
+const applyModification = async function(event, rowNum, obj) {
+  event.preventDefault();
+  const frags = document.querySelector(`#frags${rowNum}`),
+        assists = document.querySelector(`#assists${rowNum}`),
+        deaths = document.querySelector(`#deaths${rowNum}`),
+        json = { frags: parseInt(frags.lastElementChild.value),
+                 assists: parseInt(assists.lastElementChild.value),
+                 deaths: parseInt(deaths.lastElementChild.value) },
+        body = JSON.stringify({ obj: obj, newObj: json });
+
+  const response = await fetch('/modifyData', {
+    method: 'POST',
+    body
+  })
+
+  const data = await response.json();
+  showData(data);
 }
 
 window.onload = function() {

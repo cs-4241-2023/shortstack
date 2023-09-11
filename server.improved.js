@@ -46,7 +46,7 @@ const handlePost = function( request, response ) {
     const newData = JSON.parse(dataString);
     if (request.url === '/submit') {
       const kd = (parseInt(newData.deaths) === 0) ? newData.frags : (newData.frags / newData.deaths).toFixed(2);
-      newData['kd'] = kd;
+      newData['kd'] = parseFloat(kd);
       appdata.push(newData);
     } else if (request.url === '/deleteData') {
       appdata.splice(appdata.findIndex(element => {
@@ -56,6 +56,18 @@ const handlePost = function( request, response ) {
         let kd = element.kd === newData.kd;
         return frags && assists && deaths && kd;
       }), 1);
+    } else if (request.url === '/modifyData') {
+      let index = appdata.findIndex(element => {
+        let frags = element.frags === newData.obj.frags;
+        let assists = element.assists === newData.obj.assists;
+        let deaths = element.deaths === newData.obj.deaths;
+        let kd = element.kd === newData.obj.kd;
+        return frags && assists && deaths && kd;
+      });
+
+      const kd = (parseInt(newData.newObj.deaths) === 0) ? newData.newObj.frags : (newData.newObj.frags / newData.newObj.deaths).toFixed(2);
+      newData.newObj['kd'] = parseFloat(kd);
+      appdata[index] = newData.newObj;
     }
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
