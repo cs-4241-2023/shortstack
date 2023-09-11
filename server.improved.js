@@ -1,12 +1,8 @@
-const http = require("http"),
-  fs = require("fs"),
-  // IMPORTANT: you must run `npm install` in the directory for this assignment
-  // to install the mime library if you're testing this on your local machine.
-  // However, Glitch will install it automatically by looking in your package.json
-  // file.
-  mime = require("mime"),
-  dir = "public/",
-  port = 3000;
+const http = require("http");
+const fs = require("fs");
+const mime = require("mime");
+const dir = "public/";
+const port = 3000;
 
 const tasks = [];
 
@@ -15,6 +11,8 @@ const server = http.createServer(function (request, response) {
     handleGet(request, response);
   } else if (request.method === "POST") {
     handlePost(request, response);
+  } else if (request.method === "DELETE") {
+    handleDelete(request, response);
   }
 });
 
@@ -40,7 +38,7 @@ const handlePost = function (request, response) {
 const handleGet = function (request, response) {
   const filename = dir + request.url.slice(1);
 
-  if (request.url === "/") {
+  if (request.url === "/" || request.url.startsWith("/index.html")) {
     sendFile(response, "public/index.html");
   } else if (request.url === "/tasks") {
     // New endpoint for tasks
@@ -48,6 +46,22 @@ const handleGet = function (request, response) {
     response.end(JSON.stringify(tasks));
   } else {
     sendFile(response, filename);
+  }
+};
+
+const handleDelete = function (request, response) {
+  const taskId = request.url.split("/")[2]; // Extract taskId from the URL (/tasks/<taskId>)
+
+  // Find and remove the task with the specified ID from the tasks array
+  const taskIndex = tasks.findIndex((task) => task.id === taskId);
+  if (taskIndex !== -1) {
+    tasks.splice(taskIndex, 1); // Remove the task
+    response.writeHead(200, { "Content-Type": "text/plain" });
+    response.end("Task deleted successfully");
+  } else {
+    // Task not found, return a 404 response
+    response.writeHead(404);
+    response.end("404 Error: Task Not Found");
   }
 };
 
