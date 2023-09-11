@@ -1,5 +1,6 @@
 ## Color Palette Bank
 This website provides an interactive color palette storage system, where 5 colors can be set by interacting with the 5 circles in the top form. These colors are set to black by default, and are changed by using the html color picker. I used a flexbox for the form container and the table container to center the divs horizontally. 
+Glitch: rabbitt-project2.glitch.me/
 
 ## Technical Achievements
 - **Tech Achievement 1**: Created a single-page web app where users can add and remove color palettes, which updates for each input. 
