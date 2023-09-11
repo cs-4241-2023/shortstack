@@ -11,33 +11,29 @@
 
   <!-- get rid of favicon error -->
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&family=Jost&display=swap" rel="stylesheet">
 </head>
 
 
 <body>
-  <h1>Spacebar Game</h1>
+  <div class="container">
+  <h1 class ="vert-move">Spacebar Game</h1>
 
-  <form>
-    <label for="yourname">Your name:</label>
+<div class="input-container">
+    <label for="yourname">Player name:</label>
     <input type="text" id="yourname">
 
     <label for="color">Color:</label>
     <input type="text" id="color">
-<!-- 
-    <label for="colorPick">Choose a color:</label>
-    <select id="colorPick" name="colorPick">
-      <option value="red">Red</option>
-      <option value="white">White</option>
-      <option value="blue">Blue</option>
-    </select>
+  </div>
 
-    <label for="image">Upload an image:</label>
-    <input type="file" id="image" name="image" accept="image/png, image/jpeg"> -->
-
-    <button id="playbutton">PLAY</button>
-  </form>
+    <button class="playbutton" id="playbutton">Play</button>
   
   <p> Player Results</p>
+</div>
   
 
 </body>
