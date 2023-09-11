@@ -6,6 +6,8 @@ I used a flex box for the tab container (flex direction column) as well as the c
 
 I used the Rubik google font for all of my webpage text.
 
+The data and data processing functions are all stored in the server.improved.js file and are accessed with http requests.
+
 ## Technical Achievements
 
 - **Tech Achievement 1**: All of the nessesary components and data is all displayed on one page. I use a tab switcher to switch between the add, delete and update functionality. The table is updated accordingly on each http request.
