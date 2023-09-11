@@ -1,18 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/main.css" />
     <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://w7.pngwing.com/pngs/767/713/png-transparent-student-grading-become-s-child-hand-boy.png"
+    />
+    <!-- Google fonts. -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap");
+    </style>
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <h3>Calculate the sum of three numbers.</h3>
+    <br />
+    <div class="flexbox1">
+      <form>
+        <input id="number1" type="text" value="0" />
+        <input id="number2" type="text" value="0" />
+        <input id="number3" type="text" value="0" />
+        <button id="submit-button" class="button">Submit</button>
+      </form>
+    </div>
+    <br />
+    <h3>Current data:</h3>
+    <table>
+      <tr>
+        <th>Number 1</th>
+        <th>Number 2</th>
+        <th>Number 3</th>
+        <th>Sum</th>
+      </tr>
+    </table>
+    <br />
+    <div class="flexbox2">
+      <button id="clear-button" class="button">Clear</button>
+      <button id="double-button">Double</button>
+    </div>
+    <script src="js/main.js"></script>
   </body>
 </html>

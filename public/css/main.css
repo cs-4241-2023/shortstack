@@ -1,4 +1,92 @@
 body {
-  background:black;
-  color:white;
+  background: rgba(200, 0, 60, 0.4);
+  padding: 2%;
+}
+
+body, button, input {
+  font-family: 'Black Ops One', sans-serif;
+}
+
+input {
+  width: 5rem;
+}
+
+table, tr, th, td {
+  border: 0.1rem solid black;
+  border-collapse: collapse;
+  background: white;
+  padding: 0.2rem;
+  text-align: center;
+}
+
+th {
+  font-weight: 800;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: green;
+  text-shadow: 0.1rem 0.1rem darkblue;
+}
+
+.button {
+  border: 0.2rem dotted hotpink;
+  background: blue;
+  color: white;
+  padding: 0.5rem;
+  transition: 0.1s ease-out;
+}
+
+.button:active {
+  background: darkblue;
+  animation: spin 0.1s linear infinite, shrink 5s linear infinite alternate;
+}
+
+#double-button {
+  background: black;
+  color: red;
+  padding: 0.5rem;
+  border: 0.2rem inset white;
+  transition: 0.3s ease-out;
+}
+
+#double-button:hover {
+  background: green;
+  color: yellow;
+  border: 0.4rem double red;
+}
+
+#double-button:active {
+  background: orange;
+  color: blue;
+  border: 0.1rem groove purple;
+}
+
+@keyframes spin {
+  0 {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shrink {
+  0 {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.1);
+  }
+}
+
+.flexbox1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexbox2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
 }
