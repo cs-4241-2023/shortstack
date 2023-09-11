@@ -23,7 +23,6 @@ body {
 .my-form {
   font-family: 'Dosis';
   width: 100%;
-  display: flex;
 }
 
 .my-label {
@@ -74,16 +73,17 @@ body {
   font-family: 'Dosis';
   width: 100%;
   border-collapse: collapse;
+  margin: 10px;
 }
 
 .my-table th, .my-table td {
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
 }
 
 .my-table th {
   background-color: #f2f2f2;
-  text-align: left;
+  text-align: center;
 }
 
 .my-table tr:nth-child(even) {

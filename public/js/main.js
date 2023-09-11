@@ -37,25 +37,47 @@ const submit = async function( event ) {
 
 
 
-const tableparse=document.querySelector('.my-table')
-resultHTML = tableparse.innerHTML
+const tableparse=document.querySelector('tbody')
+tableparse.innerHTML = '';
+
+let resultHTML = tableparse.innerHTML
+const del = index => {
+  console.log( 'index: ', index )
+  // add the fetch request here to delete the item
+}
+let i = 0
+
+// for loop for each row
 for (const key in data) {
   if (data.hasOwnProperty(key)) {
-    resultListHTML += '<tr>';
-    resultListHTML += `<td>${data[key]['tasks']}</td>`;
-    resultListHTML += `<td>${data[key]['date']}</td>`;
-    resultListHTML += `<td>${data[key]['priority']}</td>`;
-    resultListHTML += `<td> <button class="my-deletebutton" type="button" >Delete Item</button></td>`;
-    resultListHTML += '</tr>';
+    const row = document.createElement('tr')
+    
+    // for loop for each cell
+    for( const cellKey in data[key] ) {
+      const cell = document.createElement('td')
+      cell.innerText = data[key][cellKey]
+      row.appendChild( cell )
+    }
+    
+    
+    
+    const deleteButton = document.createElement('button')
+    deleteButton.innerText = 'Delete Item';
+    deleteButton.className = 'my-deletebutton';
+    // store current value of i 
+    let _i = i
+    deleteButton.onclick = function() { del( _i ) }
+    
+    const deleteCell = document.createElement('td');
+    deleteCell.appendChild(deleteButton);
+    row.appendChild(deleteCell);
+
+
+    i++
+    tableparse.appendChild( row )
     //console.log(data)
   }
 }
-tableparse.innerHTML= resultListHTML;
-
-
-  /*const resultContainer = document.querySelector('#result');
-  resultContainer.innerHTML = resultListHTML;
-  resultContainer.appendChild(list);*/
       })
       
   }
