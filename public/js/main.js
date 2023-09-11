@@ -45,11 +45,29 @@ const submit = async function( event ) {
     }
   }
 
+const tableparse=document.querySelector('.my-table')
+
+for (const key in data) {
+  if (data.hasOwnProperty(key)) {
+    resultListHTML += '<tr>';
+    resultListHTML += `<td>${data[key]['tasks']}</td>`;
+    resultListHTML += `<td>${data[key]['date']}</td>`;
+    resultListHTML += `<td>${data[key]['priority']}</td>`;
+    resultListHTML += '</tr>';
+    //console.log(data)
+  }
+}
+tableparse.innerHTML= resultListHTML;
+
+
   const resultContainer = document.querySelector('#result');
   resultContainer.innerHTML = resultListHTML;
   resultContainer.appendChild(list);
       })
   }
+
+
+  const deletedata = document.createElement('button')
 
 window.onload = function() {
    const button = document.querySelector("button");

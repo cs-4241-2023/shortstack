@@ -53,6 +53,22 @@ body {
   background-color: #bbe4e9;
 }
 
+.my-deletebutton {
+  font-family: 'Dosis';
+  font-size: 15px;
+  padding: 5px 10px;
+  color: black;
+  background-color: #dc2f2f;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.my-deletebutton:hover {
+  color: white;
+  background-color: #f95959;
+}
+
 .my-table {
   font-family: 'Dosis';
   width: 100%;
