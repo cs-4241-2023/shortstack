@@ -49,9 +49,10 @@ const submit = async function( event ) {
   for (const key in data) {
     //console.log(key);
     if (data.hasOwnProperty(key)) {
-      const li = document.createElement('li');
-      resultListHTML += `<li>${key['tasks']}</li>`;
-      list.appendChild(li);
+      //const li = document.createElement('li');
+      resultListHTML += `<li>${data[key]['tasks']}</li>`;
+      resultListHTML += `<li>${data[key]['date']}</li>`;
+      resultListHTML += `<li>${data[key]['priority']}</li>`;
       console.log(data)
     }
   }
