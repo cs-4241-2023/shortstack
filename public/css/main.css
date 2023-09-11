@@ -87,3 +87,16 @@ td {
 th {
   padding: var(--global-padding-left);
 }
+
+table{
+  box-sizing: border-box;
+  max-width: 80vw;
+  min-width: auto;
+  max-height: auto;
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
