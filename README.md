@@ -1,5 +1,7 @@
 # CS 4241 a2-alocnayr
 
+#Ryan Kornitsky
+
 <br>
 
 ## **Glitch link:** https://a2-alocnayr.glitch.me/
