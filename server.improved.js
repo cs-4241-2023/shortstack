@@ -128,6 +128,7 @@ const handlePost = function(request, response) {
     let sentData = JSON.parse(dataString);
 
     // verify data integrity, reject bad data
+    let id = sentData.id;
     let className = sentData.className;
     let assignmentName = sentData.assignmentName;
     let dueDate = sentData.dueDate;
@@ -149,7 +150,7 @@ const handlePost = function(request, response) {
       let priority = calculatePriority(dueDate, difficulty);
 
       // push the data to the app-date array
-      appdata.push({className: className, assignmentName: assignmentName, dueDate: dueDate, difficulty: difficulty, priority: priority } )
+      appdata.push({id: id, className: className, assignmentName: assignmentName, dueDate: dueDate, difficulty: difficulty, priority: priority } )
 
       // end post with success
       endPost(response,"success", "");

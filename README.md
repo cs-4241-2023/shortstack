@@ -8,7 +8,7 @@ that users can press to use this functionality.
 
 ## Technical Achievements
 - **DELETE Request Assignment Delete Functionality**: The DELETE HTTP request was implemented in order to allow users to delete assignments that they add to the server. Each assignment
-has a delete button that will run the DELETE HTTP request when pressed. The server will remove the assignment specified in the body of the DELETE request by search the `appData` array and removing
+has a delete button that will run the DELETE HTTP request when pressed. The server will remove the assignment specified in the body of the DELETE request by search the `appdata` array and removing
 the specified assignment.
 - **PUT Request Assignment Edit Functionality**: Edit functionality, via implementing the HTTP PUT request, was added to the web application as well. In order to differentiate each
 assignment in the Node.js server, the assignment object is given an ID field that is specified via a unique timestamp. The JSON assignment object that is sent to the server in the
