@@ -43,7 +43,7 @@ is submited to the server, it automatically displays the updated data and this i
   
 2 - McCormick
   - This user stated that I should add a "load playlist" option, so that you can see what is in each playlist without having 
-  to input a song. They also said that it would be cool if that site theme changed with each playlist. Although it wasn't
+  to input a song. They also said that it would be cool if the site theme changed with each playlist. Although it wasn't
   neccessary I did like this idea, and decided to implement a function that changes the header color after this conversation.
   - Again, it was stated that my webiste was really easy to understand and simple to use.
   - If I could do this project again I would like to implement a load feature that displays each playlist seperately (maybe
