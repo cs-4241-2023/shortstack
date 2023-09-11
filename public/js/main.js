@@ -1,63 +1,82 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const submit = async function (event) {
+const fetchTasks = async () => {
+  try {
+    const fetchResponse = await fetch("/tasks", { method: "GET" });
+    const data = await fetchResponse.json();
+    getTasks(data);
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+  }
+};
+
+const submit = async event => {
   event.preventDefault();
 
-  let task = document.getElementById("task").value;
-  let desc = document.getElementById("description").value;
-  let date = document.getElementById("dueDate").value;
-  let priority = document.getElementById("priority").value;
+  const task = document.getElementById("task").value;
+  const desc = document.getElementById("description").value;
+  let inputDate = new Date(document.getElementById("dueDate").value);
+  let dueDate =
+    inputDate.getMonth() +
+    "-" +
+    (inputDate.getDate() + 1) +
+    "-" +
+    inputDate.getFullYear();
+  const priority = document.getElementById("priority").value;
 
-  let json = { task, desc, date, priority };
-  let body = JSON.stringify(json);
+  const json = { task, desc, dueDate, priority };
+  const body = JSON.stringify(json);
 
-  const response = await fetch("/submit", {
-    method: "POST",
-    body,
-  });
+  try {
+    const response = await fetch("/submit", {
+      method: "POST",
+      body,
+    });
 
-  const data = await response.json();
-  getTasks(data);
+    if (response.status === 200) {
+      fetchTasks();
+    } else {
+      throw new Error("Failed to submit task");
+    }
+  } catch (error) {
+    console.error("Error submitting task:", error);
+  }
 };
 
 const createHeaderRow = () => {
-  let header = document.createElement("thead");
-  let headerRow = document.createElement("tr");
+  const header = document.createElement("thead");
+  const headerRow = document.createElement("tr");
 
-  let taskHeader = document.createElement("th");
-  taskHeader.textContent = "Task";
-  let descHeader = document.createElement("th");
-  descHeader.textContent = "Description";
-  let dateHeader = document.createElement("th");
-  dateHeader.textContent = "Due Date";
-  let priorityHeader = document.createElement("th");
-  priorityHeader.textContent = "Priority";
+  const headers = ["Task", "Description", "Due Date", "Priority"];
+  headers.forEach(text => {
+    const headerCell = document.createElement("th");
+    headerCell.textContent = text;
+    headerRow.appendChild(headerCell);
+  });
 
-  headerRow.append(taskHeader, descHeader, dateHeader, priorityHeader);
-  header.append(headerRow);
-
+  header.appendChild(headerRow);
   return header;
 };
 
 const createDeleteButton = task => {
   const cell = document.createElement("td");
-  let button = document.createElement("button");
+  const button = document.createElement("button");
   button.className = "editButton";
-  button.textContent = "Edit";
+  button.textContent = "Delete";
   button.onclick = () => {
     deleteTask(task);
   };
 
-  cell.append(button);
+  cell.appendChild(button);
   return cell;
 };
 
-const createRow = (task, desc, date, priority, index) => {
+const createRow = (task, desc, dueDate, priority, index) => {
   let row = document.createElement("tr");
 
   row.append(createCell(task));
   row.append(createCell(desc));
-  row.append(createCell(date));
+  row.append(createCell(dueDate));
   row.append(createCell(priority));
   row.append(createDeleteButton(index));
 
@@ -74,9 +93,7 @@ const deleteTask = async task => {
     });
 
     if (deleteResponse.status === 200) {
-      const fetchResponse = await fetch("/tasks", { method: "GET" });
-      const data = await fetchResponse.json();
-      getTasks(data);
+      fetchTasks();
     } else {
       throw new Error("Failed to delete task");
     }
@@ -96,7 +113,13 @@ const getTasks = data => {
   table.replaceChildren();
   table.append(createHeaderRow());
   data.forEach(task => {
-    let row = createRow(task.task, task.desc, task.date, task.priority, task);
+    let row = createRow(
+      task.task,
+      task.desc,
+      task.dueDate,
+      task.priority,
+      task
+    );
     table.append(row);
   });
 };
@@ -105,10 +128,5 @@ window.onload = async function () {
   const button = document.querySelector("button");
   button.onclick = submit;
 
-  const response = await fetch("/tasks", {
-    method: "GET",
-  });
-
-  const data = await response.json();
-  getTasks(data);
+  fetchTasks();
 };

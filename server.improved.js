@@ -8,14 +8,7 @@ const http = require("http"),
   dir = "public/",
   port = 3000;
 
-const appdata = [
-  {
-    task: "Brush teeth",
-    desc: "Grab toothbrush and toothpaste",
-    date: "03/20/23",
-    priority: "P1",
-  },
-];
+const appdata = [];
 
 const server = http.createServer(function (request, response) {
   if (request.method === "GET") {
@@ -24,11 +17,8 @@ const server = http.createServer(function (request, response) {
     handlePost(request, response);
   } else if (request.method === "DELETE") {
     handleDelete(request, response);
-  } else if (request.method === "PUT") {
-    handlePut(request, response);
   }
 });
-
 const handleGet = function (request, response) {
   const filename = dir + request.url.slice(1);
 
@@ -52,8 +42,18 @@ const handlePost = function (request, response) {
   request.on("end", function () {
     let data = JSON.parse(dataString);
     appdata.push(data);
+    console.log(appdata);
+    SortData();
     response.writeHead(200, "OK", { "Content-Type": "text/submit" });
     response.end(JSON.stringify(appdata));
+  });
+};
+
+const SortData = () => {
+  appdata.sort(function (a, b) {
+    let dateA = new Date(a.dueDate);
+    let dateB = new Date(b.dueDate);
+    return dateA - dateB;
   });
 };
 
@@ -78,19 +78,14 @@ const handleDelete = function (request, response) {
   });
 };
 
-const handlePut = function (request, response) {};
-
 const sendFile = function (response, filename) {
   const type = mime.getType(filename);
 
   fs.readFile(filename, function (err, content) {
-    // if the error = null, then we've loaded the file successfully
     if (err === null) {
-      // status code: https://httpstatuses.com
       response.writeHeader(200, { "Content-Type": type });
       response.end(content);
     } else {
-      // file not found, error code 404
       response.writeHeader(404);
       response.end("404 Error: File Not Found");
     }
