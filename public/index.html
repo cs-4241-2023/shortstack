@@ -1,18 +1,58 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
+<head>
     <meta charset="utf-8">
-    <script src="js/main.js"></script>
+    <meta name="description" content="Fitness tracker for recording workouts.">
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> <!--remove 300ms delay as indicated through Lighthouse audit-->
+    <title>Fitness Tracker</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap">
     <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Fitness Tracker</h1>
+    </header>
+    <main>
+        <section id="training-form">
+            <!-- Form for adding and editing training sessions -->
+            <h2 align="center">Add/Edit Training Session</h2>
+            <form id="add-training-form" onsubmit="return handleSubmit(event)"><!---->
+            <!--<form id="add-training-form" action="submit-data"><!--LEGACY BEHAVIOR-->
+                <input type="hidden" id="edit-index" value="-1">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+                <label for="type">Training Type:</label>
+                <input type="text" id="type" name="type" placeholder="e.g., Ski Practice" required>
+                <label for="distance">Distance (miles):</label>
+                <input type="number" id="distance" name="distance" step="0.01" placeholder="e.g., 5.00" required>
+                <label for="time">Time (minutes):</label>
+                <input type="number" id="time" name="time" placeholder="e.g., 60" required>
+                <label for="heart-rate">Heart Rate (bpm):</label>
+                <input type="number" id="heart-rate" name="heartRate" placeholder="e.g., 150" required>
+                <button type="submit" id="submit-button">Add Session</button>
+            </form>
+        </section>
+        <section id="training-results">
+            <!-- Training session table to display data -->
+            <h2>Training Sessions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Distance (miles)</th>
+                        <th>Time (minutes)</th>
+                        <th>Heart Rate (bpm)</th>
+                        <th>Average Speed (mph)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="training-data">
+                    <!-- Training session data will be displayed here dynamically -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
 </html>
