@@ -1,4 +1,36 @@
 body {
-  background:black;
+  background: gray;
   color:white;
+  font-family:"Oswald", sans-serif;
+  font-size: 14px;
+}
+h1{
+  font-family:"Oswald", serif;
+  font-size: 48px;
+  color:aquamarine;
+}
+.lists{
+  display: flex;
+  justify-content: flex-start;
+  padding-left:7rem
+}
+
+#groceryList{
+  display: flex;
+  flex-direction:column;
+  list-style: none;
+}
+#cartList{
+  display: flex;
+  flex-direction:column;
+  list-style: none;
+}
+.errorMsg{
+  visibility: hidden;
+  display: none;
+  color:red;
+  font-size: 18px;
+}
+.priceCounts{
+
 }
