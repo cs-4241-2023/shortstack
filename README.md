@@ -2,7 +2,7 @@
 
 ## https://a2-apblanchard4.glitch.me
 
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+The Reading Log application allows users to add details about books they have read, including the title, author, start/end date, and rating. The server will calculate the time taken to read the book in days. The input fields and labels aligned with CSS grid.
 
 ## Technical Achievements
 
