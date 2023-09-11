@@ -25,15 +25,6 @@ let appdata = [
   },
 ];
 
-const starterTask = {
-  title: "",
-  date: new Date().toISOString().split("T")[0],
-  priority: "Low",
-  description: "",
-  dueDate: "",
-  id: nanoid(),
-};
-
 const server = http.createServer(function (request, response) {
   if (request.method === "GET") {
     handleGet(request, response);
@@ -94,7 +85,17 @@ const handlePost = function (request, response) {
       appdata = appdata.filter((obj) => {
         return obj.id !== parsedData.id;
       });
+    } else if (request.url === "/new") {
+      const newTask = {
+        title: "New Note",
+        date: new Date().toISOString().split("T")[0],
+        priority: "Low",
+        description: "",
+        dueDate: "",
+        id: nanoid(),
+      }
 
+      appdata.push(newTask); 
       console.log(appdata);
     }
 

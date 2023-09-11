@@ -103,6 +103,16 @@ textarea#task-body {
   background-color: white;
 }
 
+.tasks-list--new {
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+}
+
+.tasks-list--new:hover {
+  cursor: pointer;
+}
+
 form, .tasks-list--container {
   height: 85vh;
 }

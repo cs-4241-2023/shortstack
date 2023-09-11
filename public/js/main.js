@@ -114,21 +114,33 @@ function loadTasks() {
     console.log(currentNote);
   });
 
-  // // Finally add the add note button to the sidebar
-  // const form = document.querySelector("form");
-  // let newTask = document.createElement("div");
-  // newTask.addEventListener("click", async (event) => {
-  //   const response = await fetch("/new", {
-  //     method: "POST",
-  //     body: JSON.stringify(noteToDelete),
-  //   });
+  // Finally add the add task button to the sidebar
+  const form = document.querySelector("form");
+  let newTask = document.createElement("div");
+  newTask.innerText = "Make a new note!";
 
-  //   form.reset();
-  // });
-  // newTask.className = "tasks-list--task";
-  // sidebar.appendChild(newTask);
+  // Add onclick event to div
+  newTask.addEventListener("click", async (event) => {
+    // Send a request for a new task
+    const response = await fetch("/new", {
+      method: "POST",
+      body: JSON.stringify("make a new note"),
+    });
+
+    const text = await response.text();
+
+    taskData = JSON.parse(text);
+
+    currentNote = taskData.slice(-1)[0].id;
+
+    form.reset();
+    loadTasks();
+  });
+  newTask.className = "tasks-list--new";
+  sidebar.appendChild(newTask);
 }
 
+// Function to find a note within the array given an id
 async function findTask(id) {
   let returnTask = null;
   console.log(id);
@@ -140,6 +152,7 @@ async function findTask(id) {
   return returnTask;
 }
 
+// Function to delete a note
 async function deleteTask() {
   const noteToDelete = await findTask(currentNote);
 
@@ -151,7 +164,7 @@ async function deleteTask() {
   const text = await response.text();
   taskData = JSON.parse(text);
 
-  // Need to now default to 0
+  // Need to now default to 0 since the current note is now gone (can default to something else but lazy)
   currentNote = 0;
 
   loadTasks();
