@@ -1,74 +1,74 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+const http = require('http'),
+      fs = require('fs'),
+      mime = require('mime'),
+      dir = 'public/',
+      port = 3000;
+
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+  { text: 'Sample Task 1', completed: false, creation_date: '2023-09-01', priority: 'high', deadline: '2023-09-02' },
+  { text: 'Sample Task 2', completed: false, creation_date: '2023-09-05', priority: 'medium', deadline: '2023-09-08' },
+  { text: 'Sample Task 3', completed: false, creation_date: '2023-09-10', priority: 'low', deadline: '2023-09-17' }
+];
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
+
+const server = http.createServer(function(request, response) {
+  if (request.method === 'GET') {
+    handleGet(request, response);
+  } else if (request.method === 'POST') {
+    handlePost(request, response);
   }
-})
+});
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+const handleGet = function(request, response) {
+  const filename = dir + request.url.slice(1);
 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }else{
-    sendFile( response, filename )
+  if (request.url === '/') {
+    sendFile(response, 'public/index.html');
+  } else if (request.url === '/appdata') {
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(appdata));
+  } else {
+    sendFile(response, filename);
   }
-}
+};
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+const handlePost = function(request, response) {
+  let dataString = '';
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
+  request.on('data', function(data) {
+    dataString += data;
+  });
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+  request.on('end', function() {
+    const data = JSON.parse(dataString);
 
-    // ... do something with the data here!!!
+   
+    const priorityDays = data.priority === 'high' ? 1 : data.priority === 'medium' ? 3 : 7;
+    const creationDate = new Date(data.creation_date);
+    const deadline = new Date(creationDate.setDate(creationDate.getDate() + priorityDays));
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
-  })
-}
+    data.deadline = deadline.toISOString().split('T')[0]; 
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+    appdata.push(data); 
 
-   fs.readFile( filename, function( err, content ) {
+    response.writeHead(200, "OK", { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(appdata));
+  });
+};
 
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
+const sendFile = function(response, filename) {
+  const type = mime.getType(filename);
 
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
+  fs.readFile(filename, function(err, content) {
+    if (err === null) {
+      response.writeHeader(200, { 'Content-Type': type });
+      response.end(content);
+    } else {
+      response.writeHeader(404);
+      response.end('404 Error: File Not Found');
+    }
+  });
+};
 
-     }else{
-
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
-
-     }
-   })
-}
-
-server.listen( process.env.PORT || port )
+server.listen(process.env.PORT || port);
