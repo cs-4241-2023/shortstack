@@ -18,30 +18,19 @@ const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
     handleGet( request, response )
   }else if( request.method === 'POST' ){
-    handlePost( request, response );
+    handlePost( request, response,false );
   }else if( request.method === 'DELETE' ){
-    handleDelete( request, response );
+    handlePost( request, response, true );
   }
 })
 
-const handleDelete = function( request, response ) {
-  console.log("Handle Delete");
-  let dataString = ''
-
-  request.on( 'data', function( data ) {
-    dataString += data
-  })
-
-  console.log(dataString);
-
-  request.on( 'end', function() {
-    let data = JSON.parse(dataString);
-    console.log(data);
-    console.log(appdata.indexOf(data));
-    if (appdata.indexOf(data) > -1) {
-      appdata.splice(appdata.indexOf(data), 1);
-    }
-  });
+const handleDelete = function( request ) {
+  let data = JSON.parse(request);
+  console.log(request.body);
+  console.log(appdata.indexOf(data));
+  if (appdata.indexOf(data) > -1) {
+    appdata.splice(appdata.indexOf(data), 1);
+  }
 }
 
 const handleGet = function( request, response ) {
@@ -61,7 +50,7 @@ function handleGetData(request, response){
   response.end(JSON.stringify(appdata));
 }
 
-const handlePost = function( request, response ) {
+const handlePost = function( request, response, isDelete ) {
   let dataString = ''
 
   request.on( 'data', function( data ) {
@@ -69,10 +58,18 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    let data=JSON.parse( dataString );
+    if(isDelete){
+      let data = JSON.parse(dataString);
+      console.log(data);
+      if (data.index > -1) {
+        appdata.splice(data.index, 1);
+      }
+    }else{
+      let data=JSON.parse( dataString );
 
-    appdata.push(data);
-    SortData();
+      appdata.push(data);
+      SortData();
+    }
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end( JSON.stringify( appdata ) )
   })
