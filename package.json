@@ -1,12 +1,13 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "a2-blog",
+  "version": "1.0.0",
+  "description": "blog spa for a2",
+  "author": "huangrandy",
   "scripts": {
-    "start": "node server.improved.js"
+    "start": "nodemon server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
+    "mime": "^2.4.4",
+    "nodemon": "^3.0.1"
   }
 }
