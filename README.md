@@ -1,6 +1,6 @@
 
 ## WPI Badminton Club Grade Tracker
-I created a web app for Badminton Club members who using their participation in this course as a gym credit to track their progress toward their grade goal.  The user enters their target grade that they would like to receive and the dates and amount of hours they attended on each day to keep track of the users progress toward their grading goal. 
+I created a web app for Badminton Club members who are using their participation in this course as a gym credit to track their progress toward their grade goal.  The user enters their target grade and the dates + amount of hours they attended on each day to keep track of the user's progress toward their grading goal. 
 
 The user can also edit their grading goal and delete entries they make. 
 
@@ -18,6 +18,7 @@ I used flexbox to accomplish the side by side look of the grades and the logged 
     I preformed 2 user tests.
 
     Last name: Pianka
+
     Problems:
     - Nothing major, just having the table not update automatically when changing the grade was confusing 
 
@@ -25,6 +26,7 @@ I used flexbox to accomplish the side by side look of the grades and the logged 
     - Easy to navigate, clean design
     - Having the posibility of dates being our of order does not matter too much 
         - What is more important is that the time remaining is in order and easy to see
+    
     Changes:
     - (IMPLEMENTED!) have the table automatically update when changing the grade, not only after entering new data after the grade change was made
 
