@@ -16,6 +16,11 @@ Used the Source Code Pro font from Google Fonts. CSS defined in a maintainable, 
 
 - **Tech Achievement 2**: Using fetch request API, users are able to add/delete data on the server
 
+- **Tech Achievement 2**:
+
+// Use PUT to update data entries
+// Update derived field to make it more unique
+
 ### Design/Evaluation Achievements
 
 - **Design Achievement 1**:

@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+
 // Helper function to fetch tasks from server and display them in a table
 const fetchTasks = async () => {
   try {
@@ -24,8 +26,9 @@ const submit = async event => {
   let dueDate = new Date(
     document.getElementById("dueDate").value
   ).toLocaleDateString("en-US");
+  let id = uuidv4();
 
-  const json = { task, desc, dueDate };
+  const json = { id, task, desc, dueDate };
   const body = JSON.stringify(json);
 
   try {
