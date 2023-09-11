@@ -1,4 +1,8 @@
 # Statistics Tracker for Counter-Strike: Global Offensive
+Author: Thomas Pianka
+
+Glitch link: https://a2-thomaspianka.glitch.me/
+
 This project is intended to be used as a statistics tracker for the game Counter-Strike: Global Offensive. The user can input their statistics from each match, and the app will store that information, while also calculating the K/D ratio based on the inputted statistics and displaying that to the user, alongside the other statistics they inputted. I used the CSS flexbox positioning technique, primarily using a column `flex-direction` so the elements of my page line up vertically. There are no specific instructions to use the application through Glitch. However, if installing the project files locally, be sure to have Node.js installed on your machine. The project has one dependency, so to install it prior to running locally, run `npm install` within the project directory inside of a terminal or command prompt. To run the application locally, run `node server.improved.js` within the same terminal or command prompt, then navigate to `localhost:3000` within a web browser. The external CSS file uses element selectors, ID selectors, and class selectors, and the primary font the application uses is Poppins, which is a font I found on Google Fonts.
 
 ## Technical Achievements
