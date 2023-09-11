@@ -12,14 +12,19 @@ body {
   align-items: center;
 }
 
-#task-form {
-  width: 70vw;
+#form-container {
+  display: flex;
+  gap: 30px;
+}
+
+#task-form,
+#edit-form {
   background-color: gray;
   padding: 20px 50px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .input-grid {
@@ -49,6 +54,12 @@ body {
   display: flex;
 }
 
+.taskButton {
+  text-align: center;
+  padding: 4px 14px;
+  margin: 0 10px;
+}
+
 label {
   font-size: 1.2rem;
 }
@@ -67,12 +78,6 @@ button {
   border: none;
   outline: none;
   padding: 6px 10px;
-}
-
-.taskButton {
-  text-align: center;
-  padding: 4px 14px;
-  margin: 0 10px;
 }
 
 table {

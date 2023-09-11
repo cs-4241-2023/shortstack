@@ -1,5 +1,4 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
-
+// Helper function to fetch tasks from server and display them in a table
 const fetchTasks = async () => {
   try {
     const fetchResponse = await fetch("/tasks", { method: "GET" });
@@ -10,18 +9,21 @@ const fetchTasks = async () => {
   }
 };
 
+// Collects the data in form inputs and sends it to the server to create a new task
 const submit = async event => {
   event.preventDefault();
 
-  const task = document.getElementById("task").value;
-  const desc = document.getElementById("description").value;
-  let inputDate = new Date(document.getElementById("dueDate").value);
-  let dueDate =
-    inputDate.getMonth() +
-    "-" +
-    (inputDate.getDate() + 1) +
-    "-" +
-    inputDate.getFullYear();
+  let taskInput = document.getElementById("task");
+  const task = taskInput.value;
+  taskInput.value = "";
+
+  let descInput = document.getElementById("description");
+  const desc = descInput.value;
+  descInput.value = "";
+
+  let dueDate = new Date(
+    document.getElementById("dueDate").value
+  ).toLocaleDateString("en-US");
 
   const json = { task, desc, dueDate };
   const body = JSON.stringify(json);
@@ -34,6 +36,8 @@ const submit = async event => {
 
     if (response.status === 200) {
       fetchTasks();
+      taskInput.value = "";
+      descInput.value = "";
     } else {
       throw new Error("Failed to submit task");
     }
@@ -91,6 +95,7 @@ const createRow = (task, desc, dueDate, priority, index) => {
   return row;
 };
 
+// Uses fetch to delete a task instance from server, returns error if task deletion goes wrong
 const deleteTask = async task => {
   const jsonString = JSON.stringify(task);
 
@@ -110,14 +115,19 @@ const deleteTask = async task => {
   }
 };
 
-const createEditForm = () => {};
+const updateForm = task => {
+  const taskInput = document.getElementById("task");
+  const descInput = document.getElementById("description");
+  const dateInput = document.getElementById("dueDate");
+  taskInput.value = task.task;
+  descInput.value = task.desc;
+  dateInput.value = task.date;
+};
 
 const editTask = async task => {
-  const taskInput = document.getElementById("task");
-  taskInput.value = task.task;
-  const descInput = document.getElementById("description");
-  descInput.value = task.desc;
-  createEditForm();
+  let updatedTask = task;
+  updateForm(updatedTask);
+  deleteTask(task);
 };
 
 const createCell = data => {
@@ -126,6 +136,7 @@ const createCell = data => {
   return cell;
 };
 
+// Manages creation of table elements using data from server
 const getTasks = data => {
   const table = document.querySelector("table");
   table.replaceChildren();
