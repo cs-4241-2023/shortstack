@@ -8,7 +8,7 @@ const http = require("http"),
   dir = "public/",
   port = 3000;
 
-const appdata = [
+let appdata = [
   {
     title: "Assignment 1",
     date: "2023-09-15",
@@ -83,6 +83,12 @@ const handlePost = function (request, response) {
       });
     } else if (request.url === "/init") {
     } else if (request.url === "/delete") {
+      console.log(parsedData.id)
+      appdata = appdata.filter((obj) => {
+        return obj.id !== parsedData.id
+      })
+
+      console.log(appdata)
     }
 
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });

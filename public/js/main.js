@@ -97,7 +97,7 @@ function loadTasks() {
 }
 
 async function findTask(id) {
-  let returnTask = {};
+  let returnTask = null;
   taskData.forEach((task) => {
     if (task.id === parseInt(id)) {
       returnTask = task;
@@ -106,4 +106,18 @@ async function findTask(id) {
   return returnTask;
 }
 
-function deleteNote() {}
+async function deleteTask() {
+  // console.log("1", taskData)
+  const noteToDelete = await findTask(currentNote);
+  // console.log(noteToDelete)
+
+  const response = await fetch("/delete", {
+    method: "POST",
+    body: JSON.stringify(noteToDelete),
+  });
+
+  const text = await response.text();
+  taskData = JSON.parse(text);
+  
+  loadTasks();
+}
