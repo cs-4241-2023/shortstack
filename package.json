@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Task List",
+  "version": "1.1",
+  "description": "Basic Task List Website",
+  "author": "Rusen Emre Sabaz",
   "scripts": {
     "start": "node server.improved.js"
   },
