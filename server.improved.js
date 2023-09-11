@@ -8,17 +8,20 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+let cardata = [];
+let nextId = 1; // Initialize ID counter
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
+  }
+  else if( request.method === 'PUT' ){
+    handlePut( request, response ) 
+  }
+  else if( request.method === 'DELETE' ){
+    handleDelete( request, response ) 
   }
 })
 
@@ -32,22 +35,93 @@ const handleGet = function( request, response ) {
   }
 }
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+const handlePost = function(request, response) {
+  let dataString = '';
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
+  request.on('data', function(data) {
+    dataString += data;
+  });
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+  request.on('end', function() {
+      const requestData = JSON.parse(dataString);
 
-    // ... do something with the data here!!!
+      if (requestData.hasOwnProperty('year') && requestData.hasOwnProperty('mpg')) {
+        const year = Number(requestData.year); 
+        const mpg = Number(requestData.mpg);   
+        const currentYear = new Date().getFullYear();
+        const rating = currentYear - year + mpg;
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
-  })
-}
+        // Create rating field in backend
+        requestData.rating = rating;
+        
+        requestData.id = nextId++;
+        
+        cardata.push(requestData);
+    }
+
+    response.writeHead(200, { 'Content-Type': 'text/plain' });
+    response.end(JSON.stringify(requestData));
+  });
+};
+
+
+const handlePut = function(request, response) {
+  let dataString = '';
+
+  request.on('data', function(data) {
+    dataString += data;
+  });
+
+  request.on('end', function() {
+    const updatedData = JSON.parse(dataString);
+
+    if (updatedData.hasOwnProperty('id')) {
+      const idToUpdate = updatedData.id;
+      const indexToUpdate = cardata.findIndex((car) => car.id === idToUpdate);
+
+      if (indexToUpdate !== -1) {
+        cardata[indexToUpdate] = updatedData;
+
+        // Recalculate the rating based on the updated MPG value and year
+        const year = Number(updatedData.year);
+        const mpg = Number(updatedData.mpg);
+        const currentYear = new Date().getFullYear();
+        const rating = currentYear - year + mpg;
+
+        // Update the rating field in the updated data
+        updatedData.rating = rating;
+
+        response.writeHead(200, { 'Content-Type': 'text/plain' });
+        response.end(JSON.stringify(updatedData));
+      } 
+    } 
+  });
+};
+
+const handleDelete = function(request, response) {
+  let dataString = '';
+
+  request.on('data', function(data) {
+    dataString += data;
+  });
+
+  request.on('end', function() {
+    const requestData = JSON.parse(dataString);
+    if (requestData.hasOwnProperty('id')) {
+      const idToDelete = requestData.id;
+
+      const indexToDelete = cardata.findIndex((car) => car.id === idToDelete);
+
+      if (indexToDelete !== -1) {
+        // Remove the entry from the cardata array
+        const deletedData = cardata.splice(indexToDelete, 1)[0];
+
+        response.writeHead(200, { 'Content-Type': 'text/plain' });
+        response.end(JSON.stringify(deletedData));
+      } 
+    }
+  });
+};
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
