@@ -1,5 +1,8 @@
 ## Plant Watering Tracker
 
+Juliana Porto
+[https://a2-julezporto.glitch.me/](https://a2-julezporto.glitch.me/)
+
 Meet the <b>Plant Watering Tracker</b>! Input your plant's name, type, and the last day you watered it, and the Plant Watering Tracker will save that data as well as
 calculate the next date your plant will need to be watered. The Plant Watering Tracker does its next watering (derived field) calculation by taking into account the 
 plant's type and the last date you watered it.
