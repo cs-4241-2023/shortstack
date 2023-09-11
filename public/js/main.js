@@ -57,16 +57,25 @@ const createHeaderRow = () => {
   return header;
 };
 
-const createDeleteButton = task => {
+const createButtons = task => {
   const cell = document.createElement("td");
-  const button = document.createElement("button");
-  button.className = "editButton";
-  button.textContent = "Delete";
-  button.onclick = () => {
+  cell.style.width = "200px";
+
+  const editButton = document.createElement("button");
+  editButton.className = "taskButton";
+  editButton.textContent = "Edit";
+  editButton.onclick = () => {
+    editTask(task);
+  };
+
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "taskButton";
+  deleteButton.textContent = "Delete";
+  deleteButton.onclick = () => {
     deleteTask(task);
   };
 
-  cell.appendChild(button);
+  cell.append(editButton, deleteButton);
   return cell;
 };
 
@@ -77,7 +86,7 @@ const createRow = (task, desc, dueDate, priority, index) => {
   row.append(createCell(desc));
   row.append(createCell(dueDate));
   row.append(createCell(priority));
-  row.append(createDeleteButton(index));
+  row.append(createButtons(index));
 
   return row;
 };
@@ -99,6 +108,16 @@ const deleteTask = async task => {
   } catch (error) {
     console.error("Error deleting task:", error);
   }
+};
+
+const createEditForm = () => {};
+
+const editTask = async task => {
+  const taskInput = document.getElementById("task");
+  taskInput.value = task.task;
+  const descInput = document.getElementById("description");
+  descInput.value = task.desc;
+  createEditForm();
 };
 
 const createCell = data => {

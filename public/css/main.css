@@ -1,6 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap");
+
 body {
   background: rgb(88, 87, 87);
   color: white;
+  font-family: "Source Code Pro", monospace;
 }
 
 .container {
@@ -42,6 +45,10 @@ body {
   justify-content: flex-end;
 }
 
+.flex {
+  display: flex;
+}
+
 label {
   font-size: 1.2rem;
 }
@@ -62,9 +69,10 @@ button {
   padding: 6px 10px;
 }
 
-.editButton {
+.taskButton {
   text-align: center;
   padding: 4px 14px;
+  margin: 0 10px;
 }
 
 table {
