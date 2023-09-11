@@ -28,26 +28,40 @@ const submit = async function( event ) {
     body: JSON.stringify(json)
 
   }).then(async function (response){ //console.log(response)
-    //console.log("hello world")
     let data= await response.json()
     console.log(data)
 
-    const list = document.createElement('ul')
-  
-  for (const key in data) {
-    console.log(key)
-    if (data.hasOwnProperty(key)) {
+
+    //const list = document.createElement('ul')
+    let resultListHTML = '';
+
+/*  for (const key in data) {
+     console.log(key)
+     if (data.hasOwnProperty(key)) {
       const li = document.createElement('li');
       li.innerText = `${key}: ${data[key]}`;
       list.appendChild(li);
       console.log(data)
     }
   }
+*/
+
+  for (const key in data) {
+    console.log(key);
+    if (data.hasOwnProperty(key)) {
+      const li = document.createElement('li');
+      resultListHTML += `<li>${key}: ${data[key]}</li>`;
+      list.appendChild(li);
+      console.log(data)
+    }
+  }
+
   const resultContainer = document.querySelector('#result');
-  resultContainer.innerHTML = '';
+  resultContainer.innerHTML = resultListHTML;
   resultContainer.appendChild(list);
       })
   }
+
 
 
 window.onload = function() {
