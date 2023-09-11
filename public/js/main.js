@@ -151,6 +151,9 @@ async function deleteTask() {
   const text = await response.text();
   taskData = JSON.parse(text);
 
+  // Need to now default to 0
+  currentNote = 0;
+
   loadTasks();
 }
 
@@ -165,5 +168,5 @@ async function editNote() {
   const text = await response.text();
   taskData = JSON.parse(text);
 
-  loadTasks;
+  loadTasks();
 }
