@@ -1,6 +1,6 @@
 # CS 4241 a2-alocnayr
 
-#Ryan Kornitsky
+# Ryan Kornitsky
 
 <br>
 
