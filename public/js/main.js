@@ -20,7 +20,7 @@ const submit = async function (event) {
   const text = await response.text();
   taskData = JSON.parse(text);
 
-  form.reset();
+  // form.reset();
   loadTasks();
 };
 
@@ -68,7 +68,7 @@ function loadTasks() {
   taskData.forEach((task) => {
     let newTask = document.createElement("div");
 
-    if (currentNote === 0) {
+    if (currentNote === 0 || task.id === currentNote) {
       newTask.className = "tasks-list--task selected";
       currentNote = task.id;
       title.value = task.title;
@@ -107,9 +107,7 @@ async function findTask(id) {
 }
 
 async function deleteTask() {
-  // console.log("1", taskData)
   const noteToDelete = await findTask(currentNote);
-  // console.log(noteToDelete)
 
   const response = await fetch("/delete", {
     method: "POST",
@@ -120,4 +118,18 @@ async function deleteTask() {
   taskData = JSON.parse(text);
   
   loadTasks();
+}
+
+async function editNote() {
+  const noteToEdit = await findTask(currentNote);
+  
+  const response = await fetch("/edit", {
+    method: "POST",
+    body: JSON.stringify(noteToEdit),
+  })
+
+  const text = await response.text();
+  taskData = JSON.parse(text);
+
+  loadTasks;
 }

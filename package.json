@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server.improved.js"
   },
+  "type": "module",
   "dependencies": {
-    "mime": "^2.4.4"
+    "mime": "^2.4.4",
+    "nanoid": "^4.0.2"
   }
 }

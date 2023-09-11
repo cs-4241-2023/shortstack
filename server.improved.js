@@ -1,11 +1,9 @@
-const http = require("http"),
-  fs = require("fs"),
-  // IMPORTANT: you must run `npm install` in the directory for this assignment
-  // to install the mime library if you're testing this on your local machine.
-  // However, Glitch will install it automatically by looking in your package.json
-  // file.
-  mime = require("mime"),
-  dir = "public/",
+import * as http from "http";
+import * as fs from "fs";
+import mime from "mime";
+import { nanoid } from "nanoid";
+
+const dir = "public/",
   port = 3000;
 
 let appdata = [
@@ -83,12 +81,12 @@ const handlePost = function (request, response) {
       });
     } else if (request.url === "/init") {
     } else if (request.url === "/delete") {
-      console.log(parsedData.id)
+      console.log(parsedData.id);
       appdata = appdata.filter((obj) => {
-        return obj.id !== parsedData.id
-      })
+        return obj.id !== parsedData.id;
+      });
 
-      console.log(appdata)
+      console.log(appdata);
     }
 
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
