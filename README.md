@@ -8,7 +8,7 @@ You'll need to use sometype of collaborative software that will enable you both 
 4. What would you change about the interface based on their feedback?
 
 
-## Your Web Application Title
+## Web Application Title: To DO List Generator
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
 ## Technical Achievements

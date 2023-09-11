@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis&display=swap">
     <!-- get rid of favicon error -->
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
   </head>
@@ -17,7 +17,7 @@
     <!--<form class="my-form">-->
 
       <label class="my-label" for="taskName">Enter Task to do: </label>
-      <input class="my-input" type="text" id="taskName" name="taskName" required>
+      <input class="my-input" type="text" id="taskName" name="taskName" placeholder=" I have some __________ homework! " required>
 
       <label class="my-label" for="dueDate">Enter Due Date: </label>
       <input class="my-input" type="date" id="dueDate" name="dueDate" required>
@@ -25,12 +25,35 @@
       <label class="my-label" for="taskPriority">Enter Task Priority (1 low to 10 high): </label>
       <input class="my-input" type="number" id="taskPriority" name="taskPriority" min="1" max="10" required>
 
-      <button type="submit"> Generate To DO List</button>
+      <button class="my-button" type="submit"> Generate To Do List</button>
     </form>
 
-    <table id="result">
-      
+    <div is="result">
+
+    </div>
+
+    <table class="my-table">
+      <tr>
+        <th>Task</th>
+        <th>Deadline</th>
+        <th>Priority</th>
+        <th>Remove</th>
+      </tr>
+      <tr>
+        <td>Example Task</td>
+        <td>Example Deadline</td>
+        <td>Example Priority</td>
+        <td>Delete</td>
+      </tr>
+      <tr>
+        <td>Example Task 2</td>
+        <td>Example Deadline 2</td>
+        <td>Example Priority 2</td>
+        <td>Delete</td>
+      </tr>
     </table>
+    
+
 
 
   </body>
