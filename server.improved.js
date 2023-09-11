@@ -23,30 +23,64 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else{
+  } else if(request.url === '/getTodos') { // added this else if
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(appdata));
+  } else{
     sendFile( response, filename )
   }
 }
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+// const handlePost = function( request, response ) {
+//   let dataString = ''
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
+//   request.on( 'data', function( data ) {
+//       dataString += data 
+//   })
 
-  request.on( 'end', function() {
-    console.log( dataString )
+//   request.on( 'end', function() {
+//     console.log( JSON.parse( dataString ) )
+
+//     // ... do something with the data here!!!
+//     const receivedData = JSON.parse(dataString); // added these three lines
+//     appdata.push(receivedData);
+//     console.log("Updated App Data:", appdata);
+
+//     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+//     response.end('Data recieved') // was test before
+//   })
+// }
+const handlePost = function(request, response) {
+  let dataString = '';
+
+  request.on('data', function(data) {
+    dataString += data;
+  });
+
+  request.on('end', function() {
+    const receivedData = JSON.parse(dataString);
 
     // ... do something with the data here!!!
-    //push your JSON into the array
-    //appdata.push(dataString)
-
-    appdata.push(JSON.parse( dataString )) //changed this to JSON.parse so that we can send the correct kind of JSON object
-
-    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
-    response.end(JSON.stringify(appdata))
-  })
+    if(request.url === '/submit') {
+      appdata.push(receivedData);
+      console.log("Added: ", receivedData.todoinput," Due on: ", receivedData.dueDate);
+      response.writeHead(200, "OK", {'Content-Type': 'text/plain'});
+      response.end('Data received');
+    } 
+    else if(request.url === '/delete') {
+      const index = appdata.findIndex(item => item.id === receivedData.id);
+      if(index !== -1) {
+        appdata.splice(index, 1);
+        console.log("Deleted id#: ", receivedData.id);
+        response.writeHead(200, "OK", {'Content-Type': 'text/plain'});
+        response.end('Todo deleted');
+      } else {
+        console.log("ID not found: ", receivedData.id);
+        response.writeHead(400, "Not found", {'Content-Type': 'text/plain'});
+        response.end('ID not found');
+      }
+    }
+  });
 }
 
 const sendFile = function( response, filename ) {
