@@ -23,6 +23,7 @@ body {
 .my-form {
   font-family: 'Dosis';
   width: 100%;
+  display: flex;
 }
 
 .my-label {

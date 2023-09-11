@@ -35,24 +35,17 @@ const submit = async function( event ) {
     //const list = document.createElement('ul')
     let resultListHTML = '';
 
-  for (const key in data) {
-    if (data.hasOwnProperty(key)) {
-      //const li = document.createElement('li');
-      resultListHTML += `<li>${data[key]['tasks']}</li>`;
-      resultListHTML += `<li>${data[key]['date']}</li>`;
-      resultListHTML += `<li>${data[key]['priority']}</li>`;
-      console.log(data)
-    }
-  }
+
 
 const tableparse=document.querySelector('.my-table')
-
+resultHTML = tableparse.innerHTML
 for (const key in data) {
   if (data.hasOwnProperty(key)) {
     resultListHTML += '<tr>';
     resultListHTML += `<td>${data[key]['tasks']}</td>`;
     resultListHTML += `<td>${data[key]['date']}</td>`;
     resultListHTML += `<td>${data[key]['priority']}</td>`;
+    resultListHTML += `<td> <button class="my-deletebutton" type="button" >Delete Item</button></td>`;
     resultListHTML += '</tr>';
     //console.log(data)
   }
@@ -60,14 +53,15 @@ for (const key in data) {
 tableparse.innerHTML= resultListHTML;
 
 
-  const resultContainer = document.querySelector('#result');
+  /*const resultContainer = document.querySelector('#result');
   resultContainer.innerHTML = resultListHTML;
-  resultContainer.appendChild(list);
+  resultContainer.appendChild(list);*/
       })
+      
   }
+  
 
-
-  const deletedata = document.createElement('button')
+const deletedata = document.createElement('button')
 
 window.onload = function() {
    const button = document.querySelector("button");
