@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node server.improved.js"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "type": "module",
   "dependencies": {
     "mime": "^2.4.4",
