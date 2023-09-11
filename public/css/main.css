@@ -70,3 +70,7 @@ ul li button {
   padding: 5px;
   height: 40px;
 }
+
+#type, #creature, #age{
+  font-family:'Exo 2';
+}
