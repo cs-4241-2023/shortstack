@@ -1,4 +1,6 @@
 ## MY TODO LIST
+James Yi
+
 https://a2-jamesstaryi.glitch.me/
 
 This is a pretty simple and straightforward website to keep track of one's todo list.
