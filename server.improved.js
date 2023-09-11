@@ -14,6 +14,7 @@ let appdata = [
 
 
 const server = http.createServer( function( request,response ) {
+  
   if( request.method === 'GET' ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
@@ -22,6 +23,11 @@ const server = http.createServer( function( request,response ) {
    else if (request.method === 'DELETE') { 
   handleDeleteRequest(request, response);
 }
+if (request.method === 'GET' && request.url === '/library') {
+  response.writeHead(200, { 'Content-Type': 'application/json' });
+  response.end(JSON.stringify(appdata));
+}
+
   
 })
 
@@ -48,21 +54,20 @@ const handlePost = function( request, response ) {
     if (duplicate){
       response.writeHead(409, { 'Content-Type': 'application/json' });
       response.end(JSON.stringify({ message: 'Duplicate item found' }));
-      console.log(JSON.stringify( appdata ) )
+      response.end(JSON.stringify(appdata));
+
 
     }
     else{
     appdata.push(JSON.parse(dataString))
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
     response.end( JSON.stringify( appdata ) )
-    console.log(JSON.stringify( appdata ) )
     }
   })
 }
 
 const handleDeleteRequest = function(request, response){
 
-  console.log("handleDeleteRequest called....")
   if (request.url.startsWith('/delete/')){
     const itemIdentifier  = request.url.replace('/delete/','')
     console.log("Received DELETE request for itemID:", itemIdentifier)
@@ -79,7 +84,8 @@ const handleDeleteRequest = function(request, response){
     if (index !== -1){
       appdata.splice(i,1)
       response.writeHead(200, {'Content-Type': 'text/json'})
-      response.end(JSON.stringify({message: 'Item deleted successfully'}))
+      response.end(JSON.stringify(appdata));
+
     }
     else{
 

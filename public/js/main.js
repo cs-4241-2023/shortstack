@@ -1,7 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 document.addEventListener('DOMContentLoaded', function () {
 
-
+//trying to have library data always displayed, not working !!!!!
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -65,14 +65,20 @@ const response = await fetch( '/submit', {
 let data = ""; 
   if (response.status === 200){
      data = await response.json()
+  }
+  else if (response.status ===409){
+    console.error('Duplicate entry.')
+    return;
+  }
 
-
+  else{
+    console.error('Failed to submit data: ', response.statusText)
   }
 
   const list = document.createElement('ul')
   const existingList = document.querySelector('ul');
   if (existingList) {
-    existingList.parentNode.removeChild(existingList);
+    existingList.parentNode.removeChild(existingList)
   }
   
   console.log(data)
@@ -88,8 +94,8 @@ const addedItems = []
       const li = document.createElement('li')
       li.className = "userLibrary"
       const deleteButton = document.createElement("button")
-      deleteButton.innerText = "Delete";
-      deleteButton.className = "delete";
+      deleteButton.innerText = "Delete"
+      deleteButton.className = "delete"
       
       li.innerText = "Title: " + d.title + "\nAuthor: " + d.author + "\nStart Date: " + d.startDate + "\nFinish Date: " + d.dateFinished +"\nTime to Finish: " + d.timeToFinish
       
@@ -97,18 +103,54 @@ const addedItems = []
       list.appendChild(li)
       list.appendChild(deleteButton)
       addedItems.push(itemIdentifier)
-      deleteButton.onclick = () => deleteBook(itemIdentifier, li, deleteButton);
-
-   
+      deleteButton.onclick = () => deleteBook(itemIdentifier, li, deleteButton); 
 
    }
     
   })
 
-  document.body.appendChild( list )
+  document.body.appendChild( list ) 
 
 }
+const libDataStuff = async () => {
+  try {
+    const response = await fetch('/library', { method: 'GET' });
+    if (response.status === 200) {
+      const data = await response.json()
+      displayLibraryData(data)
+    } else {
+      console.error('Failed to fetch library data:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error fetching library data:', error);
+  }
+};
 
+function displayLibraryData(data){
+  const userLib = document.getElementById('userLibrary');
+
+  userLib.innerHTML = '';
+  data.forEach(item => {
+    const itemIdentifier = item.title + item.author + item.startDate + item.dateFinished;
+   
+      const li = document.createElement('li')
+      li.className = "userLibrary"
+      const deleteButton = document.createElement("button")
+      deleteButton.innerText = "Delete"
+      deleteButton.className = "delete"
+  
+      li.innerText = "Title: " + item.title + "\nAuthor: " + item.author + "\nStart Date: " + item.startDate + "\nFinish Date: " + item.dateFinished + "\nTime to Finish: " + item.timeToFinish
+  
+      userLib.appendChild(li)
+      userLib.appendChild(deleteButton)
+      deleteButton.onclick = () => deleteBook(itemIdentifier, li, deleteButton)
+    
+  });
+
+
+  document.body.appendChild(userLib)
+
+}
 
 async function deleteBook(itemID, listItemElem, delButton) {
   console.log("Delete book...")
@@ -120,7 +162,7 @@ async function deleteBook(itemID, listItemElem, delButton) {
 
     }); 
     console.log(`/delete/${itemID}`)
-    console.log("Response status:", response.status); 
+    console.log("Response status:", response.status)
 
   //sucessful
   if (response.status  === 200){
@@ -138,9 +180,6 @@ async function deleteBook(itemID, listItemElem, delButton) {
 
 }
 
-async function showLibrary(){
-  
-}
 
 document.querySelector('#title').addEventListener('input', checkForm);
 document.querySelector('#author').addEventListener('input', checkForm);
@@ -170,5 +209,6 @@ window.onload = function() {
   const submitButton = document.querySelector("#submit");
   submitButton.disabled = true;
   submitButton.onclick = submit;
+  libDataStuff()
 }
 })
