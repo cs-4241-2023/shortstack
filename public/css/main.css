@@ -1,4 +1,20 @@
 body {
-  background:black;
+  background-color: #347ca9;
   color:white;
+}
+
+.header1 {
+  color: #830D3B;
+}
+
+p {
+  color: #DBDBD5;
+}
+
+li {
+  color: #C7B33A;
+}
+
+html {
+  font-family: "Press Start 2P";
 }

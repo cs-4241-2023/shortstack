@@ -5,7 +5,7 @@ const submit = async function( event ) {
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
-  event.preventDefault()
+  event.preventDefault() // Prevents default browser behavior
   
   const input = document.querySelector( '#yourname' ),
         json = { yourname: input.value },
@@ -30,6 +30,6 @@ const submit = async function( event ) {
 }
 
 window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+   const button = document.getElementsByClassName("submit");
+  button.onclick = submit();
 }
