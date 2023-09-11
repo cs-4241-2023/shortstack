@@ -7,6 +7,9 @@
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" href="https://cdn.discordapp.com/attachments/641632207634432010/1148806297106534491/trophyfavicon.png" type="image/x-icon"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brackets-viewer@latest/dist/brackets-viewer.min.js"></script>
+
   </head>
   
   <body>
@@ -25,16 +28,23 @@
     <div class = "general">
       <label for="playernum">Enter the number of players:</label>
         <form id="playernum">
-          <input type="number" value="" id="playernum">
+          <input type="number" value="" id="playernum" min="2" max="64" onchange="updatePlayerForm()">
         </form>
     </div>
+
+    <div class = "general">
+      <div id="playerNames">
+        <!-- Player name inputs will be added here -->
+      </div>
+    </div>
+
     <br>
     <div class = "general">
     <label for="btypes">Choose a Bracket Type:</label>
-    <select id="btypes" name="Bracket Types" form = "btypes" >
+    <select id="btypes" name="Bracket Types" form = "btypes" onchange="editOptions()">
     <option value="Single Elimination">Single Elimination</option>
     <option value="Double Elimination">Double Elimination</option>
-    <option value="Round Robin">Round Robin</option>
+    <option value="Round Robin" selected>Round Robin</option>
     </select>
     </div>
 
@@ -46,7 +56,5 @@
   </body>
   <footer>
     <p>&copy; Copyright 2023: Sean Arackal
-    <p><a href="mailto:sarackal@wpi.edu">sarackal@wpi.edu</a></p>
-    <p><a href="https://www.linkedin.com/in/seanarackal/">LinkedIn</a></p>
   </footer>
 </html>
