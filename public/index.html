@@ -7,12 +7,33 @@
     <link rel="stylesheet" href="css/main.css">
     
     <!-- get rid of favicon error -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+    <link rel="icon" href="data:;base64,iVBORw0KGgo="> 
   </head>
   <body>
+    <h1 class="border-element">
+      Counter-Strike: Global Offensive Statistics Tracker
+    </h1>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <input type="number" min="0" id="frag-input" placeholder="Input number of frags" required>
+      <input type="number" min="0" id="assist-input" placeholder="Input number of assists" required>
+      <input type="number" min="0" id="death-input" placeholder="Input number of deaths" required>
+      <button type="submit" id="submit-button">Submit</button>
     </form>
+    <br>
+    <button type="button" id="toggle-table">Show Table</button>
+    <br>
+    <table class="border-element" id="stat-table" hidden>
+      <thead>
+        <tr>
+          <th>Frags</th>
+          <th>Assists</th>
+          <th>Deaths</th>
+          <th>K/D</th>
+          <th>Remove</th>
+          <!-- <th>Modify</th> -->
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
   </body>
 </html>
