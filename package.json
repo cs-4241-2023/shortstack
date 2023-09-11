@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "cs-4241-michael-mcinerney",
+  "version": "0.0.1",
+  "description": "CS4241 Assignment 2",
+  "author": "Michael McInerney",
   "scripts": {
     "start": "node server.improved.js"
   },
