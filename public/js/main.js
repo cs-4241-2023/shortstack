@@ -13,6 +13,11 @@ const submit = async function (event) {
   const form = document.querySelector("form");
   const body = parseForm(form);
 
+  if(body.title === "") {
+    alert("Please add a title");
+    return
+  }
+
   let edit = { ...body, id: currentNote };
 
   const response = await fetch("/submit", {

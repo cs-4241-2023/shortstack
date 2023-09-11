@@ -112,12 +112,14 @@ textarea#task-body {
 .tasks-list--task.selected {
   background-color: white;
   color: black;
+  border: 1px solid black;
 }
 
 .tasks-list--new {
   background-color: white;
   padding: 10px;
   margin: 10px;
+  border: 1px solid black;
 }
 
 .tasks-list--new:hover {
