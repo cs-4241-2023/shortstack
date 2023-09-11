@@ -1,27 +1,75 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
+const appdata = [];
 
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+function addTask() {
+  const taskInput = document.getElementById('new-task-name');
+  const taskDateInput = document.getElementById('new-task-date'); 
+  const taskPriorityInput = document.getElementById('new-task-priority'); 
+  const taskText = taskInput.value.trim();
+  const taskDate = taskDateInput.value; 
+  const taskPriority = taskPriorityInput.value; 
 
-  const response = await fetch( '/submit', {
-    method:'POST',
-    body 
-  })
-
-  const text = await response.text()
-
-  console.log( 'text:', text )
+  if (taskText !== '' && taskDate !== '') {
+    const task = { text: taskText, completed: false, creation_date: taskDate, priority: taskPriority };
+    fetch('/appdata', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    })
+    .then(response => response.json())
+    .then(data => {
+      loadTasks();
+    });
+  } else {
+    alert('Please enter a task and a creation date.');
+  }
 }
 
-window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+function addTaskToDOM(task, index) {
+  const taskList = document.getElementById('task-list');
+
+  const newTaskItem = document.createElement('div');
+  newTaskItem.classList.add('task-item');
+
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.classList.add('task-checkbox');
+  checkbox.checked = task.completed;
+  checkbox.addEventListener('change', () => {
+    task.completed = checkbox.checked;
+  });
+
+  const taskText = document.createElement('span');
+  taskText.classList.add('task-text');
+  taskText.textContent = `${task.text} (Created on: ${task.creation_date}, Priority: ${task.priority})`;
+
+  const editButton = document.createElement('button');
+  editButton.textContent = 'Edit';
+  editButton.addEventListener('click', () => {
+    const newTaskText = prompt('Edit task:', task.text);
+    if (newTaskText !== null && newTaskText.trim() !== '') {
+      task.text = newTaskText.trim();
+      taskText.textContent = `${task.text} (Created on: ${task.creation_date}, Priority: ${task.priority})`;
+    }
+  });
+
+  newTaskItem.appendChild(checkbox);
+  newTaskItem.appendChild(taskText);
+  newTaskItem.appendChild(editButton);
+  taskList.appendChild(newTaskItem);
 }
+
+function loadTasks() {
+  fetch('/appdata')
+    .then(response => response.json())
+    .then(data => {
+      const taskList = document.getElementById('task-list');
+      taskList.innerHTML = '';
+      data.forEach((task, index) => {
+        addTaskToDOM(task, index);
+      });
+    });
+}
+
+window.onload = loadTasks; 
