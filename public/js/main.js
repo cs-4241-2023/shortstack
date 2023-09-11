@@ -112,45 +112,7 @@ const addedItems = []
   document.body.appendChild( list ) 
 
 }
-const libDataStuff = async () => {
-  try {
-    const response = await fetch('/library', { method: 'GET' });
-    if (response.status === 200) {
-      const data = await response.json()
-      displayLibraryData(data)
-    } else {
-      console.error('Failed to fetch library data:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Error fetching library data:', error);
-  }
-};
 
-function displayLibraryData(data){
-  const userLib = document.getElementById('userLibrary');
-
-  userLib.innerHTML = '';
-  data.forEach(item => {
-    const itemIdentifier = item.title + item.author + item.startDate + item.dateFinished;
-   
-      const li = document.createElement('li')
-      li.className = "userLibrary"
-      const deleteButton = document.createElement("button")
-      deleteButton.innerText = "Delete"
-      deleteButton.className = "delete"
-  
-      li.innerText = "Title: " + item.title + "\nAuthor: " + item.author + "\nStart Date: " + item.startDate + "\nFinish Date: " + item.dateFinished + "\nTime to Finish: " + item.timeToFinish
-  
-      userLib.appendChild(li)
-      userLib.appendChild(deleteButton)
-      deleteButton.onclick = () => deleteBook(itemIdentifier, li, deleteButton)
-    
-  });
-
-
-  document.body.appendChild(userLib)
-
-}
 
 async function deleteBook(itemID, listItemElem, delButton) {
   console.log("Delete book...")
@@ -209,6 +171,5 @@ window.onload = function() {
   const submitButton = document.querySelector("#submit");
   submitButton.disabled = true;
   submitButton.onclick = submit;
-  libDataStuff()
 }
 })
