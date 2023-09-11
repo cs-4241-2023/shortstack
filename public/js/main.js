@@ -65,12 +65,12 @@ const setGoal = async function (event) {
   event.preventDefault()
 
   const goal = document.querySelector('#desiredGoal'),
-    json = { goal: goal.value }
-  body = JSON.stringify(json)
+    json = { goal: goal.value },
+    body = JSON.stringify(json)
 
   if(!validGrades.includes(goal.value)){
     const displayGoal = document.querySelector('#termGradeGoal')
-    displayGoal.innerText = "Invlaid grade, please try again"
+    displayGoal.innerText = "Invalid grade, please try again"
   }
 
   else{
@@ -104,12 +104,12 @@ const editGoal = async function (event) {
   event.preventDefault()
 
   const goal = document.querySelector('#newDesiredGoal'),
-    json = { goal: goal.value }
+    json = { goal: goal.value },
   body = JSON.stringify(json)
 
   if(!validGrades.includes(goal.value)){
     const displayGoal = document.querySelector('#termGradeGoal')
-    displayGoal.innerText = "Invlaid grade, please try again"
+    displayGoal.innerText = "Invalid grade, please try again"
   }
 
   else{
