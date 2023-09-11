@@ -18,20 +18,20 @@
     </header>
     <div class = "general">
       <label for="tourname">Enter the name of your tournament:</label>
-        <form>
-          <input type="text" id="tourname" value="">
+        <form id="tourname">
+          <input type="text" value="" id="tourname">
         </form>
     </div>
     <div class = "general">
       <label for="playernum">Enter the number of players:</label>
-        <form>
-          <input type="number" id="playernum" value="2">
+        <form id="playernum">
+          <input type="number" value="" id="playernum">
         </form>
     </div>
     <br>
     <div class = "general">
     <label for="btypes">Choose a Bracket Type:</label>
-    <select id="btypes" name="Bracket Types">
+    <select id="btypes" name="Bracket Types" form = "btypes" >
     <option value="Single Elimination">Single Elimination</option>
     <option value="Double Elimination">Double Elimination</option>
     <option value="Round Robin">Round Robin</option>

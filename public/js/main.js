@@ -1,27 +1,66 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-
 const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
   event.preventDefault()
+  let tournamentName = document.querySelector('#tourname');
+  let numberOfPlayers = document.querySelector('#playernum');
+  let bracketType = document.querySelector('#btypes');
   
-  const input = document.querySelector( '#tourname' ),
-        json = { tourname: input.text },
-        body = JSON.stringify( json )
+  if(tournamentName.value===''||numberOfPlayers.value===''||bracketType.value==='')
+  {
+    alert('Please fill in all fields');
+    return false;
+  }
 
-  const response = await fetch( '/submit', {
-    method:'POST',
+  json = {
+    name: tournamentName.value,
+    number: numberOfPlayers.value,
+    type: bracketType.value,
+  },
+
+  body = JSON.stringify( json )
+
+  const response = await fetch( "/submit", {
+    method:"POST",
     body 
-  })
+  });
 
-  const text = await response.text()
+  if (!response.ok) {
+    console.error("Failed");
+    return;
+  }
 
-  console.log( 'text:', text )
+  const form = document.querySelector("form");
+  form.reset();
+
+  const data = await response.json()
+  console.log( 'json:', json )
 }
 
 window.onload = function() {
   const button = document.querySelector("button");
   button.onclick = submit;
+}
+
+function editOptions() {
+  for(let i =1; i<=64; i++)
+  {
+    if(Math.pow(2,i)!==submit.numberOfPlayers)
+    {
+      let bTypes = document.getElementById("btypes");
+      let options = bTypes.options;
+      for(let j =0; i<options.length; j++)
+      {
+        if(options[j].text == "Single Elimination"||options[i].text == "Double Elimination")
+        {
+          options[j].disabled = true;
+        }
+      }
+    }
+    else 
+        {
+          options[1].disabled = false;
+          options[2].disabled = false;
+          options[3].disabled = false;
+        }
+  }
 }

@@ -11,9 +11,11 @@ Single ELimination, Double Elimination, Round Robin
 Restrictions on the number of players include: 
 Single/Double Elimination: Number of players must be a power of 2
 Round Robin: No restriction
+===
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Tech Achievement 1**: Takes in multiple inputs and returns them in a tournament bracket form back to the user
+- **Tech Achievement 2**: 
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- **Design Achievement 1**:
