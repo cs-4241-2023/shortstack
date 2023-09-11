@@ -61,6 +61,7 @@ const handlePost = function (request, response) {
           }
         }
       })
+
       currentGoal = hoursTilGoal
 
       response.writeHead(200, "OK", { 'Content-Type': 'text/json' })
@@ -94,10 +95,6 @@ const handlePost = function (request, response) {
         //go thru and edit all of the remianings
         appdata.forEach(d => {
           d.remaining += differenceToChange
-
-          // if (d.remaining <= 0) {
-          //   d.remaining = 0
-          // }
         })
       }
 

@@ -30,3 +30,18 @@ I used flexbox to accomplish the side by side look of the grades and the logged 
     Changes:
     - (IMPLEMENTED!) have the table automatically update when changing the grade, not only after entering new data after the grade change was made
 
+
+    Last name: McInerney
+
+    Problems:
+    - validation bug for entering the grade (would check for validation of edited grades but not for first time entries)
+
+    Comments:
+    - easy navigaion, intuitive
+    - outside of validation fail was essentially flawless
+    - easy to use with little instruction
+
+    Changes:
+    - (IMPLEMENTED!) validation fail of first time grade entires
+
+

@@ -12,6 +12,7 @@ window.onload = function () {
 
 }
 
+const validGrades = ['A', 'B', 'C', 'NR']
 const getResponse = async function (event) {
   event.preventDefault()
 
@@ -67,28 +68,35 @@ const setGoal = async function (event) {
     json = { goal: goal.value }
   body = JSON.stringify(json)
 
-  const response = await fetch('/setGoal', {
-    method: 'POST',
-    body
-  })
+  if(!validGrades.includes(goal.value)){
+    const displayGoal = document.querySelector('#termGradeGoal')
+    displayGoal.innerText = "Invlaid grade, please try again"
+  }
 
-  const res = await response.json()
-
-  const displayGoal = document.querySelector('#termGradeGoal')
-
-  displayGoal.innerText = res.goal
-  displayGoal.className = res.goal
-
-  const editGoalButton = document.createElement('button')
-  editGoalButton.onclick = editGoal
-  editGoalButton.innerText = "Change Goal"
-
-  goal.style.visibility = "hidden"
-  document.querySelector('#setGoal').style.visibility = "hidden"
-
-  const editGoalForm = document.querySelector('#editGoalForm')
-  editGoalForm.style.visibility = "visible"
-  editGoalForm.appendChild(editGoalButton)
+  else{
+    const response = await fetch('/setGoal', {
+      method: 'POST',
+      body
+    })
+  
+    const res = await response.json()
+  
+    const displayGoal = document.querySelector('#termGradeGoal')
+  
+    displayGoal.innerText = res.goal
+    displayGoal.className = res.goal
+  
+    const editGoalButton = document.createElement('button')
+    editGoalButton.onclick = editGoal
+    editGoalButton.innerText = "Change Goal"
+  
+    goal.style.visibility = "hidden"
+    document.querySelector('#setGoal').style.visibility = "hidden"
+  
+    const editGoalForm = document.querySelector('#editGoalForm')
+    editGoalForm.style.visibility = "visible"
+    editGoalForm.appendChild(editGoalButton)
+  }
 
 }
 
@@ -99,19 +107,27 @@ const editGoal = async function (event) {
     json = { goal: goal.value }
   body = JSON.stringify(json)
 
-  const response = await fetch('/editGoal', {
-    method: 'POST',
-    body
-  })
+  if(!validGrades.includes(goal.value)){
+    const displayGoal = document.querySelector('#termGradeGoal')
+    displayGoal.innerText = "Invlaid grade, please try again"
+  }
 
-  const res = await response.json()
+  else{
+    const response = await fetch('/editGoal', {
+      method: 'POST',
+      body
+    })
+  
+    const res = await response.json()
+  
+    const displayGoal = document.querySelector('#termGradeGoal')
+  
+    displayGoal.innerText = res.newGoal.goal
+    displayGoal.className = res.newGoal.goal
+  
+    drawTable(res.appdata)
+  }
 
-  const displayGoal = document.querySelector('#termGradeGoal')
-
-  displayGoal.innerText = res.newGoal.goal
-  displayGoal.className = res.newGoal.goal
-
-  drawTable(res.appdata)
 }
 
 
