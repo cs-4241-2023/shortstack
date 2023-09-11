@@ -2,17 +2,28 @@ Colin Fyock https://a2-cfyock.glitch.me/
 
 ## Technical Achievements
 
-- **Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data.**: I used the .map function in javascript to dynamically create the table rows whenever something is deleted
-  or added to the database. This is then pushed to the table through the id that the table has, id="todo_table". The page updates without the user having to refresh the page.
+- **Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data.**: 
+I used the .map function in javascript to dynamically create the table rows whenever something is deletedor added to the database. 
+This is then pushed to the table through the id that the table has, id="todo_table". 
+The page updates without the user having to refresh the page.
 
 ## Design/UX Achievements
 
 - **Test your user interface with other students**:
 
 1. Provide the last name of each student you conduct the evaluation with: Dufault
-2. What problems did the user have with your design?
+2. What problems did the user have with your design? 
+They were distracted by the shadows on the headers, they wanted more of a separation between the forms and the actual list of todo items. 
+They had a problem with being able to submit todo items with empty fields, and said the page was a little bland.
 3. What comments did they make that surprised you?
+It surprised me that they found the shadows in the headers distracting as that was my favorite part of my website.
+The comment on separation also surprised me, as I thought that <br> tag would have been enough to separate the delete something field and the Your Current Todo List field.
 4. What would you change about the interface based on their feedback?
+I would probably change the code to not allow the user to input blank fields into the todo list,
+a todo entry with nothing as the item and a blank spot as the priority does not make sense.
+I would add another divider line under the delete something from the todo list to further separate the two categories.
+I would potentially try swapping out the horizontal dividers for vertial dividers, like a tri-fold website.
+I think this would solve some problems that Will brought up about the website and may make the website less bland.
 
 ## Your Web Application Title
 
