@@ -26,7 +26,7 @@ const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
   if( request.url === '/' ) {
-    sendFile( response, 'index.html' )
+    sendFile( response, 'public/index.html' )
   }else{
     sendFile( response, filename )
   }
@@ -45,7 +45,7 @@ const handlePost = function( request, response ) {
     // ... do something with the data here!!!
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end(JSON.stringify(appdata))
+    response.end('test')
   })
 }
 
