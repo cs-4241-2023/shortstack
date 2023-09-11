@@ -54,13 +54,12 @@ const handlePost = function (request, response) {
 
   request.on("end", function () {
     const parsedData = JSON.parse(dataString);
-    console.log(parsedData);
 
     if (request.url === "/submit") {
+      // Create due date field
       const originalDate = new Date(parsedData.date);
       let due = null;
 
-      console.log(typeof parsedData.priority);
       switch (parsedData.priority) {
         case "Low":
           due = addDays(originalDate, 5).toISOString().split("T")[0];
@@ -72,16 +71,19 @@ const handlePost = function (request, response) {
           due = addDays(originalDate, 1).toISOString().split("T")[0];
           break;
       }
-
-      console.log(due);
-      appdata.push({
+      
+      let newTask = {
         ...parsedData,
-        dueDate: due,
-        id: nanoid(),
-      });
+        dueDate: due
+      }
+
+
+      let index = appdata.findIndex(task => task.id === parsedData.id)
+      appdata[index] = newTask
+
+
     } else if (request.url === "/init") {
     } else if (request.url === "/delete") {
-      console.log(parsedData.id);
       appdata = appdata.filter((obj) => {
         return obj.id !== parsedData.id;
       });
@@ -96,16 +98,11 @@ const handlePost = function (request, response) {
       }
 
       appdata.push(newTask); 
-      console.log(appdata);
     }
 
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
     response.end(JSON.stringify(appdata));
   });
-};
-
-const handlePut = function (request, response) {
-  console.log(request);
 };
 
 const sendFile = function (response, filename) {

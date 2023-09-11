@@ -12,15 +12,18 @@ const submit = async function (event) {
   const form = document.querySelector("form");
   const body = parseForm(form);
 
+  let edit = { ...body, id: currentNote };
+
   const response = await fetch("/submit", {
     method: "POST",
-    body: JSON.stringify(body),
+    body: JSON.stringify(edit),
   });
 
   const text = await response.text();
   taskData = JSON.parse(text);
 
-  // form.reset();
+  console.log(taskData)
+
   loadTasks();
 };
 
@@ -50,7 +53,6 @@ function parseForm(formData) {
     ) {
       body[element.name] = element.value;
     } else if (element.type === "select") {
-      console.log(element);
     }
   });
   return body;
@@ -73,6 +75,8 @@ function loadTasks() {
     let newTask = document.createElement("div");
 
     // If program was just initialized/we are changing task, as we iterate keep the same task highlighted
+    console.log(task.id === currentNote)
+
     if (currentNote === 0 || task.id === currentNote) {
       // When we get to the currently selected task, populate form with the data of the task
       newTask.className = "tasks-list--task selected";
@@ -143,7 +147,6 @@ function loadTasks() {
 // Function to find a note within the array given an id
 async function findTask(id) {
   let returnTask = null;
-  console.log(id);
   taskData.forEach((task) => {
     if (task.id === id) {
       returnTask = task;
