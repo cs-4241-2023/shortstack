@@ -1,4 +1,3 @@
-/* styles.css */
 body {
   background: white;
   color: black; 
@@ -13,32 +12,60 @@ h1{
   display:grid; 
  gap:1rem;
   grid-template-columns: repeat(4, 20%);
+
 } 
 
-.userLibrary{
-  display: grid; 
-  gap: 5rem; 
-  grid-template-columns: repeat(4, 30%);
-
-
+.userLibrary {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 2fr); 
+  
 }
 
-button {
-	background: #8d8686;
-	border: 5px;
+li {
+  
+  list-style-type: none;
+  padding: 10px;
+  background-color: #ca91b5;
+  border: 1px solid #d49898;
   border-radius: 5px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  position: relative;
+}
+.userLibrary .delete:hover {
+  background-color: #c0392b;
+}
+button {
+	background: #8d6be3;
+
 	color: white;
 	font-size: 15px;
 	width: 60px;
 	margin: 10px 0 0;
   font-family: 'Cormorant Garamond', serif;
 	cursor: pointer;
+  border: 5px;
+  border-radius: 3px;
+  margin-top: 10px;
+  margin-bottom:10px;
 }
-
 
 button:hover {
-	color: #971e1e;
+  background: #2980b9;
 }
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
 input[type="text"] {
 	margin: 0;
 	font-size: 15px;

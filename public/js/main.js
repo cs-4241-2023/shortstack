@@ -18,10 +18,27 @@ const startInput = document.querySelector('#startDate');
 const finishInput = document.querySelector('#dateFinished');
 const itemIdentifier = titleInput.value + authorInput.value + startInput.value + finishInput.value;
 
+const startDate = new Date(startInput.value);
+const finishDate = new Date(finishInput.value);
+
+const timeDif = finishDate - startDate;
+const msDay = 24 * 60 * 60 * 1000;
+const msMonth = 30.44 * msDay;
+const msYear = 365.25 * msDay;
+
+const years = Math.floor(timeDif / msYear);
+const remainingTimeAfterYears = timeDif % msYear;
+
+const months = Math.floor(remainingTimeAfterYears / msMonth);
+const remainingTimeAfterMonths = remainingTimeAfterYears % msMonth;
+const days = Math.floor(remainingTimeAfterMonths / msDay);
+
+const formattedTime = `${years} Year(s), ${months} Month(s), ${days} Day(s)`;
 const json = { title: titleInput.value,
          author: authorInput.value, 
          startDate: startInput.value,
          dateFinished: finishInput.value,
+         timeToFinish: formattedTime,
          identifier: itemIdentifier
 }; //json is how you want to package data before sending it to front end
   //{attribute : value}
@@ -62,7 +79,7 @@ const addedItems = []
       deleteButton.innerText = "Delete";
       deleteButton.className = "delete";
       
-      li.innerText = "Title: " + d.title + "\nAuthor: " + d.author + "\nStart Date: " + d.startDate + "\nFinish Date: " + d.dateFinished 
+      li.innerText = "Title: " + d.title + "\nAuthor: " + d.author + "\nStart Date: " + d.startDate + "\nFinish Date: " + d.dateFinished +"\nTime to Finish: " + d.timeToFinish
       
       
       list.appendChild(li)
@@ -91,7 +108,7 @@ async function deleteBook(itemID, listItemElem, delButton) {
 
     }); 
     console.log(`/delete/${itemID}`)
-    console.log("Response status:", response.status); // Log the response status code
+    console.log("Response status:", response.status); 
 
   //sucessful
   if (response.status  === 200){
