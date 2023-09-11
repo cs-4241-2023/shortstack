@@ -8,6 +8,8 @@ body {
 table, th, td{
   border: 1px solid;
   border-color: #b48888;
+  border-collapse: collapse;
+  padding: 5px;
 }
 
 /* styles.css */
@@ -66,6 +68,16 @@ table, th, td{
 
 .addPlayer button, .tabcontent button {
   background-color: #1be741;
+  font-family: 'Rubik', sans-serif;
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 5px 10px;
+  margin: 5px 5px 5px 5px;
+  cursor: pointer;
+}
+
+ #deleteButton {
+  background-color: #e71b1b;
   font-family: 'Rubik', sans-serif;
   border: 1px solid;
   border-radius: 8px;
