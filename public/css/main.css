@@ -9,7 +9,6 @@ body {
 }
 
 main {
-  /* background: white; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,6 +16,15 @@ main {
   gap: 10px;
 }
 
+footer {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+table {
+  background-color: white;
+}
 /* 
 =====================================
   Form Styling                      |

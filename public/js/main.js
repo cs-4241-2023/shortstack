@@ -1,6 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 let taskData = [];
 let currentNote = 0;
+let counter = 0;
 
 const submit = async function (event) {
   // stop form submission from trying to load
@@ -21,8 +22,6 @@ const submit = async function (event) {
 
   const text = await response.text();
   taskData = JSON.parse(text);
-
-  console.log(taskData)
 
   loadTasks();
 };
@@ -75,8 +74,6 @@ function loadTasks() {
     let newTask = document.createElement("div");
 
     // If program was just initialized/we are changing task, as we iterate keep the same task highlighted
-    console.log(task.id === currentNote)
-
     if (currentNote === 0 || task.id === currentNote) {
       // When we get to the currently selected task, populate form with the data of the task
       newTask.className = "tasks-list--task selected";
@@ -115,7 +112,7 @@ function loadTasks() {
     // Add the task to the sidebar
     sidebar.appendChild(newTask);
 
-    console.log(currentNote);
+    generateTable();
   });
 
   // Finally add the add task button to the sidebar
@@ -185,4 +182,41 @@ async function editNote() {
   taskData = JSON.parse(text);
 
   loadTasks();
+}
+
+function generateTable() {
+  const tablebody = document.getElementById("tablebody");
+  tablebody.innerHTML = "";
+  Object.keys(taskData).forEach((taskKey) => {
+    let newRow = document.createElement("tr");
+    let idCell = newRow.insertCell(0);
+    let titleCell = newRow.insertCell(1);
+    let dateCell = newRow.insertCell(2);
+    let dueDateCell = newRow.insertCell(3);
+    let priorityCell = newRow.insertCell(4);
+    let descriptionCell = newRow.insertCell(5);
+    Object.keys(taskData[taskKey]).forEach((key, index) => {
+      switch (key) {
+        case "id":
+          idCell.innerHTML = taskData[taskKey][key];
+          break;
+        case "title":
+          titleCell.innerHTML = taskData[taskKey][key];
+          break;
+        case "date":
+          dateCell.innerHTML = taskData[taskKey][key];
+          break;
+        case "dueDate":
+          dueDateCell.innerHTML = taskData[taskKey][key];
+          break;
+        case "priority":
+          priorityCell.innerHTML = taskData[taskKey][key];
+          break;
+        case "description":
+          descriptionCell.innerHTML = taskData[taskKey][key];
+          break;
+      }
+    });
+    tablebody.appendChild(newRow)
+  });
 }
