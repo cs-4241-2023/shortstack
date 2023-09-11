@@ -73,9 +73,12 @@ const handlePost = function (request, response) {
     console.log(JSON.parse(dataString));
 
     // ... do something with the data here!!!
+    newTask = JSON.parse(dataString);
+    appdata.push(newTask);
 
+    // sending back the updated appdata
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-    response.end("test");
+    response.end(JSON.stringify(appdata));
   });
 };
 

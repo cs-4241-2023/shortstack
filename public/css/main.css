@@ -68,7 +68,7 @@ textarea {
 #taskName {
   min-width: inherit;
 }
-input[type="submit"] {
+button[form="addTaskForm"] {
   background-color: #1e8c22;
     color: white;
     /* border: none; */

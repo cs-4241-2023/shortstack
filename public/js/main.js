@@ -15,11 +15,23 @@ const submit = async function (event) {
   const taskDeadline = formData.get("taskDeadline");
   const taskPriority = formData.get("taskPriority");
 
-  console.log(formData.get("taskName"));
-  console.log(formData.get("taskDescription"));
-  console.log(formData.get("taskDeadline"));
-  console.log(typeof formData.get("taskDeadline"));
-  console.log(formData.get("taskPriority"));
+  const json = {
+    taskName,
+    taskDescription,
+    taskDeadline,
+    taskPriority,
+  };
+  const body = JSON.stringify(json);
+
+  const response = await fetch("/submit", {
+    method: "POST",
+    body,
+  });
+
+  const text = await response.text();
+
+  tasks = JSON.parse(text);
+  console.log("new tasks list: ", tasks);
 
   // const input = document.querySelector("#yourname"),
   //   json = { yourname: input.value },
