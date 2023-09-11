@@ -1,5 +1,5 @@
 body {
-  background: white;
+  background: rgb(236, 210, 210);
   color: black; 
   font-family: 'Cormorant Garamond', serif;
 }
@@ -64,6 +64,9 @@ h1 {
 label {
   font-weight: bold;
   margin-right: 5px;
+}
+b {
+  color:red; 
 }
 
 input[type="text"] {

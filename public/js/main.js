@@ -138,6 +138,10 @@ async function deleteBook(itemID, listItemElem, delButton) {
 
 }
 
+async function showLibrary(){
+  
+}
+
 document.querySelector('#title').addEventListener('input', checkForm);
 document.querySelector('#author').addEventListener('input', checkForm);
 document.querySelector('#startDate').addEventListener('input', checkForm);
