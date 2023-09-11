@@ -4,7 +4,15 @@ body{
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
   padding: 70px;
+  flex-direction: column
 }
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 
 th {
   border: 5px solid black;
@@ -38,7 +46,7 @@ p {
   text-align: center
 }
 
-.gradeList {
+#gradeList {
   border-width:3px;
   border-style:solid;
   border-color: #575757;
@@ -90,3 +98,16 @@ p {
 .editGoalForm {
   visibility: hidden;
 }
+
+.sideBySide {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+}
+
+.tableInputSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+

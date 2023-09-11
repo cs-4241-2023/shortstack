@@ -1,7 +1,7 @@
 {
   "name": "a2-sarahaolson",
-  "version": "",
-  "description": "",
+  "version": "1.0.0",
+  "description": "Created for WPI Badminton Club members who are using their participation as a gym credit to track their progress toward their grade goal.",
   "author": "Sarah Olson",
   "scripts": {
     "start": "node server.improved.js"
