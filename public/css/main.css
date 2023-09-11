@@ -22,11 +22,11 @@ form button {
   border: none;
   cursor: grabbing;
   width: 40%;
-  border-radius: 50px;
+  border-radius: 10px;
 }
 
 form {
-  width: 50%;
+  width: 40%;
   align-content: center;
   background-color: #8AAFDB;
   padding: 20px;

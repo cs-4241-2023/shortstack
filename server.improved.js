@@ -8,17 +8,21 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'brand-name': 'Gucci', 'designer-name': 'Sultan Adedeji', 'phone-number': 4011231234, 'brand-type': 'Streetwear'},
-  { 'brand-name': 'Balenciaga', 'designer-name': 'Tevin Makoye', 'phone-number': 4011231235, 'brand-type': 'High Fashion'},
-  { 'brand-name': 'Vetements', 'designer-name': 'Anthony Titcombe', 'phone-number': 4011231236, 'brand-type': 'African'}
+let appdata = [
+  {'phoneNumber': 4011231234, 'brandName':'DBlock', 'designerName': 'Sultan Adedeji', 'brandType': 'streetwear'},
+  {'phoneNumber': 4011221222, 'brandName':'Gompei', 'designerName': 'tev Adedeji', 'brandType': 'croc'},
+  {'phoneNumber': 4015415411, 'brandName':'Morgan', 'designerName': 'man Adedeji', 'brandType': 'fish'}
 ]
+let recordCount;
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
+  }
+  else if(request.method === 'DELETE'){
+    handleDelete(request, response);
   }
 })
 
@@ -32,6 +36,7 @@ const handleGet = function( request, response ) {
   }
 }
 
+//every request will be a post so you have to add paths so you can handle your actions /add /delete /update and change appdata as needed
 const handlePost = function( request, response ) {
   let dataString = ''
 
@@ -40,14 +45,48 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
-    // ... do something with the data here!!!
-
+    let dString = JSON.parse(dataString)
+  
+    if (request.url == '/delete'){
+      let index = appdata.indexOf(dString)
+      appdata.slice(index, 1)
+    }
+    else {
+      appdata.push(dString)
+    }
+  
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.end(JSON.stringify({recordCount: appdata.length , data: JSON.stringify( appdata )}))
   })
 }
+
+const handleDelete = function (request, response) {
+  let dataString = '';
+
+  request.on('data', function (data) {
+    dataString += data;
+  });
+
+  request.on('end', function () {
+    const designerToDelete = JSON.parse(dataString);
+
+    // Find and remove the designer from the appdata array
+    const index = appdata.findIndex((designer) => {
+      return (
+        designer.phoneNumber === designerToDelete.phoneNumber
+      );
+    });
+
+    if (index !== -1) {
+      appdata.splice(index, 1);
+      response.writeHead(200, 'OK', { 'Content-Type': 'text/plain' });
+      response.end(JSON.stringify({ success: true }));
+    } else {
+      response.writeHead(404, 'Not Found', { 'Content-Type': 'text/plain' });
+      response.end(JSON.stringify({ success: false, error: 'Designer not found' }));
+    }
+  });
+};
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
