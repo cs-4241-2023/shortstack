@@ -1,18 +1,35 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
+    <script src="https://kit.fontawesome.com/bec98db602.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&family=Inconsolata&family=Montserrat&display=swap" rel="stylesheet">
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+</head>
+
+<body>
+    <div class="form-container">
+        <form id="colorForm">
+            <input type="text" id="name" placeholder="Palette Name...">
+            <input type="color" id="primary_color" value="#000000">
+            <input type="color" id="secondary_color" value="#000000">
+            <input type="color" id="teritary_color" value="#000000">
+            <input type="color" id="accent_1" value="#000000">
+            <input type="color" id="accent_2" value="#000000">
+            <button id="submit">submit</button>
+        </form>
+    </div>
+
+
+    <div id="displayTable"></div>
+</body>
+
 </html>
