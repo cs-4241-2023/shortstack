@@ -50,11 +50,12 @@ const handlePost = function( request, response ) {
     if (request.url == '/delete'){
       let index = appdata.indexOf(dString)
       appdata.slice(index, 1)
+      console.log('deleted', index, dString)
     }
     else {
       appdata.push(dString)
     }
-  
+
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end(JSON.stringify({recordCount: appdata.length , data: JSON.stringify( appdata )}))
   })

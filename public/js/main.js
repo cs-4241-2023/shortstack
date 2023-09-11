@@ -1,25 +1,26 @@
-let dte, list;
+let dte, list, appdata = [];
 
 // Function to handle form submission
 const submit = async function (event) {
   event.preventDefault();
 
-  const brandName = document.getElementById("brand-name");
-  const designerName = document.getElementById("designer-name");
-  const phoneNumber = document.getElementById("phone-number");
-  const brandType = document.getElementById("brand-type");
-  const json = {
-    brandName: brandName.value,
-    designerName: designerName.value,
-    phoneNumber: parseInt(phoneNumber.value),
-    brandType: brandType.value,
-  };
-  let evt = event.target
-  let dJSON = JSON.stringify(document.getElementById(evt.getAttribute('id')).innerText.replace('Delete', '').trim().replace('"',''))
-  //let deleteJSON = dJSON.split(",")
-  console.log(dJSON)
-  const fJSON = document.getElementById(evt.getAttribute('id')).innerText.replace('Delete', '').trim().replace('"','')
-  pairs = fJSON.split(", ")
+  let json,
+  evt = event.target
+
+  if (evt.getAttribute('formaction') == '/submit'){
+    let brandName = document.getElementById("brand-name");
+    let designerName = document.getElementById("designer-name");
+    let phoneNumber = document.getElementById("phone-number");
+    let brandType = document.getElementById("brand-type");
+    json = {
+      brandName: brandName.value,
+      designerName: designerName.value,
+      phoneNumber: parseInt(phoneNumber.value),
+      brandType: brandType.value,
+    }
+  } else {
+    json = appdata[evt.getAttribute('id')]
+  }
 
   const response = await fetch(evt.getAttribute('formaction'), {
     method: 'POST',
@@ -59,8 +60,8 @@ function updateDesignerList(data) {
     const listItem = document.createElement('li');
 
     // const designerInfoDiv = document.createElement('div');
-    listItem.innerHTML = `Brand Name: ${d.brandName}, Designer Name: ${d.designerName}, Phone Number: ${d.phoneNumber}, Brand Type: ${d.brandType} <button id=${d.phoneNumber} formaction="/delete" class="delete-btn">Delete</button>`;
-    listItem.id = d.phoneNumber
+    listItem.innerHTML = `Brand Name: ${d.brandName}, Designer Name: ${d.designerName}, Phone Number: ${d.phoneNumber}, Brand Type: ${d.brandType} <button id=${d.phoneNumber} formaction="/delete" class="delete-btn")>Delete</button>`;
+    appdata[d.phoneNumber] = d
     list.appendChild(listItem);
   });
 
@@ -75,3 +76,4 @@ window.onload = function () {
   const addDesigner = document.getElementById('addDesigner');
   addDesigner.onclick = submit;
 };
+
