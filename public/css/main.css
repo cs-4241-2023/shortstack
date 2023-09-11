@@ -51,6 +51,7 @@ ul li button {
 #submitButton {
   margin-top: 5px;
   font-size: large;
+  font-family: inherit;
 }
 
 #formTitle {
