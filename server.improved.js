@@ -30,8 +30,6 @@ const server = http.createServer(function (request, response) {
     handleGet(request, response);
   } else if (request.method === "POST") {
     handlePost(request, response);
-  } else if (request.method === "PUT") {
-    handlePut(request, response);
   }
 });
 
