@@ -1,18 +1,36 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
-</html>
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8" />
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+</head>
+<body>
+  <div class="form_table">
+    <div class="q full_width">
+      <div class="segment_header">
+        <h1>Run Training Index</h1>
+      </div>
+    </div>
+        <form>
+          <div class="inputs" align="left">
+          <div class="itemBox">
+          <p>Distance (mi):</p>
+          <input type="number" id="distInput" value="" required="required" /> 
+          </div>
+          <div class="itemBox">
+          <p>Time (min):</p>
+          <input type="number" id="timeInput" value="" required="required" />
+          </div>
+          <div class="itemBox">
+          <p>Description:</p>
+          <input type="text" id="descInput" value="" required="required" /><br />
+          </div>
+                  </div>
+          <button class="add-index">Index Run</button>
+        </form>
+
+  <table id="outputTable">
+  </table>
+  </div>
+</body>

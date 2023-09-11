@@ -1,4 +1,111 @@
+html,
 body {
-  background:black;
-  color:white;
+  min-height: 100%;
+}
+
+body {
+  display: block;
+  margin: 8px;
+  background: #f7f4f5;
+  font-family: "Muli", sans-serif;
+  font-size: 14px;
+}
+
+.form_table {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  border: 2px solid black;
+  background: #ffffff;
+  background-size: cover;
+  color: #36454e;
+  background-position: 50% 50%;
+}
+
+.segment_header {
+  background: #c62032;
+  width: auto;
+  text-align: Center;
+}
+
+.full_width {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100%;
+}
+
+.q {
+  margin-left: 20px;
+}
+
+.q .segment_header {
+  width: auto;
+  margin: 1px;
+  color: #ffffff;
+  background: #3250a8;
+  border-radius: 8px;
+}
+
+h1 {
+  font-size: 30px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+.itemBox {
+  padding: 10px;
+  text-align: center;
+}
+
+button {
+  padding: 5px;
+  margin-top: 5px;
+  margin-left: 35%;
+  width: 30%;
+  color: #ffffff;
+  background: #4CBB17;
+  border: 1px solid black !important;
+}
+
+.delete-button {
+  background: #d22b2b;
+  font-size: 16px;
+}
+
+.edit-button {
+  background: #F4BB44;
+  font-size: 16px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-bottom: 20px;
+  width: 995px;
+}
+
+th,
+td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #3250a8;
+  color: #ffffff;
+}
+
+p{
+  font-size: 16px;
+  text-align:center;
 }
