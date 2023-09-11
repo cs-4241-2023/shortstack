@@ -1,6 +1,7 @@
 
 # a2-SmeeBoi: 
 Sameer Desai 
+Glitch: https://a2-smeeboi.glitch.me
 
 Text form with name and color inputs. Sends json to server. Can delete players with delete button. Checks player name so cannot add duplicate player with same name.
 
