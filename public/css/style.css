@@ -1,0 +1,98 @@
+/* Reset some default styles */
+body, h1, h2, p, ul, ol, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+
+header {
+    background-color: #ff66b2; /* Pink */
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    border-radius: 10px;
+}
+
+
+main {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem;
+    background-color: #fff6e6; /* Light Peach */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+#recipe-form {
+    flex: 1;
+    padding: 1rem;
+    background-color: #f8b6d0; /* Light Pink */
+    border: 1px solid #ff66b2; /* Pink */
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+
+#recipe-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ff66b2; /* Pink */
+}
+
+#recipe-form input[type="text"],
+#recipe-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ff66b2; /* Pink */
+    border-radius: 5px;
+}
+
+
+#recipe-form button {
+    background-color: #ff66b2; /* Pink */
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#recipe-form button:hover {
+    background-color: #ff3385; /* Darker Pink on hover */
+}
+
+
+#recipe-list {
+    flex: 2;
+    padding: 1rem;
+    background-color: #fff6e6; /* Light Peach */
+    border: 1px solid #ff66b2; /* Pink */
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ff66b2; /* Pink */
+}
+
+th, td {
+    padding: 0.5rem;
+    text-align: left;
+    background-color: #ff66b2; /* Pink */
+    color: #fff;
+}
