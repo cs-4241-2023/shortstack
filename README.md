@@ -29,3 +29,22 @@ CSS defined in a maintainable, readable form, in a external stylesheet (main.css
 - **Design Achievement 3**: Used the Source Code Pro font from Google Fonts.
 
 - **Design Achievement 4**: When editing a data entry, the "submit task" button is changed to "edit task" and the input elements are filled in with the edited task values.
+
+- **Interface Testing**:
+
+Provide the last name of each student you conduct the evaluation with.
+
+Zadaphiya
+
+What problems did the user have with your design?
+
+Text is a little hard to reed with the thin font.
+No way to choose priority for tasks with same due date.
+
+What comments did they make that surprised you?
+the table formats dynamiclly based on priority , its very good.
+Clean UI
+
+What would you change about the interface based on their feedback?
+
+Clean UI but maybe more bright color scheme
