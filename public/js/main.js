@@ -64,15 +64,6 @@ const submit = async function (event) {
           }
         }
 
-        /* const dueDate = new Date(data[key]["date"]);
-        const currentDate = new Date();
-        const daysRemaining = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
-
-        const daysRemainingCell = document.createElement("td");
-        daysRemainingCell.innerText = daysRemaining > 0 ? `${daysRemaining} days` : "Expired";
-        row.appendChild(daysRemainingCell);
-    */
-
         const deleteButton = document.createElement("button");
         deleteButton.innerText = "Delete";
         deleteButton.className = "my-deletebutton";
