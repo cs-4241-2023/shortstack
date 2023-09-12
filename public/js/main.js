@@ -29,6 +29,7 @@ const addRecipe = async function (event) {
         <td>${recipe.recipe_name}</td>
         <td>${recipe.recipe_ingredients}</td>
         <td>${recipe.recipe_directions}</td>
+        <td>${recipe.cooking_time} minutes</td> <!-- Display Cooking Time -->
      </tr>`;
     })
     .join("");
@@ -59,22 +60,22 @@ const deleteRecipe = async function (event) {
 
   const recipes = await response.json();
 
-const tableRows = recipes
-  .map((recipe) => {
-    return `<tr>
-      <td>${recipe.recipe_name}</td>
-      <td>${recipe.recipe_ingredients}</td>
-      <td>${recipe.recipe_directions}</td>
-      <td>${recipe.cooking_time} minutes</td> <!-- Display Cooking Time -->
-    </tr>`;
-  })
-  .join("");
-
+  const tableRows = recipes
+    .map((recipe) => {
+      return `<tr>
+        <td>${recipe.recipe_name}</td>
+        <td>${recipe.recipe_ingredients}</td>
+        <td>${recipe.recipe_directions}</td>
+        <td>${recipe.cooking_time} minutes</td> <!-- Display Cooking Time -->
+      </tr>`;
+    })
+    .join("");
 
   document.querySelector("#recipe_table").innerHTML = tableRows;
 
   inputToDelete.value = "";
 };
+
 
 window.onload = function () {
   const addRecipeButton = document.getElementById("add_recipe");
