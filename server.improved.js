@@ -75,6 +75,8 @@ const handlePost = function( request, response ) {
           break;
         }
       }
+    } else if (json.mode === "clear") {
+      entries.length = 0; // clear array
     }
 
     const responseObj = new ServerResponse(entries);

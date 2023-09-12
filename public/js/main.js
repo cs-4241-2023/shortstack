@@ -246,6 +246,22 @@ const submit = async function( event ) {
   
 }
 
+const clear = async function( event ) {
+  // stop form submission from trying to load
+  // a new .html page for displaying results...
+  // this was the original browser behavior and still
+  // remains to this day
+  event.preventDefault();
+
+  console.log("clear");
+  
+  const json = { mode: "clear"};
+  const body = JSON.stringify( json );
+
+  await getServerResponse(body);
+
+}
+
 const getServerResponse = async function(body) {
 
   const response = await fetch( '/submit', {
@@ -265,8 +281,11 @@ const getServerResponse = async function(body) {
 }
 
 window.onload = function() {
-   const button = document.querySelector("#food_submit_button");
-  button.onclick = submit;
+  const submitButton = document.querySelector("#food_submit_button");
+  submitButton.onclick = submit;
+
+  const clearButton = document.querySelector("#food_clear_button");
+  clearButton.onclick = clear;
 
   setCounter("calories", 0);
   setCounter("protein", 0);

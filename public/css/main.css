@@ -94,11 +94,18 @@ input {
   align-items: center;
 }
 
-
-#food_submit_button {
-  font-size: inherit;
-
+.food_buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 30%;
 }
+
+#food_submit_button, #food_clear_button {
+  font-size: inherit;
+}
+
+
 #food_submit_message {
   color: red;
   line-height: 0%;
