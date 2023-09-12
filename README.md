@@ -20,3 +20,7 @@ Flexbox is used throughout the webpage to align the different components.
 This is a single-page app where the server sends back the full data to the client after any modification.
 
 
+Feedback:
+
+Last Name: Arackal
+No major feedback. Unique and cool idea. The layout is readable and easy to understand. potential suggestion is CSS styling the forms and submit button as they a little out of place
