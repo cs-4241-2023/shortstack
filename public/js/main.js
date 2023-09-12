@@ -2,11 +2,14 @@
 
 // CLIENT CODE
 
+let playerList = undefined;
+
+// Random int between min and max
 function randomNum(min, max) {
   return Math.floor(Math.random() * (max - min +1)) + min;
 }
 
-let playerList = undefined;
+// When play button is clicked, submit form data to server
 const submit = async function (event) {  
   event.preventDefault(); // Stop page defualt reload behavior
 
@@ -46,12 +49,12 @@ function populateList(serverData) {
 
     // Add edit button
     const editButton = document.createElement('button')
-    editButton.innerHTML = 'edit'
+    editButton.innerHTML = 'Edit'
     editButton.class = 'editButton'
 
     // Add delete button
     const deleteButton = document.createElement('button')
-    deleteButton.innerHTML = 'delete'
+    deleteButton.innerHTML = 'Delete'
     deleteButton.class = 'deleteButton'
 
     // Server Data to be displayed in list player
@@ -111,7 +114,6 @@ async function editPlayer(playerName) {
     populateList(serverData);
   }
 }
-
 
 // Delete player from server
 async function deletePlayer(playerName) {
