@@ -16,25 +16,33 @@ const submit = async function (event) {
   event.preventDefault();
   let evt = event.target
   let json = {}
+  id = 1
   if (evt.getAttribute('formaction') === '/submit'){
     json = {
       tasks: document.querySelector("#taskName").value,
       date: document.querySelector("#dueDate").value,
       priority: document.querySelector("#taskPriority").value,
-    }
-  } else if (evt.getAttribute('formaction') === '/delete') {
-    //Add data to delete json = {Data to delete}
-    console.log('delete')
-  }
+      id:id
+   }} else {
+    json={id:event.target.id}}
+
+   }
+   
+  
+  id=id++
+  console.log(id)
+
 
   //console.log(json);
 
-  fetch(evt.getAttribute('formaction'), {
-    method: "POST",
-    body: JSON.stringify(json),
-  }).then(async function (response) {
-    let data = await response.json();
-    let resultListHTML = "";
+  //fetch('/submit'), {
+    fetch(evt.getAttribute('formaction'), {
+      method: "POST",
+      body: JSON.stringify(json),
+    }).then(async function (response) {
+      let data = await response.json();
+      let resultListHTML = "";
+      appdata = []
 
     const tableparse = document.querySelector("tbody");
     tableparse.innerHTML = "";
@@ -44,12 +52,14 @@ const submit = async function (event) {
       console.log("index: ", index);
       // add the fetch request here to delete the item
     };*/
-    let i = 0;
+   // let i = 0;
 
     // for loop for each row
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
         const row = document.createElement("tr");
+       // row.id = `row-${i}`; 
+       row.id = data[key].id;
 
         // for loop for each cell
         for (const cellKey in data[key]) {
@@ -62,12 +72,26 @@ const submit = async function (event) {
             cell.innerText = data[key][cellKey];
             row.appendChild(cell);
           }
+          
         }
 
         const deleteButton = document.createElement("button");
         deleteButton.innerText = "Delete";
         deleteButton.className = "my-deletebutton";
         deleteButton.formAction = '/delete'
+        deleteButton.id=data[key].id;
+
+        /*if (evt.getAttribute('formaction') === '/delete') {
+          //Add data to delete json = {Data to delete}
+      
+          json={id:data[key].id}
+          fetch('/delete'),{
+            method:"POST",
+            body: JSON.stringify(json)
+          }
+          console.log('delete')
+        }
+*/
         deleteButton.onclick = submit
 
         // store current value of i
@@ -80,12 +104,26 @@ const submit = async function (event) {
         deleteCell.appendChild(deleteButton);
         row.appendChild(deleteCell);
 
-        i++;
+       // i++;
         tableparse.appendChild(row);
         //console.log(data)
       }
     }
   });
+
+//Delete Row Function
+const deleteRow = (rowId) => {
+  const rowToDelete = document.getElementById(rowId);
+  if (rowToDelete) {
+    rowToDelete.remove();
+/*
+    const idToDelete = rowId.replace('row-', '');
+    fetch('/delete', {
+      method: "POST",
+      body: JSON.stringify({ id: idToDelete }),
+    }).then(async function (response) {
+    }); */
+  } 
 };
 
 const deletedata = document.createElement("button");

@@ -9,6 +9,7 @@ const http = require("http"),
   port = 3000;
 
 let appdata = [];
+let counter = 0;
 
 const server = http.createServer(function (request, response) {
   if (request.method === "GET") {
@@ -36,21 +37,39 @@ const handlePost = function (request, response) {
   });
 
   request.on("end", function () {
-    console.log(dataString);
+    
+    //console.log(dataString);
+   // console.log(request.url);
     if (request.url === '/submit') { //handle form requests
       let newData = JSON.parse(dataString);
       appdata.push(newData);
+      newData.id = counter++;
       calculateDaysRemaining(appdata);
       console.log(appdata);
     } else if (request.url === '/delete'){
       //Delete some data -- look into array.splice
-      console.log('deleted')
-    }
+      //console.log('deleted')
+
+      console.log(dataString)
+      const deleteData = JSON.parse(dataString);
+      const idToDelete = deleteData.id;
+    
+c
+      // Index delete
+      const indexToDelete = appdata.findIndex(item => item.id === idToDelete);
+      if (indexToDelete !== -1) {
+        console.log(indexToDelete)
+        console.log(appdata[indexToDelete])
+        appdata.splice(indexToDelete, 1);
+
+      }
+    };
+    console.log(appdata)
     response.writeHead(200, 'OK', { 'Content-Type': 'application/json' });
     response.write(JSON.stringify(appdata));
     response.end();
-  });
-};
+});
+}
 
 const calculateDaysRemaining = (data) => {
   const currentDate = new Date();
