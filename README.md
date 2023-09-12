@@ -24,3 +24,6 @@ Feedback:
 
 Last Name: Arackal
 No major feedback. Unique and cool idea. The layout is readable and easy to understand. potential suggestion is CSS styling the forms and submit button as they a little out of place
+
+Last name: Caplan
+Your website looks really nice, I really like the layout and rounded corners on your containers. The colors you used for the "X left to go!" made was easy to read and very noticeable. The protein calculation is a cool feature, but I got a bit confused when figuring out what kind of food to enter because the protein value can't be 0. Ended up with broccoli with 10% protein lol. If that is intentional then making the type of foods to enter more clear would be good, or 0 as an option for the amount of protein.
