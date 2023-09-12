@@ -165,25 +165,7 @@ button:hover {
   display: inline-block;
 }
 
-/
 #due-date:focus {
   outline: none; /* Remove the default focus outline */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add a shadow to indicate focus */
-}
-
-#due-date[type="date"]::-webkit-calendar-picker-indicator {
-  background: transparent;
-  color: transparent;
-  font-size: 0;
-  width: 24px; /* Width of the calendar icon */
-  height: 24px; /* Height of the calendar icon */
-  cursor: pointer;
-  background-image: url("");=
-  background-size: cover;
-  background-repeat: no-repeat;
-  border: none;
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
 }
