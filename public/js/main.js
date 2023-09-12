@@ -72,7 +72,12 @@ class FoodEntryBuilder {
 
 const setCounter = function(type, amount) {
 
-  if (!(type === "calories" || type === "protein")) {
+  let suffix;
+  if (type === "calories") {
+    suffix = " kcal";
+  } else if (type === "protein") {
+    suffix = " g";
+  } else {
       console.log("invalid type");
       return;
   }
@@ -87,11 +92,11 @@ const setCounter = function(type, amount) {
 
   if (offset > 0) {
       offsetElement.style.color = "green";
-      offsetElement.textContent = "" + offset + " to go!";
+      offsetElement.textContent = "" + offset + suffix + " to go!";
     
   } else if (offset < 0) {
       offsetElement.style.color = "red";
-      offsetElement.textContent = "" + offset + " over target.";
+      offsetElement.textContent = "" + offset + suffix + " over target.";
   } else {
       offsetElement.style.color = "black";
       offsetElement.textContent = "You've met your goal!";
@@ -287,8 +292,6 @@ window.onload = function() {
   const clearButton = document.querySelector("#food_clear_button");
   clearButton.onclick = clear;
 
-  setCounter("calories", 0);
-  setCounter("protein", 0);
 
   const json = { mode: "read"};
   const body = JSON.stringify( json );
