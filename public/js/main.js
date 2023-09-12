@@ -1,14 +1,10 @@
 'use strict'
 
+// CLIENT CODE
 
-// FRONT-END (CLIENT) JAVASCRIPT HERE
 let list = undefined;
-const submit = async function (event) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
+const submit = async function (event) {  
+  event.preventDefault(); // stop page from reloading when form is submitted
 
   const name = document.querySelector('#yourname'), // get form input element with id=yourname
     color = document.querySelector('#color')
@@ -20,7 +16,7 @@ const submit = async function (event) {
   let max = Math.floor(100);
   json.score = Math.floor(Math.random() * (max - min) + min); // add random score for now
 
-  console.log('printing client json object:')
+  console.log('Client json object:')
   console.log(json) // print json object to console
   let clientData = JSON.stringify(json) // create json string from json object
 
@@ -33,45 +29,22 @@ const submit = async function (event) {
   console.log('printing server json object:')
   console.log(serverData) // print json string to console
 
-   // create a new list element
-  //  list = document.createElement('ol'); // create ordered list element in html
-  //  list.id = 'playerList';
- 
-  //  if (document.getElementById('playerList') == null) {
-  //    // Append the new list to the body of the HTML
-  //    document.body.appendChild(list);
-  //  }
-
-  clearList();
    populateList(serverData);
-
-   // old version
-  // if (document.getElementById('playerList') == null) {
-  //   list = document.createElement('ol') // create ordered list element in html
-  //   list.id = 'playerList'
-  //   populateList(serverData)
-  // } else {
-  //   document.getElementById('playerList').innerHTML = '';
-  //   populateList(serverData)
-  // }
-  // document.body.appendChild(list) // append list to body of html
 }
 
 function populateList(serverData) {
+
+  // Remove list from body of html
+  list = document.getElementById('playerList');
+  if (list) {
+    list.remove();
+  }
 
   list = document.createElement('ol'); // create ordered list element 
   list.id = 'playerList';
   document.body.appendChild(list); // append list to body of html
 
   serverData.forEach(d => { // for each element in json string, create a list item and append to list
-
-    // look through list and if name already exists, don't add new item
-    // check if high score is higher than existing high score
-    // if (list.innerHTML.includes(d.name)) {
-    //   console.log('name already exists')
-    //   alert(`Player name ${d.name} already exists. Please enter a different name.`);
-    //   return; 
-    // }  
 
     const item = document.createElement('li')
 
@@ -105,7 +78,6 @@ window.onload = function () {
   // if delete button is clicked, delete list item
   document.addEventListener('click', function (e) {
     if (e.target && e.target.id == 'deleteButton') {
-      console.log('delete button clicked');
       let player = e.target.closest('.player');
 
         // Call the deletePlayer function with the player name
@@ -117,7 +89,6 @@ window.onload = function () {
   // if edit button is clicked
   document.addEventListener('click', function (e) {
     if (e.target && e.target.innerHTML == 'edit') {
-      console.log('edit button clicked');
       let player = e.target.closest('.player');
 
       // Call the editPlayer function with the player name
@@ -148,7 +119,6 @@ async function editPlayer(playerName) {
     let serverData = await response.json() // get json string from server response
     console.log('printing NEW server json object:');
     console.log(serverData); // print json string to console
-    clearList();
     populateList(serverData);
   }
 }
@@ -171,14 +141,5 @@ async function deletePlayer(playerName) {
   let serverData = await response.json() // get json string from server response
   console.log('printing NEW server json object:');
   console.log(serverData); // print json string to console
-  clearList();
   populateList(serverData);
-}
-
-function clearList() {
-  // clear the old list, removes all list items
-  list = document.getElementById('playerList');
-  if (list) {
-    list.remove();
-  }
 }

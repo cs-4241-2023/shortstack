@@ -1,5 +1,6 @@
 'use strict'
-const { randomInt } = require('crypto')
+
+// SERVER CODE
 
 const http = require('http'), // http server core module
   fs = require('fs'), // needed for loading static files
@@ -13,7 +14,7 @@ const http = require('http'), // http server core module
 
 // serverPlayerLog is the test data that is stored on server
 let serverPlayerLog = [
-  { name: 'defaultplayer', color: 'red', score: 0, rank: 0 }
+  { name: 'example-player', color: 'red', score: 0, rank: 0 }
 ]
 
 // Create http server
@@ -32,7 +33,6 @@ const server = http.createServer(function (request, response) {
 // Client requests a resource
 const handleGet = function (request, response) {
   const filename = dir + request.url.slice(1)  // remove leading '/' from URL
-
   if (request.url === '/') {
     sendFile(response, 'public/index.html') // send index.html to client
   } else {
@@ -81,6 +81,8 @@ const handlePost = function (request, response) {
   })
 }
 
+
+
 // Client is deleting data from server
 const handleDelete = function (request, response) {
   // request is playerName string from client to delete
@@ -127,10 +129,7 @@ const handleDelete = function (request, response) {
 
 // Client is editing data on server
 const handlePut = function (request, response) {
-  // request is json string with name and newName
-  // find player in serverplayerlog with name and change name to newName
-  // finish by sending updated serverPlayerLog to client
-  // complete this code
+  
   let clientDataString = ''
 
   request.on('data', function (data) { // add data to clientDataString as it comes in
@@ -157,41 +156,21 @@ const handlePut = function (request, response) {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Send file to client (called by handleGet when client requests a resource)
-const sendFile = function (response, filename) {
-  const type = mime.getType(filename)
+const sendFile = function (response, fileName) {
+  const type = mime.getType(fileName);
 
-  fs.readFile(filename, function (err, content) {
-
-    // if the error = null, then we've loaded the file successfully
-    if (err === null) {
-
+  fs.readFile(fileName, function (err, content) {
+    if (err === null) { // No error means file exists
       // status code: https://httpstatuses.com
       response.writeHeader(200, { 'Content-Type': type })
-      response.end(content)
-
+      response.end(content);
     } else {
-
-      // file not found, error code 404
-      response.writeHeader(404)
-      response.end('404 Error: File Not Found')
-
+      response.writeHeader(404);
+      response.end('404 Error: File Not Found');
     }
   })
 }
 
 server.listen(process.env.PORT || port)
+
