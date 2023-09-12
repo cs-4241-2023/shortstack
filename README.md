@@ -1,3 +1,6 @@
+Bright Lin
+https://a2-bright183.glitch.me/
+
 ## Your Web Application Title
 
 My application is a leaderboard for any type of game that involves kills, deaths, and assists. The user will enter their name, kills, deaths, and assists. The server will calculate the KDA based on the data given and then store all the data on the server. The client side will then display all the data in a table. The CSS of my web app includes element selectors to change the look of the background, title, and table. I then used the ID selector to change the padding and used flexbox layout for the information inside the form tag. I also used the flexbox layout for the whole body element. The class selector was then used to with "values" which is the class for all the different columns in the table shown. I then used a black ops one font from google fonts.
