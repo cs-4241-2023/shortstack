@@ -122,5 +122,7 @@ async function deletePlayer(playerName) {
   })
 
   let serverData = await response.json() // get json string from server response
+  console.log('printing NEW server json object:')
+  console.log(serverData) // print json string to console
     populateList(serverData)
 }

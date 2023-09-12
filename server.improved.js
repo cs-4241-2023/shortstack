@@ -119,9 +119,9 @@ const handleDelete = function (request, response) {
     })
 
     console.log('AFTER delete: ' + JSON.stringify(serverPlayerLog))
+    response.writeHead(200, "OK", { 'Content-Type': 'text/json' }) // send response to client
+    response.end(JSON.stringify(serverPlayerLog))
   })
-  response.writeHead(200, "OK", { 'Content-Type': 'text/json' }) // send response to client
-  response.end(JSON.stringify(serverPlayerLog))
 }
 
 
