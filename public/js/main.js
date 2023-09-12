@@ -1,3 +1,6 @@
+'use strict'
+
+
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 let list = undefined;
 const submit = async function (event) {
@@ -10,7 +13,7 @@ const submit = async function (event) {
   const name = document.querySelector('#yourname'), // get form input element with id=yourname
     color = document.querySelector('#color')
 
-  json = {}  // create json object
+  let json = {}  // create json object
   json.name = name.value // add name
   json.color = color.value // add color
   let min = Math.ceil(0);
@@ -19,7 +22,7 @@ const submit = async function (event) {
 
   console.log('printing client json object:')
   console.log(json) // print json object to console
-  clientData = JSON.stringify(json) // create json string from json object
+  let clientData = JSON.stringify(json) // create json string from json object
 
   const response = await fetch('/submit', { // send client data to server 
     method: 'POST',
@@ -30,23 +33,35 @@ const submit = async function (event) {
   console.log('printing server json object:')
   console.log(serverData) // print json string to console
 
-  // clear the old list completely (remove the entire list element)
-  if (list) {
-    list.remove();
-  }
+   // create a new list element
+  //  list = document.createElement('ol'); // create ordered list element in html
+  //  list.id = 'playerList';
+ 
+  //  if (document.getElementById('playerList') == null) {
+  //    // Append the new list to the body of the HTML
+  //    document.body.appendChild(list);
+  //  }
 
-  if (document.getElementById('playerList') == null) {
-    list = document.createElement('ol') // create ordered list element in html
-    list.id = 'playerList'
-    populateList(serverData)
-  } else {
-    document.getElementById('playerList').innerHTML = '';
-    populateList(serverData)
-  }
-  document.body.appendChild(list) // append list to body of html
+  clearList();
+   populateList(serverData);
+
+   // old version
+  // if (document.getElementById('playerList') == null) {
+  //   list = document.createElement('ol') // create ordered list element in html
+  //   list.id = 'playerList'
+  //   populateList(serverData)
+  // } else {
+  //   document.getElementById('playerList').innerHTML = '';
+  //   populateList(serverData)
+  // }
+  // document.body.appendChild(list) // append list to body of html
 }
 
 function populateList(serverData) {
+
+  list = document.createElement('ol'); // create ordered list element 
+  list.id = 'playerList';
+  document.body.appendChild(list); // append list to body of html
 
   serverData.forEach(d => { // for each element in json string, create a list item and append to list
 
@@ -56,7 +71,7 @@ function populateList(serverData) {
     //   console.log('name already exists')
     //   alert(`Player name ${d.name} already exists. Please enter a different name.`);
     //   return; 
-    // }
+    // }  
 
     const item = document.createElement('li')
 
@@ -112,7 +127,7 @@ async function deletePlayer(playerName) {
   // delete from server
   console.log(`Request Server to delete player: ${playerName}`)
 
-  json = {}  // create json object
+  let json = {}  // create json object
   json.name = playerName // add name
 
   // let playerNameJSON = JSON.stringify(playerName) // create json string 
@@ -122,7 +137,16 @@ async function deletePlayer(playerName) {
   })
 
   let serverData = await response.json() // get json string from server response
-  console.log('printing NEW server json object:')
-  console.log(serverData) // print json string to console
-    populateList(serverData)
+  console.log('printing NEW server json object:');
+  console.log(serverData); // print json string to console
+  clearList();
+  populateList(serverData);
+}
+
+function clearList() {
+  // clear the old list, removes all list items
+  list = document.getElementById('playerList');
+  if (list) {
+    list.remove();
+  }
 }

@@ -1,3 +1,4 @@
+'use strict'
 const { randomInt } = require('crypto')
 
 const http = require('http'), // http server core module
