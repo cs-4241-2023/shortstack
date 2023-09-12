@@ -1,4 +1,5 @@
 body {
+    /* Roboto font from Google Fonts */
     font-family: 'Roboto', sans-serif;
 }
 
@@ -7,6 +8,7 @@ body {
     margin-left: 20px;
 }
 
+/* Element Selector */
 header {
     background-color: #333;
     color: #fff;

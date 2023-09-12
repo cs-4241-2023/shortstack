@@ -16,7 +16,8 @@ const getAllBlogs = function () {
                 blogPostDiv.classList.add('blog-post'); // Add a class for styling
                 blogPostDiv.id = `blog-post-${blogPost.id}`; // Unique ID for each post
                 blogPostDiv.innerHTML = `
-                <h3>${blogPost.title}</h3>
+                <h3>${blogPost.title}<h3>
+                <p>id: ${blogPost.id}</p>
                 <p>Reading Time: ${blogPost.readingTime} min</p>
                 <p id="content-${blogPost.id}">${blogPost.content}</p>
                 <button onclick="editPost(${blogPost.id})">Edit</button>

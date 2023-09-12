@@ -4,9 +4,11 @@
   "description": "blog spa for a2",
   "author": "huangrandy",
   "scripts": {
-    "start": "nodemon server.improved.js"
+    "start": "nodemon server.improved.js",
+    "build": ""
   },
   "dependencies": {
+    "build": "^0.1.4",
     "mime": "^2.4.4",
     "nodemon": "^3.0.1"
   }
