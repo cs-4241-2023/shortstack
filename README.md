@@ -96,7 +96,10 @@ Include a very brief summary of your project here. Be sure to include the CSS po
 https://a2-mareksgarbaczonek.glitch.me/
 
 ## Technical Achievements
+**Base Technical Achievements**: 
 - Created a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data.
+- In addition to a form enabling adding and deleting data on the server, I also added the ability to modify existing data.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+**Base Design Achievements**: 
+- Think aloud with Nathan Wong: He wanted a better indicator to show that you can edit a field like changing the name of the task could have been highlighted when hovering over it to indicate editability.
