@@ -18,10 +18,10 @@ The data and data processing functions are all stored in the server.improved.js 
 
 - **Design Achievement 1**:
 
-Tested with Mahir Sowad:
-
-What problems did the user have with your design?
+Tested with Mahir Sowad: What problems did the user have with your design?
 
 - tab buttons look very similar to the input fields.
-  What would you change about the interface based on their feedback?
-- I changed the color of the tab buttons so that it is clear that they are seoerate from the input fields
+
+What would you change about the interface based on their feedback?
+
+- I changed the color of the tab buttons so that it is clear that they are seperate from the input fields
