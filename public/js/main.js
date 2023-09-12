@@ -7,8 +7,9 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  let task=document.querySelector("#taskname").value;
-  let dueDate=new Date(document.querySelector("#duedate").value);
+  const form = document.querySelector('form')
+  let task = form["taskname"].value;
+  let dueDate = new Date(form["duedate"].value);
 
   let taskValid=task!=="" && task!==undefined;
   let dueDateValid=dueDate.value !== "";
@@ -20,23 +21,55 @@ const submit = async function( event ) {
     alert("Due Date is invalid");
   }
 
-  
+
   if(taskValid && dueDateValid)
   {
     dueDate.setDate(dueDate.getDate()+1);
     let due=dueDate.toLocaleDateString();
-    let json = { task, due};
+
+    let json = {task, due};
     let body = JSON.stringify( json );
+
     console.log("Body: " +body);
+
     const response = await fetch( '/json', {
           method:'POST',
           body
         })
     const data = await response.json();
     LoadFromServer(data);
-    clearForm();
+    ClearForm();
   }
 }
+
+function ClearForm(){
+  const form = document.querySelector( '#addItemContainer' );
+  form.taskname.value="";
+  form.duedate.value="";
+}
+
+function CreateDeleteButton(index){
+  let json = {index};
+  let dataIndex = JSON.stringify( json );
+  const cell = document.createElement('td');
+  cell.className="delete";
+
+  const button=document.createElement('button');
+  button.className="delete-button";
+  button.innerHTML = `\u00D7`;
+  button.onclick= (e) => {
+    deleteData(dataIndex);
+  }
+  cell.append(button);
+  return cell;
+}
+
+function CreateCell(cellInfo){
+  const cell = document.createElement('td');
+  cell.innerHTML = `<p>${cellInfo}</p>`;
+  return cell;
+}
+
 
 function CreateFirstRow(){
   let row=document.createElement("tr");
@@ -62,7 +95,6 @@ function CreateRow(task,due,index){
 
 const deleteData = (dataIndex) => {
   const body = dataIndex;
-
   fetch( "/json", {
     method:"DELETE",
     body
@@ -71,33 +103,6 @@ const deleteData = (dataIndex) => {
   })
 }
 
-function ClearForm(){
-  const form = document.querySelector( '#addItemContainer' );
-  form.taskname.value="";
-  form.duedate.value="";
-}
-
-function CreateDeleteButton(index){
-  let json = { index};
-  let dataIndex = JSON.stringify( json );
-  const cell = document.createElement('td');
-  cell.className="delete";
-
-  const button=document.createElement('button');
-  button.className="delete-button";
-  button.innerHTML = `<i class="fa-solid fa-trash"></i>`;
-  button.onclick= (e) => {
-    deleteData(dataIndex);
-  }
-  cell.append(button);
-  return cell;
-}
-
-function CreateCell(cellInfo){
-  const cell = document.createElement('td');
-  cell.innerHTML = `<p>${cellInfo}</p>`;
-  return cell;
-}
 
 function LoadFromServer(data){
   const table=document.createElement("table");

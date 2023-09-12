@@ -10,30 +10,47 @@ const http = require( 'http' ),
 
 const appdata = [
   { 'task': 'Write IQP Application', 'due': '09/29/2023'},
-  { 'task': 'Finish Assignment 2 for CS4241', 'due': '09/12/2023'},
+  { 'task': 'Finish Assignment 2', 'due': '09/12/2023'},
   { 'task': 'Apply for Scholarships', 'due': '09/30/2023'}
 ]
 
 const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
+  if( request.method === 'GET' ) 
+  {
     handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  }else if( request.method === 'DELETE' ){
+  }
+  else if( request.method === 'POST' )
+  {
+    handlePost( request, response, false );
+  }
+  else if( request.method === 'DELETE' )
+  {
     handlePost( request, response, true );
   }
 })
 
+const handleDelete = function( request ) {
+  let data = JSON.parse(request);
+  console.log(request.body);
+  console.log(appdata.indexOf(data));
+  if (appdata.indexOf(data) > -1) {
+    appdata.splice(appdata.indexOf(data), 1);
+  }
+}
+
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
-  if( request.url === '/' ) {
+  if( request.url === '/' )
+  {
     sendFile( response, 'public/index.html' )
   }
-  else if (request.url === '/json' ) {
+  else if (request.url === '/json' ) 
+  {
     handleGetData(request, response);
   }
-  else{
+  else
+  {
     sendFile( response, filename )
   }
 }
@@ -43,7 +60,7 @@ function handleGetData(request, response){
   response.end(JSON.stringify(appdata));
 }
 
-const handlePost = function( request, response ) {
+const handlePost = function( request, response, isDelete )  {
   let dataString = ''
 
   request.on( 'data', function( data ) {
@@ -52,7 +69,6 @@ const handlePost = function( request, response ) {
 
   request.on( 'end', function() {
     console.log( JSON.parse( dataString ) )
-
     if(isDelete){
       let data = JSON.parse(dataString);
       console.log(data);
@@ -65,8 +81,8 @@ const handlePost = function( request, response ) {
       appdata.push(data);
     }
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end( JSON.stringify( appdata ) )
   })
 }
 
