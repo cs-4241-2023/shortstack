@@ -108,9 +108,9 @@ const handlePost = function (request, response) {
     }
 
     appdata.push({
-      task: task,
-      hours: hours,
-      dueDate: dueDate,
+      task: receivedData.task,
+      hours: parseFloat(receivedData.hours),
+      dueDate: receivedData.dueDate,
       timeLeft: timeLeft > 0 ? `${timeLeft} days` : "Past due",
       priority: priority,
     });
