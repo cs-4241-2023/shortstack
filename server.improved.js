@@ -61,8 +61,14 @@ const handlePost = function( request, response ) {
 //calculate goal (derived field)
 function calcGoal(max, high){
   let goal = 0;
+  if (max === high) {
+    return max;
+  }
   if (max !== '') {
     goal = Math.floor((max - high) / 20);
+    if (goal === 0) {
+      goal = 1;
+    }
     goal += parseInt(high);
   }
   else {
