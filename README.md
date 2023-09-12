@@ -102,4 +102,4 @@ https://a2-mareksgarbaczonek.glitch.me/
 
 ### Design/Evaluation Achievements
 **Base Design Achievements**: 
-- Think aloud with Nathan Wong: He wanted a better indicator to show that you can edit a field like changing the name of the task could have been highlighted when hovering over it to indicate editability.
+- Think aloud with Nathan Wong: He wanted a better indicator to show that you can edit a field like changing the name of the task could have been highlighted when hovering over it to indicate editability. He also went straight to editing sample tasks 1 and 2 before noticing the actual add task area. I was surprised and felt validated that he really liked my design and said it was very minimalistic and clean. Overall he said that he easily found everything he needed to. Based on his feedback, I made sure to indicate that a field can be edited in ways such as a highlight color when hovering over it.
