@@ -38,15 +38,23 @@ const handlePost = function (request, response) {
   request.on("end", function () {
     console.log(dataString);
 
-    // ... do something with the data here!!!
-
     let newData = JSON.parse(dataString);
     appdata.push(newData);
+    calculateDaysRemaining(appdata);
     console.log(appdata);
-    response.writeHead(200, "OK", { "Content-Type": "text/plain" });
+    response.writeHead(200, 'OK', { 'Content-Type': 'application/json' });
     response.write(JSON.stringify(appdata));
     response.end();
   });
+};
+
+const calculateDaysRemaining = (data) => {
+  const currentDate = new Date();
+  for (const item of data) {
+    const dueDate = new Date(item.date);
+    const daysRemaining = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+    item.daysRemaining = daysRemaining > 0 ? `${daysRemaining} days` : 'Expired';
+  }
 };
 
 const sendFile = function (response, filename) {

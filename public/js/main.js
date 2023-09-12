@@ -27,12 +27,8 @@ const submit = async function( event ) {
     method:'POST',
     body: JSON.stringify(json)
 
-  }).then(async function (response){ //console.log(response)
+  }).then(async function (response){
     let data= await response.json()
-    //console.log(data)
-
-
-    //const list = document.createElement('ul')
     let resultListHTML = '';
 
 
@@ -44,6 +40,7 @@ let resultHTML = tableparse.innerHTML
 const del = index => {
   console.log( 'index: ', index )
   // add the fetch request here to delete the item
+
 }
 let i = 0
 
@@ -53,20 +50,27 @@ for (const key in data) {
     const row = document.createElement('tr')
     
     // for loop for each cell
-    for( const cellKey in data[key] ) {
-      const cell = document.createElement('td')
-      cell.innerText = data[key][cellKey]
-      row.appendChild( cell )
+    for (const cellKey in data[key]) {
+      const cell = document.createElement('td');
+      if (cellKey === 'daysRemaining') {
+        const daysRemainingCell = document.createElement('td');
+        daysRemainingCell.innerText = data[key][cellKey];
+        row.appendChild(daysRemainingCell);
+      } else {
+        cell.innerText = data[key][cellKey];
+        row.appendChild(cell);
+      }
     }
     
-    const dueDate = new Date(data[key]["date"]);
+   /* const dueDate = new Date(data[key]["date"]);
         const currentDate = new Date();
         const daysRemaining = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
 
         const daysRemainingCell = document.createElement("td");
         daysRemainingCell.innerText = daysRemaining > 0 ? `${daysRemaining} days` : "Expired";
         row.appendChild(daysRemainingCell);
-    
+    */
+   
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'Delete';
     deleteButton.className = 'my-deletebutton';
@@ -78,23 +82,11 @@ for (const key in data) {
     deleteCell.appendChild(deleteButton);
     row.appendChild(deleteCell);
 
-    /*resultListHTML += '<tr>';
-    resultListHTML += `<td>${data[key]['tasks']}</td>`;
-    resultListHTML += `<td>${data[key]['date']}</td>`;
-    resultListHTML += `<td>${data[key]['priority']}</td>`;
-    resultListHTML += `<td> <button class="my-deletebutton" onclick="window.delete(${i})" type="button" >Delete Item</button></td>`;
-    resultListHTML += '</tr>';*/
-    
     i++
     tableparse.appendChild( row )
     //console.log(data)
   }
 }
-//tableparse.innerHTML= resultListHTML;
-
-  /*const resultContainer = document.querySelector('#result');
-  resultContainer.innerHTML = resultListHTML;
-  resultContainer.appendChild(list);*/
       })
       
   }
