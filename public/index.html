@@ -21,31 +21,52 @@
         <h2 class = "status_name">Calories</h2>
         <p class = "status_value">0</p>
         <p class = "status_offset">300 to go</p>
-        <label for="calories_goal">Goal: </label>
-        <input
-          type = "number"
-          value = "3000"
-          id = "calories_goal"
-          maxlength="4"
-          class = "status_goal"> kcal</input>
+        <div>
+          <label for="calories_goal">Goal: </label>
+          <input
+            type = "number"
+            value = "3000"
+            id = "calories_goal"
+            maxlength="4"
+            class = "status_goal"> kcal</input>
+        </div>
       </div>
 
       <div class = "status status_protein">
         <h2 class = "status_name">Protein</h2>
         <p class = "status_value">0</p>
         <p class = "status_offset">300 to go</p>
-        <label for= "protein_goal">Goal: </label>
-        <input
-        type = "number"
-        value = "150"
-        id = "protein_goal"
-        maxlength="3"
-        class = "status_goal"> g</input>
+        <div>
+          <label for= "protein_goal">Goal: </label>
+          <input
+          type = "number"
+          value = "150"
+          id = "protein_goal"
+          maxlength="3"
+          class = "status_goal"> g</input>
+        </div>
+      <div>
     </section>
 
-    <form>
-      <input type="text" id="yourname" value="your name here">
+    <form class = "food_entry_form">
+
+      <div>
+        <label for="food_name">Name: </label>
+        <input type="text" id="food_name" placeholder="Name of food...">
+      </div>
+      
+      <div>
+        <label for="food_calories">Calories: </label>
+        <input type="number" id="food_calories" placeholder="Calories in kcal...">
+      </div>
+
+      <div>
+        <label for="food_protein">Protein: </label>
+        <input type="number" id="food_protein" placeholder="Protein in g...">
+      </div>
+      
       <button>submit</button>
     </form>
+
   </body>
 </html>

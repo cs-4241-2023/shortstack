@@ -8,36 +8,55 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  margin-bottom: 20px;
 }
 
 .status {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
   background: #F4A261;
   border-radius: 20px;
+  padding: 1rem;
   width: 30%;
-  aspect-ratio: 1/1;
   text-align: center;
+  line-height: 0%;
 }
 
 .status > .status_name {
-font-size: 3rem;
-line-height: 0.7;
+font-size: 6vw;
 }
 
 .status > .status_value {
-  font-size: 4rem;
-  line-height: 0;
+  font-size: 6vw;
 }
+
+.status > .status_offset {
+  font-size: 2vw;
+}
+
 
 .status > .status_goal {
   text-align: center;
-}
-
-.status_calories > .status_goal {
-  width: 12%;
-}
-
-.status_protein > .status_goal {
+  font-size: 3vw;
   width: 10%;
+}
+
+
+.food_entry_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+  background: #2A9D8F;
+  border-radius: 20px;
+  padding: 1rem;
+  margin-inline: 10%;
+
+  font-size: 1.5vw;
+
 }
 
 /* DISABLE SPIN BUTTONS */
