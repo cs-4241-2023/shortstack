@@ -17,8 +17,8 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 - In addition to a form enabling adding and deleting data on the server, I also added the ability to modify existing data.
 
 **Additional Technical Achievements**: 
-- I have bypassed the default date input and created my own date input that would just be a single string which would trigger the date picker pop up to appear.
-
+- I have bypassed the default date input and created my own date input that would just be a single string that would trigger the date picker pop-up to appear.
+- I have fetched the current date and used formatted and placed it under My Day title as well as used it in my calculations.
 
 ## Design/Evaluation Achievements
 **Base Design Achievements**: 
@@ -27,3 +27,4 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 
 **Additional Design Achievements**: 
 - I have created my own icons in Adobe Illustrator but only used the Plus icon in the final project.
+- I have spent more time on the CSS and design of the page than the base project itself. I spent time designing the user interface in Adobe Experience Design before implementing it for this project. The page is fairly responsive and scales pretty well with different screen sizes.
