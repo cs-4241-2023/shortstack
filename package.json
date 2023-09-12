@@ -1,8 +1,8 @@
 {
-  "name": "",
+  "name": "CS4241-2023-A2",
   "version": "",
-  "description": "",
-  "author": "",
+  "description": "Assignment 2 for CS4241",
+  "author": "Josh Jahnz",
   "scripts": {
     "start": "node server.improved.js"
   },
