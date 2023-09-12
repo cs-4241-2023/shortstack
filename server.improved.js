@@ -9,6 +9,7 @@ const http = require("http"),
   port = 3000;
 
 const appdata = [];
+let nextID = 0;
 
 const server = http.createServer(function (request, response) {
   if (request.method === "GET") {
@@ -17,14 +18,51 @@ const server = http.createServer(function (request, response) {
     handlePost(request, response);
   } else if (request.method === "DELETE") {
     handleDelete(request, response);
+  } else if (request.method === "PUT") {
+    handlePut(request, response);
   }
 });
+
+const handlePut = function (request, response) {
+  let dataString = "";
+
+  request.on("data", function (data) {
+    dataString += data;
+  });
+
+  request.on("end", function () {
+    console.log("Received PUT request data:", dataString); // Add this line for debugging
+
+    try {
+      const updatedData = JSON.parse(dataString);
+      const resourceId = updatedData.id;
+
+      const resourceIndex = appdata.findIndex(item => item.id === resourceId);
+
+      if (resourceIndex === -1) {
+        response.writeHead(404, { "Content-Type": "text/plain" });
+        response.end("Resource not found");
+      } else {
+        appdata[resourceIndex] = updatedData;
+
+        SortData();
+        response.writeHead(200, { "Content-Type": "application/json" });
+        response.end(JSON.stringify(updatedData));
+      }
+    } catch (error) {
+      response.writeHead(400, { "Content-Type": "text/plain" });
+      response.end("Bad Request: Invalid JSON data");
+    }
+  });
+};
+
 const handleGet = function (request, response) {
   const filename = dir + request.url.slice(1);
 
   if (request.url === "/") {
     sendFile(response, "public/index.html");
   } else if (request.url === "/tasks") {
+    SortData();
     response.setHeader("Content-Type", "application/json");
     response.end(JSON.stringify(appdata));
   } else {
@@ -41,8 +79,10 @@ const handlePost = function (request, response) {
 
   request.on("end", function () {
     let data = JSON.parse(dataString);
+    data.id = nextID;
     appdata.push(data);
     console.log(appdata);
+    nextID++;
     SortData();
     response.writeHead(200, "OK", { "Content-Type": "text/submit" });
     response.end(JSON.stringify(appdata));

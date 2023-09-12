@@ -8,7 +8,7 @@ I used a grid to display all of the inputs in the task-form. The grid is made up
 
 Id selectors were used for the task-form and the inputs inside the form, class selectors were used for the buttons beside the tasks as well as for the many containers (button, input, and main container).
 
-Used the Source Code Pro font from Google Fonts. CSS defined in a maintainable, readable form, in a external stylesheet (main.css).
+CSS defined in a maintainable, readable form, in a external stylesheet (main.css).
 
 ## Technical Achievements
 
@@ -16,11 +16,16 @@ Used the Source Code Pro font from Google Fonts. CSS defined in a maintainable, 
 
 - **Tech Achievement 2**: Using fetch request API, users are able to add/delete data on the server
 
-- **Tech Achievement 2**:
+- **Tech Achievement 3**: Using fetch request API, users are able to edit/modify data on the server
 
-// Use PUT to update data entries
-// Update derived field to make it more unique
+- **Tech Achievement 4**: Priority field derived from due date using daysBetween function.
 
 ### Design/Evaluation Achievements
 
-- **Design Achievement 1**:
+- **Design Achievement 1**: Used a table to store the task data entries
+
+- **Design Achievement 2**: Used grid display to format the inputs in the form
+
+- **Design Achievement 3**: Used the Source Code Pro font from Google Fonts.
+
+- **Design Achievement 4**: When editing a data entry, the "submit task" button is changed to "edit task" and the input elements are filled in with the edited task values.
