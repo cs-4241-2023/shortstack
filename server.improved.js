@@ -5,14 +5,10 @@ const http = require( 'http' ),
       // However, Glitch will install it automatically by looking in your package.json
       // file.
       mime = require( 'mime' ),
-      dir  = 'public/',
+      dir = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const appdata = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -24,10 +20,13 @@ const server = http.createServer( function( request,response ) {
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
-
+  console.log(request.url);
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else{
+  } else if (request.url === '/results') {
+    sendTextToClient(response, JSON.stringify(appdata));
+  }
+  else {
     sendFile( response, filename )
   }
 }
@@ -40,13 +39,20 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
-    // ... do something with the data here!!!
+    let result = JSON.parse(dataString);
+    console.log(result);
+    appdata.push(result);
+    console.log(appdata.length);
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end('test')
   })
+}
+
+const sendTextToClient = function(response, text) {
+  response.statusCode = 200;
+  response.setHeader('Content-Type', 'application/json');
+  response.end(text);
 }
 
 const sendFile = function( response, filename ) {
