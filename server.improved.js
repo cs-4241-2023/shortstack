@@ -9,9 +9,7 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+ 
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -40,12 +38,41 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+  const clientData = JSON.parse( dataString )
+  console.log( clientData )
 
     // ... do something with the data here!!!
+    if (clientData.Player1Guess === clientData.ComputerGuess && clientData.Player2Guess === clientData.ComputerGuess){
+     appdata.push({ 'Player': '1', 'PlayerGuess': clientData.Player1Guess, 
+                    'CompGuess': clientData.ComputerGuess, 'isWinner': true },
+                    { 'Player': '2', 'PlayerGuess': clientData.Player2Guess, 
+                    'CompGuess': clientData.ComputerGuess, 'isWinner': true } )
+                    console.log(appdata)
+    } else if (clientData.Player1Guess === clientData.ComputerGuess && clientData.Player2Guess !== clientData.ComputerGuess){
+      appdata.push({ 'Player': '1', 'PlayerGuess': clientData.Player1Guess, 
+                    'CompGuess': clientData.ComputerGuess, 'isWinner': true },
+                    { 'Player': '2', 'PlayerGuess': clientData.Player2Guess, 
+                    'CompGuess': clientData.ComputerGuess, 'isWinner': false } )
+                    console.log(appdata)
+    } else if(clientData.Player1Guess !== clientData.ComputerGuess && clientData.Player2Guess === clientData.ComputerGuess){
+      appdata.push({ 'Player': '1', 'PlayerGuess': clientData.Player1Guess, 
+                    'CompGuess': clientData.ComputerGuess, 'isWinner': false },
+                    { 'Player': '2', 'PlayerGuess': clientData.Player2Guess, 
+                    'CompGuess': clientData.ComputerGuess, 'isWinner': true } )
+                    console.log(appdata)
+    } else {
+      appdata.push({ 'Player': '1', 'PlayerGuess': clientData.Player1Guess, 
+                    'CompGuess': clientData.ComputerGuess, 'isWinner': false },
+                    { 'Player': '2', 'PlayerGuess': clientData.Player2Guess, 
+                    'CompGuess': clientData.ComputerGuess, 'isWinner': false } )
+                    console.log(appdata)
+    }
+    console.log(JSON.stringify(appdata))
+
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    
+    response.end(JSON.stringify(appdata))
   })
 }
 
