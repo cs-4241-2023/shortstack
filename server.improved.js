@@ -8,11 +8,7 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+let appdata = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -22,31 +18,87 @@ const server = http.createServer( function( request,response ) {
   }
 })
 
+//Priority logic
+
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else{
+  } else if(request.url === '/getTodos') { // added this else if
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(appdata));
+    //response.end([priority: 'priority', data: JSON.stringify(appdata)]);
+  } else{
     sendFile( response, filename )
   }
 }
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+// const handlePost = function( request, response ) {
+//   let dataString = ''
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
+//   request.on( 'data', function( data ) {
+//       dataString += data 
+//   })
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+//   request.on( 'end', function() {
+//     console.log( JSON.parse( dataString ) )
+
+//     // ... do something with the data here!!!
+//     const receivedData = JSON.parse(dataString); // added these three lines
+//     appdata.push(receivedData);
+//     console.log("Updated App Data:", appdata);
+
+//     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+//     response.end('Data recieved') // was test before
+//   })
+// }
+const handlePost = function(request, response) {
+  let dataString = '';
+
+  request.on('data', function(data) {
+    dataString += data;
+  });
+
+  request.on('end', function() {
+    const receivedData = JSON.parse(dataString);
 
     // ... do something with the data here!!!
-
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
-  })
+    if(request.url === '/submit') {
+      //calculate priority 
+      //priorityData = 
+      let date = new Date(receivedData.dueDate)
+      let today = new Date
+      const diff = date - today
+      console.log(diff)
+      priority = ""
+      if(diff < 200000000){
+        priority = "HIGH"
+      }
+      else{
+        priority = "LOW"
+      }
+      receivedData.priority = priority
+      //receivedData.push('priority', priority);
+      appdata.push(receivedData);
+      console.log("Added: ", receivedData.todoinput," Due on: ", receivedData.dueDate);
+      response.writeHead(200, "OK", {'Content-Type': 'text/plain'});
+      response.end('Data received');
+    } 
+    else if(request.url === '/delete') {
+      const index = appdata.findIndex(item => item.id === receivedData.id);
+      if(index !== -1) {
+        appdata.splice(index, 1);
+        console.log("Deleted id#: ", receivedData.id);
+        response.writeHead(200, "OK", {'Content-Type': 'text/plain'});
+        response.end('Todo deleted');
+      } else {
+        console.log("ID not found: ", receivedData.id);
+        response.writeHead(400, "Not found", {'Content-Type': 'text/plain'});
+        response.end('ID not found');
+      }
+    }
+  });
 }
 
 const sendFile = function( response, filename ) {
