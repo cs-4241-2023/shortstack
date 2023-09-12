@@ -1,12 +1,12 @@
 {
   "name": "",
-  "version": "",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A2 Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js",
   "author": "",
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
+    "mime": "^3.0.0"
   }
 }
