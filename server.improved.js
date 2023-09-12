@@ -24,7 +24,7 @@ const server = http.createServer(function (request, response) {
     handlePost(request, response)
   } else if (request.method === 'DELETE') { // client is deleting data
     handleDelete(request, response)
-  } else if (request.method === 'PUT') { // client is updating data
+  } else if (request.method === 'PUT') { // client is editing data
     handlePut(request, response)
   }
 })
@@ -124,6 +124,45 @@ const handleDelete = function (request, response) {
     response.end(JSON.stringify(serverPlayerLog))
   })
 }
+
+// Client is editing data on server
+const handlePut = function (request, response) {
+  // request is json string with name and newName
+  // find player in serverplayerlog with name and change name to newName
+  // finish by sending updated serverPlayerLog to client
+  // complete this code
+  let clientDataString = ''
+
+  request.on('data', function (data) { // add data to clientDataString as it comes in
+    clientDataString += data
+  })
+
+  request.on('end', function () { // end when client is done sending data
+    let clientData = {}
+    clientData = JSON.parse(clientDataString) // parse clientDataString into JSON object
+
+    let playerToEdit = clientData.name;
+    let newName = clientData.newName;
+
+    // loop through serverPlayerLog and edit player with matching name
+    serverPlayerLog.forEach(player => {
+      if (playerToEdit === player.name) {
+        player.name = newName;
+      }
+    })
+
+    response.writeHead(200, "OK", { 'Content-Type': 'text/json' }) // send response to client
+    response.end(JSON.stringify(serverPlayerLog))
+  })
+
+}
+
+
+
+
+
+
+
 
 
 

@@ -94,15 +94,12 @@ function populateList(serverData) {
     item.appendChild(deleteButton)
 
     list.appendChild(item)
-    // add edit and delete buttons after list item
-    // list.appendChild( editButton )
   })
 }
 
 window.onload = function () {
   const playbutton = document.querySelector('#playbutton');
   playbutton.onclick = submit;
-
 
 
   // if delete button is clicked, delete list item
@@ -118,9 +115,44 @@ window.onload = function () {
   });
 
   // if edit button is clicked
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.innerHTML == 'edit') {
+      console.log('edit button clicked');
+      let player = e.target.closest('.player');
 
+      // Call the editPlayer function with the player name
+      editPlayer(player.id);
+    }
 
+  });
 }
+
+
+async function editPlayer(playerName) {
+  // edit player name
+  console.log(`Request Server to edit player: ${playerName}`)
+  let newName = prompt("Please enter new name:", "New Name");
+  if (newName == null || newName == "") {
+    alert("Player name not changed");
+  } else {
+    console.log(`New name: ${newName}`);
+    let json = {}  // create json object
+    json.name = playerName // add name
+    json.newName = newName // add new name
+
+    const response = await fetch('/edit', {
+      method: 'PUT',
+      body: JSON.stringify(json)
+    })
+
+    let serverData = await response.json() // get json string from server response
+    console.log('printing NEW server json object:');
+    console.log(serverData); // print json string to console
+    clearList();
+    populateList(serverData);
+  }
+}
+
 
 
 async function deletePlayer(playerName) {
