@@ -2,24 +2,36 @@ const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
       // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
+     
       mime = require( 'mime' ),
       dir  = 'public/',
       port = 3000
-
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+//store all data here 
+let appdata = [
 ]
 
+
+
+
 const server = http.createServer( function( request,response ) {
+  console.log(request.url)
+  
   if( request.method === 'GET' ) {
     handleGet( request, response )    
-  }else if( request.method === 'POST' ){
+  }
+  else if( request.method === 'POST' ){
+    
     handlePost( request, response ) 
   }
+   else if (request.method === 'DELETE') { 
+  handleDeleteRequest(request, response);
+}
+if (request.method === 'GET' && request.url.startsWith('/library')) {
+  console.log("library get request ")
+  response.writeHead(200, { 'Content-Type': 'text/json' })
+  response.end(JSON.stringify(appdata))
+}
+
 })
 
 const handleGet = function( request, response ) {
@@ -27,7 +39,8 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else{
+  }
+  else{
     sendFile( response, filename )
   }
 }
@@ -40,14 +53,57 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    const newItem = JSON.parse(dataString)
+    let duplicate = appdata.some(item => item.title === newItem.title && item.author === newItem.author)
+    if (duplicate){
+      response.writeHead(409, { 'Content-Type': 'application/json' })
+      response.end(JSON.stringify(appdata));
 
-    // ... do something with the data here!!!
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    }
+    else{
+    appdata.push(JSON.parse(dataString))
+    response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
+    response.end( JSON.stringify( appdata ) )
+    }
   })
 }
+
+const handleDeleteRequest = function(request, response){
+
+  if (request.url.startsWith('/delete/')){
+    const itemIdentifier  = request.url.replace('/delete/','')
+    console.log("Received DELETE request for itemID:", itemIdentifier)
+
+    let index = -1
+    for (let i = 0; i < appdata.length;i ++){
+      if (appdata[i].identifier === itemIdentifier) {
+        index = i
+        break
+      }
+    }
+    console.log("Current appdata:", appdata);
+
+    if (index !== -1){
+      appdata.splice(index,1)
+      response.writeHead(200, {'Content-Type': 'text/json'})
+      response.end(JSON.stringify(appdata))
+
+    }
+    else{
+
+      response.writeHead(404, { 'Content-Type': 'text/json' })
+      response.end(JSON.stringify({ message: 'Item not found' }))
+
+    }
+  }
+  else {
+    console.log("Invalid DELETE request:", request.url)
+
+    response.writeHead(400, { 'Content-Type': 'application/json' })
+    response.end(JSON.stringify({ message: 'Invalid DELETE request' }))
+    }
+} 
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
