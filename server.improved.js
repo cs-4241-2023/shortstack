@@ -40,8 +40,17 @@ const handlePost = function( request, response ) {
 
   request.on( 'end', function() {
     let result = JSON.parse(dataString);
-    console.log(result);
-    appdata.push(result);
+    let newResult = {
+      taskName: result.taskName,
+      taskDescription: result.taskDescription,
+      assignerFirstName: result.assignerFirstName,
+      assignerLastName: result.assignerLastName,
+      assigneeFirstName: result.assigneeFirstName,
+      assigneeLastName: result.assigneeLastName,
+      assigneeEmail: `${result.assigneeLastName}.${result.assigneeFirstName}@TAsforthisclassarecool.com`,
+    }
+    console.log(newResult);
+    appdata.push(newResult);
     console.log(appdata.length);
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })

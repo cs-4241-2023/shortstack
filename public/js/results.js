@@ -3,17 +3,7 @@ const getServerData = async function() {
     const response = await fetch('results', {method: 'GET'});
     const text = await response.text();
 
-    let entries = JSON.parse(text).map(x => {
-        return { 
-            taskName: x.taskName,
-            taskDescription: x.taskDescription,
-            assignerFirstName: x.assignerFirstName,
-            assignerLastName: x.assignerLastName,
-            assigneeFirstName: x.assigneeFirstName,
-            assigneeLastName: x.assigneeLastName,
-            assigneeEmail: `${x.assigneeLastName}.${x.assigneeFirstName}@TAsforthisclassarecool.com`
-        }
-    })
+    let entries = JSON.parse(text);
     console.log(entries);
 
     let body = document.querySelector('body');
