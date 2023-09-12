@@ -22,7 +22,13 @@ A flexbox was used for the form, and a grid was used for displaying the results.
 
 ### Design/Evaluation Achievements
 - **First user test**
-    - Last name: 
-    - Problems: 
-    - Comments that surprised me:
-    - What I would change:
+    - Last name: Caplan
+    - Problems: Didn't have any issues navigating, no comments about issues
+    - Comments that surprised me: I'm glad the UI was intuitive and she liked the way it looked, no comments about the goal stuff being confusing which I'd been expecting so that was good
+    - What I would change: Nothing major based on feedback. One thing I'd want to do is make sure that it still looks fine on more varied screen sizes and different browsers
+- **Second user test**
+    - Last name: McCormick
+    - Problems: Did not have any problems with the interface
+    - Comments that surprised me: A comment about liking the pop up screen for editing, since I wasn't sure if that'd make the screen feel to busy or seem too redundant since it's almost exactly the same as the original form
+    - What I would change: Nothing major based on the comments. If anything I'd see if there are other effects I could add to really lean into the old arcade machine look
+- I also got some feedback from someone outside the class before testing it with classmates, and the main issue that came up was wanting to know how the goal was calculated - I considered changing the goal help text to include more info about calculations, but it that version was kind of convoluted so I'm still not sure what the best solution would be
