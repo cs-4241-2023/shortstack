@@ -29,16 +29,17 @@ const submit = async function (event) {
   }
 
   let data = await response.json();
-  data = data.data;
-  let dte = data.map(jsonString => JSON.parse(jsonString))
+  let count = data.recordCount
+  data = JSON.parse(data.data);
+
   document.getElementById('reset').click();
 
   // Update the designer list
-  updateDesignerList(dte);
+  updateDesignerList(data, count);
 };
 
 // Function to update the designer list
-function updateDesignerList(data) {
+function updateDesignerList(data, count) {
   list = document.getElementById('designerList');
 
   if (list == null) {
@@ -49,8 +50,8 @@ function updateDesignerList(data) {
     list.innerHTML = '';
   }
 
-  document.getElementById('recordCount').innerHTML = "Designer List - " + data.recordCount;
-
+  document.getElementById('recordCount').innerHTML = `Designer List - ${count}`;
+  appdata = []
   // Append designer information and buttons
   data.forEach(d => {
     const listItem = document.createElement('li');

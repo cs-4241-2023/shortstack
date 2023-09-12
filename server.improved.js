@@ -9,7 +9,7 @@ const http = require( 'http' ),
       port = 3000
 
 let appdata = []
-let recordCount;
+let recordCount = 0;
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -35,19 +35,24 @@ const handlePost = function( request, response ) {
 
   request.on( 'data', function( data ) {
       dataString += data   
-      if (request.url == '/delete'){
-        let index = appdata.indexOf(dataString)
-        appdata.slice(index, 1)
-        console.log(index, dataString, appdata[0])
+      if (request.url === '/delete'){
+        for(index = 0; index < appdata.length; index++){
+          if (JSON.stringify(appdata[index]) === dataString){
+            appdata.splice(index, 1)
+            console.log('deleted', index, dataString, JSON.stringify(appdata[index]))
+            break;
+          }
+        }
       }
-      else {
-        appdata.push(dataString)
+      else if (request.url === '/submit') {
+        appdata.push(JSON.parse(dataString))
       }
   })
 
   request.on( 'end', function() {
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end(JSON.stringify({recordCount: appdata.length , data: appdata}))
+    response.end(JSON.stringify({recordCount: appdata.length , data: JSON.stringify(appdata)}))
+    console.log(appdata.length)
   })
 }
 
