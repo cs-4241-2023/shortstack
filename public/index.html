@@ -11,17 +11,34 @@
   </head>
   <body>
     <form>
-      <input type="text" id="taskname" value="Task Name">
-      <div>
+      <div class="form-row">
+        <label>Task name: </label>
+        <input type="text" id="taskname" value="Task Name">  
+      </div>
+      <div class="form-row">
+        <label>Description: </label>
         <input type="text" id="taskdescription" value="Task Description">
       </div>
-      <div>
-        <input type="text" id="assignerfirstname" value="Assigner First name">
-        <input type="text" id="assignerlastname" value="Assigner Last name">
+      <div class="form-section">
+        <label>Assigner:</label>
+        <div class="form-row">
+          <label>First name: </label>
+          <input type="text" id="assignerfirstname" value="Assigner First name">
+        </div>
+        <div class="form-row">
+          <Label>Last name: </Label>
+          <input type="text" id="assignerlastname" value="Assigner Last name">          
+        </div>
       </div>
-      <div>
-        <input type="text" id="assigneefirstname" value="Assignee First Name">
-        <input type="text" id="assigneelastname" value="Assignee Last Name">
+      <div class="form-section">
+        <div class="form-row">
+          <label>First name: </label>
+          <input type="text" id="assigneefirstname" value="Assignee First Name">
+        </div>
+        <div class="form-row">
+          <label>Last name: </label>
+          <input type="text" id="assigneelastname" value="Assignee Last Name">
+        </div>
       </div>
       <button>submit</button>
     </form>

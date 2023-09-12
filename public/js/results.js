@@ -25,10 +25,8 @@ const getServerData = async function() {
         let li = document.createElement('li');
         li.innerHTML = `
         <div class='todo-item'>
-            <div class='task-row'>
-                <div class='task-name'>${entry.taskName}:</div>
-                <div class='task-description'>${entry.taskDescription}</div>
-            </div>
+            <div class='task-name'>${entry.taskName}:</div>
+            <div class='task-description'><strong>Description</strong>: ${entry.taskDescription}</div>
             <div class='assigner-assignee-row'>
                 <div class='assigner-box'>
                     <div class='assigned-by-label'>Assigned by: </div>
@@ -40,7 +38,7 @@ const getServerData = async function() {
                 </div>
                 <div class='email-box'>
                     <div class='email-label'>Assignee email:</div>
-                    <div class='assignee-email'>${entry.assigneeEmail}</div>
+                    <div><address>${entry.assigneeEmail}</address></div>
                 </div>
             </div>
         </div>
