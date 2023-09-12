@@ -1,4 +1,56 @@
+@import url('https://fonts.google.com/specimen/Montserrat');
+@import url('https://fonts.google.com/specimen/Kanit');
+
 body {
-  background:black;
+  background:white;
+  color:black;
+    font-family: "Monteserrat", sans-serif;
+}
+
+form {
+  padding-top:20px;
+  display:grid;
+  grid-template-rows:40px 40px 40px;
+  text-align:center;
+  font-size:20px;
+}
+
+input[type="text"] {
+  width:200px;
+  height:20px;
+  padding-top:5px;
+}
+
+.todoHeading {
+  text-align:center;
+  margin-top:0;
+  border-bottom:5px solid black;
+}
+
+.addButton {
+  text-align:center;
+  width:100%;
+  height:50px;
+  padding-top:10px;
+  padding-bottom:5px;
+}
+
+#addItemButton {
+  font-size:30px;
   color:white;
+  background-color:dodgerblue;
+  border-radius:6px;
+  font-family: "Kanit", serif;
+}
+
+ul {
+  list-style-type:none;
+  border-color:black;
+}
+
+li {
+  text-align:center;
+  padding-right:3.5%;
+  padding-bottom:5px;
+  font-size:18px;
 }
