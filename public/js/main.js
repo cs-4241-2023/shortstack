@@ -29,13 +29,10 @@ const submit = async function( event ) {
     body
   })
 
-
   const text = await response.text()
   
-  console.log( 'text:', text)
-
-  form.reset();
-  addToTable(json)
+  form.reset()
+  addToTable(JSON.parse(text))
 }
 
 const deleteUser = async function ( json, event ){  

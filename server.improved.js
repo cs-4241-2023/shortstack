@@ -9,8 +9,8 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  {'name':'Alex Marrinan', 'email': 'ammarrinan@wpi.edu','type': 'student', 'department': 'CS/IMGD', 'id': 0},
-  {'name':'Charlie Roberts', 'email': 'croberts@wpi.edu','type': 'professor', 'department': 'CS/IMGD', 'id': 1}
+  {'name':'Alex Marrinan', 'email': 'ammarrinan@wpi.edu','type': 'Undergrad Student', 'department': 'CS/IMGD', 'id': 0},
+  {'name':'Charlie Roberts', 'email': 'croberts@wpi.edu','type': 'Professor', 'department': 'CS/IMGD', 'id': 1}
 ]
 
 var nextId = 2
@@ -50,11 +50,14 @@ const handlePost = function( request, response ) {
 
   request.on( 'end', function() {
     const json = JSON.parse(dataString)
+    const email = `${json.name.charAt(0)}${json.email}@wpi.edu`.toLowerCase()
+    json['name'] += ` ${json.email}`
+    json['email'] = email
     json.id = nextId
     nextId += 1
     appdata.push(json);
     response.writeHead( 200, "OK", {'Content-Type': 'text/json' })
-    response.end('added new student!')
+    response.end(JSON.stringify(json))
   })
 }
 
