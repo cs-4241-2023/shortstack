@@ -3,16 +3,104 @@
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
-    <script src="js/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="js/main.js"></script>
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+  <body class = "tv">
+    <header>
+      <h1>HIGH SCORES</h1>
+      <p>an arcade scoreboard for every game</p>
+      <hr>
+     
+    </header>
+    <form class = "flexcontainer" id = "gameForm">
+
+        <div class = "flexitem">
+          <p>Game</p>
+          <input type="text" id="game" placeholder="Tetris">
+        </div>
+
+        <div class = "flexitem">
+          <p>High Score</p>
+          <input type="number" id="highscore" placeholder="17776">
+        </div>
+
+        <div class = "flexitem">
+          <p>Max Score
+          <span class="help">?
+            <span class="helptext">Max possible score helps calculate a score goal. If you are unsure of the max score or the game is infinite, leave this field empty.</span>
+          </span>
+          </p>
+          <input type="number" id="maxscore" placeholder="999999">
+        </div>
+
+        <div class = "flexitem">
+        </div>
+
+        <div class = "flexitem" id = "nameForm">
+          <p>Initials</p>
+          <input type="text" id="initials" placeholder="EXA" maxlength="3">
+        </div>
+
+        <button class = "flexitem" id = "submitForm">ENTER</button>
+
+      </form>
+    <hr>
+
+    <div class = "datacontainer">
+      <div class = "griditem"></div>
+      <h3 class = "griditem">GAME</h3>
+      <h3 class = "griditem">HIGH SCORE</h3>
+      <h3 class = "griditem">MAX SCORE</h3>
+      <h3 class = "griditem">GOAL
+        <span class="help">?
+          <span class="helptext">A score goal calculated based off of the current high score and max score (if given)</span>
+        </span>
+      </h3>
+      <div class = "griditem"></div>
+    </div>
+
+    <div class = "datacontainer" id = "data"></div>
+
+    <div class = "popupContainer" id = "editwindow">
+      <div class = "popup">
+        <form class = "flexcontainer" id = "editForm">
+
+          <div class = "flexitem">
+            <p>Game</p>
+            <input type="text" id="gameEdit" placeholder="Tetris">
+          </div>
+
+          <div class = "flexitem">
+            <p>High Score</p>
+            <input type="number" id="highscoreEdit" placeholder="17776">
+          </div>
+
+          <div class = "flexitem">
+            <p>Max Score</p>
+            <input type="number" id="maxscoreEdit" placeholder="999999">
+          </div>
+
+          <div class = "flexitem" id = "nameFormE">
+            <p>Initials</p>
+            <input type="text" id="initialsEdit" placeholder="EXA" maxlength="3">
+          </div>
+          <button class = "flexitem" id = "submitEdit">ENTER</button>        
+        </form>
+      </div>
+    </div>
+
+    <div class = "popupContainer" id = "errorPop">
+      <div class = "popup">
+        <p id = "errorText"></p>
+        <button id = "exitPop" onclick="exitPopup()">EXIT</button>
+      </div>
+    </div>
+
+    <footer></footer>
   </body>
 </html>

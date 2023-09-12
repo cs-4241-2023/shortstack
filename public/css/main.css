@@ -1,4 +1,204 @@
-body {
-  background:black;
-  color:white;
+html {
+  font-family: 'Press Start 2P';
 }
+
+*{font-family: inherit;}
+
+header { 
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+body {
+
+  background:rgb(41, 43, 70);
+  background-image: radial-gradient(rgba(41, 43, 70, 0.75), rgb(17, 18, 29));
+  color:white;
+  text-shadow: 0 0 3px #aeaeae;
+  height: 100%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  
+}
+
+footer {
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+hr {
+  width: 75%;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  border: 2px solid white;
+}
+
+h1 {
+  font-size: 4.3em;
+  margin-bottom: 2%;
+  text-shadow: -1.3px 0 0 #ecd750, 1.3px 0 0 #50dcec, -3px 0 0 #df3b32, 3px 0 0 #2903ea;
+}
+
+/* TV lines effect */
+.tv::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  background: linear-gradient(rgba(0, 0, 0, 0.25) 50%, rgba(19, 19, 19, 0.027) 50%);
+  background-size: 100% 2px;
+  pointer-events: none;
+}
+
+/* flex container and items */
+.flexcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexitem {
+  text-align: center;
+}
+
+/* grid containers and items */
+.datacontainer {
+  display: inline-grid;
+  grid-template-columns: .9fr 1fr 1fr 1fr 1fr .9fr;
+  width: 100%;
+}
+
+.griditem {
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+}
+
+/* input styling */
+input {
+  background-color: rgba(255, 0, 0, 0);
+  width: 90%;
+  padding: 12px 20px;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 2px solid white;
+  outline: none;
+  color: white;
+  max-width: 100%;
+}
+
+input:focus {
+  box-shadow: -1.3px 0 0 #ecd750, 1.3px 0 0 #50dcec, -3px 0 0 #df3b32, 3px 0 0 #2903ea;
+  background-color: white;
+  color: rgb(41, 43, 70);
+}
+
+::placeholder { 
+  color: rgb(124, 126, 167);
+  opacity: 0.8;
+}
+
+/* button styling */
+button {
+  width: fit-content;
+  height: fit-content;
+  padding: 10px;
+  background-color: white;
+  color: rgb(41, 43, 70);
+  border: 2px solid white;
+  margin: 10px;
+  font-size: .7em;
+}
+
+button:hover {
+  box-shadow: -1.3px 0 0 #ecd750, 1.3px 0 0 #50dcec, -3px 0 0 #df3b32, 3px 0 0 #2903ea;
+}
+
+button:active {
+  box-shadow: -1.3px 0 0 #ecd750, 1.3px 0 0 #50dcec, -3px 0 0 #df3b32, 3px 0 0 #2903ea;
+  background-color: rgb(215, 215, 215);
+  border-color: rgb(215, 215, 215);
+}
+
+/* ID */
+#initials, #initialsEdit {
+  text-transform: uppercase;
+}
+
+#submitForm , #submitEdit{
+  margin-left: 40%;
+  margin-right: 40%;
+}
+
+
+/* help hover + text */
+.help {
+  position: relative;
+  color: #ecd750;
+  font-size: small;
+}
+
+.help .helptext {
+  visibility: hidden;
+  background-color: white;
+  color: rgb(41, 43, 70);
+  text-align: center;
+  padding: 10px;
+  position: absolute;
+  bottom: 250%;
+  left: -610%;
+  font-size: 0.5em;
+  line-height: 1.3;
+  width:1300%;
+
+}
+
+.help .helptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 40%;
+  border: 10px solid;
+  border-color: white transparent transparent transparent;
+}
+
+.help:hover .helptext {
+  visibility: visible;
+}
+
+/* popupp stuff */
+
+.popupContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.6);
+  visibility: hidden;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  background-color: rgb(41, 43, 70);
+  border: 4px solid white;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  line-height: 1.7;
+}
+
