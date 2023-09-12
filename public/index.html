@@ -3,41 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Manager</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Recipe Tracker</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Exo">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Sans">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
-    <header>
-        <h1>Recipe Manager</h1>
-    </header>
-    <main>
-        <section id="recipe-form">
-            <h2>Add a New Recipe</h2>
-            <form id="add-recipe-form">
-                <label for="recipe-name">Recipe Name:</label>
-                <input type="text" id="recipe-name" required>
-                <label for="ingredients">Ingredients:</label>
-                <textarea id="ingredients" rows="4" required></textarea>
-                <label for="instructions">Cooking Instructions:</label>
-                <textarea id="instructions" rows="6" required></textarea>
-                <button type="submit">Add Recipe</button>
-            </form>
-        </section>
-        <section id="recipe-list">
-            <h2>Recipe List</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Recipe Name</th>
-                        <th>Ingredients</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="recipe-table-body">
-                </tbody>
-            </table>
-        </section>
-    </main>
+    <h1 id="fancy_text">Recipe Tracker</h1>
+    <hr style="width: 90%">
+    <br>
+
+    <h2>Add a Recipe</h2>
+
+    <form id="recipe_form">
+        <label for="recipe_name">Recipe Name:</label>
+        <input type="text" id="recipe_name" name="recipe_name" required>
+
+        <label for="recipe_ingredients">Ingredients:</label>
+        <textarea id="recipe_ingredients" name="recipe_ingredients" rows="4" required></textarea>
+
+        <label for="recipe_directions">Directions:</label>
+        <textarea id="recipe_directions" name="recipe_directions" rows="4" required></textarea>
+
+        <button id="add_recipe">Add Recipe</button>
+    </form>
+
+    <hr style="width: 50%">
+
+    <h2>Delete a Recipe</h2>
+
+    <form id="delete_form">
+        <label for="recipe_to_delete">Recipe Name to Delete:</label>
+        <input type="text" id="recipe_to_delete" name="recipe_to_delete" required>
+        <button id="delete_recipe">Delete Recipe</button>
+    </form>
+
+    <br>
+
+    <h1>Your Recipe List</h1>
+
+    <hr style="width: 90%">
+
+    <table>
+        <tr>
+            <th>Recipe Name</th>
+            <th>Ingredients</th>
+            <th>Directions</th>
+        </tr>
+        <tbody id="recipe_table"></tbody>
+    </table>
+
     <script src="js/main.js"></script>
 </body>
 </html>
+
