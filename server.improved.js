@@ -59,6 +59,12 @@ const handlePost = function( request, response ) {
     const json = JSON.parse( dataString );
     if (json.mode === "add") {
       json.entry.id = idCounter++;
+
+      // derived field
+      // there are 4 calories per gram of protein
+      let proteinCalories = json.entry.protein * 4;
+      json.entry.percentProtein = Math.round((proteinCalories / json.entry.calories) * 100);
+
       entries.push(json.entry);
     } else if (json.mode === "delete") {
       console.log("delete", json.id);

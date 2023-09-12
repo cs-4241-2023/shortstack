@@ -4,10 +4,6 @@ class FoodEntry {
       this.name = name;
       this.calories = calories;
       this.protein = protein;
-
-      // there are 4 calories per gram of protein
-      let proteinCalories = protein * 4;
-      this.percentProtein = Math.round((proteinCalories / calories) * 100);
   }
 }
 
