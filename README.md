@@ -90,12 +90,13 @@ You'll need to use sometype of collaborative software that will enable you both 
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+## To-Do List
 
 ## Project Summary
 **Link**: https://a2-mareksgarbaczonek.glitch.me/
 
+- This project is a to-do list application. A user can add tasks, set their priorities, and add due dates. In the future, the app would also determine if the task would be assigned for today or just be unassigned in all tasks page (Currently the diamond on the far right of each row is a placeholder for when I implement it).
+- Once the user adds tasks, they can modify the task name, the priority, due date, or mark the task as complete.
 
 **Description**: 
 - My derived field is the due date for each task changes from a date and displays a message instead if the task is overdue, due today, or due tomorrow.
