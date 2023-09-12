@@ -16,7 +16,14 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 - Created a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data.
 - In addition to a form enabling adding and deleting data on the server, I also added the ability to modify existing data.
 
+**Additional Technical Achievements**: 
+- I have bypassed the default date input and created my own date input that would just be a single string which would trigger the date picker pop up to appear.
+
+
 ## Design/Evaluation Achievements
 **Base Design Achievements**: 
 - Think aloud with Nathan Wong: He wanted a better indicator to show that you can edit a field like changing the name of the task could have been highlighted when hovering over it to indicate editability. He also went straight to editing sample tasks 1 and 2 before noticing the actual add task area. I was surprised and felt validated that he really liked my design and said it was very minimalistic and clean. Overall he said that he easily found everything he needed to. Based on his feedback, I made sure to indicate that a field can be edited in ways such as a highlight color when hovering over it.
 - Think aloud with Mike McInerney: He was confused about the diamond buttons and wanted the ability to reorder tasks and potentially sort them. When he opened my site he said "OOOOO! This is very cool" and really liked how intuitive and visually appealing the interface was. Based on his feedback I would implement the ability to reorder and sort tasks but I did not manage to squeeze it in for A2 submission.
+
+**Additional Design Achievements**: 
+- I have created my own icons in Adobe Illustrator but only used the Plus icon in the final project.
