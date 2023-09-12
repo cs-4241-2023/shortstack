@@ -1,74 +1,109 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+const http = require('http'),
+  fs = require('fs'),
+  mime = require('mime'),
+  dir = 'public/',
+  port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+let appdata = [
+  {
+    'course': 'CS4241',
+    'assignment': 'A2',
+    'dueDate': '2023-09-12',
+    'dueTime': '11:59',
+    'daysLeft': '0',
+  },
 ]
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
+const server = http.createServer(function (request, response) {
+  if (request.method === 'GET') {
+    handleGet(request, response)
+  } else if (request.method === 'POST') {
+    handlePost(request, response)
+  }
+  else if (request.method === 'DELETE') {
+    handleDelete(request, response)
   }
 })
-
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
-
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }else{
-    sendFile( response, filename )
+const handleGet = function (request, response) {
+  const filename = dir + request.url.slice(1)
+  if (request.url === '/') {
+    sendFile(response, 'public/index.html')
+  }
+  else if (request.url === '/data') {
+    response.writeHeader(200, { "Content-type": "text/json" });
+    response.end(JSON.stringify(appdata));
+  }
+  else {
+    sendFile(response, filename)
   }
 }
-
-const handlePost = function( request, response ) {
+const handlePost = function (request, response) {
+  console.log("request URL" + request.url);
   let dataString = ''
-
-  request.on( 'data', function( data ) {
-      dataString += data 
+  request.on('data', function (data) {
+    dataString += data
   })
+  request.on('end', function () {
+    let postResponse = JSON.parse(dataString);
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
-
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    let daysLeft = calculateDaysLeft(postResponse.dueDate)
+    appdata.push({ course: postResponse.course, assignment: postResponse.assignment, dueDate: postResponse.dueDate, dueTime: postResponse.dueTime, daysLeft: daysLeft })
+    response.writeHead(200, "OK", { 'Content-Type': 'text/json' })
+    response.end(JSON.stringify(appdata))
   })
 }
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
-
-   fs.readFile( filename, function( err, content ) {
-
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
-
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
-
-     }else{
-
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
-
-     }
-   })
+const handleDelete = function (request, response) {
+  let dataString = ''
+  request.on('data', function (data) {
+    dataString += data
+  })
+  request.on('end', function () {
+    let assignmentToRemove = JSON.parse(dataString).assignmentToRemove
+    appdata = appdata.filter(function (n, i) {
+      return n.title !== assignmentToRemove;
+    })
+    response.writeHead(200, "OK", { 'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(appdata))
+  })
 }
 
-server.listen( process.env.PORT || port )
+const sendFile = function (response, filename) {
+  const type = mime.getType(filename)
+
+  fs.readFile(filename, function (err, content) {
+
+    // if the error = null, then we've loaded the file successfully
+    if (err === null) {
+
+      // status code: https://httpstatuses.com
+      response.writeHeader(200, { 'Content-Type': type })
+      response.end(content)
+
+    } else {
+
+      // file not found, error code 404
+      response.writeHeader(404)
+      response.end('404 Error: File Not Found')
+
+    }
+  })
+}
+
+const calculateDaysLeft = function (dueDate){
+    //2023-09-12
+    dueDate= new Date(dueDate)
+    console.log(dueDate)
+    
+    let today = new Date()
+    
+    let time = dueDate.getTime() - today.getTime()
+    console.log(time)
+    time= Math.floor(time / (1000 * 3600 * 24))+1 //days
+    console.log(time)
+    return time
+  }
+
+
+server.listen(process.env.PORT || port)
