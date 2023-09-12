@@ -6,13 +6,33 @@
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
     
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    
   </head>
-  <body>
+  <body class= "flexParent">
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <table >
+        <tr >
+          <th>Meeting Name:</th>
+          <th><input class = "flexChild" type="text" id="meetname" value="Meeting Name Here"></th>
+        </tr>
+        <tr>
+          <th>Location:</th>
+          <th><input type="text" id="locationname" value="Loaction Here"></th>
+        </tr>
+        <tr>
+          <th>Date:</th>
+          <th><input type="text" id="datetime" value="MM/DD/YY"></th>
+        </tr>
+        <tr>
+          <th>
+            <button>Submit</button>
+          </th>
+          <th><input type="text" id="yourname" value="Password(Paul Godinez)"></th>
+        </tr>
+      </table>
     </form>
+    <ul>
+      
+    </ul>
   </body>
 </html>
