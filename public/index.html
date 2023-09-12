@@ -1,18 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
+    <link rel="stylesheet" href="css/main.css" />
+
     <!-- get rid of favicon error -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
   </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+  <div class="container">
+    <div class="box2">
+      <h1>The Movie List</h1>
+    </div>
+    <body>
+      <form>
+        <div class="box1">
+          <div class="boxInput">
+            <label for="mTitle"> Movie Title: </label>
+            <input type="text" id="mTitle" value="" />
+          
+            <label for="mLength"> Movie Length:</label>
+            <input type="text" id="mLength" value="" />
+
+            <label for="mYear"> Movie Year:</label>
+            <input type="text" id="mYear" value="" />
+          </div>
+        </div>
+
+        <div class="box3">
+            <button id="add">Add</button>
+            <div>
+              <button id="delete">Delete</button>
+            </div>
+            <div>
+              <button id="modify">Modify</button>
+            </div>
+        </div>
+
+        <div class="table"></div>
+      </form>
+    </body>
+  </div>
 </html>
