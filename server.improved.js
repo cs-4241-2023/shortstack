@@ -1,74 +1,128 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+const http = require('http');
+const fs = require('fs');
+const mime = require('mime');
+const dir = 'public/';
+const port = 3000;
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+let nextBlogPostId = 1; // Initialize the unique ID counter
+const blogData = [];
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  }
-})
+const server = http.createServer(function (request, response) {
+    if (request.method === 'DELETE') {
+        const postId = request.url.slice(8);
+        handleDelete(postId, response);
+    } else if (request.method === 'PUT') {
+        const postId = request.url.slice(8); // Extract postId from URL
+        updateBlogPost(postId, request, response);
+    } else if (request.method === 'GET' && request.url === '/fetch') {
+        getAllPosts(request, response);
+    } else if (request.method === 'GET') {
+        handleGet(request, response);
+    } else if (request.method === 'POST' && request.url === '/submit') {
+        handlePost(request, response);
+    }
+});
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+const updateBlogPost = function (postId, request, response) {
+    let dataString = '';
 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }else{
-    sendFile( response, filename )
-  }
+    request.on('data', function (data) {
+        dataString += data;
+    });
+
+    request.on('end', function () {
+        const updatedBlogPost = JSON.parse(dataString);
+
+        // Find the blog post by ID and update its title and content
+        const index = blogData.findIndex((post) => post.id === parseInt(postId));
+
+        if (index !== -1) {
+            blogData[index].title = updatedBlogPost.title;
+            blogData[index].content = updatedBlogPost.content;
+            blogData[index].readingTime = calculateReadingTime(updatedBlogPost.content);
+            response.writeHead(200, 'OK', { 'Content-Type': 'text/plain' });
+            response.end('Blog post updated successfully');
+        } else {
+            response.writeHead(404, 'Not Found', { 'Content-Type': 'text/plain' });
+            response.end('Blog post not found');
+        }
+    });
+};
+
+
+function calculateReadingTime(content) {
+    // Assuming an average reading speed of 200 words per minute
+    const wordsPerMinute = 200;
+
+    // Count the number of words in the content
+    const wordCount = content.split(/\s+/).length;
+
+    // Calculate reading time in minutes (rounded up)
+    const readingTime = Math.ceil(wordCount / wordsPerMinute);
+
+    return readingTime;
 }
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+const handleDelete = function (postId, response) {
+    // Find the blog post by ID and remove it from the blogData array
+    const index = blogData.findIndex((post) => post.id === parseInt(postId));
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
+    if (index !== -1) {
+        blogData.splice(index, 1);
+        response.writeHead(200, { 'Content-Type': 'text/plain' });
+        response.end('Blog post deleted successfully');
+    } else {
+        response.writeHead(404, { 'Content-Type': 'text/plain' });
+        response.end('Blog post not found');
+    }
+};
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+const handleGet = function (request, response) {
+    const filename = dir + request.url.slice(1);
 
-    // ... do something with the data here!!!
+    if (request.url === '/') {
+        sendFile(response, 'public/index.html');
+    } else {
+        sendFile(response, filename);
+    }
+};
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
-  })
-}
+const handlePost = function (request, response) {
+    let dataString = '';
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+    request.on('data', function (data) {
+        dataString += data;
+    });
 
-   fs.readFile( filename, function( err, content ) {
+    request.on('end', function () {
+        const blogPost = JSON.parse(dataString);
+        blogPost.id = nextBlogPostId++; // Assign a unique ID to the blog post
+        blogPost.readingTime = calculateReadingTime(blogPost.content);
+        console.log(blogPost)
+        blogData.push(blogPost);
 
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
+        response.writeHead(200, 'OK', { 'Content-Type': 'text/plain' });
+        response.end('Blog post created successfully');
+    });
+};
 
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
+const getAllPosts = function (request, response) {
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify(blogData));
+};
 
-     }else{
+const sendFile = function (response, filename) {
+    const type = mime.getType(filename);
 
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
+    fs.readFile(filename, function (err, content) {
+        if (err === null) {
+            response.writeHeader(200, { 'Content-Type': type });
+            response.end(content);
+        } else {
+            response.writeHeader(404);
+            response.end('404 Error: File Not Found');
+        }
+    });
+};
 
-     }
-   })
-}
-
-server.listen( process.env.PORT || port )
+server.listen(process.env.PORT || port);
