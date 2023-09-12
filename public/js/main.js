@@ -17,8 +17,6 @@ const submit = async function (event) {
   let max = Math.floor(100);
   json.score = Math.floor(Math.random() * (max - min) + min); // add random score for now
 
-
-
   console.log('printing client json object:')
   console.log(json) // print json object to console
   clientData = JSON.stringify(json) // create json string from json object
@@ -113,12 +111,16 @@ window.onload = function () {
 async function deletePlayer(playerName) {
   // delete from server
   console.log(`Request Server to delete player: ${playerName}`)
+
+  json = {}  // create json object
+  json.name = playerName // add name
+
+  // let playerNameJSON = JSON.stringify(playerName) // create json string 
   const response = await fetch('/delete', {
     method: 'DELETE',
-    body: playerName
+    body: JSON.stringify(json)
   })
 
   let serverData = await response.json() // get json string from server response
-
     populateList(serverData)
 }

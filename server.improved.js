@@ -50,8 +50,8 @@ const handlePost = function (request, response) {
   request.on('end', function () { // end when client is done sending data
     let clientData = {}
     clientData = JSON.parse(clientDataString) // parse clientDataString into JSON object
-    
-  
+
+
     let serverData = {}
     serverData.name = clientData.name;
     serverData.color = clientData.color;
@@ -72,6 +72,9 @@ const handlePost = function (request, response) {
       player.rank = index + 1;
     })
 
+    // print full serverPlayerLog to console
+    console.log('Server Player Log: ' + JSON.stringify(serverPlayerLog))
+
     response.writeHead(200, "OK", { 'Content-Type': 'text/json' }) // send response to client
     response.end(JSON.stringify(serverPlayerLog))
   })
@@ -82,36 +85,47 @@ const handleDelete = function (request, response) {
   // request is playerName string from client to delete
   // delete that player from serverPlayerLog
 
-  // request.on('data', function (data) { // add data to clientDataString as it comes in
-  //   console.log('Server received a DELETE request')
-  // })
+  let clientDataString = ''
+
+  request.on('data', function (data) { // add data to clientDataString as it comes in
+    clientDataString += data
+  })
 
   request.on('end', function () { // end when client is done sending data
     console.log('Server received complete DELETE request')
-    let playerToDelete = request; 
 
-    console.log('before delete: ' + JSON.stringify(serverPlayerLog))
+    let clientData = {}
+    clientData = JSON.parse(clientDataString) // parse clientDataString into JSON object
+    let playerToDelete = clientData;
+
+    // print playerToDelete to console
+    console.log('Player to delete: ' + JSON.stringify(playerToDelete))
+
+    console.log('BEFORE delete: ' + JSON.stringify(serverPlayerLog))
 
     //loop through serverPlayerLog and delete player with matching name
     serverPlayerLog.forEach(player => {
-      if (player.name === playerToDelete) {
-        // delete player entry in serverPlayerLog with slice
-        serverPlayerLog.slice(serverPlayerLog.indexOf(playerToDelete), 1);
-
-        // sort serverPlayerLog by score
-        serverPlayerLog.sort((a, b) => (a.score < b.score) ? 1 : -1)
-        serverPlayerLog.forEach((player, index) => {
-          player.rank = index + 1;
-        })
-
-        console.log('after delete: ' + JSON.stringify(serverPlayerLog))
+      if (playerToDelete.name === player.name) {
+        console.log('INSIDE DELETE PORTION BEFORE SLICE')
+        // delete playerToDelete entry in serverPlayerLog with slice
+        serverPlayerLog.splice(serverPlayerLog.indexOf(player), 1)
       }
     })
-  })
 
+    // sort serverPlayerLog by score
+    serverPlayerLog.sort((a, b) => (a.score < b.score) ? 1 : -1)
+    serverPlayerLog.forEach((player, index) => {
+      player.rank = index + 1;
+    })
+
+    console.log('AFTER delete: ' + JSON.stringify(serverPlayerLog))
+  })
   response.writeHead(200, "OK", { 'Content-Type': 'text/json' }) // send response to client
-    response.end(JSON.stringify(serverPlayerLog))
+  response.end(JSON.stringify(serverPlayerLog))
 }
+
+
+
 
 
 
