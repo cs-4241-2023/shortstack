@@ -1,7 +1,9 @@
-body, html {
+/* General */
+body,
+html {
   margin: 0;
   padding: 0;
-  font-family: 'Nunito Sans', sans-serif;;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .container {
@@ -12,41 +14,53 @@ body, html {
 .left-div {
   width: 200px;
   background-color: #212121;
-  color: #D2D2D2;
+  color: #d2d2d2;
   padding-top: 20px;
-  padding-left: 20px;
 }
 
 .right-div {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding-top: 20px;
   padding-left: 50px;
-}
-
-.tasks-div {
-  /*background-color: #C8C8C8;*/
-  margin-right: 50px;
 }
 
 h1 {
   margin-bottom: 5px;
 }
+/* General */
 
+/* Task-Table */
+.tasks-div {
+  margin-right: 50px;
+}
 
+#menu-table {
+  margin-top: 25px;
+  padding-right: 5px;
+  padding-left: 5px;
+  color: #d2d2d2;
+  flex: 1;
+  width: 100%;
+}
 
-
-
-
-
-
-
+.menu-row {
+  border-radius: 5px;
+  height: 30px;
+  background-color: #515151;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+  align-items: center;
+  font-size: 12px;
+}
 
 #task-table {
   margin-top: 25px;
-  color: #D2D2D2;
+  color: #d2d2d2;
   flex: 1;
   width: 100%;
 }
@@ -62,32 +76,29 @@ td {
 }
 
 .left-container {
-  float: left; /* Align to the left */
-  /*background-color: lightblue;*/
+  float: left;
   display: flex;
   align-items: center;
   width: 100%;
 }
 
 .right-container {
-  float: right; /* Align to the right */
-  /*background-color: lightblue;*/
+  float: right;
   display: flex;
   align-items: center;
 }
-
-
-
+/* Task-Table */
 
 /* Completion-Button */
-.Completion-Button{
+.Completion-Button {
   height: 20px;
   width: 20px;
   margin-right: 15px;
   border-radius: 15px;
-  border: 3px solid #D2D2D2;
+  border: 3px solid #d2d2d2;
   outline: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .Completion-Button:hover {
@@ -95,95 +106,100 @@ td {
 }
 
 .Completion-Button:active {
-  background-color: #D2D2D2;
+  background-color: #d2d2d2;
 }
 /* Completion-Button */
 
 /* MyDay-Button */
-.MyDay-Button{
+.MyDay-Button {
   height: 20px;
   width: 20px;
-  border: 3px solid #D2D2D2;
+  border: 3px solid #d2d2d2;
   border-radius: 0px;
-  transform:rotate(45deg) scale(0.707106781188);
+  transform: rotate(45deg) scale(0.707106781188);
   outline: none;
-  /*background-color: #333333;*/
-  background-color: #D2D2D2;
+  background-color: transparent;
 }
 
 .MyDay-Button:hover {
   background-color: #555555;
 }
+
+.MyDay-Button.active {
+  background-color: #d2d2d2;
+}
 /* MyDay-Button */
 
-
 /* Priority-Buttons */
-.LowPriority-Button{
-  height: 15px;
-  width: 15px;
+.LowPriority-Button {
+  height: 20px;
+  width: 20px;
   margin-right: 3px;
   border-radius: 15px;
-  border: 1px solid #64FF83;
-  outline: none;
-  background-color: #64FF83;
-}
-
-.MediumPriority-Button{
-  height: 15px;
-  width: 15px;
-  margin-right: 3px;
-  border-radius: 15px;
-  border: 1px solid #FFE064;
+  border: 1px solid #64ff83;
   outline: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
-.HighPriority-Button{
-  height: 15px;
-  width: 15px;
+.MediumPriority-Button {
+  height: 20px;
+  width: 20px;
+  margin-right: 3px;
+  border-radius: 15px;
+  border: 1px solid #ffe064;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.HighPriority-Button {
+  height: 20px;
+  width: 20px;
   margin-right: 15px;
   border-radius: 15px;
-  border: 1px solid #FF6464;
+  border: 1px solid #ff6464;
   outline: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .LowPriority-Button:hover {
-  background-color: #4DC164;
+  background-color: #4dc164;
 }
-.LowPriority-Button:active {
-  background-color: #64FF83;
+.LowPriority-Button:active,
+.LowPriority-Button.active {
+  background-color: #64ff83;
 }
 
 .MediumPriority-Button:hover {
-  background-color: #BFA84C;
+  background-color: #bfa84c;
 }
-.MediumPriority-Button:active {
-  background-color: #FFE064;
+.MediumPriority-Button:active,
+.MediumPriority-Button.active {
+  background-color: #ffe064;
 }
 
 .HighPriority-Button:hover {
-  background-color: #B84A4A;
+  background-color: #b84a4a;
 }
-.HighPriority-Button:active {
-  background-color: #FF6464;
+.HighPriority-Button:active,
+.HighPriority-Button.active {
+  background-color: #ff6464;
 }
 /* Priority-Buttons */
 
-
-
 /* Add-Task */
-.create-task-div{
+.create-task-div {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /*background-color: lightblue;*/
   margin-right: 52px;
   margin-left: 2px;
 }
 
-.create-task-container{
+.create-task-container {
   margin-top: auto;
   margin-bottom: 50px;
   box-sizing: border-box;
@@ -197,33 +213,37 @@ td {
   justify-content: space-between;
 }
 
-input{
+input {
   box-sizing: border-box;
   height: 50px;
   border: 0;
   outline: none;
   background-color: transparent;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 15px;
   width: calc(100% - 50px);
 }
 
 input::placeholder {
-  color: #D2D2D2;
+  color: #d2d2d2;
 }
 
 input:focus {
-  background-color: #7A7A7A;
+  background-color: #7a7a7a;
 }
 
-.create-task-right-container{
+input:hover {
+  background-color: #545454;
+}
+
+.create-task-right-container {
   float: right;
   display: flex;
   align-items: center;
   margin-right: 15px;
 }
 
-.create-task-left-container{
+.create-task-left-container {
   float: left;
   display: flex;
   align-items: center;
@@ -232,21 +252,75 @@ input:focus {
 /* Add-Task */
 
 /* Add-Task-Button */
-.AddTask-Button{
+.AddTask-Button {
   height: 20px;
   width: 20px;
   margin-right: 15px;
   border: 0;
   outline: none;
-  background-image: url('/public/images/Add.png');
+  background-image: url("https://cdn.glitch.global/2da16112-6f84-4795-81d2-bf9dd1ac1cb0/Add.png?v=1694375329731");
   background-color: transparent;
+  cursor: pointer;
 }
 
 .AddTask-Button:hover {
-  background-image: url('/public/images/Add-Hover.png');
+  background-image: url("https://cdn.glitch.global/2da16112-6f84-4795-81d2-bf9dd1ac1cb0/Add-Hover.png?v=1694375335707");
 }
 
 .AddTask-Button:active {
-  background-image: url('/public/images/Add-Active.png');
+  background-image: url("https://cdn.glitch.global/2da16112-6f84-4795-81d2-bf9dd1ac1cb0/Add-Active.png?v=1694375332243");
 }
 /* Add-Task-Button */
+
+/* Date-Picker */
+.datepicker-toggle {
+  display: inline-block;
+  position: relative;
+  margin-right: 15px;
+  color: #d2d2d2;
+  flex: 1;
+  display: flex;
+  margin-right: 15px;
+}
+
+.date-text {
+  white-space: nowrap;
+}
+
+.datepicker-toggle-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.datepicker-toggle:hover {
+  color: #afb0b1;
+}
+
+.datepicker-toggle:active {
+  color: #ffffff;
+}
+
+.datepicker-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.datepicker-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+/* Date-Picker */
