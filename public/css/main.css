@@ -1,4 +1,35 @@
+@font-face{
+  font-family: 'Roboto', sans-serif;
+  src: url(https://fonts.googleapis.com/css2?family=Roboto&display=swap);
+}
+
 body {
-  background:black;
+  background:gray;
   color:white;
+}
+
+th{
+  font-family: Roboto, sans-serif;
+  color:red;
+}
+
+li{
+  font-family: Roboto, sans-serif;
+
+}
+input{
+  width:200px;
+  height: 20px;
+  font-family: Roboto, sans-serif
+}
+
+#yourname{
+  font-weight: bold;
+}
+
+.flexParent{
+  display:flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-content: flex-start;
 }

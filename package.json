@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Meeting Time",
+  "version": "1.0",
+  "description": "WPI Meetings Pages",
+  "author": "Paul Godinez",
   "scripts": {
     "start": "node server.improved.js"
   },

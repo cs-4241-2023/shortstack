@@ -14,6 +14,12 @@ const appdata = [
   { 'model': 'ford', 'year': 1987, 'mpg': 14} 
 ]
 
+const meetings = [
+  { 'name' : 'MQP Meeting', 'location' : 'UH520', 'date' : '9/20/2023', 'daysTill': '19'},
+  { 'name' : 'Club Meeting', 'location' : 'CCHagg', 'date' : '9/23/2023', 'daysTill': '22'},
+  { 'name' : 'Teach-Parent', 'location' : 'Morgan', 'date' : '9/30/2023', 'daysTill': '29'}
+]
+
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
     handleGet( request, response )    
@@ -40,12 +46,30 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
+   // console.log( JSON.parse( dataString ) )
+     //for(let x = 3; x < 16; x+=4){
+      //let firstPos = dataString.split('\"');
+      //console.log(firstPos[x]);
+    //}
+    
+    let firstPos = dataString.split('\"');
+    const checker = firstPos[3].localeCompare('Paul Godinez');
+    //console.log(checker)
+    if(checker == 0){
+        const today = new Date()
+        const date = firstPos[15].split('/')
+        let months = parseInt(date[0]) - today.getMonth() - 1
+        let days = parseInt(date[1]) - today.getDate()
+        const totalDays = months * 30 + days
+        meetings.push({ 'name' : firstPos[7], 'location' : firstPos[11], 'date' : firstPos[15], 'daysTill' : totalDays})
+      }
+    //meetings.push({ 'name:' : firstPos[7], 'location' : firstPos[11], 'date' : firstPos[15]})
+    //console.log(meetings)
+    //console.log(JSON.stringify(meetings))
     // ... do something with the data here!!!
-
+    //response.end(JSON.parse(JSON.stringify(meetings)))
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.end(JSON.stringify(meetings))
   })
 }
 
