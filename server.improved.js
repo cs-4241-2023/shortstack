@@ -54,7 +54,6 @@ const handlePost = function (request, response) {
       const deleteData = JSON.parse(dataString);
       const idToDelete = deleteData.id;
     
-c
       // Index delete
       const indexToDelete = appdata.findIndex(item => item.id === idToDelete);
       if (indexToDelete !== -1) {

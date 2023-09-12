@@ -23,7 +23,7 @@ const submit = async function (event) {
       date: document.querySelector("#dueDate").value,
       priority: document.querySelector("#taskPriority").value,
       id:id
-   }} else {
+   }else {
     json={id:event.target.id}}
 
    }
@@ -31,7 +31,7 @@ const submit = async function (event) {
   
   id=id++
   console.log(id)
-
+ } 
 
   //console.log(json);
 
@@ -110,6 +110,13 @@ const submit = async function (event) {
       }
     }
   });
+};
+
+const response = await fetch('/submit',{
+  method: 'POST',
+  body = JSON.stringify(row json)
+})
+
 
 //Delete Row Function
 const deleteRow = (rowId) => {
