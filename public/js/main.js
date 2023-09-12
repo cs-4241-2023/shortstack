@@ -30,6 +30,6 @@ const submit = async function( event ) {
 }
 
 window.onload = function() {
-   const button = document.getElementsByClassName("submit");
-  button.onclick = submit();
+   const button = document.getElementById("submit");
+  button.onclick = submit;
 }
