@@ -10,9 +10,75 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+
+    <header>
+      <h1>Calorie and Protein Counter</h1>
+    </header>
+
+    <section class="status_section">
+
+      <div class = "status status_calories">
+        <h2 class = "status_name">Calories</h2>
+        <p class = "status_value" id = "calories_value">0</p>
+        <p class = "status_offset" id = "calories_offset">300 to go</p>
+        <div>
+          <label for="calories_goal">Goal: </label>
+          <input
+            type = "number"
+            value = "3000"
+            id = "calories_goal"
+            onchange = "updateCaloriesGoal()"
+            class = "status_goal"> kcal
+        </div>
+      </div>
+
+      <div class = "status status_protein">
+        <h2 class = "status_name">Protein</h2>
+        <p class = "status_value" id = "protein_value">0</p>
+        <p class = "status_offset" id = "protein_offset">300 to go</p>
+        <div>
+          <label for= "protein_goal">Goal: </label>
+          <input
+          type = "number"
+          value = "150"
+          id = "protein_goal"
+          onchange = "updateProteinGoal()"
+          class = "status_goal"> g
+        </div>
+      </div>
+    </section>
+
+    <form class = "food_entry_form">
+
+      <div>
+        <label for="food_name">Name: </label>
+        <input type="text" id="food_name" placeholder="Name of food...">
+      </div>
+      
+      <div>
+        <label for="food_calories">Calories: </label>
+        <input type="number" id="food_calories" placeholder="Calories in kcal...">
+      </div>
+
+      <div>
+        <label for="food_protein">Protein: </label>
+        <input type="number" id="food_protein" placeholder="Protein in g...">
+      </div>
+      
+
+      <div class = "food_submit_container">
+        <div class = "food_buttons">
+          <button id = "food_submit_button">Submit</button>
+          <button id = "food_clear_button">Clear</button>
+        </div>
+        
+        <p id = "food_submit_message">def</p>
+      </div>
+      
     </form>
+
+    <section id = "food_list">
+    </section>
+
   </body>
 </html>

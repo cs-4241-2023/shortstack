@@ -1,3 +1,17 @@
+class ServerResponse {
+  constructor(entries) {
+    this.entries = entries;
+
+    this.totalCalories = 0;
+    this.totalProtein = 0;
+
+    for (let i = 0; i < entries.length; i++) {
+      this.totalCalories += entries[i].calories;
+      this.totalProtein += entries[i].protein;
+    }
+  }
+}
+
 const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
@@ -8,11 +22,8 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const entries = [];
+let idCounter = 0;
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -23,7 +34,8 @@ const server = http.createServer( function( request,response ) {
 })
 
 const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+  console.log("handleGet", request.url);
+  const filename = dir + request.url.slice( 1 );
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
@@ -33,6 +45,7 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
+  console.log("handlePost", request.url);
   let dataString = ''
 
   request.on( 'data', function( data ) {
@@ -40,12 +53,39 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    console.log("server:", JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
+    const json = JSON.parse( dataString );
+    if (json.mode === "add") {
+      json.entry.id = idCounter++;
+
+      // derived field
+      // there are 4 calories per gram of protein
+      let proteinCalories = json.entry.protein * 4;
+      json.entry.percentProtein = Math.round((proteinCalories / json.entry.calories) * 100);
+
+      entries.push(json.entry);
+    } else if (json.mode === "delete") {
+      console.log("delete", json.id);
+      for (let i = 0; i < entries.length; i++) {
+        if (entries[i].id === json.id) {
+          console.log("found", entries[i]);
+          entries.splice(i, 1);
+          break;
+        }
+      }
+    } else if (json.mode === "clear") {
+      entries.length = 0; // clear array
+    } else if (json.mode === "read") {
+      // do nothing
+      console.log("read");
+    }
+
+    const responseObj = new ServerResponse(entries);
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.end(JSON.stringify(responseObj));
   })
 }
 
@@ -53,6 +93,9 @@ const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
 
    fs.readFile( filename, function( err, content ) {
+
+    console.log("filename:", filename);
+    console.log("err:", err);
 
      // if the error = null, then we've loaded the file successfully
      if( err === null ) {
