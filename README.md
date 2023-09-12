@@ -9,3 +9,11 @@ This application requires the input of a string in the username function, which 
 
 - **Tech Achievement 1**: In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
   The user may manipulate data within the server by updating the derived field balance. When a user deposits into an account, the server will add the value of the deposit to the balance variable and return the result. Withdraw works similarly, but also checks to make sure that a user balance is greater than the withdrawl amount before any money is removed. (i.e. a withdrawal may not leave balance as a negative number.) These implementatiosn allow for dynamic adjusting of variables within the server.
+
+## Design/Evaluation Achievements
+
+- **Design Achievement 1**: Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the think-aloud protocol to obtain feedback on your design (talk-aloud is also fine).
+  Last Name: Raymond
+  Issues: Issues with the formatting of the input fields. Issue With too much white space. Issue with cluttered buttons.
+  Suprising Comments: I was suprised about the ambiguous nature of "Admin is the default username" as to me it was very clear but another set of eyes it wasnt as clear what it meant.
+  Changes: I would definetly change the formatting of the input fields and also make the buttons larger and take up more space on the page.
