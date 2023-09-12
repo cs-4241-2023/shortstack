@@ -2,7 +2,7 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 ===
 
 ## a2-andrewhariyanto
-## link
+## https://a2-andrewhariyanto.glitch.me/
 This website is a tracker for calculating the accrued amount for a deposit after certain number of time with simple interest. The derived field is the accrued amount and is calculated in the server. This app is a single-page app and users can modify, submit, and delete data on this one page. I used 2 forms (one for modify and one for submit). For CSS positioning, I used a grid for the submit area and the data display area uses flex. I also used a font called Rubik from Google Fonts. All HTML files have been validated.
 
 ## Technical Achievements
