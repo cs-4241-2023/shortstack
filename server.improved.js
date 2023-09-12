@@ -77,6 +77,9 @@ const handlePost = function( request, response ) {
       }
     } else if (json.mode === "clear") {
       entries.length = 0; // clear array
+    } else if (json.mode === "read") {
+      // do nothing
+      console.log("read");
     }
 
     const responseObj = new ServerResponse(entries);

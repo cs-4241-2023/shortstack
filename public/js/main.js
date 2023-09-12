@@ -290,4 +290,9 @@ window.onload = function() {
   setCounter("calories", 0);
   setCounter("protein", 0);
 
+  const json = { mode: "read"};
+  const body = JSON.stringify( json );
+
+  (async function() { await getServerResponse(body); })();
+
 }
