@@ -1,18 +1,61 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 2</title>
+    <title>Per Game Basketball Stat Calculator</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet">
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+    <header class="topLevelElement">
+      <h1>
+        Per Game Basketball Stat Calculator
+      </h1>
+    </header>
+    <div class="topLevelElement" id="mainContent">
+      <form>
+      <label>
+        Player Name:
+        <input type="text" id="playerName">
+      </label>
+      <label>
+        Games Played:
+        <input type="number" id="gamesPlayed">
+      </label>
+      <label>
+        Total Points:
+        <input type="number" id="totalPoints">
+      </label>
+      <label>
+        Total Rebounds:
+        <input type="number" id="totalRebounds">
+      </label>
+      <label>
+        Total Assists:
+        <input type="number" id="totalAssists">
+      </label>
+      <button id="submitButton">Submit</button>
     </form>
+    <table id = "playerTable">
+      <tr>
+        <th>Player Name</th>
+        <th>Games Played</th>
+        <th>Total Points</th>
+        <th>Total Rebounds</th>
+        <th>Total Assists</th>
+        <th>Points Per Game</th>
+        <th>Rebounds Per Game</th>
+        <th>Assists Per Game</th>
+      </tr>
+    </table>
+    </div>
+    <footer class="topLevelElement">
+    <a href="https://github.com/timconnors33">GitHub profile</a></footer>
   </body>
 </html>

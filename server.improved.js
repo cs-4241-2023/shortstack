@@ -1,17 +1,40 @@
 const http = require( 'http' ),
       fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
       mime = require( 'mime' ),
       dir  = 'public/',
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+  { 
+    'playerName': 'LeBron James', 
+    'gamesPlayed': 55, 
+    'totalPoints': 1590,
+    'totalRebounds': 457,
+    'totalAssists': 375,
+    'pointsPerGame': 28.9,
+    'reboundsPerGame': 8.3,
+    'assistsPerGame': 6.8
+  },
+  { 
+    'playerName': 'Jayson Tatum', 
+    'gamesPlayed': 74, 
+    'totalPoints': 2225,
+    'totalRebounds': 649,
+    'totalAssists': 342,
+    'pointsPerGame': 30.1,
+    'reboundsPerGame': 8.8,
+    'assistsPerGame': 4.6
+  },
+  { 
+    'playerName': 'Nikola Jokic', 
+    'gamesPlayed': 69, 
+    'totalPoints': 1690,
+    'totalRebounds': 817,
+    'totalAssists': 678,
+    'pointsPerGame': 24.5,
+    'reboundsPerGame': 11.8,
+    'assistsPerGame': 9.8
+  }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -27,6 +50,10 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
+  }else if (request.url === "/appdata") {
+    const body = JSON.stringify(appdata)
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(body)
   }else{
     sendFile( response, filename )
   }
@@ -40,12 +67,20 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    const playerData = JSON.parse(dataString)
 
-    // ... do something with the data here!!!
+    playerData.pointsPerGame = (playerData.totalPoints / playerData.gamesPlayed).toFixed(1)
+    playerData.reboundsPerGame = (playerData.totalRebounds / playerData.gamesPlayed).toFixed(1)
+    playerData.assistsPerGame = (playerData.totalAssists / playerData.gamesPlayed).toFixed(1)
 
+    console.log(playerData)
+
+    appdata.push(playerData)
+    
+    
+    const body = JSON.stringify(appdata.slice(-1))
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.end(body)
   })
 }
 

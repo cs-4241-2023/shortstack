@@ -1,4 +1,56 @@
+* {
+  font-family: 'Merriweather', serif;
+  box-sizing: border-box
+}
+
+.topLevelElement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+header {
+  background-color: #1D428A;
+  padding: 0px;
+  margin-bottom: 10px;
+  padding: 0px;
+  color: white;
+}
+
 body {
-  background:black;
-  color:white;
+  margin: 0px;
+  padding: 0px;
+  background-color: #1D428A;
+  color: black;
+  background: white;
+}
+
+#mainContent {
+  background: white;
+  color: black;
+  gap: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* https://github.com/mdn/learning-area/blob/main/html/tables/basic/minimal-table.css */
+table, td, th {
+  border-collapse: collapse;
+  border: 2px solid rgb(200, 200, 200);
+  letter-spacing: 1px;
+}
+
+button:hover {
+  background-color: red;
+}
+
+footer {
+  margin: 10px;
 }
