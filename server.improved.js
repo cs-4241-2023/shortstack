@@ -19,6 +19,8 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
+  }else if( request.method === 'DELETE'){
+    handleDelete( request, response)
   }
 })
 
@@ -40,13 +42,70 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    //console.log( JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
+    let dataPoint = JSON.parse(dataString)
+    dataPoint.status = status(dataPoint.CurrHP, dataPoint.MaxHP)
+    dataPoint.id = 0
+    fs.readFile(__dirname+'/public/jsonData.json', function(err, content) {
+      if(err===null) {
+        let dataTable = [JSON.parse(content)]
+        dataPoint.id=dataTable[0].length
+        dataTable[0].push(dataPoint)
+        fs.writeFile(__dirname+'/public/jsonData.json', JSON.stringify(dataTable[0]), 'utf8', (err)=>{
+          if(err) console.log("File found\n"+err);
+          else console.log("File found, Written")})
+      }else{
+        let dataTable = [dataPoint]
+        fs.writeFile(__dirname+'/public/jsonData.json', JSON.stringify(dataTable), 'utf8', (err)=>{
+          if(err) console.log("No file found\n"+err);
+          else console.log("No file, Created")})
+      }
+    })
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end('test')
   })
+}
+
+const handleDelete = function( request, response ) {
+  let index = -1
+  request.on('data', function (data) {
+    index = data
+    //console.log("Deleting: "+temp)
+  })
+
+  request.on('end', function() {
+    if (index >= 0) {
+      fs.readFile(__dirname + '/public/jsonData.json', function (err, content) {
+        if (err === null) {
+          let dataTable = [JSON.parse(content)]
+          dataTable[0].splice(index, 1)
+          fs.writeFile(__dirname + '/public/jsonData.json', JSON.stringify(dataTable[0]), 'utf8', (err) => {
+            if (err) console.log(err)
+          })
+        } else {
+          console.log("Delete index " + index + " error\n" + err);
+        }
+      })
+    }
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end('Deleted')
+  })
+}
+
+const status = function(currHP, maxHP){
+  let percent = currHP/maxHP;
+  if(percent>0.50){
+    return "Normal";
+  }else if(percent>0.25){
+    return "Bloodied";
+  }else if(percent>0){
+    return "Very Bloodied";
+  }else{
+    return "Dead";
+  }
 }
 
 const sendFile = function( response, filename ) {
