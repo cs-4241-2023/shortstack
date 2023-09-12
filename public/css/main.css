@@ -40,13 +40,19 @@ h1.vert-move {
 }
 
 input{
-width: 100%;
+width: 70%;
 height: 80%;
+font-size: 60%;
+border: none;
+  outline: none;
+  border-bottom: 1px solid black;
+
 }
 
 
-.playbutton {
+button {
   margin-top: 20px;
+  margin-left: 10px;
   align-items: center;
   background-color: white;
   border-radius: 12px;
@@ -64,6 +70,6 @@ height: 80%;
   touch-action: manipulation;
 }
 
-.playbutton:hover {
+button:hover {
   box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
 }
