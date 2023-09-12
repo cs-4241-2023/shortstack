@@ -43,7 +43,6 @@ const handleGet = function (request, response) {
 // Client is adding data to server
 const handlePost = function (request, response) {
   let clientDataString = ''
-
   request.on('data', function (data) { // add data to clientDataString as it comes in
     clientDataString += data
   })
@@ -52,29 +51,20 @@ const handlePost = function (request, response) {
     let clientData = {}
     clientData = JSON.parse(clientDataString) // parse clientDataString into JSON object
 
+    let newPlayer = {
+      name: clientData.name,
+      color: clientData.color,
+      score: clientData.score,
+      rank: 0,
+    }
 
-    let serverData = {}
-    serverData.name = clientData.name;
-    serverData.color = clientData.color;
-    serverData.score = clientData.score;
-    serverData.rank = 0; // default rank is 0
+    serverPlayerLog.push(newPlayer) // add new player to serverPlayerLog array
 
-
-    console.log('Client Data:' + JSON.stringify(clientData))
-    console.log('Server Data (Client Data with rank):' + JSON.stringify(serverData))
-
-
-    serverPlayerLog.push(serverData) // add new object to serverPlayerLog array
-    // ... do something with the data here!!!
-
-    // sort serverPlayerLog by score
+    // Sort serverPlayerLog by score and add rank to each player
     serverPlayerLog.sort((a, b) => (a.score < b.score) ? 1 : -1)
     serverPlayerLog.forEach((player, index) => {
       player.rank = index + 1;
     })
-
-    // print full serverPlayerLog to console
-    console.log('Server Player Log: ' + JSON.stringify(serverPlayerLog))
 
     response.writeHead(200, "OK", { 'Content-Type': 'text/json' }) // send response to client
     response.end(JSON.stringify(serverPlayerLog))
@@ -85,43 +75,30 @@ const handlePost = function (request, response) {
 
 // Client is deleting data from server
 const handleDelete = function (request, response) {
-  // request is playerName string from client to delete
-  // delete that player from serverPlayerLog
-
   let clientDataString = ''
-
   request.on('data', function (data) { // add data to clientDataString as it comes in
     clientDataString += data
   })
 
   request.on('end', function () { // end when client is done sending data
-    console.log('Server received complete DELETE request')
 
     let clientData = {}
     clientData = JSON.parse(clientDataString) // parse clientDataString into JSON object
     let playerToDelete = clientData;
 
-    // print playerToDelete to console
-    console.log('Player to delete: ' + JSON.stringify(playerToDelete))
-
-    console.log('BEFORE delete: ' + JSON.stringify(serverPlayerLog))
-
-    //loop through serverPlayerLog and delete player with matching name
+    // Delete player from serverPlayerLog
     serverPlayerLog.forEach(player => {
       if (playerToDelete.name === player.name) {
-        console.log('INSIDE DELETE PORTION BEFORE SLICE')
-        // delete playerToDelete entry in serverPlayerLog with slice
         serverPlayerLog.splice(serverPlayerLog.indexOf(player), 1)
       }
     })
 
-    // sort serverPlayerLog by score
+    // Sort serverPlayerLog by score
     serverPlayerLog.sort((a, b) => (a.score < b.score) ? 1 : -1)
     serverPlayerLog.forEach((player, index) => {
       player.rank = index + 1;
     })
 
-    console.log('AFTER delete: ' + JSON.stringify(serverPlayerLog))
     response.writeHead(200, "OK", { 'Content-Type': 'text/json' }) // send response to client
     response.end(JSON.stringify(serverPlayerLog))
   })
@@ -129,7 +106,7 @@ const handleDelete = function (request, response) {
 
 // Client is editing data on server
 const handlePut = function (request, response) {
-  
+
   let clientDataString = ''
 
   request.on('data', function (data) { // add data to clientDataString as it comes in

@@ -16,8 +16,6 @@ const submit = async function (event) {
   let max = Math.floor(100);
   json.score = Math.floor(Math.random() * (max - min) + min); // add random score for now
 
-  console.log('Client json object:')
-  console.log(json) // print json object to console
   let clientData = JSON.stringify(json) // create json string from json object
 
   const response = await fetch('/submit', { // send client data to server 
@@ -26,7 +24,7 @@ const submit = async function (event) {
   })
 
   let serverData = await response.json() // get json string from server response
-  console.log('printing server json object:')
+  console.log('SERVER DATA (after add player):')
   console.log(serverData) // print json string to console
 
    populateList(serverData);
@@ -100,13 +98,10 @@ window.onload = function () {
 
 
 async function editPlayer(playerName) {
-  // edit player name
-  console.log(`Request Server to edit player: ${playerName}`)
   let newName = prompt("Please enter new name:", "New Name");
   if (newName == null || newName == "") {
     alert("Player name not changed");
   } else {
-    console.log(`New name: ${newName}`);
     let json = {}  // create json object
     json.name = playerName // add name
     json.newName = newName // add new name
@@ -117,7 +112,7 @@ async function editPlayer(playerName) {
     })
 
     let serverData = await response.json() // get json string from server response
-    console.log('printing NEW server json object:');
+    console.log('SERVER DATA (after edit):');
     console.log(serverData); // print json string to console
     populateList(serverData);
   }
@@ -126,9 +121,6 @@ async function editPlayer(playerName) {
 
 
 async function deletePlayer(playerName) {
-  // delete from server
-  console.log(`Request Server to delete player: ${playerName}`)
-
   let json = {}  // create json object
   json.name = playerName // add name
 
@@ -139,7 +131,7 @@ async function deletePlayer(playerName) {
   })
 
   let serverData = await response.json() // get json string from server response
-  console.log('printing NEW server json object:');
+  console.log('SERVER DATA (after delete):');
   console.log(serverData); // print json string to console
   populateList(serverData);
 }
