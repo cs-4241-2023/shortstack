@@ -91,8 +91,6 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 ---
 
 ## To-Do List App
-
-## Project Summary
 **Link**: https://a2-mareksgarbaczonek.glitch.me/
 
 - This project is a to-do list application. A user can add tasks, set their priorities, and add due dates. In the future, the app would also determine if the task would be assigned for today or just be unassigned in all tasks page (Currently the diamond on the far right of each row is a placeholder for when I implement it).
