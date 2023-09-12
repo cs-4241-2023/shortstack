@@ -8,7 +8,22 @@ h1 {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/*Results*/
+/* Top of page */
+
+.large-link-container {
+  width: 100%;
+  margin: 10px;
+  background-color: blueviolet;
+  display:flex;
+  justify-content: center;
+}
+
+h1.top-link {
+  font-size: 4rem;
+  color:aquamarine;
+}
+
+/* Results */
 
 .todo-item {
   margin: 5px;
@@ -56,3 +71,41 @@ address {
 
 /* Form */
 
+form {
+  background:purple;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+input {
+  width: 75%;
+}
+
+button {
+  margin-right: 0px;
+}
+
+#taskdescription {
+  height: 2rem;
+}
+
+label {
+  font-size: 1.5rem;
+  color:black;
+  background: skyblue;
+}
+
+label.section-label {
+  font-size: 2rem;
+  color: black;
+  background: cyan;
+}
+
+button {
+  font-size: 2rem;
+}

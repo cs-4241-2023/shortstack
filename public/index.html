@@ -10,37 +10,44 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+    <div class="large-link-container">
+      <a href="/results.html"><h1 class="top-link">Results</h1></a>
+    </div>
     <form>
-      <div class="form-row">
-        <label>Task name: </label>
-        <input type="text" id="taskname" value="Task Name">  
-      </div>
-      <div class="form-row">
-        <label>Description: </label>
-        <input type="text" id="taskdescription" value="Task Description">
+      <div class="form-section">
+        <label class="section-label">Task</label>
+        <div class="form-row">
+          <label>Name: </label>
+          <input type="text" id="taskname">  
+        </div>
+        <div class="form-row">
+          <label>Description: </label>
+          <input type="text" id="taskdescription">
+        </div>
       </div>
       <div class="form-section">
-        <label>Assigner:</label>
+        <label class="section-label">Assigner</label>
         <div class="form-row">
           <label>First name: </label>
-          <input type="text" id="assignerfirstname" value="Assigner First name">
+          <input type="text" id="assignerfirstname">
         </div>
         <div class="form-row">
           <Label>Last name: </Label>
-          <input type="text" id="assignerlastname" value="Assigner Last name">          
+          <input type="text" id="assignerlastname">          
         </div>
       </div>
       <div class="form-section">
+        <label class="section-label">Assignee</label>
         <div class="form-row">
           <label>First name: </label>
-          <input type="text" id="assigneefirstname" value="Assignee First Name">
+          <input type="text" id="assigneefirstname">
         </div>
         <div class="form-row">
           <label>Last name: </label>
-          <input type="text" id="assigneelastname" value="Assignee Last Name">
+          <input type="text" id="assigneelastname">
         </div>
       </div>
-      <button>submit</button>
+      <button>Submit</button>
     </form>
     <a href="/results.html">Results</a>
   </body>
