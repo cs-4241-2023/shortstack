@@ -1,4 +1,6 @@
-## Your Web Application Title
+## a2-wfryan (Grocery List Maker)
+
+https://a2-wfryan.glitch.me/
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
 This is a basic grocery list maker. It keeps track of pricing per item and total price. You can reset the whole list and modify items in the list. It uses the CSS Flex/Flexbox for positioning certain elements on the page. To modify an item's price, enter a price in the price field, check the checkbox to the right of the item (or items, can modify multiple items at the same time), then click the Modify Item Price button. All items checked off will have their price in the list updated. I should note that its only the list itself that'll get the price updated. If you update the price of an item in the cart it won't reflect because it was added to the cart before the price change.
