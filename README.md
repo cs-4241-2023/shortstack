@@ -1,7 +1,7 @@
 
 # a2-SmeeBoi: 
 Sameer Desai 
-Glitch: https://a2-smeeboi.glitch.me
+Glitch: 
 
 Random number "game". 
 
