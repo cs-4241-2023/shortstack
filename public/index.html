@@ -4,20 +4,19 @@
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
+    <script src="js/main.js"></script>
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <header>
-    <h1>HIGH SCORES</h1>
-    <p>an arcade scoreboard for every game</p>
-    <hr>
-   
-  </header>
   <body class = "tv">
+    <header>
+      <h1>HIGH SCORES</h1>
+      <p>an arcade scoreboard for every game</p>
+      <hr>
+     
+    </header>
     <form class = "flexcontainer" id = "gameForm">
 
         <div class = "flexitem">
@@ -53,7 +52,7 @@
     <hr>
 
     <div class = "datacontainer">
-      <h3 class = "griditem"></h3>
+      <div class = "griditem"></div>
       <h3 class = "griditem">GAME</h3>
       <h3 class = "griditem">HIGH SCORE</h3>
       <h3 class = "griditem">MAX SCORE</h3>
@@ -62,7 +61,7 @@
           <span class="helptext">A score goal calculated based off of the current high score and max score (if given)</span>
         </span>
       </h3>
-      <h3 class = "griditem"></h3>
+      <div class = "griditem"></div>
     </div>
 
     <div class = "datacontainer" id = "data"></div>
@@ -86,7 +85,7 @@
             <input type="number" id="maxscoreEdit" placeholder="999999">
           </div>
 
-          <div class = "flexitem" id = "nameForm">
+          <div class = "flexitem" id = "nameFormE">
             <p>Initials</p>
             <input type="text" id="initialsEdit" placeholder="EXA" maxlength="3">
           </div>
@@ -102,6 +101,6 @@
       </div>
     </div>
 
+    <footer></footer>
   </body>
-  <footer></footer>
 </html>
