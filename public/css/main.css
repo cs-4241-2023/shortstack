@@ -16,11 +16,10 @@ button:hover {
   background-color: #4A051C;
 }
 ul {
-  list-style-type: none; /* get rid of bullet points on side of list items */
+  list-style-type: none; /* no bullet points on side of list items */
 }
 
-/* common style ends */
-/* container */
+
 .container {
   min-width: 700px;
   display: flex;
@@ -70,7 +69,7 @@ label {
   font-size: 1.0rem;
 }
 
-/* todo-form style ends */
+
 /* todo-items */
 .todo-items {
   min-width: 350px;
@@ -104,9 +103,7 @@ label {
   font-size: 1.1rem;
   font-weight: 550;
 }
-/* applied when the todo item is checked */
+
 .checked { 
   text-decoration: line-through;
 }
-/* todo-items style ends */
-/* container style ends */
