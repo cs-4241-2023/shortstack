@@ -2,6 +2,10 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 ---
 Glitch Links:
 
+https://a2-eramadani3.glitch.me/
+
+https://glitch.com/edit/#!/a2-eramadani3
+
 ## Your Web Application Title
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
