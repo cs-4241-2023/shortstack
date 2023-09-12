@@ -54,26 +54,7 @@ const json = { title: titleInput.value,
   //{attribute : value}
 const body = JSON.stringify( json )
 
-/*
-const libRes = await fetch('/library',{
-  method: 'POST',
-  body
-})
 
-let libData = ""
-if (libRes.status === 200) {
-  libData = await libRes.json()
-  displayLibrary(libData)
-} 
-else if (libRes.status === 409) {
-  console.error('Duplicate entry.');
-  
-} 
-else {
-  console.error('Failed to submit data: ', libRes.statusText);
-}
-
-*/
 
 const response = await fetch( '/submit', {
     method:'POST', 
@@ -181,8 +162,6 @@ async function checkForm() {
     submitButton.disabled = true
   }
 }
-
-
 
 const getLibrary = async function(){
 
