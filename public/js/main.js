@@ -24,6 +24,7 @@ const populateTable = async () => {
       const dueDateInput = document.createElement("input");
       dueDateInput.type = "date";
       dueDateInput.value = item.dueDate;
+      console.log("wowowo", item.dueDate);
       const dueDateCell = document.createElement("td");
       dueDateCell.appendChild(dueDateInput);
 
@@ -151,9 +152,9 @@ const submit = async function (event) {
       window.alert(`Error: ${text}`);
       return;
     }
+    console.log("Response:", text);
 
     await populateTable();
-    console.log("Response:", text);
   } catch (error) {
     console.error("Error:", error);
   }
