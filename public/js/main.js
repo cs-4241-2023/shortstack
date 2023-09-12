@@ -1,115 +1,123 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 let list = null;
-const submit = async function( event ) {
+const submit = async function (event) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault()
-  
-  const name = document.querySelector( '#yourname' ), // get form input element with id=yourname
-        color = document.querySelector( '#color' )
-        
-        json = {}  // create json object
-        json.name = name.value // add name
-        json.color = color.value // add color
 
-        console.log( 'printing json object:')
-        console.log( json) // print json object to console
-        clientData = JSON.stringify( json ) // create json string from json object
-  
-  const response = await fetch( '/submit', { // send client data to server to /submit path??
-    method:'POST',
+  const name = document.querySelector('#yourname'), // get form input element with id=yourname
+    color = document.querySelector('#color')
+
+  json = {}  // create json object
+  json.name = name.value // add name
+  json.color = color.value // add color
+  let min = Math.ceil(0);
+  let max = Math.floor(100);
+  json.score = Math.floor(Math.random() * (max - min) + min); // add random score for now
+
+
+
+  console.log('printing client json object:')
+  console.log(json) // print json object to console
+  clientData = JSON.stringify(json) // create json string from json object
+
+  const response = await fetch('/submit', { // send client data to server 
+    method: 'POST',
     body: clientData // set body of request to clientData json string
   })
 
-  let data = await response.json() // get json string from server response
+  let serverData = await response.json() // get json string from server response
+  console.log('printing server json object:')
+  console.log(serverData) // print json string to console
 
-  // only create 1 list element the first time submit is clicked
-  // then just add list items to the list
-  
-
-if (document.getElementById('playerList') == null) {
-  list = document.createElement('ul') // create unordered list element in html
-  list.id = 'playerList'
-  populateList(data)
-} else {
-  document.getElementById('playerList').innerHTML = ''
-  populateList(data)
-}
-
-function populateList(data) {
-  data.forEach( d => { // for each element in json string, create a list item and append to list
-    
-  // look through list and if name already exists, don't add new item
-  // check if high score is higher than existing high score
-  if (list.innerHTML.includes(d.name)) {
-    console.log('name already exists')
-    return
+  if (document.getElementById('playerList') == null) {
+    list = document.createElement('ul') // create unordered list element in html
+    list.id = 'playerList'
+    populateList(serverData)
+  } else {
+    document.getElementById('playerList').innerHTML = ''
+    populateList(serverData)
   }
 
-    const item = document.createElement('li')
+  function populateList(serverData) {
+    serverData.forEach(d => { // for each element in json string, create a list item and append to list
 
-    // add edit button
-    const editButton = document.createElement('button')
-    editButton.innerHTML = 'edit'
+      // look through list and if name already exists, don't add new item
+      // check if high score is higher than existing high score
+      // if (list.innerHTML.includes(d.name)) {
+      //   console.log('name already exists')
+      //   alert(`Player name ${d.name} already exists. Please enter a different name.`);
+      //   return; 
+      // }
 
-    // add delete button
-    const deleteButton = document.createElement('button')
-    deleteButton.innerHTML = 'delete'
-    deleteButton.id = 'deleteButton'
+      const item = document.createElement('li')
 
-    // Data to be displayed in list item
-    item.innerHTML = `<b>Name</b> : ${d.name}, <b>Color</b>: ${d.color}, <b>High Score: </b> ${d.highscore}`
-    // add high sch
-    item.id = 'player'
+      // add edit button
+      const editButton = document.createElement('button')
+      editButton.innerHTML = 'edit'
 
-    // Add buttons in li item
-    item.appendChild(editButton)
-    item.appendChild(deleteButton)
+      // add delete button
+      const deleteButton = document.createElement('button')
+      deleteButton.innerHTML = 'delete'
+      deleteButton.id = 'deleteButton'
 
-    list.appendChild( item )
-    // add edit and delete buttons after list item
-    // list.appendChild( editButton )
-  })
+      // Server Data to be displayed in list item
+      item.innerHTML = `Name: ${d.name}, Color: ${d.color}, Score: ${d.score}, Rank: ${d.rank}`
+      item.className = 'player'
+      item.id = `${d.name}`; // set id of list item to name of player
+
+      // Add buttons in li item
+      item.appendChild(editButton)
+      item.appendChild(deleteButton)
+
+      list.appendChild(item)
+      // add edit and delete buttons after list item
+      // list.appendChild( editButton )
+    })
+  }
+  document.body.appendChild(list)
+
+
 }
-  document.body.appendChild( list )
 
-  
-}
-
-window.onload = function() {
+window.onload = function () {
   const playbutton = document.querySelector('#playbutton');
   playbutton.onclick = submit;
 
 
 
   // if delete button is clicked, delete list item
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (e.target && e.target.id == 'deleteButton') {
       console.log('delete button clicked');
-      let listItem = e.target.closest('#player');
-      console.log(`listItem: ${listItem}`);
+      let player = e.target.closest('.player');
 
-      if (listItem) {
-        listItem.remove();
+      if (player) {
+        // Get the player name from the list item
+        console.log(`Player to delete: ${player.id}`);
+
+        // Call the deletePlayer function with the player name
+        deletePlayer(player.id);
+
+        // Remove the list item from the HTML
+        player.remove();
       }
-
-      deletePlayer(listItem.name);
     }
   });
 
   // if edit button is clicked
-  
-  
+
+
 }
 
 
-function deletePlayer(playerName){
-   // delete from server
-   console.log(`Request Server to delete player: ${playerName}`)
-   const response = fetch( '/delete', {
-    method:'DELETE',
+async function deletePlayer(playerName) {
+  // delete from server
+  console.log(`Request Server to delete player: ${playerName}`)
+  const response = await fetch('/delete', {
+    method: 'DELETE',
     body: playerName
   })
 }
