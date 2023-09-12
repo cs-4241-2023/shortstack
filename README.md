@@ -96,7 +96,7 @@ Include a very brief summary of your project here. Be sure to include the CSS po
 https://a2-mareksgarbaczonek.glitch.me/
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- Created a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: 
