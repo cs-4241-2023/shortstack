@@ -54,7 +54,7 @@ function createTable(tableData){
 
       const answer = document.createElement('div')
       answer.classList.add("cellGuess")
-      answer.innerText = `${e.isWinner}`
+      answer.innerText = `${e.CompGuess}`
       player1.appendChild(answer)
 
       displayTable.appendChild(player1)
