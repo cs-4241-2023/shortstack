@@ -53,9 +53,6 @@ const submit = async function (event) {
 
 const updateTaskTable = function (tasks) {
   const table = document.getElementById("tasksTable");
-  const tasksTableRowsContainer = document.getElementsByClassName(
-    "tasks-table-rows-container"
-  );
   // clear the current rows
   let rows = document.querySelectorAll("table tr");
 
