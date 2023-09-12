@@ -93,7 +93,12 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 ## Your Web Application Title
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
-https://a2-mareksgarbaczonek.glitch.me/
+## Project Summary
+**Link**: https://a2-mareksgarbaczonek.glitch.me/
+
+
+**Description**: 
+- My derived field is the due date for each task changes from a date and displays a message instead if the task is overdue, due today, or due tomorrow.
 
 ## Technical Achievements
 **Base Technical Achievements**: 
