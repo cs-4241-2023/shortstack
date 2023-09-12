@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Expense Tracker",
+  "version": "0.1.0",
+  "description": "Application for tracking expenses",
+  "author": "Nicholas Borrello",
   "scripts": {
     "start": "node server.improved.js"
   },
