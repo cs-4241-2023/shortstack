@@ -48,3 +48,16 @@ Clean UI
 What would you change about the interface based on their feedback?
 
 Clean UI but maybe more bright color scheme
+
+Adedeji
+
+What problems did the user have with your design?
+
+No way to cancel an edit request on the UI.
+
+What comments did they make that surprised you?
+Simple UI design, pretty intuitive.
+
+What would you change about the interface based on their feedback?
+
+Add a way to cancel out of your request after pressing the edit data entry button.
