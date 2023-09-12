@@ -2,6 +2,8 @@ body {
   background: rgb(236, 210, 210);
   color: black; 
   font-family: 'Cormorant Garamond', serif;
+  margin-left: 50px;
+
 }
 h1{
   color:black;
@@ -18,13 +20,14 @@ h1{
 .userLibrary {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(4, 2fr); 
+  grid-template-columns: repeat(2, 2fr); 
+  margin-right: 170px;
+
   
 }
 
 li {
   
-  list-style-type: none;
   padding: 10px;
   background-color: #ca91b5;
   border: 1px solid #d49898;
@@ -32,7 +35,9 @@ li {
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
   position: relative;
+  
 }
+
 .userLibrary .delete:hover {
   background-color: #c0392b;
 }
@@ -67,6 +72,8 @@ label {
 }
 b {
   color:red; 
+  
+
 }
 
 input[type="text"] {
@@ -81,4 +88,3 @@ input[type="text"] {
   font-family: 'Cormorant Garamond', serif;
 	color: #888;
 }
-

@@ -1,7 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 document.addEventListener('DOMContentLoaded', function () {
 
-//trying to have library data always displayed, not working !!!!!
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -23,29 +22,28 @@ const submitButton = document.querySelector('button');
 if (!titleInput.value.trim() || !authorInput.value.trim() || !startInput.value.trim() || !finishInput.value.trim()) {
   submitButton.disabled = true;
 
-  console.log('Please fill in all fields');
+  console.log('Please fill in all fields')
 }
-submitButton.disabled = false;
+submitButton.disabled = false
 
 
-const itemIdentifier = titleInput.value + authorInput.value + startInput.value + finishInput.value;
+const itemIdentifier = titleInput.value + authorInput.value + startInput.value + finishInput.value
+const startDate = new Date(startInput.value)
+const finishDate = new Date(finishInput.value)
 
-const startDate = new Date(startInput.value);
-const finishDate = new Date(finishInput.value);
+const timeDif = finishDate - startDate
+const msDay = 24 * 60 * 60 * 1000
+const msMonth = 30.44 * msDay
+const msYear = 365.25 * msDay
 
-const timeDif = finishDate - startDate;
-const msDay = 24 * 60 * 60 * 1000;
-const msMonth = 30.44 * msDay;
-const msYear = 365.25 * msDay;
+const years = Math.floor(timeDif / msYear)
+const remainingTimeAfterYears = timeDif % msYear
 
-const years = Math.floor(timeDif / msYear);
-const remainingTimeAfterYears = timeDif % msYear;
+const months = Math.floor(remainingTimeAfterYears / msMonth)
+const remainingTimeAfterMonths = remainingTimeAfterYears % msMonth
+const days = Math.floor(remainingTimeAfterMonths / msDay)
 
-const months = Math.floor(remainingTimeAfterYears / msMonth);
-const remainingTimeAfterMonths = remainingTimeAfterYears % msMonth;
-const days = Math.floor(remainingTimeAfterMonths / msDay);
-
-const formattedTime = `${years} Year(s), ${months} Month(s), ${days} Day(s)`;
+const formattedTime = `${years} Year(s), ${months} Month(s), ${days} Day(s)`
 const json = { title: titleInput.value,
          author: authorInput.value, 
          startDate: startInput.value,
@@ -54,8 +52,28 @@ const json = { title: titleInput.value,
          identifier: itemIdentifier
 }; //json is how you want to package data before sending it to front end
   //{attribute : value}
-const body = JSON.stringify( json ); 
+const body = JSON.stringify( json )
 
+/*
+const libRes = await fetch('/library',{
+  method: 'POST',
+  body
+})
+
+let libData = ""
+if (libRes.status === 200) {
+  libData = await libRes.json()
+  displayLibrary(libData)
+} 
+else if (libRes.status === 409) {
+  console.error('Duplicate entry.');
+  
+} 
+else {
+  console.error('Failed to submit data: ', libRes.statusText);
+}
+
+*/
 
 const response = await fetch( '/submit', {
     method:'POST', 
@@ -76,7 +94,7 @@ let data = "";
   }
 
   const list = document.createElement('ul')
-  const existingList = document.querySelector('ul');
+  const existingList = document.querySelector('ul')
   if (existingList) {
     existingList.parentNode.removeChild(existingList)
   }
@@ -128,7 +146,7 @@ async function deleteBook(itemID, listItemElem, delButton) {
 
   //sucessful
   if (response.status  === 200){
-      let ul = listItemElem.parentNode;
+      let ul = listItemElem.parentNode
 
     ul.removeChild(listItemElem)
     ul.removeChild(delButton)
@@ -143,33 +161,89 @@ async function deleteBook(itemID, listItemElem, delButton) {
 }
 
 
-document.querySelector('#title').addEventListener('input', checkForm);
-document.querySelector('#author').addEventListener('input', checkForm);
-document.querySelector('#startDate').addEventListener('input', checkForm);
-document.querySelector('#dateFinished').addEventListener('input', checkForm);
+document.querySelector('#title').addEventListener('input', checkForm)
+document.querySelector('#author').addEventListener('input', checkForm)
+document.querySelector('#startDate').addEventListener('input', checkForm)
+document.querySelector('#dateFinished').addEventListener('input', checkForm)
 
 
 async function checkForm() {
-  const titleInput = document.querySelector('#title');
-  const authorInput = document.querySelector('#author');
-  const startInput = document.querySelector('#startDate');
-  const finishInput = document.querySelector('#dateFinished');
-  const submitButton = document.querySelector('button');
+  const titleInput = document.querySelector('#title')
+  const authorInput = document.querySelector('#author')
+  const startInput = document.querySelector('#startDate')
+  const finishInput = document.querySelector('#dateFinished')
+  const submitButton = document.querySelector('button')
 
   if (titleInput.value.trim() && authorInput.value.trim() && startInput.value.trim() && finishInput.value.trim()) {
-    submitButton.disabled = false;
+    submitButton.disabled = false
   } 
   else {
-    submitButton.disabled = true;
+    submitButton.disabled = true
   }
 }
 
 
 
-window.onload = function() {
+const getLibrary = async function(){
+
   
-  const submitButton = document.querySelector("#submit");
+  const libRes = await fetch('/library', {
+    method: 'GET'
+  });
+
+let libData = ""
+if (libRes.status === 200) {
+  libData = await libRes.json()
+  displayLibrary(libData)
+} 
+else if (libRes.status === 409) {
+  console.error('Conflict');
+  
+} 
+else {
+  console.error('Failed to show data: ', libRes.statusText);
+}
+}
+
+
+
+function displayLibrary(data){
+
+  const list1 = document.createElement('ul')
+  const addedItems = []
+
+
+  data.forEach(d => {
+
+    const itemIdentifier = d.title + d.author + d.startDate + d.dateFinished
+    if (!addedItems.includes(itemIdentifier)){
+      const li = document.createElement('li')
+      li.className = "userLibrary"
+      const deleteButton = document.createElement("button")
+      deleteButton.innerText = "Delete"
+      deleteButton.className = "delete"
+      
+      li.innerText = "Title: " + d.title + "\nAuthor: " + d.author + "\nStart Date: " + d.startDate + "\nFinish Date: " + d.dateFinished +"\nTime to Finish: " + d.timeToFinish
+      
+      
+      list1.appendChild(li)
+      list1.appendChild(deleteButton)
+      addedItems.push(itemIdentifier)
+      deleteButton.onclick = () => deleteBook(itemIdentifier, li, deleteButton); 
+
+   }
+    
+  })
+
+  document.body.appendChild( list1 )  
+
+}
+
+window.onload = function() {
+  const submitButton = document.querySelector("#submit")
   submitButton.disabled = true;
   submitButton.onclick = submit;
+ getLibrary();
+
 }
 })
