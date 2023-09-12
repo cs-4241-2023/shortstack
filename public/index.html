@@ -19,8 +19,8 @@
 
       <div class = "status status_calories">
         <h2 class = "status_name">Calories</h2>
-        <p class = "status_value">0</p>
-        <p class = "status_offset">300 to go</p>
+        <p class = "status_value" id = "calories_value">0</p>
+        <p class = "status_offset" id = "calories_offset">300 to go</p>
         <div>
           <label for="calories_goal">Goal: </label>
           <input
@@ -28,14 +28,15 @@
             value = "3000"
             id = "calories_goal"
             maxlength="4"
+            onchange = "updateCaloriesGoal()"
             class = "status_goal"> kcal</input>
         </div>
       </div>
 
       <div class = "status status_protein">
         <h2 class = "status_name">Protein</h2>
-        <p class = "status_value">0</p>
-        <p class = "status_offset">300 to go</p>
+        <p class = "status_value" id = "protein_value">0</p>
+        <p class = "status_offset" id = "protein_offset">300 to go</p>
         <div>
           <label for= "protein_goal">Goal: </label>
           <input
@@ -43,6 +44,7 @@
           value = "150"
           id = "protein_goal"
           maxlength="3"
+          onchange = "updateProteinGoal()"
           class = "status_goal"> g</input>
         </div>
       <div>
@@ -65,7 +67,12 @@
         <input type="number" id="food_protein" placeholder="Protein in g...">
       </div>
       
-      <button>submit</button>
+
+      <div class = "food_submit_container">
+        <button id = "food_submit_button">Submit</button>
+        <p id = "food_submit_message">def</p>
+      </div>
+      
     </form>
 
   </body>
