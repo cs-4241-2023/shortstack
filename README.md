@@ -45,7 +45,7 @@ one js file to manage the server, server.improved.js
 
 -5 Points, UI study: 
     Student: Will Ryan
-    Problems with design: Timeline box spacing and organization could be improved, standardization of button sizes/colors
+    Problems with design: Timeline box spacing and organization could be improved, standardization of button sizes/colors (specifically, get submit button on same line as other boxes in the timeline)
     Comments they made that surprised you: "All in all it's not bad tho"
     What you would change: I would spend time sizing the timeline specifically, ensure text fits properly in the boxes, improve organization of them
 
