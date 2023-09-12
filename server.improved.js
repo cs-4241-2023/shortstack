@@ -9,10 +9,12 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+  { 'id': 0, 'yourName': 'Bright', 'yourKills': 10, 'yourDeaths': 5, 'yourAssists': 1, 'KDA': 2.2},
+  { 'id': 1, 'yourName': 'Nelson', 'yourKills': 20, 'yourDeaths': 50, 'yourAssists': 3, 'KDA': .46 }
 ]
+
+ 
+
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -27,9 +29,16 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else{
+  }else if( request.url === '/start'){
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(appdata))
+  }
+  else{
     sendFile( response, filename )
   }
+
+
+
 }
 
 const handlePost = function( request, response ) {
@@ -40,13 +49,63 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+    const data = JSON.parse( dataString );
+    
+    if( request.url === '/delete' ) {
+      let fail = true;
+      for(let i=0; i < appdata.length; i++){
+        if(data.id === appdata[i].id){
+          fail = false
 
-    // ... do something with the data here!!!
+          appdata.splice(i, 1) 
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+          response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+          response.end('')
+          break
+        }
+      }
+      if(fail){
+        response.writeHead( 404, "Not Found", {'Content-Type': 'text/plain' })
+        response.end('')
+      }
+
+    }else if(request.url === '/modify'){
+      let fail = true;
+      for(let i=0; i < appdata.length; i++){
+        if(data.id === appdata[i].id){
+          fail = false
+
+          data.KDA = (data.yourKills + data.yourAssists) / data.yourDeaths
+
+          appdata[i] = data
+
+          response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+          response.end(JSON.stringify(data))
+          break
+        }
+      }
+      if(fail){
+        response.writeHead( 404, "Not Found", {'Content-Type': 'text/plain' })
+        response.end('')
+      }
+
+    }else if(request.url === '/submit'){
+
+      // KDA = (kills + assists)/ deaths 
+      kills = data.yourKills
+      deaths = data.yourDeaths
+      assists =  data.yourAssists
+      kda = (kills + assists) / deaths
+      
+      data.KDA = kda
+
+      appdata.push(data)
+
+      response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+      response.end(JSON.stringify(data))
+    }
   })
+
 }
 
 const sendFile = function( response, filename ) {
