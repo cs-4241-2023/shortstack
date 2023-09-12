@@ -10,6 +10,39 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+
+    <header>
+      <h1>Calorie and Protein Counter</h1>
+    </header>
+
+    <section class="status_section">
+
+      <div class = "status status_calories">
+        <h2 class = "status_name">Calories</h2>
+        <p class = "status_value">0</p>
+        <p class = "status_offset">300 to go</p>
+        <label for="calories_goal">Goal: </label>
+        <input
+          type = "number"
+          value = "3000"
+          id = "calories_goal"
+          maxlength="4"
+          class = "status_goal"> kcal</input>
+      </div>
+
+      <div class = "status status_protein">
+        <h2 class = "status_name">Protein</h2>
+        <p class = "status_value">0</p>
+        <p class = "status_offset">300 to go</p>
+        <label for= "protein_goal">Goal: </label>
+        <input
+        type = "number"
+        value = "150"
+        id = "protein_goal"
+        maxlength="3"
+        class = "status_goal"> g</input>
+    </section>
+
     <form>
       <input type="text" id="yourname" value="your name here">
       <button>submit</button>
