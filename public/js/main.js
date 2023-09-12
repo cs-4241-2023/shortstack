@@ -1,103 +1,83 @@
-let editIndex = null; 
+// FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const fetchAndDisplayRecipes = async () => {
-    const response = await fetch('/get-recipes');
-    const recipes = await response.json();
-    const tableBody = document.querySelector('#recipe-table-body');
-    tableBody.innerHTML = '';
+const addRecipe = async function (event) {
+  event.preventDefault();
 
-    recipes.forEach((recipe, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${recipe.recipeName}</td>
-            <td>${recipe.ingredients.replace(/\n/g, ', ')}</td>
-            <td>
-                <button onclick="deleteRecipe(${index})">Delete</button>
-                <button onclick="editRecipe(${index})">Edit</button>
-            </td>
-        `;
-        tableBody.appendChild(row);
-    });
+  const inputName = document.querySelector("#recipe_name");
+  const inputIngredients = document.querySelector("#recipe_ingredients");
+  const inputDirections = document.querySelector("#recipe_directions");
+
+  const recipeData = {
+    recipe_name: inputName.value,
+    recipe_ingredients: inputIngredients.value,
+    recipe_directions: inputDirections.value,
+  };
+
+  const response = await fetch("/add_recipe", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(recipeData),
+  });
+
+  const recipes = await response.json();
+
+  const tableRows = recipes
+    .map((recipe) => {
+      return `<tr>
+        <td>${recipe.recipe_name}</td>
+        <td>${recipe.recipe_ingredients}</td>
+        <td>${recipe.recipe_directions}</td>
+     </tr>`;
+    })
+    .join("");
+
+  document.querySelector("#recipe_table").innerHTML = tableRows;
+
+  inputName.value = "";
+  inputIngredients.value = "";
+  inputDirections.value = "";
 };
 
-const deleteRecipe = async (index) => {
-    const response = await fetch('/delete-recipe', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ index }),
-    });
-    const result = await response.json();
-    if (result.status === 'success') {
-        fetchAndDisplayRecipes();
-    } else {
-        alert('Failed to delete recipe: ' + result.message);
-    }
-};
+const deleteRecipe = async function (event) {
+  event.preventDefault();
 
-const editRecipe = async (index) => {
-    const response = await fetch('/get-recipes');
-    const recipes = await response.json();
-    const recipe = recipes[index];
-    if (recipe) {
-        document.querySelector('#recipe-name').value = recipe.recipeName;
-        document.querySelector('#ingredients').value = recipe.ingredients;
-        document.querySelector('#instructions').value = recipe.instructions;
-        editIndex = index;
-    } else {
-        console.error('Recipe not found');
-    }
-};
+  const inputToDelete = document.querySelector("#recipe_to_delete");
 
-const submitRecipe = async function (event) {
-    event.preventDefault();
+  const recipeToDelete = {
+    recipe_name: inputToDelete.value,
+  };
 
-    const recipeName = document.querySelector('#recipe-name').value;
-    const ingredients = document.querySelector('#ingredients').value;
-    const instructions = document.querySelector('#instructions').value;
+  const response = await fetch("/delete_recipe", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(recipeToDelete),
+  });
 
-    if (recipeName === "" || ingredients === "" || instructions === "") {
-        alert("All fields are required.");
-        return;
-    }
+  const recipes = await response.json();
 
-    const recipeData = {
-        recipeName,
-        ingredients,
-        instructions,
-    };
+  const tableRows = recipes
+    .map((recipe) => {
+      return `<tr>
+        <td>${recipe.recipe_name}</td>
+        <td>${recipe.recipe_ingredients}</td>
+        <td>${recipe.recipe_directions}</td>
+     </tr>`;
+    })
+    .join("");
 
-    const body = JSON.stringify(recipeData);
+  document.querySelector("#recipe_table").innerHTML = tableRows;
 
-    let url = '/add-recipe';
-    if (editIndex !== null) {
-        url = '/update-recipe';
-    }
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body,
-    });
-
-    const result = await response.json();
-
-    if (result.status === 'success') {
-        document.querySelector('#recipe-name').value = '';
-        document.querySelector('#ingredients').value = '';
-        document.querySelector('#instructions').value = '';
-        editIndex = null;
-        fetchAndDisplayRecipes();
-    } else {
-        alert('Failed to add/update recipe: ' + result.message);
-    }
+  inputToDelete.value = "";
 };
 
 window.onload = function () {
-    const addButton = document.querySelector('#add-recipe-form button');
-    addButton.addEventListener('click', submitRecipe);
-    fetchAndDisplayRecipes();
+  const addRecipeButton = document.getElementById("add_recipe");
+  const deleteRecipeButton = document.getElementById("delete_recipe");
+
+  addRecipeButton.onclick = addRecipe;
+  deleteRecipeButton.onclick = deleteRecipe;
 };
