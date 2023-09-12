@@ -13,7 +13,7 @@ let appdata = [];
 const server = http.createServer(function (request, response) {
   if (request.method === "GET") {
     handleGet(request, response);
-  } else if (request.method === "POST") {
+  } else if (request.method === "POST") {``
     handlePost(request, response);
   }
 });
@@ -37,11 +37,15 @@ const handlePost = function (request, response) {
 
   request.on("end", function () {
     console.log(dataString);
-
-    let newData = JSON.parse(dataString);
-    appdata.push(newData);
-    calculateDaysRemaining(appdata);
-    console.log(appdata);
+    if (request.url === '/submit') { //handle form requests
+      let newData = JSON.parse(dataString);
+      appdata.push(newData);
+      calculateDaysRemaining(appdata);
+      console.log(appdata);
+    } else if (request.url === '/delete'){
+      //Delete some data -- look into array.splice
+      console.log('deleted')
+    }
     response.writeHead(200, 'OK', { 'Content-Type': 'application/json' });
     response.write(JSON.stringify(appdata));
     response.end();

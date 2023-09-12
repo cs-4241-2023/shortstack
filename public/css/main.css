@@ -1,5 +1,5 @@
 body {
-  font-family: 'Dosis';
+  font-family: "Dosis";
   text-align: center;
   margin: 0;
   padding: 0;
@@ -10,7 +10,7 @@ body {
 }
 
 .my-heading {
-  font-family: 'Dosis';
+  font-family: "Dosis";
   font-size: 50px;
   font-weight: bold;
   color: #bbe4e9;
@@ -21,8 +21,9 @@ body {
 }
 
 .my-form {
-  font-family: 'Dosis';
+  font-family: "Dosis";
   width: 100%;
+  display: flex;
 }
 
 .my-label {
@@ -40,7 +41,7 @@ body {
 }
 
 .my-button {
-  font-family: 'Dosis';
+  font-family: "Dosis";
   font-size: 20px;
   padding: 10px 20px;
   background-color: #53a8b6;
@@ -54,7 +55,7 @@ body {
 }
 
 .my-deletebutton {
-  font-family: 'Dosis';
+  font-family: "Dosis";
   font-size: 15px;
   padding: 5px 10px;
   color: black;
@@ -69,21 +70,38 @@ body {
   background-color: #f95959;
 }
 
-.my-table {
-  font-family: 'Dosis';
-  width: 100%;
-  border-collapse: collapse;
-  margin: 10px;
+.my-editbutton {
+  font-family: "Dosis";
+  font-size: 15px;
+  padding: 5px 10px;
+  color: black;
+  background-color: #0e7cf4;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
-.my-table th, .my-table td {
+.my-editbutton:hover {
+  color: white;
+  background-color: #0aa0f6;
+}
+
+
+.my-table {
+  font-family: "Dosis";
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.my-table th,
+.my-table td {
   padding: 12px;
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
 }
 
 .my-table th {
   background-color: #f2f2f2;
-  text-align: center;
+  text-align: left;
 }
 
 .my-table tr:nth-child(even) {
