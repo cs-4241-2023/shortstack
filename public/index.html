@@ -5,14 +5,26 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <meta name="viewport" content="width=device-width">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://media.discordapp.net/attachments/641632207634432010/1150954369202802778/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.discordapp.com/attachments/641632207634432010/1150954497766592613/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.discordapp.com/attachments/641632207634432010/1150954609934860398/favicon-16x16.png">
   </head>
   <body>
+    <h1>What do I have to do?</h1>
+    <h5>a quick organzier created by Sean</h5>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <input type="text" id="taskname" placeholder="Task...">
+      <input type="date" id="duedate">
+      <label> Urgent?<input type="checkbox" id="urgent?" value="URGENT"></label>
+      <button>Add Task</button>
     </form>
+
+    <ul id="myTasks">
+      <li>Write IQP Application</li>
+      <li class="done priority">Finish Assignment 2 for CS4241</li>
+      <li>Apply for Scholarships</li>
+    </ul>
   </body>
+  
 </html>
