@@ -10,21 +10,42 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.discordapp.com/attachments/641632207634432010/1150954497766592613/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.discordapp.com/attachments/641632207634432010/1150954609934860398/favicon-16x16.png">
   </head>
+  
   <body>
+    <div class = "container">
+    
     <h1>What do I have to do?</h1>
     <h5>a quick organzier created by Sean</h5>
-    <form>
-      <input type="text" id="taskname" placeholder="Task...">
-      <input type="date" id="duedate">
-      <label> Urgent?<input type="checkbox" id="urgent?" value="URGENT"></label>
-      <button>Add Task</button>
+    <form class="todo-form" id = "addItemContainer">
+      <label>Task Name</label><input  class="todo-input" type="text" id="taskname" placeholder="Task...">
+      <label>Due Date</label><input  class="todo-input" type="date" id="duedate">
+      <button class="add-button" type="submit">Add Task</button>
     </form>
 
-    <ul id="myTasks">
-      <li>Write IQP Application</li>
-      <li class="done priority">Finish Assignment 2 for CS4241</li>
-      <li>Apply for Scholarships</li>
+    <div id="task-table">
+      
+    </div>
+
+    <!---
+    <ul class="todo-items" id="myTasks">
+      <li class = "item">
+        <input class="checkbox" type="checkbox">
+        Write IQP Application
+        <button class="delete-button">X</button>
+      </li>
+      <li class = "item">
+        <input class="checkbox" type="checkbox">
+        Finish Assignment 2 for CS4241
+        <button class="delete-button">X</button>
+      </li>
+      <li class = "item">
+        <input class="checkbox" type="checkbox">
+        Apply for Scholarships
+        <button class="delete-button">X</button>
     </ul>
+    --->
+
+  </div>
   </body>
   
 </html>

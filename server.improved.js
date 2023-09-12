@@ -9,9 +9,9 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+  { 'task': 'Write IQP Application', 'due': '09/29/2023'},
+  { 'task': 'Finish Assignment 2 for CS4241', 'due': '09/12/2023'},
+  { 'task': 'Apply for Scholarships', 'due': '09/30/2023'}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -19,6 +19,8 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
+  }else if( request.method === 'DELETE' ){
+    handlePost( request, response, true );
   }
 })
 
@@ -27,9 +29,18 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else{
+  }
+  else if (request.url === '/json' ) {
+    handleGetData(request, response);
+  }
+  else{
     sendFile( response, filename )
   }
+}
+
+function handleGetData(request, response){
+  response.setHeader('Content-Type', 'application/json');
+  response.end(JSON.stringify(appdata));
 }
 
 const handlePost = function( request, response ) {
@@ -42,7 +53,17 @@ const handlePost = function( request, response ) {
   request.on( 'end', function() {
     console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
+    if(isDelete){
+      let data = JSON.parse(dataString);
+      console.log(data);
+      if (data.index > -1) {
+        appdata.splice(data.index, 1);
+      }
+    }else{
+      let data=JSON.parse( dataString );
+
+      appdata.push(data);
+    }
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end('test')
