@@ -26,7 +26,6 @@ const submit = async function (event) {
   let serverData = await response.json() // get json string from server response
   console.log('SERVER DATA (after add player):')
   console.log(serverData) // print json string to console
-
    populateList(serverData);
 }
 
@@ -49,11 +48,13 @@ function populateList(serverData) {
     // add edit button
     const editButton = document.createElement('button')
     editButton.innerHTML = 'edit'
+    editButton.class = 'editButton'
+
 
     // add delete button
     const deleteButton = document.createElement('button')
     deleteButton.innerHTML = 'delete'
-    deleteButton.id = 'deleteButton'
+    deleteButton.class = 'deleteButton'
 
     // Server Data to be displayed in list item
     item.innerHTML = `Name: ${d.name}, Color: ${d.color}, Score: ${d.score}, Rank: ${d.rank}`
@@ -72,30 +73,24 @@ window.onload = function () {
   const playbutton = document.querySelector('#playbutton');
   playbutton.onclick = submit;
 
-
-  // if delete button is clicked, delete list item
+  // Delete button clicked
   document.addEventListener('click', function (e) {
-    if (e.target && e.target.id == 'deleteButton') {
+    if (e.target && e.target.class == 'deleteButton') {
       let player = e.target.closest('.player');
-
-        // Call the deletePlayer function with the player name
-        deletePlayer(player.id);
+      // Call the deletePlayer function with the player name
+      deletePlayer(player.id);
     }
-
   });
 
-  // if edit button is clicked
+  // Edit button clicked
   document.addEventListener('click', function (e) {
-    if (e.target && e.target.innerHTML == 'edit') {
+    if (e.target && e.target.class == 'editButton') {
       let player = e.target.closest('.player');
-
       // Call the editPlayer function with the player name
       editPlayer(player.id);
     }
-
   });
 }
-
 
 async function editPlayer(playerName) {
   let newName = prompt("Please enter new name:", "New Name");
