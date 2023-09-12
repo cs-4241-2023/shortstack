@@ -66,21 +66,11 @@ const handlePost = function (request, response) {
     serverPlayerLog.push(serverData) // add new object to serverPlayerLog array
     // ... do something with the data here!!!
 
-    // loop through serverPlayerLog and compare each players scores to calculate rank for each player
-    // assign player with highest score rank 1 and so on
-    serverPlayerLog.forEach(player => {
-      let rank = 1;
-      serverPlayerLog.forEach(otherPlayer => {
-        if (player.score < otherPlayer.score) {
-          rank++;
-        }
-      })
-      player.rank = rank;
+    // sort serverPlayerLog by score
+    serverPlayerLog.sort((a, b) => (a.score < b.score) ? 1 : -1)
+    serverPlayerLog.forEach((player, index) => {
+      player.rank = index + 1;
     })
-
-    // sort players by rank so that rank 1 is at the top of the list
-    serverPlayerLog.sort((a, b) => (a.rank > b.rank) ? 1 : -1)
-
 
     response.writeHead(200, "OK", { 'Content-Type': 'text/json' }) // send response to client
     response.end(JSON.stringify(serverPlayerLog))
@@ -92,26 +82,35 @@ const handleDelete = function (request, response) {
   // request is playerName string from client to delete
   // delete that player from serverPlayerLog
 
-  request.on('data', function (data) { // add data to clientDataString as it comes in
-    console.log('Server received a DELETE request')
-  })
+  // request.on('data', function (data) { // add data to clientDataString as it comes in
+  //   console.log('Server received a DELETE request')
+  // })
 
   request.on('end', function () { // end when client is done sending data
     console.log('Server received complete DELETE request')
-    let deletePlayer = request
+    let playerToDelete = request; 
 
     console.log('before delete: ' + JSON.stringify(serverPlayerLog))
 
-
     //loop through serverPlayerLog and delete player with matching name
     serverPlayerLog.forEach(player => {
-      if (player.name === deletePlayer) {
+      if (player.name === playerToDelete) {
         // delete player entry in serverPlayerLog with slice
-        serverPlayerLog.slice(serverPlayerLog.indexOf(deletePlayer), 1);
+        serverPlayerLog.slice(serverPlayerLog.indexOf(playerToDelete), 1);
+
+        // sort serverPlayerLog by score
+        serverPlayerLog.sort((a, b) => (a.score < b.score) ? 1 : -1)
+        serverPlayerLog.forEach((player, index) => {
+          player.rank = index + 1;
+        })
+
         console.log('after delete: ' + JSON.stringify(serverPlayerLog))
       }
     })
   })
+
+  response.writeHead(200, "OK", { 'Content-Type': 'text/json' }) // send response to client
+    response.end(JSON.stringify(serverPlayerLog))
 }
 
 
