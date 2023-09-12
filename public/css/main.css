@@ -154,16 +154,7 @@ button:hover {
   background-color: #fff; /* Set background color */
 }
 
-/* Style the calendar icon (you can use a custom icon here) */
-#due-date::-webkit-calendar-picker-indicator {
-  display: none;
-}
 
-/* Style the date picker's container (you can't style the date picker itself) */
-#due-date-container {
-  position: relative;
-  display: inline-block;
-}
 
 #due-date:focus {
   outline: none; /* Remove the default focus outline */
