@@ -25,3 +25,31 @@ I used id selectors with my addItemContainer and task-table, and class selectors
 - **Design Achievement 3**: Created and used a color palette from color.adobe.com.
 - **Design Achievement 4**: I used Lato as the font from GoogleFonts for the primary copy text in my site. I specified that Arial, Helvetica, and sans-serif as backup fonts.
 - **Design Achievement 5**: I used a Font Awesome script to import the trash icon that is used when users delete data.
+- **Design Achievement 6**: 2 of my classmates reviewed my site
+
+#### Review 1
+**Last Name: **
+Marrinan
+
+**What problems did the user have with your design? **
+User had a problem where the creation & deadline dates were 1 day behind
+
+**What comments did they make that surprised you?**
+The date issue surprised me the most. 
+
+**What would you change about the interface based on their feedback?**
+I'd update the date input to be accurate.
+
+
+#### Review 2
+**Last Name **
+Rabbitt
+
+**What problems did the user have with your design?**
+User noticed that the creation & deadline dates were 1 day behind due to a timezone error
+
+**What comments did they make that surprised you?**
+The user was a big fan of the reset form button
+
+**What would you change about the interface based on their feedback?**
+I would fix the timezone error in the input

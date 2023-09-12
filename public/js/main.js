@@ -1,4 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
+
+
 const submit = async function( event) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -10,12 +12,13 @@ const submit = async function( event) {
   const form = document.querySelector('form')
 
   let task=form["Task"].value;
-  let deadline=new Date(form["Deadline"].value).toLocaleDateString("en-US");
-  let creationDate=new Date(form["CreationDate"].value).toLocaleDateString("en-US");
+  let deadlineDate=new Date(form["Deadline"].value);
+  let creationDate=new Date(form["CreationDate"].value);
+
 
   let taskValid=task!=="" && task!==undefined;
   let dateValid=creationDate.value !== "";
-  let deadlineValid=deadline.value !== "";
+  let deadlineValid=deadlineDate.value !== "";
 
   if(!taskValid){
     alert("Task is invalid");
@@ -28,9 +31,16 @@ const submit = async function( event) {
   }
 
   if(taskValid && dateValid && deadlineValid){
-    let json = { task, creationDate, deadline};
+
+    creationDate.setDate(creationDate.getDate()+1);
+    let creation=creationDate.toLocaleDateString();
+
+    deadlineDate.setDate(deadlineDate.getDate()+1);
+    let deadline=deadlineDate.toLocaleDateString();
+
+    let json = { task, creation, deadline};
     let body = JSON.stringify( json );
-    console.log(body);
+    console.log("Body: " +body);
     const response = await fetch( '/json', {
           method:'POST',
           body
@@ -78,11 +88,11 @@ function CreateHeaderCell(cellInfo){
   return cell;
 }
 
-function CreateRow(task,creationDate,deadline,priority,index){
+function CreateRow(task,creation,deadline,priority,index){
   let row=document.createElement("tr");
   row.append(CreateDeleteButton(index));
   row.append(CreateCell(task));
-  row.append(CreateCell(creationDate));
+  row.append(CreateCell(creation));
   row.append(CreateCell(deadline));
   row.append(CreateCell(priority));
   return row;
@@ -136,7 +146,7 @@ function LoadFromServer(data){
   data.forEach((item,index) => {
     console.log(index);
     let row=CreateRow(item["task"],
-                                          item["creationDate"],
+                                          item["creation"],
                                           item["deadline"],
                                           JudgePriority(item["deadline"]),
                                           index);
