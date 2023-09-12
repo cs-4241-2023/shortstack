@@ -19,7 +19,7 @@ const submit = async function( event ) {
 
   const text = await response.text()
   console.log('Response:', text);
-  fetchTodos();
+  fetchTodos(); //I don't think this is necessary
 }
 
 const fetchTodos = async function() {
@@ -29,23 +29,23 @@ const fetchTodos = async function() {
   const todoList = document.querySelector('#todoList'); // delete maybe
   todoList.innerHTML = '';  // Clear current list
 
-  const tbody = document.querySelector("#todoTable tbody");
+  const tbody = document.querySelector("#todoTable");
 
   todos.forEach(todo => {
-    let date = new Date(todo.dueDate)
-    let today = new Date
-    const diff = date - today
-    console.log(diff)
-    priority = "HIGH"
-    if(diff < 200000000){
-      priority = "HIGH"
-    }
-    else{
-      priority = "LOW"
-    }
+    // let date = new Date(todo.dueDate)
+    // let today = new Date
+    // const diff = date - today
+    // console.log(diff)
+    // priority = "HIGH"
+    // if(diff < 200000000){
+    //   priority = "HIGH"
+    // }
+    // else{
+    //   priority = "LOW"
+    // }
 
     const todoItem = document.createElement('li');
-    todoItem.textContent = `${todo.todoinput} | ${todo.dueDate} | ${priority} `;
+    todoItem.textContent = `${todo.todoinput} | ${todo.dueDate} | ${todo.priority} `;
 
 
 
@@ -54,27 +54,30 @@ const fetchTodos = async function() {
     deleteBtn.textContent = 'Delete';
     deleteBtn.onclick = () => deleteTodo(todo.id);  // attach delete function to the button
 
-
-    // const row = document.createElement("tr");
-
-    // const tdTodo = document.createElement("td");
-    // tdTodo.textContent = todo.todoinput;
-    // row.appendChild(tdTodo);
-    // const tdDueDate = document.createElement("td");
-    // tdDueDate.textContent = todo.dueDate;
-    // row.appendChild(tdDueDate);
-
-    // const tdPriority = document.createElement("td");
-    // tdPriority.textContent = priority;
-    // row.appendChild(tdPriority);
-
-    // row.appendChild(deleteBtn)
-    // tbody.appendChild(row);
-
-
-
     todoItem.appendChild(deleteBtn);
     todoList.appendChild(todoItem);
+
+    /*const row = document.createElement("tr");
+    
+    const tdTodo = document.createElement("td");
+    tdTodo.textContent = todo.todoinput;
+    row.appendChild(tdTodo);
+    const tdDueDate = document.createElement("td");
+    tdDueDate.textContent = todo.dueDate;
+    row.appendChild(tdDueDate);
+
+    const tdPriority = document.createElement("td");
+    tdPriority.textContent = priority;
+    row.appendChild(tdPriority);
+
+    const tdDelete = document.createElement("td");
+    tdDelete.innerHTML = "<button class=\"deleteButton\" onclick=" +  `${deleteTodo(todo.id)}` + ")>Delete</button>";
+    row.appendChild(tdDelete);
+
+    // row.appendChild(deleteBtn)
+
+    tbody.appendChild(row);*/
+
   });
 }
 

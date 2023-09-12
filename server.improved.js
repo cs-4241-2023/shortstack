@@ -18,6 +18,8 @@ const server = http.createServer( function( request,response ) {
   }
 })
 
+//Priority logic
+
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
@@ -26,6 +28,7 @@ const handleGet = function( request, response ) {
   } else if(request.url === '/getTodos') { // added this else if
     response.writeHead(200, { 'Content-Type': 'application/json' });
     response.end(JSON.stringify(appdata));
+    //response.end([priority: 'priority', data: JSON.stringify(appdata)]);
   } else{
     sendFile( response, filename )
   }
@@ -62,6 +65,21 @@ const handlePost = function(request, response) {
 
     // ... do something with the data here!!!
     if(request.url === '/submit') {
+      //calculate priority 
+      //priorityData = 
+      let date = new Date(receivedData.dueDate)
+      let today = new Date
+      const diff = date - today
+      console.log(diff)
+      priority = ""
+      if(diff < 200000000){
+        priority = "HIGH"
+      }
+      else{
+        priority = "LOW"
+      }
+      receivedData.priority = priority
+      //receivedData.push('priority', priority);
       appdata.push(receivedData);
       console.log("Added: ", receivedData.todoinput," Due on: ", receivedData.dueDate);
       response.writeHead(200, "OK", {'Content-Type': 'text/plain'});
