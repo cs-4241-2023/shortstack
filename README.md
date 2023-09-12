@@ -1,26 +1,15 @@
 Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
 ===
-
-CSS:
-- CSS styling of the primary visual elements in the application
-- Various CSS Selector functionality must be demonstrated:
-    - Element selectors
-    - ID selectors
-    - Class selectors
-- CSS positioning and styling of the primary visual elements in the application:
-    - Use of either a CSS grid or flexbox for layout
-    - Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
-
-- CSS defined in a maintainable, readable form, in external stylesheets 
-
 ## To-Do List App
 **Link**: https://a2-mareksgarbaczonek.glitch.me/
 
 - This project is a to-do list application. A user can add tasks, set their priorities, and add due dates. In the future, the app would also determine if the task would be assigned for today or just be unassigned in all tasks page (Currently the diamond on the far right of each row is a placeholder for when I implement it).
 - Once the user adds tasks, they can modify the task name, the priority, due date, or mark the task as complete.
 
-**Description**: 
+**Description And CSS**: 
 - My derived field is the due date for each task changes from a date and displays a message instead if the task is overdue, due today, or due tomorrow.
+- I have used flex boxes for my page layout
+- I have used Nunito Sans Font from Google Fonts for all of the text on my website.
 
 ## Technical Achievements
 **Base Technical Achievements**: 
