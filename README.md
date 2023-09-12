@@ -13,3 +13,21 @@ Glitch: rabbitt-project2.glitch.me/
 - **Design Achievement 1**: Used the flex display option to center the form and table containers horizontally. 
 - **Design Achievement 2**: Imported the Font Awesome icons script to add a x icon for the delete buttons.
 - **Design Achievement 3**: Applied CSS styles to the default color picker form input, to make the selector display as a circle with a semi-transparent white background.
+
+#### Review 1
+Marrinan
+**What problems did the user have with your design?**
+User didn't realize the color pickers were interactable.
+**What comments did they make that surprised you?**
+I was surprised the color picker wasn't as obvious as I thought.
+**What would you change about the interface based on their feedback?**
+I would make the color inputs more obvious to interact with.
+
+#### Review 2
+Donnelly
+**What problems did the user have with your design?**
+User also had issues with the color picker
+**What comments did they make that surprised you?**
+Same as above
+**What would you change about the interface based on their feedback?**
+I would add a color picker icon to each of the color inputs.
