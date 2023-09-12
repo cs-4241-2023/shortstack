@@ -1,27 +1,41 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
-
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
-
-  const response = await fetch( '/submit', {
-    method:'POST',
-    body 
-  })
-
-  const text = await response.text()
-
-  console.log( 'text:', text )
-}
+let play = []
 
 window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+  fetch( '/fResults', {
+    method: 'GET'
+  })
+  .then( function( response ) {
+    response.json().then(function(data) {
+      play = Object.values(data)
+      createTable()
+      
+      const bButton = document.querySelector( '#backButton' )
+       bButton.onclick = backIndex
+    })
+  })
+}
+
+const createTable = function() {
+  let row = "<table id= dTable>"
+      row += "<tr>"
+      row += "<td>Present Name</td>"
+      row += "<td>Price</td>"
+      row += "</tr>"
+
+      
+      for(let i=0; i<play.length; i++) {
+        
+        row += "<tr>"
+        row += "<td>"+play[i].name+"</td>"
+        row += "<td>"+play[i].price+"</td>"
+        row += "<tr>" 
+      }
+      
+      row += "</table>"
+      document.getElementById('createTable').innerHTML = row
+}
+
+const backIndex = function( e ) {
+  e.preventDefault();
+  window.location = "index.html"
 }
