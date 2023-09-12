@@ -67,9 +67,7 @@ Acheivements
 Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the assignment to your personal interests. These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README and why it was challenging. ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM. Remember, the highest grade you can get on any individual assignment is a 100%.
 
 *Technical*
-- (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
 
-- (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
 
 *Design/UX*
 - (5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the [think-aloud protocol](https://en.wikipedia.org/wiki/Think_aloud_protocol) to obtain feedback on your design (talk-aloud is also fine). Important considerations when designing your study:
@@ -87,14 +85,19 @@ You'll need to use sometype of collaborative software that will enable you both 
 
 *You do not need to actually make changes based on their feedback*. This acheivement is designed to help gain experience testing user interfaces. If you run two user studies, you should answer two sets of questions. 
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
 ## Your Web Application Title
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
+This is a basic grocery list maker. It keeps track of pricing per item and total price. You can reset the whole list and modify items in the list. It uses the CSS Flex/Flexbox for positioning certain elements on the page. To modify an item's price, enter a price in the price field, check the checkbox to the right of the item (or items, can modify multiple items at the same time), then click the Modify Item Price button. All items checked off will have their price in the list updated. I should note that its only the list itself that'll get the price updated. If you update the price of an item in the cart it won't reflect because it was added to the cart before the price change.
+
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Tech Achievement 1**: Created a single-page app that provides a form for users to submit items for their grocery list along with their estimated price. The server calculates what the total cost (before any tax for taxable items) of the list would be and sends that back along side the actual list itself for the client to display the list and total price. Users can reset the entire list
+
+- **Tech Achievement Two**: Users can modify the price of any item added to their grocery list
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: 
+1. Heineman 
+2. He thought it was hard to tell when the list was resetting because of my sample item being similarly styled from a font perspective. He also said that it was unclear what the middle checkbox was and that I should add a label for it. 
+3. I was surprised with his raving about the total price calculation. That felt like such a basic feature. He liked the simplicity of my design which kinda surprised me also because I thought it was a little too simple in its current state. I was going for simplicity but I thought the current design is a little too simple. Most of ym styling was positioning, not actual design styling from the colors and other things
+4. I added a label to identify what the middle checkbox does due to his feedback. I also would like to add more distinction between different elements based on his feedback. They all look too similar and some design distinctions could be beneficial.

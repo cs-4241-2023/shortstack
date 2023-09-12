@@ -167,6 +167,35 @@ const addList = function(data){
     total = parseFloat(data.totalPrice.totalPrice.toFixed(2))
 }
 
+const delItems = async function ( event ){
+  event.preventDefault()
+
+  let idxs = [];
+  let idx = 0;
+  let list = [].slice.call(document.getElementById("groceryList").children)
+  list = list.splice(1)
+  list.forEach(element => {
+    if(element.getElementsByClassName("modbox").length === 1)
+    {
+      if(element.getElementsByClassName("modbox")[0].checked){
+        idxs.push(idx);
+      }
+    }
+    idx+= 1;
+  });
+
+  const json = {items: idxs},
+        body = JSON.stringify( json )
+  const response = await fetch( '/delete', {
+    method:'DELETE',
+    body 
+  })
+
+  const data = await response.json()
+
+  updateList(data);
+}
+
 const updateList = function(data){
   let list;
   let tmp;
@@ -250,9 +279,11 @@ window.onload = function() {
   const button = document.getElementById("submit");
   const resetBut = document.getElementById("reset");
   const modBut = document.getElementById("modify");
+  const delBut = document.getElementById("delete")
   modBut.onclick = modify;
   button.onclick = submit;
   resetBut.onclick = reset;
+  delBut.onclick = delItems;
 
   gList = document.getElementById("groceryList");
 

@@ -103,7 +103,31 @@ const handlePost = function (request, response) {
 
 
 };
+const deleteItems = function(data){
+  let temp = []
+  outerLoop: data.items.forEach(idx =>{
+    if(idx < groceryList.length){
+    innerLoop: for(let i = 0; i < groceryList.length; i++)
+    {
+      if(i !== idx){
+        temp.push(groceryList[i])
+      }
+      else{
+        groceryList.splice(idx, 1)
+      }
+    }}
+    else{
+      groceryList.splice(idx, 1)
+    }
+  });
 
+  console.log(temp)
+  groceryList.splice(0, groceryList.length);
+  temp.forEach(item =>{
+    groceryList.push(item)
+  });
+
+}
 const handleDelete = function (request, response) {
 
   let dataString = "";
@@ -112,13 +136,24 @@ const handleDelete = function (request, response) {
     dataString += data;
   });
 
+  if(request.url === "/reset"){
   request.on("end", function () {
     groceryList.splice(0, groceryList.length);
     console.log(groceryList)
     calcTotalPrice();
     response.writeHead(200, "OK", { "Content-Type": "text/json" });
     response.end(JSON.stringify(groceryList)); 
-  });
+  });}
+  else{
+    request.on("end", function () {
+      deleteItems(JSON.parse(dataString))
+      calcTotalPrice();
+      retObject = { groceryList, totalPrice };
+      console.log(retObject)
+      response.writeHead(200, "OK", { "Content-Type": "text/json" });
+      response.end(JSON.stringify(retObject)); 
+    });
+  }
 
 };
 
