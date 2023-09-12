@@ -13,7 +13,7 @@ Then user can delete players with delete button which deletes player info on ser
 
 Then user can edit player name with edit button which edits player info on server and will change all players with that name.
 
-Need to scroll down to see results. Not enough time to fix
+NOTE: Need to scroll down to see results. Not enough time to fix :(
 
 
 ## Technical Achievements
@@ -21,7 +21,7 @@ Need to scroll down to see results. Not enough time to fix
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**:
-Used Jost Google Font,
+Flexbox, Used Jost Google Font,
 CSS animate header to move up and down,
 Button outline on hover
 
