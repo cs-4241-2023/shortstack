@@ -90,7 +90,7 @@ You'll need to use sometype of collaborative software that will enable you both 
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## To-Do List
+## To-Do List App
 
 ## Project Summary
 **Link**: https://a2-mareksgarbaczonek.glitch.me/
