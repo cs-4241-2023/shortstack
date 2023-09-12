@@ -19,7 +19,8 @@ body {
 .status_section {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 10%;
   margin-bottom: 35px;
 }
 
@@ -30,7 +31,7 @@ body {
   align-items: center;
   border-radius: 20px;
   padding: 1rem;
-  width: 30%;
+  padding-inline: 3rem;
   text-align: center;
   line-height: 0%;
 }
@@ -44,21 +45,21 @@ body {
 }
 
 .status > .status_name {
-font-size: 6vw;
+font-size: 2vw;
 }
 
 .status > .status_value {
-  font-size: 6vw;
+  font-size: 2vw;
 }
 
 .status > .status_offset {
-  font-size: 3vw;
+  font-size: 1vw;
 }
 
 
 .status > .status_goal_field {
   text-align: center;
-  font-size: 3vw;
+  font-size: 1vw;
   width: 5%;
 }
 
@@ -72,9 +73,11 @@ font-size: 6vw;
   background: #2A9D8F;
   border-radius: 20px;
   padding: 1rem;
-  margin-inline: 10%;
+  margin-inline: 25%;
 
-  font-size: 2vw;
+  margin-bottom: 35px;
+
+  font-size: 0.75vw;
 }
 
 .food_entry_form > button {
@@ -100,5 +103,63 @@ input {
   color: red;
   line-height: 0%;
   opacity: 0;
+}
 
+#food_list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.entry {
+  background-color: #E9C46A;
+  border-radius: 20px;
+  margin-inline: 25%;
+
+  height: 20%;
+
+  padding-inline-start: 3rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5%;
+}
+
+.entry:hover {
+  background-color: #d7b357;
+}
+
+.entry > .name {
+  font-size: 1.5vw;
+  line-height: 0%;
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+.entry > .info {
+  font-size: 1vw;
+  line-height: 30%;
+  text-align: right;
+}
+
+.entry > .delete {
+  background: #ed5353;
+  padding: 1.5rem;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  vertical-align: center;
+}
+
+.entry > .delete:hover {
+  background: #cf4141;
+}
+
+.entry > .delete:active {
+  background: #882929;}
+
+.entry > .delete_x {
+  vertical-align: center;
+  font-size: 10em;
 }

@@ -23,6 +23,7 @@ const http = require( 'http' ),
       port = 3000
 
 const entries = [];
+let idCounter = 0;
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -57,7 +58,17 @@ const handlePost = function( request, response ) {
     // ... do something with the data here!!!
     const json = JSON.parse( dataString );
     if (json.mode === "add") {
+      json.entry.id = idCounter++;
       entries.push(json.entry);
+    } else if (json.mode === "delete") {
+      console.log("delete", json.id);
+      for (let i = 0; i < entries.length; i++) {
+        if (entries[i].id === json.id) {
+          console.log("found", entries[i]);
+          entries.splice(i, 1);
+          break;
+        }
+      }
     }
 
     const responseObj = new ServerResponse(entries);

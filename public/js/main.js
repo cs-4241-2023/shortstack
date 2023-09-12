@@ -1,8 +1,13 @@
 class FoodEntry {
   constructor(name, calories, protein) {
+      this.id = -1; // not yet assigned by server
       this.name = name;
       this.calories = calories;
       this.protein = protein;
+
+      // there are 4 calories per gram of protein
+      let proteinCalories = protein * 4;
+      this.percentProtein = Math.round((proteinCalories / calories) * 100);
   }
 }
 
@@ -112,6 +117,83 @@ const updateProteinGoal = function() {
   setCounter("protein", currentProtein);
 };
 
+/*
+Generate the HTML for the food entries. Format:
+
+<div class="entry">
+  <h2 class="name">Food Name</h2>
+  <div class="info">
+    <p class="calories">Calories: 100</p>
+    <p class="protein">Protein: 10</p>
+    <p class="percent_protein">Percent Protein: 40%</p>
+  </div>
+  <div class ="delete">
+    <p class="delete_x">x</p>
+  </div>
+</div>
+*/
+const generateFoodEntries = function(entries) {
+
+  const html = document.getElementById("food_list");
+
+  // clear the existing entries first
+  html.innerHTML = "";
+
+  // generate the new entries
+  for (let i = 0; i < entries.length; i++) {
+
+      let entryData = entries[i];
+
+      let entryHTML = document.createElement("div");
+      entryHTML.classList.add("entry");
+
+      let nameHTML = document.createElement("h2");
+      nameHTML.textContent = entryData.name;
+      nameHTML.classList.add("name");
+      entryHTML.appendChild(nameHTML);
+
+      let infoHTML = document.createElement("div");
+      infoHTML.classList.add("info");
+
+      let caloriesHTML = document.createElement("p");
+      caloriesHTML.textContent = "Calories: " + entryData.calories + " kcal";
+      caloriesHTML.classList.add("calories");
+      infoHTML.appendChild(caloriesHTML);
+
+      let proteinHTML = document.createElement("p");
+      proteinHTML.textContent = "Protein: " + entryData.protein + " g";
+      proteinHTML.classList.add("protein");
+      infoHTML.appendChild(proteinHTML);
+
+      let percentProteinHTML = document.createElement("p");
+      percentProteinHTML.textContent = "Percent Protein: " + entryData.percentProtein + "%";
+      percentProteinHTML.classList.add("percent_protein");
+      infoHTML.appendChild(percentProteinHTML);
+
+      entryHTML.appendChild(infoHTML);
+
+      let deleteHTML = document.createElement("div");
+      deleteHTML.classList.add("delete");
+      deleteHTML.onclick = async function() {
+        const json = { mode: "delete", id: entryData.id };
+        const body = JSON.stringify( json );
+
+        await getServerResponse(body);
+      };
+
+      let deleteXHTML = document.createElement("h1");
+      deleteXHTML.textContent = "x";
+      deleteXHTML.classList.add("delete_x");
+      deleteHTML.appendChild(deleteXHTML);
+      
+      entryHTML.appendChild(deleteHTML);
+
+      html.appendChild(entryHTML);
+
+  }
+
+};
+
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const submit = async function( event ) {
@@ -129,7 +211,7 @@ const submit = async function( event ) {
   let caloriesElement = document.getElementById("food_calories");
   let proteinElement = document.getElementById("food_protein");
 
-  builder.setName(nameElement.value);
+  builder.setName(nameElement.value.toLowerCase());
   builder.setCalories(caloriesElement.value);
   builder.setProtein(proteinElement.value);
 
@@ -161,8 +243,14 @@ const submit = async function( event ) {
 
   console.log("valid");
   
-  const json = { mode: "add", entry: foodEntry },
-        body = JSON.stringify( json );
+  const json = { mode: "add", entry: foodEntry };
+  const body = JSON.stringify( json );
+
+  await getServerResponse(body);
+  
+}
+
+const getServerResponse = async function(body) {
 
   const response = await fetch( '/submit', {
     method:'POST',
@@ -175,6 +263,9 @@ const submit = async function( event ) {
   console.log( 'data:', data );
   setCounter("calories", data.totalCalories);
   setCounter("protein", data.totalProtein);
+
+  generateFoodEntries(data.entries);
+
 }
 
 window.onload = function() {
