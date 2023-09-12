@@ -16,13 +16,13 @@ Modify an existing row of data
 Delete a row of data
 
 Q1: Provide the last name of each student you conduct the evaluation with.
-*Hariyanto*
+- *Hariyanto*
 
 Q2: What problems did the user have with your design?
-*The user mentioned that they would like to see more color of the webpage as well as a dollar sign on the necessary fields.*
+- *The user mentioned that they would like to see more color of the webpage as well as a dollar sign on the necessary fields.*
 
 Q3: What comments did they make that surprised you?
-*The comment about adding the dollar sign surprised me because it was just something I hadn't though about. It was something that I overlooked due to spending so much time lookng at the webpage.*
+- *The comment about adding the dollar sign surprised me because it was just something I hadn't though about. It was something that I overlooked due to spending so much time lookng at the webpage.*
 
 Q3: What would you change about the interface based on their feedback?
-*I would likely incroperate their feedback by adding more color to the website to make it look better and also add the dollar sign to indicate currency on the fields that need it.*
+- *I would likely incroperate their feedback by adding more color to the website to make it look better and also add the dollar sign to indicate currency on the fields that need it.*
