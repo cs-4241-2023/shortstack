@@ -2,3 +2,45 @@ body {
   background:black;
   color:white;
 }
+
+.todo-item {
+  margin: 3px;
+  background:blue;
+}
+
+.task-row {
+  display: flex;
+  flex-direction: row;
+  margin: 4%;
+}
+
+.task-name {
+  font-size:2rem;
+  width: 33%;
+  min-height: 4rem;
+}
+
+.task-description {
+  font-size: 1.25rem;
+  width: 66%;
+  min-height: 4rem;
+}
+
+.assigner-assignee-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 1.6rem;
+}
+
+.assigner-box {
+  background: red;
+}
+
+.assignee-box {
+  background: purple;
+}
+
+.email-box {
+  background: orange;
+}
