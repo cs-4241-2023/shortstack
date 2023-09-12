@@ -1,74 +1,152 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+const http = require('http');
+const fs = require('fs');
+const mime = require('mime');
+const dir = 'public/';
+const port = 3000;
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+    {
+        'recipeName': 'Chocolate Chip Cookies',
+        'ingredients': '1 cup flour\n1/2 cup sugar\n1/2 cup chocolate chips\n1/4 cup butter\n1 egg',
+        'instructions': '1. Preheat oven to 350°F.\n2. Mix flour, sugar, and chocolate chips in a bowl.\n3. Melt butter and add it to the mixture.\n4. Add egg and mix well.\n5. Drop spoonfuls of dough onto a baking sheet.\n6. Bake for 12-15 minutes.'
+    },
+    {
+        'recipeName': 'Vegetable Stir-Fry',
+        'ingredients': '2 cups mixed vegetables\n1/4 cup soy sauce\n2 tablespoons vegetable oil\n1 clove garlic, minced\n1 teaspoon ginger, grated',
+        'instructions': '1. Heat oil in a pan over medium-high heat.\n2. Add garlic and ginger, sauté for 1 minute.\n3. Add mixed vegetables and stir-fry for 5-7 minutes.\n4. Add soy sauce and cook for an additional 2 minutes.\n5. Serve hot.'
+    },
+    {
+        'recipeName': 'Pasta Carbonara',
+        'ingredients': '8 oz spaghetti\n2 eggs\n1/2 cup grated Parmesan cheese\n4 slices bacon, chopped\n2 cloves garlic, minced\nSalt and pepper to taste',
+        'instructions': '1. Cook spaghetti according to package instructions.\n2. While pasta cooks, fry bacon until crispy in a pan.\n3. In a bowl, whisk eggs and Parmesan cheese.\n4. Drain cooked pasta and immediately toss with egg mixture.\n5. Add bacon, garlic, salt, and pepper.\n6. Serve immediately.'
+    }
+];
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  }
-})
+module.exports = appdata;
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+const server = http.createServer(function (request, response) {
+    if (request.method === 'GET') {
+        handleGet(request, response);
+    } else if (request.method === 'POST') {
+        handlePost(request, response);
+    } else {
+        response.writeHead(405, { 'Content-Type': 'text/plain' });
+        response.end('Method not allowed');
+    }
+});
 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }else{
-    sendFile( response, filename )
-  }
-}
+const handleGet = function (request, response) {
+    const filename = dir + request.url.slice(1);
 
-const handlePost = function( request, response ) {
-  let dataString = ''
+    if (request.url === '/get-recipes') {
+        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.end(JSON.stringify(appdata));
+        return; 
+    }
 
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
+    if (request.url.endsWith('.css')) {
+        sendFile(response, filename, 'text/css');
+    } else if (request.url === '/') {
+        sendFile(response, 'public/index.html');
+    } else {
+        sendFile(response, filename);
+    }
+};
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
+const handlePost = function (request, response) {
+    if (request.headers['content-type'] !== 'application/json') {
+        response.writeHead(400, { 'Content-Type': 'text/plain' });
+        response.end('Bad Request: Invalid Content-Type');
+        return;
+    }
 
-    // ... do something with the data here!!!
+    let dataString = '';
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
-  })
-}
+    request.on('data', function (data) {
+        dataString += data;
+    });
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+    request.on('end', function () {
+        try {
+            const jsonData = JSON.parse(dataString);
 
-   fs.readFile( filename, function( err, content ) {
+            if (request.url === '/update-recipe') {
+                const { index, updatedRecipe } = jsonData;
+                if (index >= 0 && index < appdata.length) {
+                    appdata[index] = updatedRecipe;
+                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                    response.end(JSON.stringify({ status: 'success' }));
+                    return;
+                } else {
+                    response.writeHead(400, { 'Content-Type': 'application/json' });
+                    response.end(JSON.stringify({ status: 'error', message: 'Invalid index' }));
+                    return;
+                }
+            }
 
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
+            if (request.url === '/delete-recipe') {
+                const index = jsonData.index;
+                if (index >= 0 && index < appdata.length) {
+                    appdata.splice(index, 1);
+                    response.writeHead(200, { 'Content-Type': 'application/json' });
+                    response.end(JSON.stringify({ status: 'success' }));
+                    return;
+                } else {
+                    response.writeHead(400, { 'Content-Type': 'application/json' });
+                    response.end(JSON.stringify({ status: 'error', message: 'Invalid index' }));
+                    return;
+                }
+            }
 
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
+            // Validate the JSON data before adding to appdata
+            if (!jsonData.recipeName || !jsonData.ingredients || !jsonData.instructions) {
+                response.writeHead(400, { 'Content-Type': 'text/plain' });
+                response.end('Bad Request: Invalid JSON data');
+                return;
+            }
 
-     }else{
+            // Add the received recipe to the appdata array
+            appdata.push({
+                'recipeName': jsonData.recipeName,
+                'ingredients': jsonData.ingredients,
+                'instructions': jsonData.instructions,
+            });
 
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
+            // Calculate a derived field (e.g., total ingredients count)
+            const totalIngredientsCount = jsonData.ingredients.split('\n').length;
 
-     }
-   })
-}
+            // Send a response back to the client with the added recipe and derived field
+            const responseData = {
+                'recipeAdded': jsonData,
+                'totalIngredientsCount': totalIngredientsCount,
+            };
 
-server.listen( process.env.PORT || port )
+            console.log('Received Data:', jsonData);
+            console.log('Total Ingredients Count:', totalIngredientsCount);
+
+            // Send the responseData back to the client
+            response.writeHead(200, { 'Content-Type': 'application/json' });
+            response.end(JSON.stringify(responseData));
+
+        } catch (error) {
+            response.writeHead(500, { 'Content-Type': 'text/plain' });
+            response.end('Internal Server Error');
+            console.error('Error:', error);
+        }
+    });
+};
+const sendFile = function (response, filename) {
+    const type = mime.getType(filename);
+
+    fs.readFile(filename, function (err, content) {
+        if (err === null) {
+            response.writeHead(200, { 'Content-Type': type });
+            response.end(content);
+        } else {
+            response.writeHead(404, { 'Content-Type': 'text/plain' });
+            response.end('404 Error: File Not Found');
+        }
+    });
+};
+
+server.listen(process.env.PORT || port);
