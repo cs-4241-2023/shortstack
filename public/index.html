@@ -11,8 +11,28 @@
   </head>
   <body>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <label class="text" for="name">Enter your name:</label>
+      <input type="text" id="name" value="">
+
+
+      <label class="num" for="age">Enter your age at the start of the year:</label>
+      <input type="number" id="age" value="">
+
+
+      <label class="num" for="year">Enter the current year:</label>
+      <input type="number" id="year" value="">
+
+
+      <button id="submit">submit</button>
+      <br>
+
+      <label class="num" for="delete">Enter the index of the entry to delete:</label>
+      <input type="number" id="delete" value="0">
+
+      <button id="deleteButton">delete</button>
     </form>
+    <table id="results">
+      
+    </table>
   </body>
 </html>
