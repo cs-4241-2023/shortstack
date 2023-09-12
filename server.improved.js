@@ -1,4 +1,4 @@
-const http = require("http");
+onst http = require("http");
 const fs = require("fs");
 const mime = require("mime");
 const dir = "public/";
@@ -44,6 +44,20 @@ const handlePost = function (request, response) {
         appdata.splice(indexToDelete, 1);
       }
     }
+    // Calculate cooking time based on ingredients complexity
+const calculateCookingTime = (ingredients) => {
+  const ingredientCount = ingredients.split(',').length;
+  const cookingTime = ingredientCount * 5; // 5 minutes per ingredient
+  return cookingTime;
+};
+
+if (request.url === "/add_recipe") {
+  appdata.push(requestData);
+  const addedRecipe = requestData;
+  addedRecipe.cooking_time = calculateCookingTime(addedRecipe.recipe_ingredients);
+  response.writeHead(200, "OK", { "Content-Type": "application/json" });
+  response.end(JSON.stringify(appdata));
+}
 
     console.log(appdata);
 
