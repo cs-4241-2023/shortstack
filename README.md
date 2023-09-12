@@ -1,9 +1,9 @@
 Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
 ===
 
-GLITCH LINK
+Nicholas Heineman
+https://webware-character-creator.glitch.me/
 
-NOTE: I'm aware this project does not look great, and the code is a convoluted mess, and it is because I bit off a lot more than I can chew in terms of design, and completely underestimated how much time it would take. I'm hoping that since I fullfilled all of the requirements, I will get all or most points, but I am VERY AWARE of the visual and functional failings of my interface, I just have not had time to correct them. In future projects I will spend less time on backend development by keeping my goals simple, and more time on designing a website that actually looks good.
 ---
 
 ## Character Manager
@@ -43,11 +43,11 @@ one js file to manage the server, server.improved.js
 
 -5 Points: Add ability to modify data. Both the character and timeline items can be modified. To do this, enter in values in the submissions tab, and click the relevant 'modify' button on each item, what is in the submission boxes will go into 
 
--5 Points, UI study
-
-
-
-
+-5 Points, UI study: 
+    Student: Will Ryan
+    Problems with design: Timeline box spacing and organization could be improved, standardization of button sizes/colors
+    Comments they made that surprised you: "All in all it's not bad tho"
+    What you would change: I would spend time sizing the timeline specifically, ensure text fits properly in the boxes, improve organization of them
 
 
 
