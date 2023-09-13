@@ -1,6 +1,7 @@
 const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
+      // To run, use node server.improved.js
       // to install the mime library if you're testing this on your local machine.
       // However, Glitch will install it automatically by looking in your package.json
       // file.
