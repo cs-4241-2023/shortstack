@@ -190,7 +190,7 @@ const getTasks = data => {
       task.task,
       task.desc,
       task.dueDate,
-      priority(task.dueDate),
+      priorityCalculator(task.dueDate),
       task
     );
     table.append(row);
