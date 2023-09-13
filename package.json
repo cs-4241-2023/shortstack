@@ -1,12 +1,12 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "a2-sl-wu",
+  "version": "0.1.0",
+  "description": "WPI CS 4241 second assignment",
+  "author": "Sharon Wu",
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
+    "mime": "^3.0.0"
   }
 }
