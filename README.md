@@ -91,10 +91,13 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 ---
 
 ## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+My Project is a character creator that takes in a character's name and stats, and displays them on a table alongside their stat average and the recommended class for them based on their stats. There are a total of 7 classes that can be recommended. The CSS positioning technique I used was the grid, in order to format my table to display for the full length. In order to use my application, enter a character's name and their attack, defense, and speed. To delete a character, press on them in the table and click on delete at the bottom. To modify a character, enter the name of an existing character and their new stats. 
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
-
+- **Tech Achievement 1**: My program
+- **Tech Achievement 2**: My program is able to modify data by finding the specified character and deleting + replacing their data in the table. 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: 
+
+1. Wonoski
+2. Donnelly

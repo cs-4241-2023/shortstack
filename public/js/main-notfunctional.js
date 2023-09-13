@@ -76,3 +76,53 @@ window.onload = function() {
       console.log(out)
   }
 }
+
+/*
+function createTableFromJSON(json) {
+  var arr = [];
+  arr = JSON.parse(json); // Convert JSON to array.
+  console.log(arr)
+  var col = [];
+  for (var key in arr) {
+    if (col.indexOf(key) === -1) {
+      col.push(key);
+    }
+  }
+
+  // Create a dynamic table.
+  var table = document.createElement("table") // Create table header.
+  var row = table.insertRow(-1); // Table row. (last position)
+
+  for (var i = 0; i < col.length; i++) {
+    var header = document.createElement("header"); // Table header.
+    header.innerHTML = col[i];
+    row.appendChild(header);
+  }
+
+  row = table.insertRow(-1); // add new row for the names
+  // Add JSON to the table rows.
+  for (var i = 0; i < arr.length; i++) {
+    var cell1 = row.insertCell(0);
+    cell1.innerHTML = arr[i].name;
+    var cell2 = row.insertCell(1);
+    cell2.innerHTML = arr[i].attack;
+    var cell3 = row.insertCell(2);
+    cell3.innerHTML = arr[i].defense;
+    var cell4 = row.insertCell(3);
+    cell4.innerHTML = arr[i].speed;
+  }
+
+  // Finally, add the dynamic table to a container.
+  var divContainer = document.getElementById("showTable");
+  divContainer.innerHTML = "";
+  divContainer.appendChild(table);
+  console.log(table);
+};
+
+}
+
+window.onload = function() {
+  const button = document.querySelector("button");
+ button.onclick = submit;
+}
+*/
