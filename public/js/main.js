@@ -5,7 +5,7 @@ const submit = async function( event ) {
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
-  event.preventDefault()
+  // event.preventDefault()
   
   const input = document.querySelector( '#yourname' ),
         json = { yourname: input.value },
@@ -21,7 +21,18 @@ const submit = async function( event ) {
   console.log( 'text:', text )
 }
 
-window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+//Front end for page one
+
+const login_validate = async function( event ){
+  // username = document.querySelector('#user_name_box').get;
+  
+ fetch('/homepage.html').then((response) => response.json())
+.then((json) => console.log(json));
+}
+
+
+
+window.onload = function(){
+  const loginButton = document.querySelector("#sign_in_button");
+  loginButton.onclick = login_validate;
 }

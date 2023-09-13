@@ -26,10 +26,11 @@ const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
   if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
+    sendFile( response, 'public/index.html')
   }else{
     sendFile( response, filename )
   }
+  console.log(filename);
 }
 
 const handlePost = function( request, response ) {
