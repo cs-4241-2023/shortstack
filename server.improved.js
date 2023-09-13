@@ -33,6 +33,10 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
+  //handle /delete /submit requests here
+  //calculate the derived field
+  //add data to app data 
+  
   let dataString = ''
 
   request.on( 'data', function( data ) {

@@ -1,11 +1,18 @@
+
+
 body {
-  background-color: #347ca9;
+  background-color: #545ca9;
   color:white;
 }
 
 .header1 {
   color: #830D3B;
 }
+
+.grid-item {
+  color: #830D3B;
+}
+
 
 p {
   color: #DBDBD5;
@@ -16,5 +23,5 @@ li {
 }
 
 html {
-  font-family: "Press Start 2P";
+  font-family: "Josefin Sans";
 }

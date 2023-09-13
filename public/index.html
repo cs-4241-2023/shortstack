@@ -1,18 +1,54 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      /* Align header1 to the center */
+      h1{
+        text-align: center;
+      }
+    /* style the page using a grid layout */
+    .grid-container {
+      display: grid;
+      grid-template-columns: 33% 33% 33%;
+      grid-template-rows: 33% 33% 33%;
+      background-color: #8c1010;
+      padding: 10px;
+    }
+    .grid-item {
+      background-color: #545ca9;
+      border: 1px solid rgba(131, 49, 30, 0.8);
+      padding: 80px;
+      font-size: 30px;
+      text-align: center;
+}
+    </style>
     <title>Shows to Watch (CS4241 Assignment 2)</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
+   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
     <h1 class="header1">TV Watchlist</h1>
+    <!-- grid stuff -->
+    <div class="grid-container">
+      <div class="grid-item">1</div>
+      <div class="grid-item">2</div>
+      <div class="grid-item">3</div>  
+      <div class="grid-item">4</div>
+      <div class="grid-item">5</div>
+      <div class="grid-item">6</div>  
+      <div class="grid-item">7</div>
+      <div class="grid-item">8</div>
+      <div class="grid-item">9</div>  
+    </div>
     <form>
-      <input type="text" id="yourname" value="your name here">
+      <!-- add input elements -->
+      <input type="text" id="showName" value="Name Of Show or Movie">
+      <input type="text" id="relYear" value="Year Of Release">
+      <input type="text" id="genre" value="Genre">
       <button id="submit">submit</button>
     </form>
   </body>

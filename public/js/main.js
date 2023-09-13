@@ -6,9 +6,9 @@ const submit = async function( event ) {
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault() // Prevents default browser behavior
-  
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
+   //add more fields to your json based on your form 
+  const input = document.querySelector( '#showName' ),
+        json = { showName: input.value },
         body = JSON.stringify( json )
 
   const response = await fetch( '/submit', {
@@ -20,6 +20,8 @@ const submit = async function( event ) {
   
   const list = document.createElement('ul')
   
+  //display addition
+  //add some sort of a delete button 
   data.forEach( d => {
     const item = document.createElement('li')
     item.innerHTML = `<b>model</b>: ${d.model}, <b>mpg</b>: ${d.mpg}`
