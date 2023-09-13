@@ -1,6 +1,6 @@
 ## Your Web Application Title
 
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+I created a todo list application. My application uses flexbox for body containers and button containers, as well as grid to format the form element. This todo list application creates a derived field using your dueDate input that shows priority level of your tasks.
 
 ## CSS Requirements
 
