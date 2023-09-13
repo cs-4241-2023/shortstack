@@ -6,20 +6,24 @@ let playerList = undefined;
 
 // Random int between min and max
 function randomNum(min, max) {
-  return Math.floor(Math.random() * (max - min +1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // When play button is clicked, submit form data to server
-const submit = async function (event) {  
+const submit = async function (event) {
   event.preventDefault(); // Stop page defualt reload behavior
+
+  // hide div with input-container
+  const inputContainer = document.querySelector('#input-container');
+  inputContainer.style.display = 'none';
 
   const name = document.querySelector('#yourname'); // get form input element with id=yourname
   const color = document.querySelector('#color');
 
   let formData = {}  // json for client data
-  formData.name = name.value 
-  formData.color = color.value 
-  formData.score = randomNum(1,100); // Add random score between 1-100
+  formData.name = name.value
+  formData.color = color.value
+  formData.score = randomNum(1, 100); // Add random score between 1-100
 
   const response = await fetch('/submit', { // Send client data to server 
     method: 'POST',
@@ -35,6 +39,8 @@ const submit = async function (event) {
 // Populate list of players in html with server data
 function populateList(serverData) {
 
+
+
   playerList = document.getElementById('playerList');
   if (playerList) {
     playerList.remove();  // Reset player list by removing old list
@@ -42,11 +48,15 @@ function populateList(serverData) {
 
   playerList = document.createElement('ol'); // Ordered list of players 
   playerList.id = 'playerList';
-  document.body.appendChild(playerList);
 
+  // document.body.appendChild(playerList);
+
+  // add playerList to body inside the div with id=container
+  let container = document.getElementById('container');
+  container.appendChild(playerList);
 
   // For each player in server data, create a list item
-  serverData.forEach(d => { 
+  serverData.forEach(d => {
     const player = document.createElement('li') // Player list item
 
     // Add edit button
@@ -69,7 +79,7 @@ function populateList(serverData) {
     player.appendChild(deleteButton)
 
     // Add player <li> to list <ol>
-    playerList.appendChild(player) 
+    playerList.appendChild(player)
   })
 }
 
@@ -82,7 +92,9 @@ window.onload = function () {
   document.addEventListener('click', function (e) {
     if (e.target && e.target.class == 'deleteButton') {
       let player = e.target.closest('.player');
-      deletePlayer(player.id); // player id is name of player
+      if (confirm(`Are you sure you want to delete Player: ${deletePlayer.name}?`) == true) {
+        deletePlayer(player.id); // player id is name of player
+      }
     }
   });
 
@@ -93,6 +105,7 @@ window.onload = function () {
       editPlayer(player.id); // player id is name of player
     }
   });
+
 }
 
 // Edit player name on server
