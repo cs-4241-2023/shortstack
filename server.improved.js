@@ -82,7 +82,6 @@ const handlePost = function( request, response ) {
     if (myData.action === 'delete') {
       let index = myData.index
       appdata.splice(index,1)
-      //delete appdata[row]
     }
     // ... do something with the data here!!! 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })

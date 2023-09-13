@@ -40,6 +40,13 @@ input {
   text-align: left;
 }
 
+.leftimg {
+  float: left;
+}
+
+.rightimg {
+  float: right;
+}
 #create {
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, serif;
   font-size: 16pt;
@@ -75,6 +82,7 @@ tr {
 
 th,
 td {
+  border: 1px solid black;
   padding: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
