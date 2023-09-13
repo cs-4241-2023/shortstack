@@ -39,13 +39,16 @@ const handlePost = function (request, response) {
   request.on("end", function () {
     if (request.url === '/submit') { //handle form requests
       let newData = JSON.parse(dataString);
+      newData.id = appdata.length;
       appdata.push(newData);
-      newData.id = counter++;
       calculateDaysRemaining(appdata);
       console.log(appdata);
     } else if (request.url === '/delete'){
         let index = JSON.parse(dataString);
         appdata.splice(parseInt(index.id), 1);
+        for(let idRst = 0; idRst < appdata.length; idRst++){
+            appdata[idRst].id = idRst;
+        }
     }
     console.log(appdata)
     response.writeHead(200, 'OK', { 'Content-Type': 'application/json' });
