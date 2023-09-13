@@ -17,7 +17,7 @@ form {
   display: inline-block;
   margin-left: auto;
   margin-right: auto;
-  text-align: left;
+  text-align: center;
 }
 
 label {
@@ -41,22 +41,24 @@ input {
 }
 
 .leftimg {
+  border-radius: 0%;
   float: left;
 }
 
 .rightimg {
+  border-radius: 0%;
   float: right;
 }
 #create {
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, serif;
   font-size: 16pt;
-  text-align: left;
+  text-align: center;
 }
 
 #delete {
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 16pt;
-  text-align: left;
+  text-align: center;
 }
 
 table {
