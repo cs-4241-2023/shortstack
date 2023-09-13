@@ -9,16 +9,14 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+  //{ date: '9/10/2023', exercise: 'Squats', sets: 3, reps: 5, weight: 145 }
 ]
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
+    handlePost( request, response )
   }
 })
 
@@ -27,7 +25,10 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else{
+  } /*else if (request.url === "/getLogs") {
+    response.writeHeader(200, { "Content-Type": "text/plain" });
+    response.end(JSON.stringify(appdata));
+  } */else {
     sendFile( response, filename )
   }
 }
@@ -38,15 +39,24 @@ const handlePost = function( request, response ) {
   request.on( 'data', function( data ) {
       dataString += data 
   })
+  //console.log(JSON.parse(dataString))
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
+    //if ( request.url === "/submit" ) {
+      appdata.push(JSON.parse(dataString));
+    /*} else if ( request.url === "/delete" ) {
+      console.log( JSON.parse( dataString ) )
+      handleDelete( JSON.parse(dataString) )
+    }*/
     // ... do something with the data here!!!
-
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.write(JSON.stringify(appdata))
+    response.end()
   })
+}
+
+const handleDelete = function( data ) {
+    appdata.splice(data["deleteLog"], 1);
 }
 
 const sendFile = function( response, filename ) {
