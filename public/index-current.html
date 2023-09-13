@@ -16,15 +16,12 @@
     <div class="header">
       <h1>Character Creator</h1> 
     </div> 
-<hr>
+    <img align="right" src="https://cdn.pixabay.com/photo/2014/04/03/10/55/swords-311733_960_720.png" width="140" height="140" alt="swords">
+    <img align="left" src="https://cdn.pixabay.com/photo/2014/04/03/10/55/swords-311733_960_720.png" width="140" height="140" alt="swords">
+    <hr>
+    <div class = "stats">
     <form id="Homework2">
-      <div class = "leftimg">
-        <img src="https://cdn.pixabay.com/photo/2014/04/03/10/55/swords-311733_960_720.png" width="140" height="140" alt="swords">
-      </div>
-      <div class = "rightimg">
-        <img src="https://cdn.pixabay.com/photo/2014/04/03/10/55/swords-311733_960_720.png" width="140" height="140" alt="swords">
-        </div>
-      <label style="background-color: white;"> Name:    </label>
+      <label> Name:    </label>
       <input type="text" id ="name" value="">
       <br>
       <label style="background-color: lightcoral;"> Attack:  </label>
@@ -38,22 +35,22 @@
       <br>
       <br>
       <button id="create">Create/Modify Character</button>
+    </div>
     <hr>
     <div id="showTable"> </div>
-    <table>
+    <table border='1' align='center'>
         <thead>
           <tr>
             <th></th>
-            <th>Name <span class="resize-handle"></span> </th>
-            <th>Attack <span class="resize-handle"></span> </th>
-            <th>Defense <span class="resize-handle"></span> </th>
-            <th>Speed <span class="resize-handle"></span> </th>
-            <th>Average <span class="resize-handle"></span> </th>
-            <th>Recommended Class <span class="resize-handle"></span> </th>
+            <th>Name</th>
+            <th>Attack</th>
+            <th>Defense</th>
+            <th>Speed</th>
+            <th>Average</th>
+            <th>Recommended</th>
           </tr>
         </thead>
-        <tbody id="data-output">
-        </tbody>
+        <tbody id="data-output"></tbody>
       </table>
     </form>
     <br>

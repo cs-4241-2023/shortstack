@@ -6,13 +6,9 @@ const http = require( 'http' ),
       // file.
       mime = require( 'mime' ),
       dir  = 'public/',
-      port = 3000
+      port = 3002
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const appdata = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -27,7 +23,10 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
-  }else{
+  } else if (request.url === '/results') { 
+    //send appdata
+  }
+  else {
     sendFile( response, filename )
   }
 }
@@ -40,12 +39,54 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
-    // ... do something with the data here!!!
-
+    const myData = JSON.parse( dataString )
+    if (myData.action === 'create') {
+      //addToMemory()
+      Element = {}
+      Element.name = myData.name
+      Element.attack = myData.attack
+      Element.defense = myData.defense
+      Element.speed = myData.speed
+      let trueatk = parseInt(myData.attack)
+      let truedef = parseInt(myData.defense)
+      let truespd = parseInt(myData.speed)
+      Element.average = (trueatk + truedef + truespd)/3
+      Element.average = Math.trunc(Element.average * Math.pow(10, 2))/Math.pow(10, 2)
+      let recommended = 'Fighter'
+      if ((Element.attack === Element.defense) && (Element.attack != Element.speed)) {
+        recommended = 'Paladin'
+      }
+      if ((Element.attack === Element.speed) && (Element.attack != Element.defense)) {
+        recommended = 'Ranger'
+      }
+      if ((Element.defense === Element.speed) && (Element.attack != Element.defense)) {
+        recommended = 'Monk'
+      }
+      if ((truedef > trueatk) && (truedef > truespd)) {
+        recommended = 'Tank'
+      }
+      if ((trueatk > truespd) && (trueatk > truedef)) {
+        recommended = 'Barbarian'
+      }
+      if ((truespd > trueatk) && (truespd > truedef)) {
+        recommended = 'Rogue'
+      }
+      Element.recommended = recommended
+      for (let i = 0; i < appdata.length; i++) {
+        if (appdata[i].name === myData.name) {
+          appdata.splice(i,1)
+        }
+      }
+      appdata.push(Element)
+    }
+    if (myData.action === 'delete') {
+      let index = myData.index
+      appdata.splice(index,1)
+    }
+    // ... do something with the data here!!! 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    const jsonContent = JSON.stringify(appdata);
+    response.end(jsonContent)
   })
 }
 
