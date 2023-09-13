@@ -7,24 +7,20 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const index = document.querySelector('#id').value,
+  const 
         name = document.querySelector('#yourname').value,
         username = document.querySelector('#username').value,
         email = document.querySelector('#email').value,
         position = document.querySelector('#position').value,
-        json = {id: index, yourname: name, username: username, email: email, position: position},
+        json = {yourname: name, username: username, email: email, position: position},
+      
         body = JSON.stringify( json )
 
-  
-  const response = await fetch( '/submit', {
-    method:'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: body
-  });
+
   
   function validate_input() {
     console.log("Validating input...");
-    if (index === "" || name === "" || username === "" || email === "" || position === "") {
+    if (name === "" || username === "" || email === "" || position === "") {
       return false;
     }
   return true;
@@ -38,6 +34,12 @@ const submit = async function( event ) {
   {
     console.log("Input validated.");
   }
+
+  const response = await fetch( '/submit', {
+    method:'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: body
+  });
 
 if (response.ok) {
   // Data was successfully submitted
@@ -66,9 +68,6 @@ const updateTable = async function() {
   if (response.ok) {
     const data = await response.json();
     console.log('Table data:', data);
-    const id = document.querySelector('#id');
-    id.value = data.length + 1;
-    console.log('Next ID:', id.value);
     // Call a function to populate/update the table with the received data
     populateTable(data);
   } else {
@@ -83,10 +82,11 @@ const populateTable = function(data) {
 
 
 
-  data.forEach(function(player) {
+  data.forEach(function(player,index){
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td> <input type="radio" id="html_${player.index}" name="delete" value="${player.index}"></td>
+      <td> <input type="button" id=${index} onclick="editPlayer(${index})" value="Edit"></td>
+      <td> <input type="button" id=${index} onclick="deletePlayer(${index})" value="Delete"></td>
       <td>${player.yourname}</td>
       <td>${player.username}</td>
       <td>${player.email}</td>
@@ -97,8 +97,7 @@ const populateTable = function(data) {
 };
 
 // Function to delete a player from the table
-const deletePlayer = async function() {
-  const index = document.querySelector('input[name="delete"]:checked').value;
+const deletePlayer = async function(index) {
   console.log('Deleting player with index:', index);
   const response = await fetch('/delete', {
     method: 'POST',
@@ -108,17 +107,24 @@ const deletePlayer = async function() {
   updateTable();
 };
 
-// Function to edit a player in the table.
-// const editPlayer = async function() {
-//   const index = document.querySelector('input[name="delete"]:checked').value;
-//   console.log('Editing player with index:', index);
-//   const response = await fetch('/edit', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ index: index })
-//   })
-//   updateTable();
-// };
+// Function to edit a player from the table
+const editPlayer = async function(index) {
+  //This is needed for playerData.
+  const 
+        name = document.querySelector('#yourname').value,
+        username = document.querySelector('#username').value,
+        email = document.querySelector('#email').value,
+        position = document.querySelector('#position').value,
+        json = {yourname: name, username: username, email: email, position: position}
+
+  console.log('Editing player with index:', index);
+  const response = await fetch('/edit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ index: index, playerdata: json})
+  })
+  updateTable();
+};
 
 
 window.onload = function() {

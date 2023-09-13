@@ -17,7 +17,6 @@
   <body>
     <h1 id="web-header"> ESports Sign Up</h1>
     <form>
-      <input type="hidden" id="id" value="0">
       <input type="text" onfocus="this.value=''" id="yourname" placeholder="Your real name here." style="  padding: 7px 15px; margin: 10px 0;" >
       <input type="text" onfocus="this.value=''" id="username" placeholder="Your gamertag here." style="  padding: 7px 15px; margin: 10px 0;" >
       <input type="text" onfocus="this.value=''" id="email" placeholder="Your email here." style="  padding: 7px 15px; margin: 10px 0;" >
@@ -32,6 +31,7 @@
       <table id="player-table">
         <tr>
           <th></th>
+          <th></th>
           <th>Player Name</th>
           <th>Player GamerTag</th>
           <th>Player Email</th>
@@ -40,9 +40,6 @@
         <tbody id="table-body">
         </tbody>
       </table>
-      <div id ="begone_toht">
-      <button type="button" id="delete-button" onclick="deletePlayer()">Delete Entry</button>
-    </div>
     </ul>
   </body>
 </html>

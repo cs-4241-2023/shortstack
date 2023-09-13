@@ -9,9 +9,9 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'index': 1, 'yourname': 'Justin', 'username': 'Sombero', 'email': 'jwonoski2@wpi.edu', 'position': 'DPS'},
-  { 'index': 2,'yourname': 'Mason', 'username': 'Sneke', 'email': 'mSneke@wpi.edu', 'position': 'Support'},
-  { 'index': 3,'yourname': 'Tim', 'username': 'Robo', 'email': 'tRobo@wpi.edu', 'position': 'Tank'} 
+  {'yourname': 'Justin', 'username': 'Sombero', 'email': 'jwonoski2@wpi.edu', 'position': 'DPS'},
+  {'yourname': 'Mason', 'username': 'Sneke', 'email': 'mSneke@wpi.edu', 'position': 'Support'},
+  {'yourname': 'Tim', 'username': 'Robo', 'email': 'tRobo@wpi.edu', 'position': 'Tank'} 
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -46,12 +46,13 @@ const handlePost = function( request, response ) {
   if( request.url === '/delete' ) {
     request.on( 'data', function( data ) {
       dataString += data
+      
       console.log(JSON.parse( dataString ))
       //This deserves to be pee. Don't debate with me.
       const pee = JSON.parse( dataString )  
       const num = Number(pee.index)
       console.log(num)
-        appdata.splice(num - 1, 1)
+        appdata.splice(num, 1)
     })
 
     request.on( 'end', function() {
@@ -60,23 +61,23 @@ const handlePost = function( request, response ) {
     })
   }  
   // Implementation for Edit: If I got time. 
-  // else if( request.url === '/edit' ) {
-  //   //Implement edit function here.
-  //   request.on( 'data', function( data ) {
-  //     dataString += data
-  //     console.log(JSON.parse( dataString ))
-  //     //This deserves to be pee. Don't debate with me.
-  //     const pee = JSON.parse( dataString )  
-  //     const num = Number(pee.index)
-  //     console.log(num)
-  //       appdata[num] = updateTable(data)
-  //   })
+  else if( request.url === '/edit' ) {
+    //Implement edit function here.
+    request.on( 'data', function( data ) {
+      //Data.playerData is being sent from main.js 
+      dataString += data //Adding data to assembly code to make it a string.
+      const playerinfo = JSON.parse(dataString)
+      const index = playerinfo.index
+      console.log(dataString)
+      console.log(JSON.parse(dataString))
+        appdata[index] = playerinfo.playerdata
+    })
 
-  //   request.on( 'end', function() {
-  //     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-  //     response.end('test')
-  //   })
-  // }
+    request.on( 'end', function() {
+      response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+      response.end('test')
+    })
+  }
   else {
     request.on( 'data', function( data ) {
       dataString += data 
