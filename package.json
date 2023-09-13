@@ -1,12 +1,12 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
-  "scripts": {
-    "start": "node server.improved.js"
-  },
-  "dependencies": {
-    "mime": "^2.4.4"
-  }
+    "name": "",
+    "version": "1.0",
+    "description": "",
+    "author": "Ryan Rabbitt",
+    "scripts": {
+        "start": "node server.improved.js"
+    },
+    "dependencies": {
+        "mime": "^2.4.4"
+    }
 }
