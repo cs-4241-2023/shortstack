@@ -1,3 +1,4 @@
+
 const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
@@ -8,12 +9,45 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
+
+/*
+const express = require('express'),
+      app = express(),
+      port = 3000
+
+app.listen(port, (error) =>{
+  if(!error){
+    console.log("Server is Successfully Running, and App is listening on port" + PORT);
+  }else{
+    console.log("Error occurred, server can't start", error);
+  }
+});
+
+app.use('GET', (req, res, next) => {
+  handleGet(request, response)
+  next();
+})
+
+
+
+
+const server = app.createServer( function( request,response ) {
+  if( request.method === 'GET' ) {
+    handleGet( request, response )    
+  }else if( request.method === 'POST' ){
+    handlePost( request, response ) 
+  }
+})
+*/
+
+
+
 const appdata = [
   { 'id': 0, 'yourName': 'Bright', 'yourKills': 10, 'yourDeaths': 5, 'yourAssists': 1, 'KDA': 2.2},
   { 'id': 1, 'yourName': 'Nelson', 'yourKills': 20, 'yourDeaths': 50, 'yourAssists': 3, 'KDA': .46 }
 ]
 
- 
+
 
 
 const server = http.createServer( function( request,response ) {
@@ -23,6 +57,8 @@ const server = http.createServer( function( request,response ) {
     handlePost( request, response ) 
   }
 })
+
+
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 

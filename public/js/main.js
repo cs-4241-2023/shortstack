@@ -159,6 +159,7 @@ const appending = function(data) {
   const buttonColumn = document.createElement('td')
   buttonColumn.appendChild(button)
   row.appendChild(buttonColumn)
+  buttonColumn.className = "deleteButton"
   button.textContent = "Delete"
   button.onclick = deleteEvent
 
@@ -166,6 +167,7 @@ const appending = function(data) {
   const buttonColumn1 = document.createElement('td')
   buttonColumn1.appendChild(button1)
   row.appendChild(buttonColumn1)
+  buttonColumn1.className = "modifyButton"
   button1.textContent = "Modify"
   button1.onclick = modifyEvent
 
