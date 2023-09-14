@@ -7,18 +7,18 @@ const submit = function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const date = document.getElementById('#date'),
-        exercise = document.getElementById('#exercise'),
-        sets = document.getElementById('#sets'),
-        reps = document.getElementById('#reps'),
-        weight = document.getElementById('#weight')
+  const date = document.querySelector('#date'),
+        exercise = document.querySelector('#exercise'),
+        sets = document.querySelector('#sets'),
+        reps = document.querySelector('#reps'),
+        weight = document.querySelector('#weight')
         
   const jsonData = {
     date: date.value,
     exercise: exercise.value,
     sets: sets.value,
     reps: reps.value,
-    weight: weight.value
+    weight: weight.value,
   }
   
   let body = JSON.stringify(jsonData)
@@ -35,7 +35,7 @@ const submit = function( event ) {
 }
 
 window.onload = function() {
-  const button = document.getElementById("#submit");
+  const button = document.querySelector("#submit");
   button.onclick = submit;
 
   /*const response = await fetch( '/start' )
