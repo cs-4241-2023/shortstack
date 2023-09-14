@@ -9,10 +9,6 @@ body {
   color: #830D3B;
 }
 
-.grid-item {
-  color: #830D3B;
-}
-
 
 p {
   color: #DBDBD5;
@@ -36,15 +32,28 @@ html {
   height: 500px;
   align-content: space-between;
 }
+
 .grid-item {
   background-color: #545ca9;
   border: 1px solid rgba(131, 49, 30, 0.8);
+  color: #830D3B;
   padding: 40px;
   font-size: 30px;
   text-align: center;
 }
 
+
+
 input{
   width: 100%;
 }
+
+#item2 {
+  grid-row-start: 1;
+  grid-row-end: 4;
+
+  grid-column-start: 2;
+  grid-column-end: 4;
+}
+
 
