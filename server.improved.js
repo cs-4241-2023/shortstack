@@ -50,7 +50,7 @@ const handlePost = function( request, response ) {
     }*/
     // ... do something with the data here!!!
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.write(JSON.stringify(appdata))
+    // response.write(JSON.stringify(appdata))
     response.end()
   })
 }
