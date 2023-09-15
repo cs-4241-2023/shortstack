@@ -53,22 +53,19 @@ const submit = async function (event) {
     error.style.opacity = 1;
     error.textContent = error_message;
     return;
-  } else {
-    error.style.opacity = 0;
-
-    newSubmission = new hourEntry(dateVal, numHours, reasoning);
   }
-
+  error.style.opacity = 0;
+  newSubmission = new hourEntry(dateVal, numHours, reasoning);
+  console.log(newSubmission);
   const json = { mode: "add", entry: newSubmission };
   const body = JSON.stringify(json);
   serverResponse(body);
 };
 
 const serverResponse = async function (body) {
-  console.log("entry:", body);
-  const response = await fetch("/submit", {
+  const response = fetch("/submit", {
     method: "POST",
-    body,
+    body: body,
   });
 
   const text = await response.text();
@@ -83,8 +80,13 @@ window.onload = function () {
   button.onclick = submit;
   let error = document.getElementById("error-message");
   error.style.opacity = 0;
+
   const json = { mode: "read" };
   const body = JSON.stringify(json);
+
+  (async function () {
+    await serverResponse(body);
+  })();
 };
 
 /*
@@ -102,13 +104,14 @@ html outline for the hour entry to shove into the grid
   </div>
 </div>
 */
-writeInfoToScreen = function (submissions) {
-  const gridList = document.getElementById("#grid-list");
+const writeInfoToScreen = function (submissions) {
+  let entriesList = document.getElementById("listOfEntries");
 
-  gridList.innerHTML = "";
+  entriesList.innerHTML = "";
   let hoursSum = 7;
 
-  for (entry in submissions) {
+  for (i = 0; i < submissions.length; i++) {
+    let entry = submissions[i];
     let entryHTML = document.createElement("div");
     entryHTML.classList.add("entry");
 
@@ -118,27 +121,27 @@ writeInfoToScreen = function (submissions) {
     let dateHTML = document.createElement("p");
     dateHTML.textContent = "Date: " + entry.data;
     dateHTML.classList.add("calories");
-    infoHTML.appendChild(dateHTML);
+    info.appendChild(dateHTML);
 
     let reasonHTML = document.createElement("p");
-    reasonHTML.textContent = "Reason: " + entryData.reason;
+    reasonHTML.textContent = "Reason: " + entry.reason;
     reasonHTML.classList.add("reason");
-    infoHTML.appendChild(reasonHTML);
+    info.appendChild(reasonHTML);
 
     let hoursLeftHTML = document.createElement("p");
     hoursLeftHTML.textContent =
-      "Hours Left After This: " + (hoursSum - entryData.numHours) + " hours";
-    hoursSum -= numHours;
-    percentProteinHTML.classList.add("hoursLeft");
-    infoHTML.appendChild(hoursLeftHTML);
+      "Hours Left After This: " + (hoursSum - entry.numHours) + " hours";
+    hoursSum -= entry.numHours;
+    hoursLeftHTML.classList.add("hoursLeft");
+    info.appendChild(hoursLeftHTML);
 
-    entryHTML.appendChild(infoHTML);
+    entryHTML.appendChild(info);
 
     let deleteHTML = document.createElement("div");
     deleteHTML.style.height = "40px";
     deleteHTML.classList.add("delete");
     deleteHTML.onclick = async function () {
-      const json = { mode: "delete", id: entryData.id };
+      const json = { mode: "delete", id: entry.id };
       const body = JSON.stringify(json);
       await serverResponse(body);
     };
@@ -146,10 +149,10 @@ writeInfoToScreen = function (submissions) {
     let deletButton = document.createElement("a");
     deletButton.textContent = "x";
     deletButton.classList.add("delete_x");
-    deleteHTML.appendChild(deleteXHTML);
+    deleteHTML.appendChild(deletButton);
 
     entryHTML.appendChild(deleteHTML);
 
-    gridList.appendChild(entryHTML);
+    entriesList.appendChild(entryHTML);
   }
 };
