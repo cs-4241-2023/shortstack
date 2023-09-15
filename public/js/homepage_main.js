@@ -1,10 +1,13 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+let global_entryID = 0;
+
 class hourEntry {
   constructor(date, num, reasoning) {
     this.date = date;
     this.numHours = num;
     this.reason = reasoning;
+    this.id = global_entryID++;
   }
   setDate(date) {
     this.date = date;
@@ -17,8 +20,8 @@ class hourEntry {
     this.reason = reason;
   }
 
-  setValid(isValid) {
-    this.valid = isValid;
+  setID(id) {
+    this.id = id;
   }
 }
 
@@ -56,22 +59,37 @@ const submit = async function (event) {
   }
   error.style.opacity = 0;
   newSubmission = new hourEntry(dateVal, numHours, reasoning);
-  console.log(newSubmission);
+
   const json = { mode: "add", entry: newSubmission };
   const body = JSON.stringify(json);
   serverResponse(body);
 };
 
 const serverResponse = async function (body) {
-  const response = fetch("/submit", {
+  const response = await fetch("/submit", {
     method: "POST",
     body: body,
   });
 
   const text = await response.text();
-  let data = JSON.parse(text);
+  const data = JSON.parse(text);
   console.log("data:", data);
-  writeInfoToScreen(data.entries);
+  writeInfoToScreen(data);
+};
+
+const clear = async function (event) {
+  // stop form submission from trying to load
+  // a new .html page for displaying results...
+  // this was the original browser behavior and still
+  // remains to this day
+  event.preventDefault();
+
+  console.log("clear");
+
+  const json = { mode: "clear" };
+  const body = JSON.stringify(json);
+
+  await serverResponse(body);
 };
 
 //Front end for page one
@@ -85,6 +103,7 @@ window.onload = function () {
   const body = JSON.stringify(json);
 
   (async function () {
+    clear();
     await serverResponse(body);
   })();
 };
@@ -140,15 +159,15 @@ const writeInfoToScreen = function (submissions) {
     let deleteHTML = document.createElement("div");
     deleteHTML.style.height = "40px";
     deleteHTML.classList.add("delete");
-    deleteHTML.onclick = async function () {
-      const json = { mode: "delete", id: entry.id };
-      const body = JSON.stringify(json);
-      await serverResponse(body);
-    };
 
     let deletButton = document.createElement("a");
     deletButton.textContent = "x";
     deletButton.classList.add("delete_x");
+    deletButton.onclick = async function () {
+      const json = { mode: "delete", id: entry.id };
+      const body = JSON.stringify(json);
+      await serverResponse(body);
+    };
     deleteHTML.appendChild(deletButton);
 
     entryHTML.appendChild(deleteHTML);
