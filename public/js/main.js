@@ -25,8 +25,12 @@ const submit = async function (event) {
 
 const login_validate = async function (event) {
   // username = document.querySelector('#user_name_box').get;
-
-  window.location.href = "../homepage.html";
+  // const reponse = await fetch("homepage.html", {
+  //   method: "GET",
+  //   url: "homepage.html",
+  // });
+  // const text = await reponse.text();
+  // console.log("Text:", text);
 };
 
 window.onload = function () {
