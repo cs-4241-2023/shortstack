@@ -41,36 +41,34 @@ const handlePost = function (request, response) {
 
     if (data.mode === "clear") {
       appdata = [];
-    }
-    if (data.mode === "read") {
+    } else if (data.mode === "read") {
       let text = JSON.stringify(appdata);
       response.writeHead(200, "OK", { "Content-Type": "text/plain" });
       response.end(text);
       return;
-    }
-    if (data.mode === "delete") {
+    } else if (data.mode === "delete") {
+      // console.log("current list: ", JSON.stringify(appdata));
       const target = data.id;
       console.log("Target:", target);
       for (i = 0; i < appdata.length; i++) {
-        if (appdata[i].id === target) {
+        if (appdata[i].id == target) {
           console.log("Deleting the element: ", appdata[i]);
-          let temp = appdata.slice(i, 1);
+          let temp = appdata.splice(i, 1);
           console.log("Removed: ", JSON.stringify(temp));
           console.log("New appdata", JSON.stringify(appdata));
-          return;
+          break;
         }
       }
-
-      return;
+    } else {
+      console.log(data);
+      const entry = {
+        date: data.entry.date,
+        numHours: parseInt(data.entry.numHours),
+        reason: data.entry.reason,
+        id: data.entry.id,
+      };
+      appdata.push(entry);
     }
-    console.log(data);
-    const entry = {
-      date: data.entry.date,
-      numHours: parseInt(data.entry.numHours),
-      reason: data.entry.reason,
-      id: data.entry.id,
-    };
-    appdata.push(entry);
 
     let text = JSON.stringify(appdata);
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });

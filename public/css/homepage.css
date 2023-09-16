@@ -84,3 +84,15 @@ input[type="button"] {
 input[type="button"]:hover {
   background-color: #801313;
 }
+
+button {
+  margin: 0px 20px 0px 0px;
+  font-size: 14px;
+  border: var(--secondary-color);
+  height: 20px;
+  width: 96px;
+  border-radius: 10px;
+  color: white;
+  background-color: #a23535;
+  transition-duration: 0.2s;
+}

@@ -30,39 +30,51 @@ const submit = async function (event) {
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
+
   event.preventDefault();
 
-  let error_message = "";
-  let dateBox = document.getElementById("date-of-hours");
-  let numHoursBox = document.getElementById("number-of-hours");
-  let reasoningBox = document.getElementById("reasoning-box");
+  let evt = event.target;
+  if (evt.getAttribute("formaction") === "/submit") {
+    //add item logic
+    let error_message = "";
+    let dateBox = document.getElementById("date-of-hours");
+    let numHoursBox = document.getElementById("number-of-hours");
+    let reasoningBox = document.getElementById("reasoning-box");
 
-  let error = document.getElementById("error-message");
+    let error = document.getElementById("error-message");
 
-  let dateVal = dateBox.value;
-  let numHours = parseFloat(numHoursBox.value);
-  let reasoning = reasoningBox.value;
+    let dateVal = dateBox.value;
+    let numHours = parseFloat(numHoursBox.value);
+    let reasoning = reasoningBox.value;
 
-  if (dateVal == "" || numHoursBox.value == "") {
-    error_message = "Please fill out the fields";
-  } else if (numHours < 0) {
-    error_message = "Please enter a greater than zero number of hours";
-  } else if (reasoning == "") {
-    error_message = "Please give a reason for your hours";
+    if (dateVal == "" || numHoursBox.value == "") {
+      error_message = "Please fill out the fields";
+    } else if (numHours < 0) {
+      error_message = "Please enter a greater than zero number of hours";
+    } else if (reasoning == "") {
+      error_message = "Please give a reason for your hours";
+    }
+    console.log(error_message);
+
+    if (error_message !== "") {
+      error.style.opacity = 1;
+      error.textContent = error_message;
+      return;
+    }
+    error.style.opacity = 0;
+    newSubmission = new hourEntry(dateVal, numHours, reasoning);
+
+    const json = { mode: "add", entry: newSubmission };
+    const body = JSON.stringify(json);
+    console.log("New submission: ", body);
+    serverResponse(body);
+  } else {
+    console.log("delete logic");
+    const json = { mode: "delete", id: evt.id };
+    const body = JSON.stringify(json);
+    console.log("delete data: ", body);
+    serverResponse(body);
   }
-  console.log(error_message);
-
-  if (error_message !== "") {
-    error.style.opacity = 1;
-    error.textContent = error_message;
-    return;
-  }
-  error.style.opacity = 0;
-  newSubmission = new hourEntry(dateVal, numHours, reasoning);
-
-  const json = { mode: "add", entry: newSubmission };
-  const body = JSON.stringify(json);
-  serverResponse(body);
 };
 
 const serverResponse = async function (body) {
@@ -73,7 +85,7 @@ const serverResponse = async function (body) {
 
   const text = await response.text();
   const data = JSON.parse(text);
-  console.log("data:", data);
+  console.log("gonna print data:", data);
   writeInfoToScreen(data);
 };
 
@@ -138,14 +150,20 @@ const writeInfoToScreen = function (submissions) {
     info.classList.add("info");
 
     let dateHTML = document.createElement("p");
-    dateHTML.textContent = "Date: " + entry.data;
-    dateHTML.classList.add("calories");
+    dateHTML.textContent = "Date: " + entry.date;
+    dateHTML.classList.add("date");
     info.appendChild(dateHTML);
 
     let reasonHTML = document.createElement("p");
     reasonHTML.textContent = "Reason: " + entry.reason;
     reasonHTML.classList.add("reason");
     info.appendChild(reasonHTML);
+
+    let hoursHTML = document.createElement("p");
+    hoursHTML.textContent = "Entered hours: " + entry.numHours;
+    hoursHTML.classList.add("enteredHours");
+    hoursHTML.onclick = submit;
+    info.appendChild(hoursHTML);
 
     let hoursLeftHTML = document.createElement("p");
     hoursLeftHTML.textContent =
@@ -160,14 +178,12 @@ const writeInfoToScreen = function (submissions) {
     deleteHTML.style.height = "40px";
     deleteHTML.classList.add("delete");
 
-    let deletButton = document.createElement("a");
-    deletButton.textContent = "x";
-    deletButton.classList.add("delete_x");
-    deletButton.onclick = async function () {
-      const json = { mode: "delete", id: entry.id };
-      const body = JSON.stringify(json);
-      await serverResponse(body);
-    };
+    let deletButton = document.createElement("button");
+    deletButton.textContent = "Delete";
+    deletButton.formAction = "/delete";
+    deletButton.id = entry.id;
+    deletButton.onclick = submit;
+
     deleteHTML.appendChild(deletButton);
 
     entryHTML.appendChild(deleteHTML);
