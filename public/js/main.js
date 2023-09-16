@@ -1,27 +1,39 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const submit = async function( event ) {
+const submit = async function (event) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( '#yourname' ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+  // event.preventDefault()
 
-  const response = await fetch( '/submit', {
-    method:'POST',
-    body 
-  })
+  const input = document.querySelector("#yourname"),
+    json = { yourname: input.value },
+    body = JSON.stringify(json);
 
-  const text = await response.text()
+  const response = await fetch("/submit", {
+    method: "POST",
+    body,
+  });
 
-  console.log( 'text:', text )
-}
+  const text = await response.text();
 
-window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
-}
+  console.log("text:", text);
+};
+
+//Front end for page one
+
+const login_validate = async function (event) {
+  // username = document.querySelector('#user_name_box').get;
+  // const reponse = await fetch("homepage.html", {
+  //   method: "GET",
+  //   url: "homepage.html",
+  // });
+  // const text = await reponse.text();
+  // console.log("Text:", text);
+};
+
+window.onload = function () {
+  const loginButton = document.querySelector("#sign_in_button");
+  loginButton.onclick = login_validate;
+};
