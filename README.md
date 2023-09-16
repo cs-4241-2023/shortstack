@@ -1,5 +1,7 @@
 # Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js
 
+Link: https://a2-valleyquail.glitch.me
+
 ## RBE Attendance Tracker
 
 This web app is the prototype the a club membership and attendance tracking
