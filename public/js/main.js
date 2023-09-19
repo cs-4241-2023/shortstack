@@ -7,16 +7,26 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault() // Prevents default browser behavior
    //add more fields to your json based on your form 
-  const input = document.querySelector( '#showName' ),
-        json = { showName: input.value },
-        body = JSON.stringify( json )
+  const showName = document.querySelector( '#showName' )
+  const relYear = document.querySelector( '#relYear' )
+  const showGenre = document.querySelector( '#showGenre' )
+        json = { showName: showName.value, 
+                  relYear: relYear.value,
+                  showGenre: showGenre.value },
+        body = JSON.stringify( json ) // converts json to string 
 
-  const response = await fetch( '/submit', {
+        
+
+   fetch( '/submit', {
     method:'POST',
-    body 
-  })
+    body
+  }).then(async function (response){
+    let newData = await response.json() //wait until response
+console.log(newData)
+ })
 
-  const data = await response.json()
+  // const data = await response.json()
+  // console.log(data)
   
   const list = document.createElement('ul')
   

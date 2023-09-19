@@ -41,13 +41,14 @@ const handlePost = function( request, response ) {
   let dataString = ''
 
   request.on( 'data', function( data ) {
-      dataString += data 
+      dataString += data // stuff from frontend
   })
 
   request.on( 'end', function() {
     console.log( JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
+    appdata.push(JSON.parse(dataString))
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
     response.end( JSON.stringify( appdata) ) 
