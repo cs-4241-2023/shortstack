@@ -16,14 +16,31 @@ const submit = async function( event ) {
         body = JSON.stringify( json ) // converts json to string 
 
         
-
-   fetch( '/submit', {
+        
+  const response = await fetch( '/submit', {
     method:'POST',
     body
-  }).then(async function (response){
-    let newData = await response.json() //wait until response
-console.log(newData)
- })
+  })
+    
+  let newData = await response.json() //wait until response
+  console.log(newData)
+
+
+
+  newData.forEach(item => {
+    
+    const tr = document.createElement('tr')
+    const td1 = document.createElement('td')
+    const td2 = document.createElement('td')
+    const td3 = document.createElement('td')
+    td1.innerHTML = newData.showName
+    td2.innerHTML = newData.relYear
+    td3.innerHTML = newData.showGenre
+    tr.appendChild(td1)
+    tr.appendChild(td2)
+    tr.appendChild(td3)
+  })
+
 
   // const data = await response.json()
   // console.log(data)
