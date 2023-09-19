@@ -8,11 +8,9 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const appdata = []
+
+
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -20,6 +18,7 @@ const server = http.createServer( function( request,response ) {
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
   }
+
 })
 
 const handleGet = function( request, response ) {
@@ -40,14 +39,33 @@ const handlePost = function( request, response ) {
   })
 
   request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
-
+    // console.log("Server")
+    
+    // console.log(appdata)
     // ... do something with the data here!!!
+    // if /delete, then call delEntry
+    // console.log(request.url)
+    if(request.url === '/submit'){
+      // console.log( JSON.parse(dataString))
+      
+      let newItem = JSON.parse(dataString)
+      if(newItem.toBeDeleted === true){
+        appdata.splice(0,1)
+      }
+      else {
+        appdata.push(newItem)
+      }
 
+    }
+
+    
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
+    response.write(JSON.stringify(appdata))
+    response.end()
   })
 }
+
+
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
