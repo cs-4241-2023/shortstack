@@ -1,18 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Satisfy&family=Yellowtail&display=swap');
+    </style>
+
     <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+    <h1 id="title">Request for Extension</h1>
+    <form action="/my-handling-form-page" method="post">
+      <ul class="container">
+        <li class="form-row">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="user_name" required />
+        </li>
+        <li class="form-row">
+          <label for="mail">Email:</label>
+          <input type="email" id="mail" name="user_email" required />
+        </li>
+
+        <li class="form-row">
+          <label for="asnmt">
+            Assignment:
+          </label>
+          <input
+            type="text"
+            id="asnmt"
+            list="asmt"
+            name="user_asnmt"
+            required
+          />
+          <datalist id="asmt">
+            <option>A1: Getting Started</option>
+            <option>A2: Shortstack</option>
+          </datalist>
+        </li>
+        <li class="form-row">
+          <label for="date">Days Until Due:</label>
+          <input type="text" id="date" name="user_date" required />
+        </li>
+        <!-- create a date field here to capture the date -->
+        <li class="form-row">
+          <label for="msg">Reason For Extension:</label>
+          <textarea id="msg" name="user_message"></textarea>
+        </li>
+        <li class="button">
+          <button type="submit" id="sub-button" value="submit">Submit</button>
+        </li>
+      </ul>
     </form>
   </body>
 </html>
