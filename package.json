@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Kitty Collector",
+  "version": "1.0",
+  "description": "Kitty Collector is a website where a user can input their cat's and maybe even their friend's cat's information to keep track of all their favorite cats. Fill out the four fields and click submit to see the inputted information population on the table.",
+  "author": "Kristine Guan",
   "scripts": {
     "start": "node server.improved.js"
   },
