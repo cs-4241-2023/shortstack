@@ -10,9 +10,9 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'show': 'Skull Island', 'year': 2023, 'mpg': 23 },
-  { 'show': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'show': 'ford', 'year': 1987, 'mpg': 14} 
+  { 'showName': 'Skull Island', 'relYear': 2023, 'showGenre': 'Action/Adventure'},
+  { 'showName': 'One Piece', 'relYear': 2023, 'showGenre': 'Action/Adventure, Live Action' },
+  { 'showName': 'I Am Not Okay With This', 'relYear': 2023, 'showGenre': 'Probably Drama, Live Action'} 
 ]
 
 const server = http.createServer( function( request,response ) {

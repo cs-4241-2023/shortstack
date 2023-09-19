@@ -56,4 +56,8 @@ input{
   grid-column-end: 4;
 }
 
+.table{
+  align-content: center;
+}
+
 
