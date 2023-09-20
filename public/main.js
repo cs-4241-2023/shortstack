@@ -100,15 +100,14 @@ const playerSubmit = async function( event ) {
   const input1 = document.querySelector( '#player1' ),
         input2 = document.querySelector( '#player2' ),
         compNumber = Math.floor(Math.random() * 11),
-        json = { Player1Guess: input1.value, Player2Guess: input2.value, ComputerGuess:compNumber  },
-        body = JSON.stringify( json )
-  
+        json = { Player1Guess: input1.value, Player2Guess: input2.value, ComputerGuess:compNumber  }  
 
 
-  const response = await fetch("/submit", {
-        method: "POST",
-        body
-      })
+  const response = await fetch( '/submit', {
+  method:  'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body:    JSON.stringify( json )
+})
       const update = await response.json();
       createTable(update)
       

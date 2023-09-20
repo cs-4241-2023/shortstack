@@ -1,4 +1,4 @@
-const http = require( 'http' ),
+/*const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
       // to install the mime library if you're testing this on your local machine.
@@ -93,9 +93,50 @@ const sendFile = function( response, filename ) {
        // file not found, error code 404
        response.writeHeader( 404 )
        response.end( '404 Error: File Not Found' )
-
+ 
      }
    })
-}
+}*/
 
-server.listen( process.env.PORT || port )
+
+const express = require("express"),
+      { MongoClient, ServerApiVersion } = require("mongodb"),
+      app = express(),
+      appData     = [],
+      port = 3000
+app.use("/", express.static("public"))
+app.use( express.json() )
+
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+app.use(express.urlencoded({extened:true}))
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+app.post( '/submit', (req, res) => {
+  appData.push( req.body )
+  res.writeHead( 200, { 'Content-Type': 'application/json' })
+  res.end( JSON.stringify( appData ) )
+})
+
+
+run().catch(console.dir);
+app.listen( 3000 )
