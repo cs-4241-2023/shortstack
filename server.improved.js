@@ -49,7 +49,7 @@ const handlePost = function (request, response) {
 
   request.on("data", function (data) {
     dataString += data;
-    console.log(dataString)
+    //console.log(dataString)
   });
 
   request.on("end", function () {
@@ -72,12 +72,6 @@ const handlePost = function (request, response) {
           newData[id].priority = calculateDerivedField(data.date, data.msg);
       }
 
-      //find the record in newData
-      //update that record in newData 
-      //send new Data back to the client
-
-    // ... do something with the data here!!! push data into appdata array
-    console.log(JSON.parse(dataString));
     response.writeHead(200, "OK", { "Content-Type": "text/json" });
     response.end(JSON.stringify(newData));
   });

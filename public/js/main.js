@@ -8,7 +8,7 @@ const submit = async function (event) {
   // remains to this day
   event.preventDefault();
 
-  const input = document.querySelectorAll("#name, #mail, #asnmt, #date, #msg"),
+  let input = document.querySelectorAll("#name, #mail, #asnmt, #date, #msg"),
     json = {
       name: input[0].value,
       mail: input[1].value,
@@ -17,18 +17,17 @@ const submit = async function (event) {
       msg: input[4].value,
     }
   if (modifyData === true) { 
-    json.id === modId;
+    json.id = modId
   } 
   const body = JSON.stringify(json);
 
   fetch((modifyData === false) ? "/submit" : "/modify", {
     method: "POST",
-    body,
+    body: body,
   }).then(async function (response) {
     let data = await response.json();
     data.forEach((entry, index) => (entry.id = index));
     render(data);
-    console.log(data);
   });
 
   };
@@ -39,6 +38,7 @@ async function render(data) {
   list.innerHTML = "";
   modifyData = false
   modId = null
+  document.getElementById('mainForm').reset()
   const item1 = document.createElement("p");
   const button_sort = document.createElement("button");
   button_sort.innerText = "Sort By Priority";
@@ -72,7 +72,6 @@ async function render(data) {
 
 async function prioritysort(data) {
   const sortedArray = [];
-  console.log(data);
   for (let i = 0; i < data.length; i++) {
     const d = data[i];
     if (d.priority == "High") {
@@ -115,16 +114,6 @@ async function mod(data) {
   document.getElementById('asnmt').value = data.asnmt;
   document.getElementById('date').value = data.date;
   document.getElementById('msg').value = data.msg;
-  
-  /*fetch("/modify", {
-    method: "POST",
-    body: data,
-  }).then(async function (response) {
-    let data = await response.json();
-    data.forEach((entry, index) => (entry.id = index));
-    render(data);
-    console.log(data);
-  });*/
 }
 
 window.onload = function () {
