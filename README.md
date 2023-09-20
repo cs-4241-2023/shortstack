@@ -3,6 +3,8 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 
 Due: September 11th, by 11:59 AM.
 
+Tristan Sharich
+
 Glitch Site: https://classy-veiled-legend.glitch.me
 
 Notes: 
