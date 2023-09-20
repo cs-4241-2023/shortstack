@@ -10,9 +10,7 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'showName': 'Skull Island', 'relYear': 2023, 'showGenre': 'Action/Adventure'},
-  { 'showName': 'One Piece', 'relYear': 2023, 'showGenre': 'Action/Adventure, Live Action' },
-  { 'showName': 'I Am Not Okay With This', 'relYear': 2023, 'showGenre': 'Probably Drama, Live Action'} 
+  { 'showName': 'Name', 'relYear': 'Year Of Release', 'showGenre': 'Genre'}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -76,5 +74,7 @@ const sendFile = function( response, filename ) {
      }
    })
 }
+
+const deleteRow = async function( event ) {}
 
 server.listen( process.env.PORT || port )

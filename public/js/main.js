@@ -1,5 +1,8 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+
+let idNum = 1;
+
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -13,9 +16,11 @@ const submit = async function( event ) {
 
         json = { showName: showName.value, 
                   relYear: relYear.value,
-                  showGenre: showGenre.value },
+                  showGenre: showGenre.value,
+                  id: idNum},
+        idNum++;
         body = JSON.stringify( json ) // converts json to string 
-
+        
         
         
   const response = await fetch( '/submit', {
@@ -27,25 +32,45 @@ const submit = async function( event ) {
   console.log(newData)
 
   const table = document.querySelector("table") // Will find the FIRST table element in html.
-
+  
   table.innerHTML = '';
+  
+  i = 0;
   newData.forEach(item => {
-    //debugger;
+    debugger;
+    
+      const editBtn =  document.createElement("BUTTON")
+      editBtn.innerHTML = "Edit";
+
+      const deleteBtn =  document.createElement("BUTTON")
+      deleteBtn.innerHTML = "Delete";
+
       const tr = document.createElement('tr')
+      console.log(item.id)
       const td1 = document.createElement('td')
       const td2 = document.createElement('td')
       const td3 = document.createElement('td')
+      const td4 = document.createElement('td')
       td1.innerHTML = item.showName
       td2.innerHTML = item.relYear
       td3.innerHTML = item.showGenre
+      td4.appendChild(editBtn)
+      td4.appendChild(deleteBtn)
       tr.appendChild(td1)
       tr.appendChild(td2)
       tr.appendChild(td3)
+      tr.appendChild(td4)
       table.appendChild(tr)
-
+    i++
+//add a button to delete or modify your data
+//each button should have its own action listener
+//keep track of each entry by using an id
+// you might need that id to edit or delete an entry
   })
 
 }
+
+
 
 window.onload = function() {
    const button = document.getElementById("submit");
