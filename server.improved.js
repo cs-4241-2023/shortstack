@@ -62,6 +62,19 @@ const handlePost = function (request, response) {
     else if(request.url === "/delete"){
       newData.splice(data.id,1);
     }
+    else if(request.url === "/modify"){
+          let id = parseInt(data.id)
+          newData[id].name = data.name;
+          newData[id].mail = data.mail;
+          newData[id].asnmt = data.asnmt;
+          newData[id].date = data.date;
+          newData[id].msg = data.msg;
+          newData[id].priority = calculateDerivedField(data.date, data.msg);
+      }
+
+      //find the record in newData
+      //update that record in newData 
+      //send new Data back to the client
 
     // ... do something with the data here!!! push data into appdata array
     console.log(JSON.parse(dataString));
