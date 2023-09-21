@@ -1,51 +1,25 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif&display=swap" rel="stylesheet">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <!-- add input fields for name and surname-->
-      <!-- <input type="text" id="Task" value="Write your task"> -->
-    
-    <div class="todo-container">
-      <h1>My To-Do List</h1>
+    <head>
+        <title>Login</title>
+        <meta charset="utf-8">
+        <!-- <script src="js/main2.js"></script> -->
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    </head>
+    <body>
+        <h1 id="login-header">Login</h1>
+        <form action="/login" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username"> 
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <br>
+            <button type="submit" name="action" value="login" id="loginButton">Login</button>
+            <button type="submit" name="action" value="create" id="createAccount">Create Account</button>
+            <!-- <button type="submit" id="loginButton">Login</button>
+            <button type="submit" id="createAccount">Create Account</button> -->
       
-      <form method="post">
-        <table id = submitTable>
-          <tr>
-            <td><input type="text" id="newTodoInput" placeholder="Add a new task..."></td>
-            <td><input type="date" id="dueDate"></td>
-            <td><button type = "submit" id="submitForm">Submit</button> </td>
-          </tr>
-        </table>
-      </form>
-      
-
-      <table id="todoTable">
-        <thead>
-            <tr>
-                <th>Todo</th>
-                <th>DUE ON</th>
-                <th>Priority</th>
-                <!-- <th>Delete</th> -->
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Rows will be added here -->
-        </tbody>
-    </table>
-  
-      <ul id="todoList"></ul>
-  </div>
-  </body>
+        </form>
+    </body>
 </html>
