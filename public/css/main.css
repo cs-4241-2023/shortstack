@@ -1,30 +1,28 @@
-#title {
+
+.form-row {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #f9f2fc;
+  padding: 0.75em;
+  font-family: "Satisfy", cursive;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+#title {
   font-family: "Yellowtail", cursive;
   font-size: 35px;
 }
 
-.container {
-  background-color: #f9f2fc;
-  padding: 0;
-  list-style: none;
-  border-radius: 10px;
-}
-
-.form-row {
-  display: flex;
-  padding: 0.75em;
-  font-family: "Satisfy", cursive;
-  font-size: 20px;
-  justify-content: space-evenly;
-}
-
 input,
 textarea {
+  flex: 1;
   width: 325px;
   font-size: 20px;
 }
+
 
 input:invalid {
   background-color: #d15a66;
@@ -33,13 +31,6 @@ input:invalid {
 
 input:valid {
   opacity: 1;
-}
-
-.button {
-  display: flex;
-  justify-content: center;
-  border-radius: 15px;
-  font-size: 17px;
 }
 
 button {
