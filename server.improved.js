@@ -1,42 +1,81 @@
-const http = require("http"),
-  fs = require("fs"),
-  // IMPORTANT: you must run `npm install` in the directory for this assignment
-  // to install the mime library if you're testing this on your local machine.
-  // However, Glitch will install it automatically by looking in your package.json
-  // file.
-  mime = require("mime"),
-  dir = "public/",
-  port = 3000;
-//inital bank account
-let appdata = [{ username: "Admin", income: 10000, expenses: 2000, balance: 8000 }];
+const express = require("express");
+const cookie  = require( 'cookie-session' )
+const {MongoClient} = require('mongodb');
+const app = express();
+const  fs =  require("fs"),
+mime = require("mime"),
+dir = "public/",
+port = 3000;
+uri = "mongodb+srv://ethancatania:HelloWorld@a3clusterec.nhtdscq.mongodb.net/?retryWrites=true&w=majority"
 
-const server = http.createServer(function (request, response) {
-  ////check print called
-  if ((request.method === "GET") & (request.url === "/print")) handlePrint(response);
-  
-  else if (request.method === "POST") {//check whether a createUser, deposit, or withdrawal call
-    
-    if (request.url === "/createUser") handlePost(request, response);
-    else if (request.url === "/deposit") handleDeposit(request, response);
-   else if (request.url === "/withdraw") handleWithdraw(request, response);
-    
-  } 
-  //check get and Delete 
-  else if (request.method === "GET") handleGet(request, response);
-  else if (request.method === "DELETE") handleRemove(request, response);
+const client = new MongoClient(uri);
+client.connect();
+
+app.use( cookie({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
+
+app.get('/', (req, res) => {
+    // Assuming 'login.html' is your login page
+    sendFile(res, "public/newAccount.html");
 });
 
-const handleGet = function (request, response) {
-  const filename = dir + request.url.slice(1);
 
-  if (request.url === "/") {
-    sendFile(response, "public/index.html");
-  } else {
-    sendFile(response, filename);
+app.use( express.urlencoded({ extended:true }) );
+
+
+app.post('/login', (req,res) => {
+  let dataString = "";
+
+  req.on("data", function (data) {
+    dataString += data;
+  });
+
+  req.on("end", function () {
+    const userData = JSON.parse(dataString);
+    const username = userData.username;
+    const password = userData.password;
+    const aUser = {
+      username: username,
+      password: password
+    }
+    loginHelper(aUser, res, req );
+  });
+});
+
+async function loginHelper(aUser, res, req){
+  try{
+    
+    const DB = client.db("a3DB");
+    const collection =  DB.collection("Banking");
+
+  const name = aUser.username
+    const key = {username: name};
+    const exists = await collection.findOne(key);
+    
+    
+    
+    if (exists === null) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ username: name }));
+    } else if (exists.password === aUser.password){
+      console.log("login Successful");
+      req.session.username = aUser.username;
+      res.redirect('/index.html');
+      
+      } else {
+        res.writeHead(400, {"Content-Type": "application/json" });
+        res.end(JSON.stringify({ username: name}));
+      }
+    }   
+  catch (e) {
+    console.log(e);
   }
-};
+}
 
-const handlePost = function (request, response) {
+app.post("/createUser", (request, response) => {
+  
   let dataString = "";
 
   request.on("data", function (data) {
@@ -45,47 +84,203 @@ const handlePost = function (request, response) {
 
   request.on("end", function () {
     const userData = JSON.parse(dataString);
-
-    // Check if the username already exists
-    const exists = appdata.some((item) => item.username === userData.username);
-
-    if (!exists) {
-      // calculate dervied balance variable 
-      const balance = userData.income - userData.expenses;
-
-      // If the username doesn't exist add a create a new user 
-      const newUser = {
-        username: userData.username,
-        income: userData.income,
-        expenses: userData.expenses,
-        balance: balance,
-      };
-      //add the new data to the array
-      appdata.push(newUser);
-
-      response.writeHead(201, "OK", { "Content-Type": "application/json" });
-      response.end(
-        JSON.stringify({ // send username
-          username: newUser.username,
-        })
-      );
-    } else {
-      // username already exists
-
-      response.writeHead(400, "Bad Request", {
-        "Content-Type": "application/json",
-      });
-      // send username 
-      response.end(
-        JSON.stringify({
-          username: userData.username,
-        })
-      );
-    }
+    request.session.username = userData.username;
+    if(userData.password == userData.REpassword){
+    // If the username doesn't exist add a create a new user 
+    const newUser = {
+        username: request.session.username,
+        password: userData.password,
+        balance: userData.balance,
+    };
+    addToDb(newUser, response);
+  } else {
+    console.log("a");
+    response.writeHead(301, {"Content-Type": "application/json"})
+    response.end(JSON.stringify({ username: request.session.username }));
+  }
   });
-  //toggle print 
-  displayed = false;
-};
+});
+
+app.delete("/remove", (request, response) => {
+ 
+  let dataString = "";
+  
+  request.on("data", function (data) {
+    dataString += data;
+  });
+  
+  request.on("end", function () {
+    const username = request.session.username;
+    const aUsername = { username: username };
+        deleteFromDb(aUsername, response);
+      });
+});
+
+app.post("/withdraw", (request, response) => {
+  let dataString = "";
+
+  request.on("data", function (data) {
+    dataString += data;
+  });
+
+  request.on("end", function () {
+      const userData = JSON.parse(dataString);
+      const username = request.session.username;
+      const amount = userData.amount;
+      withdrawHelper(username, response, amount);
+  });
+});
+
+app.post("/deposit", (request, response) => {
+ 
+  let dataString = "";
+
+  request.on("data", function (data) {
+    dataString += data;
+  });
+  
+
+  request.on("end", function () {
+    const userData = JSON.parse(dataString);
+    const username = request.session.username;
+    const amount = userData.amount;
+    depositHelper(username,response, amount);
+    }); 
+});
+
+async function withdrawHelper(name, res, amount){
+try{
+    
+  const DB = client.db("a3DB");
+  const collection =  DB.collection("Banking");
+
+  const key = {username: name};
+  console.log("Received username: " + name);
+  const exists = await collection.findOne(key);
+  
+  
+  if (exists === null) {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ username: name }));
+  } else {
+    const balance = exists.balance;
+    if (balance >= amount){
+      const newBalance = balance - amount;
+      updateBalance(name, res, newBalance);
+    } else {
+      res.writeHead(400, {"Content-Type": "application/json" });
+      res.end(JSON.stringify({ username: name, balance: balance  }));
+    }
+  }   
+} 
+catch (e) {
+  console.log(e);
+}
+}
+
+async function depositHelper(name, res, amount){
+
+  try{
+    
+    const DB = client.db("a3DB");
+    const collection =  DB.collection("Banking");
+
+    const key = {username: name};
+    const exists = await collection.findOne(key);
+    
+    
+    if (exists === null) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ username: name }));
+    } else {
+      const balance = exists.balance;
+      const newBalance = balance + amount;
+
+      updateBalance(name, res, newBalance);
+    }   
+  } 
+  catch (e) {
+    console.log(e);
+  }
+}
+  
+async function updateBalance(name, res, newBalance){
+
+  try{
+
+    const DB = client.db("a3DB");
+    const collection =  DB.collection("Banking");
+
+    const key = {username: name};
+    res.writeHead(200, { "Content-Type": "application/json" });
+    const update = {$set: {balance: newBalance }};
+    await collection.updateOne(key, update );
+    
+
+    res.end(JSON.stringify({ username: name, balance: newBalance }));
+  } catch (e) {
+    console.log(e);
+  }
+}
+async function deleteFromDb(account, res){
+  try{
+    
+    const DB = client.db("a3DB");
+    const collection =  DB.collection("Banking");
+
+    const name = account.username;
+    const key = {username: name};
+    const exists = await collection.findOne(key);
+
+  if (name !== "Admin") {
+    if (exists !== null) {
+    await collection.deleteOne(account);
+    res.type('html');
+    res.redirect('/login.html');
+  } 
+  else{
+    res.writeHead(201,{ "Content-Type": "application/json" });
+    res.end( JSON.stringify({ username: name }));
+  }
+}else {
+  res.writeHead(202, { "Content-Type": "application/json" });
+  res.end( JSON.stringify({ username: name }));
+}
+  
+
+  }catch(e){
+    console.log(e);
+    }
+}
+
+
+
+async function addToDb(newUser, res){
+  try{
+    
+    const DB = client.db("a3DB");
+    const collection =  DB.collection("Banking");
+
+    const name = newUser.username;
+    const key = {username: name};
+    const exists = await collection.findOne(key);
+    
+    if (exists === null) {
+      await collection.insertOne(newUser);
+      res.type('html');
+      res.redirect('/index.html');
+
+    }  else{
+      res.writeHead(300, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ username: newUser.username }));
+    }
+
+    
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 
 const sendFile = function (response, filename) {
   const type = mime.getType(filename);
@@ -104,149 +299,7 @@ const sendFile = function (response, filename) {
   });
 };
 
-let displayed = false;
+app.use( express.static( 'public' ) );
+app.use( express.json() );
 
-const handlePrint = function (response) {
-  let dataString = "";
-  
-//if page is not displaying accounts, go through each item in the string and create new data string with the inputted values
-  if (displayed === false) {
-    appdata.forEach((d) => {
-      dataString +=
-        "Username: " +
-        d.username +
-        " Income: " +
-        d.income +
-        " Expenses: " +
-        d.expenses +
-        " Balance: " +
-        d.balance +
-        "\n";
-    });
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.end(JSON.stringify(dataString)); 
-   
-  }  else{
-       response.writeHead(200, { "Content-Type": "text/plain" });
-    response.end(JSON.stringify("")); 
-    }
-  //toggle print 
-  displayed = !displayed;
-};
-
-const handleRemove = function (request, response) {
-  let dataString = "";
-  
-  request.on("data", function (data) {
-    dataString += data;
-  });
-  
-  request.on("end", function () {
-    const data = JSON.parse(dataString);
-//prevents admin from being removed
-    if (data.yourname !== "Admin") {
-      //find the index where username matches the input value
-      const index = appdata.findIndex((item) => item.username === data.yourname);
-      //Found data
-      if (index !== -1) {
-        //remove data from array
-        appdata.splice(index, 1);
-        
-        response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(
-          JSON.stringify({
-            yourname: data.yourname,
-          })
-        );
-      } else {//could not find data
-        response.writeHead(404, { "Content-Type": "application/json" });
-        response.end(JSON.stringify({ message: "Data not found" }));
-      }
-    } else {//admin was attempted to be deleted
-      response.writeHead(403, { "Content-Type": "application/json" });
-      response.end(
-        JSON.stringify({ message: "Permission denied: Cannot remove admin" })
-      );
-    }
-  });
-  //toggle print 
-  displayed = false;
-};
-const handleDeposit = function (request, response) {
-  let dataString = "";
-
-  request.on("data", function (data) {
-    dataString += data;
-  });
-
-  request.on("end", function () {
-    const data = JSON.parse(dataString);
-
-    //search data for matching username
-    const user = appdata.find((item) => item.username === data.username);
-
-    if (user) {
-      //balance = input + balance
-      user.balance += data.amount;
-
-      response.writeHead(200, { "Content-Type": "application/json" });
-      response.end(
-        JSON.stringify({
-          message: "Deposit successful",
-          username: user.username,
-          balance: user.balance,
-        })
-      );
-    } else {
-      response.writeHead(404, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ message: "User not found" }));
-    }
-  });
-  //toggle print 
-  displayed = false;
-};
-
-const handleWithdraw = function (request, response) {
-  let dataString = "";
-
-  request.on("data", function (data) {
-    dataString += data;
-  });
-
-  request.on("end", function () {
-    const data = JSON.parse(dataString);
-
-    ////search data for matching username
-    const user = appdata.find((item) => item.username === data.username);
-
-    if (user) {
-   
-      if (user.balance >= data.amount) {
-        //balance = balance - input
-        user.balance -= data.amount;
-
-        response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(
-          JSON.stringify({
-            username: user.username,
-            balance: user.balance,
-          })
-        );
-      } else { //Balance < input value (i.e Insufficent Funds)
-        response.writeHead(400, { "Content-Type": "application/json" });
-        response.end(
-          JSON.stringify({
-            username: user.username,
-            balance: user.balance,
-          })
-        );
-      }
-    } else { // User could not be found
-      response.writeHead(404, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ message: "User not found" }));
-    }
-  });
-  //toggle print 
-  displayed = false;
-};
-server.listen(process.env.PORT || port);
+app.listen(process.env.PORT || port);
