@@ -99,44 +99,104 @@ const sendFile = function( response, filename ) {
 }*/
 
 
+require('dotenv').config()
 const express = require("express"),
-      { MongoClient, ServerApiVersion } = require("mongodb"),
+      { MongoClient } = require("mongodb"),
       app = express(),
       appData     = [],
       port = 3000
+
 app.use("/", express.static("public"))
 app.use( express.json() )
-
+//console.log(process.env.USER, process.env.PASS, process.env.HOST)
+app.use(express.urlencoded({extened:true}))
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
+let client = new MongoClient(uri);
+let serverConn = async function(){
+try {
+  client.connect()
+  listAllDatabases(client);
+} catch (error) {
+  console.error(error)
+} finally {
+  await client.close()
+}
 
-app.use(express.urlencoded({extened:true}))
+}
 
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+const listAllDatabases = async function(client) { 
+  const dbList = await client.db('admin').admin().listDatabases();
+  dbList.databases.forEach(db => {
+    //console.log(`${db.name}`)
+  })
+}
+
+serverConn();
+
+
+async function createListing(client, newListing){
+  const result = await client.db("numbergame").collection("dbcollection").insertOne(newListing);
+  console.log(`New listing created with the following id: ${result.insertedId}`);
+}
+
+async function handlePost (client, req, res){
+  if (req.body.Player1Guess === req.body.ComputerGuess){
+    await createListing(client,
+    {
+      'Player': req.body.UserName, 
+      'Player1Guess': req.body.Player1Guess, 
+      'CompGuess': req.body.ComputerGuess, 
+      'isWinner': true, 
+      
+    })
+  } else {
+    await createListing(client,
+      {
+        'Player': req.body.UserName,  
+        'Player1Guess': req.body.Player1Guess, 
+        'CompGuess': req.body.ComputerGuess, 
+        'isWinner': false, 
+        
+      })
+      //console.log(`${req.body.Player1Guess}`)
   }
 }
-app.post( '/submit', (req, res) => {
-  appData.push( req.body )
-  res.writeHead( 200, { 'Content-Type': 'application/json' })
-  res.end( JSON.stringify( appData ) )
+
+
+
+app.post( '/submit', express.json(), async ( req, res ) => {
+  handlePost(client,req,res)
+  let collection = client.db("numbergame").collection("dbcollection")
+  if (collection !== null) {
+    const docs = await collection.find({}).toArray()
+    res.json( docs )
+    //console.log(JSON.parse(docs))
+  }
+}), 
+
+/*app.post( '/delete', async ( req, res ) => {
+  console.log('Got here');
+  let collection = client.db("numbergame").collection("dbcollection")
+  //let playerName = JSON.parse(req.body.UserName)
+  if (collection !== null) {
+    console.log(`${req.body.UserName}`)
+    collection.deleteOne({ Player: req.body.UserName});
+
+   // collection.deleteMany({ "Player": { $lt: req.body.UserName } });
+    console.log(`${collection.deletedCount} document(s) was/were deleted.`);
+    const docs = await collection.find({}).toArray()
+    res.json( docs )
+  }
+})*/
+
+app.post('/delete', async (req,res)=>{
+  const collection = client.db("numbergame").collection("dbcollection")
+  const result = await collection.deleteOne({
+    Player:req.body.UserName
+  })
+  const docs = await collection.find({}).toArray()
+    res.json( docs )
 })
-
-
-run().catch(console.dir);
+    
 app.listen( 3000 )

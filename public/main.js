@@ -32,19 +32,17 @@ function createTable(tableData){
   displayTable.appendChild(headers)
   //Player Rows
   tableData.forEach(e => {
-    console.log(e.Player)
-    if(e.Player === '1'){
       const player1 = document.createElement('div')
       player1.classList.add('row')
 
       const p1Name = document.createElement('div')
       p1Name.classList.add("cellName")
-      p1Name.innerText = '1'
+      p1Name.innerText = `${e.Player}`
       player1.appendChild(p1Name)
 
       const p1Number = document.createElement('div')
       p1Number.classList.add("cellGuess")
-      p1Number.innerText = `${e.PlayerGuess}`
+      p1Number.innerText = `${e.Player1Guess}`
       player1.appendChild(p1Number)
 
       const p1Winner = document.createElement('div')
@@ -58,34 +56,40 @@ function createTable(tableData){
       player1.appendChild(answer)
 
       displayTable.appendChild(player1)
-    } else {
-      const player2 = document.createElement('div')
-      player2.classList.add('row')
-
-      const p2Name = document.createElement('div')
-      p2Name.classList.add("cellName")
-      p2Name.innerText = '2'
-      player2.appendChild(p2Name)
-
-      const p2Number = document.createElement('div')
-      p2Number.classList.add("cellGuess")
-      p2Number.innerText = `${e.PlayerGuess}`
-      player2.appendChild(p2Number)
-
-      const p2Winner = document.createElement('div')
-      p2Winner.classList.add("cellResult")
-      p2Winner.innerText = `${e.isWinner}`
-      player2.appendChild(p2Winner)
-
-      const answer = document.createElement('div')
-      answer.classList.add("cellGuess")
-      answer.innerText = `${e.CompGuess}`
-      player2.appendChild(answer)
-      
-      displayTable.appendChild(player2)
-    }
+    
   });
   document.body.appendChild(displayTable)
+}
+
+let userName =''
+const userLogin = async function( event ){
+ event.preventDefault()
+  userName = document.getElementById("user").value
+  console.log(`${userName}`)
+  const userMessage = document.createElement('p')
+  userMessage.innerText = `Hello ${userName} Welcome to the Number Game!!! `
+  document.body.appendChild(userMessage)
+  document.getElementById("player1").hidden = false
+  document.getElementById("submit").hidden = false
+  document.getElementById("desc").hidden = false
+  document.getElementById("msg").hidden = false
+  document.getElementById("delete").hidden = false
+  document.getElementById("modify").hidden = false
+} 
+
+const userDelete = async function( event ){
+  event.preventDefault()
+  console.log(`${userName}`)
+  const json = { UserName: userName  }
+
+
+  const response = await fetch( '/delete', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify( json )
+  })
+  const update = await response.json();
+  createTable(update)
 }
 
 const playerSubmit = async function( event ) {
@@ -98,16 +102,18 @@ const playerSubmit = async function( event ) {
   
   
   const input1 = document.querySelector( '#player1' ),
-        input2 = document.querySelector( '#player2' ),
+        input2 = document.querySelector( '#user' ),
         compNumber = Math.floor(Math.random() * 11),
-        json = { Player1Guess: input1.value, Player2Guess: input2.value, ComputerGuess:compNumber  }  
+        json = { UserName: input2.value, Player1Guess: input1.value, ComputerGuess:compNumber  }
+       // body = JSON.stringify( json )
 
-
-  const response = await fetch( '/submit', {
-  method:  'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body:    JSON.stringify( json )
-})
+        const response = await fetch( '/submit', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify( json )
+        })
+        //.then( response => response.json() )
+        //.then( console.log ) 
       const update = await response.json();
       createTable(update)
       
@@ -115,16 +121,24 @@ const playerSubmit = async function( event ) {
 
 
   
-  document.getElementById("player1").value = ""
-  document.getElementById("player2").value = ""
-  
+  document.getElementById("player1").value = ""  
+  document.getElementById("user").value = ""
 
 }
 
 
 
 window.onload = function() {
-  const buttonOne = document.querySelector("#submit");
-  buttonOne.onclick = playerSubmit;
+  const buttonOne = document.querySelector("#login");
+  buttonOne.onclick = userLogin;
 
+  const buttonTwo = document.querySelector("#submit");
+  buttonTwo.onclick = playerSubmit;
+
+  document.getElementById("player1").hidden = true
+  document.getElementById("submit").hidden = true
+  document.getElementById("desc").hidden = true
+  document.getElementById("msg").hidden = true
+  document.getElementById("delete").hidden = true
+  document.getElementById("modify").hidden = true
 }
