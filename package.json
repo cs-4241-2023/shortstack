@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Sophia Silkaitis",
+  "version": "1.0.0",
+  "description": "Webware Assignment #2",
+  "author": "Sophia Silkaitis",
   "scripts": {
     "start": "node server.improved.js"
   },

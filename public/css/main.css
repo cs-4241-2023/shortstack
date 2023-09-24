@@ -1,4 +1,39 @@
-body {
-  background:black;
-  color:white;
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #f9f2fc;
+  padding: 0.75em;
+  font-family: "Satisfy", cursive;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+#title {
+  font-family: "Yellowtail", cursive;
+  font-size: 35px;
+}
+
+input,
+textarea {
+  flex: 1;
+  width: 325px;
+  font-size: 20px;
+}
+
+
+input:invalid {
+  background-color: #d15a66;
+  opacity: 0.3;
+}
+
+input:valid {
+  opacity: 1;
+}
+
+button {
+  font-size: 15px;
+  font-family: "Satisfy", cursive;
 }
