@@ -271,6 +271,9 @@ const getServerResponse = async function(body) {
 
   const response = await fetch( '/submit', {
     method:'POST',
+    headers: {
+      'Content-Type': 'application/json'
+  },
     body 
   })
 

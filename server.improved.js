@@ -11,107 +11,55 @@ class ServerResponse {
     }
   }
 }
+const express = require('express');
+const bodyParser = require('body-parser');
+const mime = require('mime');
+const fs = require('fs');
+const path = require('path');
 
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
+app.use(express.static('public'));
 
 const entries = [];
 let idCounter = 0;
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  }
-})
+app.get('*', (req, res) => {
+  console.log("get", req.url)
+  const filename = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
+  const type = mime.getType(filename);
 
-const handleGet = function( request, response ) {
-  console.log("handleGet", request.url);
-  const filename = dir + request.url.slice( 1 );
-
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  }else{
-    sendFile( response, filename )
-  }
-}
-
-const handlePost = function( request, response ) {
-  console.log("handlePost", request.url);
-  let dataString = ''
-
-  request.on( 'data', function( data ) {
-      dataString += data 
-  })
-
-  request.on( 'end', function() {
-    console.log("server:", JSON.parse( dataString ) )
-
-    // ... do something with the data here!!!
-    const json = JSON.parse( dataString );
-    if (json.mode === "add") {
-      json.entry.id = idCounter++;
-
-      // derived field
-      // there are 4 calories per gram of protein
-      let proteinCalories = json.entry.protein * 4;
-      json.entry.percentProtein = Math.round((proteinCalories / json.entry.calories) * 100);
-
-      entries.push(json.entry);
-    } else if (json.mode === "delete") {
-      console.log("delete", json.id);
-      for (let i = 0; i < entries.length; i++) {
-        if (entries[i].id === json.id) {
-          console.log("found", entries[i]);
-          entries.splice(i, 1);
-          break;
-        }
-      }
-    } else if (json.mode === "clear") {
-      entries.length = 0; // clear array
-    } else if (json.mode === "read") {
-      // do nothing
-      console.log("read");
+  fs.readFile(filename, (err, content) => {
+    if (err === null) {
+      res.set('Content-Type', type);
+      res.send(content);
+    } else {
+      res.status(404).send('404 Error: File Not Found');
     }
+  });
+});
 
-    const responseObj = new ServerResponse(entries);
+app.post('/submit', (req, res) => {
+  const json = req.body;
+  console.log("post", req.body);
 
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end(JSON.stringify(responseObj));
-  })
-}
+  if (json.mode === "add") {
+    json.entry.id = idCounter++;
+    let proteinCalories = json.entry.protein * 4;
+    json.entry.percentProtein = Math.round((proteinCalories / json.entry.calories) * 100);
+    entries.push(json.entry);
+  } else if (json.mode === "delete") {
+    const index = entries.findIndex(e => e.id === json.id);
+    if (index !== -1) entries.splice(index, 1);
+  } else if (json.mode === "clear") {
+    entries.length = 0;
+  }
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+  const responseObj = new ServerResponse(entries);
+  res.json(responseObj);
+});
 
-   fs.readFile( filename, function( err, content ) {
-
-    console.log("filename:", filename);
-    console.log("err:", err);
-
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
-
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
-
-     }else{
-
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
-
-     }
-   })
-}
-
-server.listen( process.env.PORT || port )
+app.listen(port, () => console.log(`Server is running at http://localhost:${port}`));
