@@ -10,7 +10,7 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'showName': 'Name', 'relYear': 'Year Of Release', 'showGenre': 'Genre'}
+  { 'showName': 'Suite Life of Zack and Cody', 'relYear': '2005', 'showGenre': 'Sitcom',}
 ]
 
 const server = http.createServer( function( request,response ) {

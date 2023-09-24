@@ -4,6 +4,9 @@
 let idNum = 1;
 
 const submit = async function( event ) {
+
+
+
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
@@ -33,17 +36,17 @@ const submit = async function( event ) {
 
   const table = document.querySelector("table") // Will find the FIRST table element in html.
   
-  table.innerHTML = '';
+  // table.innerHTML = '';
   
   i = 0;
   newData.forEach(item => {
-    debugger;
     
       const editBtn =  document.createElement("BUTTON")
       editBtn.innerHTML = "Edit";
 
       const deleteBtn =  document.createElement("BUTTON")
       deleteBtn.innerHTML = "Delete";
+      deleteBtn.className = 'delete'
 
       const tr = document.createElement('tr')
       console.log(item.id)
@@ -70,9 +73,19 @@ const submit = async function( event ) {
 
 }
 
+const deleteRow = async function( event ) {
 
+
+  
+}
 
 window.onload = function() {
    const button = document.getElementById("submit");
   button.onclick = submit;
 }
+
+window.onload = function() {
+  const button = document.getElementsByClassName("delete");
+ button.onclick = deleteRow;
+}
+
