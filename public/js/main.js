@@ -205,17 +205,16 @@ const getServerResponse = async function(command, jsonText = {}) {
     headers: {
       'Content-Type': 'application/json'
   },
-    json 
+    body: json 
   })
 
-  const text = await response.text();
-  const data = JSON.parse(text);
+  const data = await response.json();
 
   console.log( 'data:', data );
-  setCounter("calories", data.totalCalories);
-  setCounter("protein", data.totalProtein);
+  // setCounter("calories", data.totalCalories);
+  // setCounter("protein", data.totalProtein);
 
-  generateFoodEntries(data.entries);
+  // generateFoodEntries(data.entries);
 
 }
 
@@ -229,12 +228,14 @@ window.onload = function() {
   const caloriesGoalButton = document.querySelector("#calories_goal_button");
   caloriesGoalButton.onclick = async function() {
     let caloriesGoal = prompt("Enter new calories goal", "3000");
+    console.log(caloriesGoal);
     await getServerResponse("/setgoal", {type: "calories", value: caloriesGoal});
-  }
+  };
 
   const proteinGoalButton = document.querySelector("#protein_goal_button");
   proteinGoalButton.onclick = async function() {
     let proteinGoal = prompt("Enter new protein goal", "150");
+    console.log(proteinGoal);
     await getServerResponse("/setgoal", {type: "protein", value: proteinGoal});
   };
 

@@ -22,7 +22,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
   (err) => console.log(err)
 );
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(express.static('public'));
 
 
@@ -41,11 +41,16 @@ app.get('*', (req, res) => {
   });
 });
 
+const getState = function() {
+  return {message: "hello world"};
+};
+
 // Set calories/protein goal
 // Format: {type: ["protein"/"calories"], value: [number]}
 app.post('/setgoal', (req, res) => {
   const json = req.body;
   console.log("set goal", json);
+  res.json(getState());
 });
 
 // Add entry
@@ -53,6 +58,7 @@ app.post('/setgoal', (req, res) => {
 app.post('/add', (req, res) => {
   const json = req.body;
   console.log("add", json);
+  res.json(getState());
 });
 
 // Delete entry
@@ -60,6 +66,7 @@ app.post('/add', (req, res) => {
 app.post('/delete', (req, res) => {
   const json = req.body;
   console.log("delete", json);
+  res.json(getState());
 });
 
 // Clear all entries
@@ -67,6 +74,7 @@ app.post('/delete', (req, res) => {
 app.post('/clear', (req, res) => {
   const json = req.body;
   console.log("clear", json);
+  res.json(getState());
 });
 
 
