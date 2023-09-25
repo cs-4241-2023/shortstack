@@ -12,28 +12,47 @@ input[type=number] {
 
 body {
   background: #264653;
-  color:white;
+  color:#FAF9F6;
   font-family: 'Roboto' , sans-serif;
+  height: fit-content;
 }
 
-.status_section {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 10%;
-  margin-bottom: 35px;
+#logout_button {
+  display: inline;
+  width: fit-content;
 }
+
+header > h1, h4 {
+  color: #FAF9F6;
+  line-height: 0%;
+}
+
 
 .status {
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  border-radius: 20px;
-  padding: 1rem;
-  padding-inline: 3rem;
-  text-align: center;
+  
+  padding: 1.5rem;
+  padding-inline: 2rem;
+  
   line-height: 0%;
+
+  text-align: center;
+  border-radius: 20px;
+
+  margin-bottom: 5%;
+}
+
+.status > h2, p {
+  color: #FAF9F6;
+}
+
+.edit_goal {
+  width: fit-content;
+  display: inline;
+  margin: auto;
 }
 
 .status_calories {
@@ -44,30 +63,15 @@ body {
   background: #E76F51;
 }
 
-.status > .status_name {
-font-size: 2vw;
-}
 
-.status > .status_value {
-  font-size: 2vw;
-}
-
-.status > .status_offset {
-  font-size: 1vw;
-}
-
-
-.status > .status_goal {
-  display: inline-block;
-}
 
 
 .food_entry_form {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  gap: 1rem;
+  gap: 1rem; */
   background: #2A9D8F;
   border-radius: 20px;
   padding: 1rem;
@@ -75,16 +79,8 @@ font-size: 2vw;
 
   margin-bottom: 35px;
 
-  font-size: 0.75vw;
 }
 
-.food_entry_form > button {
-  font-size: 1.5vw;
-}
-
-input {
-  font-size: inherit;
-}
 
 .food_submit_container {
   display: flex;
@@ -97,10 +93,6 @@ input {
   flex-direction: row;
   justify-content: space-evenly;
   gap: 30%;
-}
-
-#food_submit_button, #food_clear_button {
-  font-size: inherit;
 }
 
 
@@ -137,7 +129,6 @@ input {
 }
 
 .entry > .name {
-  font-size: 1.5vw;
   line-height: 0%;
   margin-left: 10px;
   margin-right: auto;
@@ -166,5 +157,4 @@ input {
 
 .entry > .delete_x {
   vertical-align: center;
-  font-size: 10em;
 }
