@@ -1,11 +1,10 @@
-Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
+Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
+
 ===
-
-Due: September 11th, by 11:59 AM.
-
 Ansel Chang
 
-Glitch site: https://a2-anselchangg.glitch.me/
+This is hosted on Heroku at https://calorie-counter-87a47dc49720.herokuapp.com/
+The benefit is much faster website loading time. It also allows for setting a remote directly, so it's super easy to make changes and push.
 
 This website features a calorie and protein tracker to make dieting easy! Simply log food entries and the calculator will determine your current calorie and protein counts and how much left towards the goal you've set.
 
@@ -31,8 +30,6 @@ Lighthouse scores:
 - 93% Accessibility
 - 100% Best practices
 - 90% SEO
-
-This is hosted on Heroku at https://calorie-counter-87a47dc49720.herokuapp.com/
 
 
 W3C tips followed:
