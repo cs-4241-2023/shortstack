@@ -1,7 +1,7 @@
-Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
+Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
+Due: September 25nd, by 11:59 AM.
 ===
 
-Due: September 11th, by 11:59 AM.
 
 Tristan Sharich
 
@@ -21,22 +21,4 @@ I used the felbox formatting to make a table like structure. I tried to make cus
 of the categories to help make things look better. The result didn't look as nice as I hoped but 
 the flexbox structure is there. 
 
-Feedback: 
-
-Andrew Sosa:
-What problems did the user have with your design?
-    The formatting of the data within the flexbox table is very uneven and not appealing to the eye
-What comments did they make that surprised you?
-    Liked that the pervious attempts showed up along witht the newest ones. I would have liked to add a 
-    reset button to delte all data stored for the session
-What would you change about the interface based on their feedback?
-    I would change the flexbox design layout. 
-
-James Yi: 
-
-There may be a bug or I am not understanding something. Player 1 guessed 5 and player 2 guessed 10. It says the Computer guessed 5 but Player 1 didn't win? 
-
-Every run of the game duplicates the past game and adds it to the page. This could get troublesome fast, possibly only add the most recent game to the list instead of adding all previous ones over and over again.
-
-Overall I think its pretty solid, may need some minor bug fixes and some css that differentiates between player 1 and 2.
-
+The delete function removes a guess the user has made. The modify function lets the user change one of the losses to a win, despite their guess. Both of these go from the first matching instance of in the data to the latest. All the buttons, input fields and texts feilds are controlled by bootstrap/ 

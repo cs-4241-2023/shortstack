@@ -175,26 +175,21 @@ app.post( '/submit', express.json(), async ( req, res ) => {
   }
 }), 
 
-/*app.post( '/delete', async ( req, res ) => {
-  console.log('Got here');
-  let collection = client.db("numbergame").collection("dbcollection")
-  //let playerName = JSON.parse(req.body.UserName)
-  if (collection !== null) {
-    console.log(`${req.body.UserName}`)
-    collection.deleteOne({ Player: req.body.UserName});
-
-   // collection.deleteMany({ "Player": { $lt: req.body.UserName } });
-    console.log(`${collection.deletedCount} document(s) was/were deleted.`);
-    const docs = await collection.find({}).toArray()
-    res.json( docs )
-  }
-})*/
 
 app.post('/delete', async (req,res)=>{
   const collection = client.db("numbergame").collection("dbcollection")
+  console.log(req.body.UserName)
   const result = await collection.deleteOne({
     Player:req.body.UserName
   })
+  const docs = await collection.find({}).toArray()
+    res.json( docs )
+}), 
+
+app.post('/modify', async (req,res)=>{
+  const collection = client.db("numbergame").collection("dbcollection")
+  console.log(req.body.UserName)
+  const result = await collection.updateOne({ Player: req.body.UserName }, { $set: {isWinner: true} });
   const docs = await collection.find({}).toArray()
     res.json( docs )
 })

@@ -6,6 +6,15 @@ function createTable(tableData){
   displayTable.classList.add("container")
 
   //Header Row
+  const leaderboard = document.createElement('div')
+  leaderboard.classList.add("row")
+
+  const leaderboardMsg = document.createElement('div')
+  leaderboardMsg.classList.add("hcell")
+  leaderboardMsg.innerText = 'Here is the leaderboard for all players'
+  leaderboard.appendChild(leaderboardMsg)
+  displayTable.appendChild(leaderboard)
+  
   const headers = document.createElement('div')
   headers.classList.add("row")
 
@@ -75,6 +84,8 @@ const userLogin = async function( event ){
   document.getElementById("msg").hidden = false
   document.getElementById("delete").hidden = false
   document.getElementById("modify").hidden = false
+  document.getElementById("msg2").hidden = false
+  document.getElementById("numRange").hidden = false
 } 
 
 const userDelete = async function( event ){
@@ -84,6 +95,21 @@ const userDelete = async function( event ){
 
 
   const response = await fetch( '/delete', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify( json )
+  })
+  const update = await response.json();
+  createTable(update)
+}
+
+const userModify = async function (event){
+  event.preventDefault()
+  console.log(`${userName}`)
+  const json = { UserName: userName  }
+
+
+  const response = await fetch( '/modify', {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify( json )
@@ -103,7 +129,9 @@ const playerSubmit = async function( event ) {
   
   const input1 = document.querySelector( '#player1' ),
         input2 = document.querySelector( '#user' ),
-        compNumber = Math.floor(Math.random() * 11),
+        input3 = document.querySelector( '#numRange' ),
+        maxNum = parseInt(input3.value),
+        compNumber = Math.floor(Math.random() * maxNum),
         json = { UserName: input2.value, Player1Guess: input1.value, ComputerGuess:compNumber  }
        // body = JSON.stringify( json )
 
@@ -135,10 +163,19 @@ window.onload = function() {
   const buttonTwo = document.querySelector("#submit");
   buttonTwo.onclick = playerSubmit;
 
+  const buttonThree = document.querySelector("#delete");
+  buttonThree.onclick = userDelete;
+
+  const buttonFour = document.querySelector("#modify");
+  buttonFour.onclick = userModify;
+
+
   document.getElementById("player1").hidden = true
   document.getElementById("submit").hidden = true
   document.getElementById("desc").hidden = true
   document.getElementById("msg").hidden = true
   document.getElementById("delete").hidden = true
   document.getElementById("modify").hidden = true
+  document.getElementById("msg2").hidden = true
+  document.getElementById("numRange").hidden = true
 }
