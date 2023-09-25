@@ -1,27 +1,19 @@
-Randy Dyer: https://a2-rbdyer.glitch.me/
+your glitch (or alternative server) link e.g. http://a3-charlie-roberts.glitch.me
 
-## Basketball player rating calculator
+Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
-For my project, I decideded to make a calculator to find an overall player rating based off of a few variables: Outside shooting score, Inside shooting score, athleticism, playmaking, and defense. Each varaible is on a scale from 0-99. Each variable is weighted and then averaged to get the player's overall rating. Use the tabs at the top of the web page to add, delete, or update a player entry in the table.
-
-I used a flex box for the tab container (flex direction column) as well as the contatiner holding the tabs and the inputs (flex direction row). I used class names for contatianers as well as elemments like the tab buttons, and ids for the input fields in order to get the user inputted text.
-
-I used the Rubik google font for all of my webpage text. I also styled the table, buttons and text.
-
-The data and data processing functions are all stored in the server.improved.js file and are accessed with http requests.
+- the goal of the application
+- challenges you faced in realizing the application
+- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
+- what CSS framework you used and why
+  - include any modifications to the CSS framework you made via custom CSS you authored
+- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for _one_ (and one alone) middleware please
+  add a little more detail about what it does.
 
 ## Technical Achievements
 
-- **Tech Achievement 1**: All of the nessesary components and data is all displayed on one page. I use a tab switcher to switch between the add, delete and update functionality. The table is updated accordingly on each http request.
+- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 
 ### Design/Evaluation Achievements
 
-- **Design Achievement 1**:
-
-Tested with Mahir Sowad: What problems did the user have with your design?
-
-- tab buttons look very similar to the input fields.
-
-What would you change about the interface based on their feedback?
-
-- I changed the color of the tab buttons so that it is clear that they are seperate from the input fields
+- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...

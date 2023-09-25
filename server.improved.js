@@ -1,12 +1,170 @@
-const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+require('dotenv').config()
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const express    = require('express'),
+{ MongoClient } = require("mongodb"),
+      app        = express()
+const currentUser = 'test'
+const saltRounds = 10;
+
+
+app.use( express.static( 'public' ) )
+app.use( express.static( 'views'  ) )
+app.use( express.json() )
+app.use( (req,res,next) => {
+  if( PlayerCollection !== null ) {
+    next()
+  }else{
+    res.status( 503 ).send()
+  }
+})
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+const uri = `mongodb+srv://rbdyer3:${process.env.PASS}@cluster0.h1jga56.mongodb.net/?retryWrites=true&w=majority`
+const client = new MongoClient( uri )
+let PlayerCollection = null
+let userCollection = null
+
+/* Function to connect to databases */
+async function run() {
+  //connect to client
+  await client.connect()
+  userCollection = await client.db("Login").collection("user")
+  PlayerCollection = await client.db("2kRating").collection("rating")
+
+
+// Handle login POST request
+app.post('/login', async (req, res) => {
+  const username = req.body.user.username
+  const password = req.body.user.password
+console.log('username and password: ',username, password)
+  try {
+    // Check if the user exists in the database
+const user = await userCollection.find(
+  {username: username}
+).toArray()
+console.log(user)
+
+    if (user.length === 0) {
+      console.log("add user")
+
+      bcrypt.hash(password, saltRounds, function(err, hash) {
+        // Store hash in your password DB.
+        const userToAdd = userCollection.insertOne({ username: username, password: hash })
+    });
+    }
+
+    // Check if the password is correct
+    const passwordMatch = await bcrypt.compare(password, user[0].password);
+
+    if (passwordMatch) {
+      console.log('password correct' )
+      // res.redirect('/playerRating.html');
+      res.sendFile('/public/playerRating.html');
+    }
+    else{
+      console.log('password incorrect' )
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+  // route to get all docs
+  app.get("/get", async (req, res) => {
+    if (PlayerCollection !== null) {
+      const docs = await PlayerCollection.find(
+        {user: currentUser}
+      ).toArray()
+      console.log(docs)
+      res.json( docs )
+    }
+   })
+   // add player to database
+   app.post( '/add', async (req,res) => {
+    const reqPlayer = req.body.newPlayer;
+    reqPlayer.rating = calculateOverallRating(reqPlayer.outside,reqPlayer.inside,reqPlayer.athleticism,reqPlayer.playmaking,reqPlayer.defense)
+    reqPlayer.user = currentUser
+    const result = await PlayerCollection.insertOne( reqPlayer )
+    const docs = await PlayerCollection.find(
+      {user: currentUser}
+    ).toArray()
+    res.json( docs )
+  }) 
+  //delete player from database
+  // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
+  app.post( '/remove', async (req,res) => {
+    const playerName = req.body.name
+    const result = await PlayerCollection.deleteOne({ 
+      name: playerName
+    })
+    const docs = await PlayerCollection.find(
+      {user: currentUser}
+    ).toArray()
+    res.json( docs )
+  })
+  //update user in the database
+  app.post( '/update', async (req,res) => {
+    const reqPlayer = req.body.newPlayer;
+    reqPlayer.rating = calculateOverallRating(reqPlayer.outside,reqPlayer.inside,reqPlayer.athleticism,reqPlayer.playmaking,reqPlayer.defense)
+    const result = await PlayerCollection.updateOne(
+      { name: reqPlayer.name },
+      { 
+        $set: { 'outside': reqPlayer.outside,
+        'inside': reqPlayer.inside,
+        'athleticism': reqPlayer.athleticism,
+        'playmaking': reqPlayer.playmaking,
+        'defense': reqPlayer.defense,
+        'rating': reqPlayer.rating,
+     }
+    }
+    )
+    console.log(reqPlayer.name)
+    const docs = await PlayerCollection.find({
+      user: currentUser
+    }).toArray()
+    res.json( docs )
+  })
+
+}
+/* connect to database */
+run()
+
+
+// app.get( '/get', async (req,res) => {
+//   const result = await collection.updateOne(
+//     { _id:MongoClient.ObjectId( req.body._id ) },
+//     { $set:{ name:req.body.name } }
+//   )
+
+//   res.json( result )
+// })
+
+
+
+
+
+// app.delete('/delete', (req, res) => {
+//   const playerToDelete = req.body.name;
+//   // Use the correct filter function to remove the player with the specified name
+//   nbaPlayerData = nbaPlayerData.filter((player) => player.name !== playerToDelete);
+//   res.status(200).json(nbaPlayerData);
+// });
+// app.get('/get', (req, res) => {
+//   try {
+//     res.status(200).json(nbaPlayerData);
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+
+
+
 
 let nbaPlayerData = [
   {
@@ -148,100 +306,6 @@ let nbaPlayerData = [
 
 ];
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  }
-})
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
-
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-    
-    //response.playerData = nbaPlayerData;
-    //response.end(nbaPlayerData);
-    // response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    // response.end(JSON.stringify(nbaPlayerData))
-  }
-  else if(request.url === '/data'){
-    sendJSON(response, nbaPlayerData);
-  }
-  else{
-    sendFile( response, filename )
-    }
-}
-
-const handlePost = function( request, response ) {
-  let dataString = ''
-  request.on( 'data', function( data ) {
-    dataString += data 
-})
-  // delete the player
-  if(request.url === '/delete'){
-    request.on( 'end', function() {
-    const requestData = dataString;
-    console.log(requestData)
-      // ... do something with the data here!!!
-        nbaPlayerData = nbaPlayerData.filter(function( obj ) {
-          return obj.name !== requestData;
-      });
-      
-      response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-      response.end(JSON.stringify(nbaPlayerData))
-    })
-}
-  // add the player
-  else{
-  request.on( 'end', function() {
-    //console.log('datastring', dataString )
-  const requestData = JSON.parse(dataString);
-    // ... do something with the data here!!!
-    requestData.rating = calculateOverallRating(requestData.outside,requestData.inside,requestData.athleticism,requestData.playmaking,requestData.defense)
-    nbaPlayerData.push(requestData);
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end(JSON.stringify(nbaPlayerData))
-  })}
-}
-
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
-
-   fs.readFile( filename, function( err, content ) {
-
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
-
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
-
-     }else{
-
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
-
-     }
-   })
-}
-const sendJSON = function(response, jsonData) {
-  // Set the content type to JSON
-  response.setHeader('Content-Type', 'application/json');
-
-  // Convert the JSON data to a string
-  const jsonStr = JSON.stringify(jsonData);
-
-  // Write the JSON data to the response
-  response.writeHeader(200);
-  response.end(jsonStr);
-};
-
-
-server.listen( process.env.PORT || port )
-
 function calculateOverallRating(outsideScoring, insideScoring, athleticism, playmaking, defending) {
   // Check if the input ratings are within the valid range (0-99)
   if (
@@ -266,3 +330,4 @@ function calculateOverallRating(outsideScoring, insideScoring, athleticism, play
   // Round the overall rating to the nearest integer
   return Math.round(overallRating);
 }
+

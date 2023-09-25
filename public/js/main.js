@@ -2,11 +2,8 @@
 
 let playerData;
 
+
 const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
   event.preventDefault()
   
   const name = document.querySelector( '#name' )
@@ -22,62 +19,98 @@ const submit = async function( event ) {
           "athleticism": parseInt(athleticism.value),
           "playmaking": parseInt(playmaking.value),
           "defense": parseInt(defense.value),
+          "rating": 1,
+          "user": null,
+        }
+  fetch( '/add', {
+    method:'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:JSON.stringify({ "newPlayer":json })
+  })
+  .then( response => response.json() )
+  .then( json => populateTable(json) )
+}
+
+const deletePlayerOnServer = async function (name, event) {
+  // event.preventDefault()
+  const data = { name: name };
+
+  fetch('/remove', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data) // Stringify the object as JSON
+  })
+    .then((response) => response.json())
+    .then((json) => populateTable(json))
+    .catch((error) => {
+      console.error('Fetch error:', error);
+    });
+};
+
+const update = async function( name, event ) {
+  // event.preventDefault()
+  const outside = document.querySelector( '#outsideUpdate' )
+  const inside = document.querySelector( '#insideUpdate' )
+  const athleticism = document.querySelector( '#athleticismUpdate' )
+  const playmaking = document.querySelector( '#playmakingUpdate' )
+  const defense = document.querySelector( '#defenseUpdate' )
+  const json = {
+          "name": name,
+          "outside": outside.value,
+          "inside": inside.value,
+          "athleticism": athleticism.value,
+          "playmaking": playmaking.value,
+          "defense": defense.value,
           "rating": 1
-        },
-        body = JSON.stringify( json )
-
-  const response = await fetch( '/submit', {
+        }
+  fetch( '/update', {
     method:'POST',
-    body 
+    headers: { 'Content-Type': 'application/json' },
+    body:JSON.stringify({ "newPlayer":json })
   })
-
-  const data = await response.text();
-
-  getDataLoad()
+  .then( response => response.json() )
+  .then( json => populateTable(json) )
 }
 
-const deletePlayerOnServer = async function(name){
-  //event.preventDefault()
-
-  // const dropdown = document.getElementById('deleteDropdown');
-  // const name = dropdown.options[dropdown.selectedIndex].name;
-  const body = name
-  console.log("body", body)
-  const response = await fetch( '/delete', {
-    method:'POST',
-    body 
-  })
-  const data = await response.text();
-  console.log( 'data:', data )
-  getDataLoad()
-}
-
+  
+//getData()
 const getData = async function( event ) {
   event.preventDefault()
 
-  const response = await fetch( '/data', {
-    method:'GET' 
+  fetch('/get', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
   })
-
-  const data = await response.text()
-  console.log( 'data:', JSON.parse(data) )
-  const jsonData = JSON.parse(data)
-  populateTable(jsonData);
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((json) => populateTable(json),(json) => loadDeleteDropdown(json)), (json) => loadUpdateDropdown(json)
+    .catch((error) => {
+      console.error('Fetch error:', error);
+    });
 }
+
 const getDataLoad = async function( event ) {
-
-  const response = await fetch( '/data', {
-    method:'GET' 
+  // if (event) {
+  //   event.preventDefault();
+  // }
+  fetch('/get', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
   })
-
-  const data = await response.text()
-  const jsonData = JSON.parse(data)
-  //update table
-  populateTable(jsonData);
-  //update dropdown
- 
- 
-  loadDeleteDropdown(jsonData)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((json) => populateTable(json))
+    .catch((error) => {
+      console.error('Fetch error:', error);
+    });
 }
 
 const loadDeleteDropdown = function (data){
@@ -89,10 +122,17 @@ const loadDeleteDropdown = function (data){
     dropdown.appendChild(option);
   });
 }
-
-
+const loadUpdateDropdown = function (data){
+  const dropdown = document.getElementById('updateDropdown')
+  dropdown.innerHTML = '';
+  data.forEach(item => {
+    const option = document.createElement('option');
+    option.textContent = item.name;
+    dropdown.appendChild(option);
+  });
+}
 window.onload = function() {
-  document.getElementById('tab1').style.display = "block";
+  // document.getElementById('tab1').style.display = "block";
   const button = document.querySelector("#submit");
   button.onclick = submit;
   getDataLoad();
@@ -116,6 +156,8 @@ function populateTable(data) {
 
       tableBody.appendChild(row);
   };
+  loadDeleteDropdown(data)
+  loadUpdateDropdown(data)
 }
 
 const nbaPlayerData = [
@@ -258,8 +300,6 @@ const nbaPlayerData = [
 
 ];
 
-
-
 // tab switcher
 function openTab(event, tabName) {
   var i, tabcontent, tablinks;
@@ -286,8 +326,8 @@ function openTab(event, tabName) {
 
 
 // Event listener for the delete button click
-
-const deletePlayer = function(){
+const deletePlayer = function(event){
+  // event.preventDefault()
   //delete button for dropdown
   const dropdown = document.getElementById('deleteDropdown');
   // Get the selected option
@@ -298,6 +338,22 @@ const deletePlayer = function(){
     dropdown.remove(selectedOption.index);
     //console.log(selectedOption.innerHTML)
     deletePlayerOnServer(selectedOption.innerHTML)
+  } else {
+    alert('No option selected to delete.');
+  }
+}
+// Event listener for the update button click
+const updatePlayer = function(event){
+  // event.preventDefault()
+  //delete button for dropdown
+  const dropdown = document.getElementById('updateDropdown');
+  // Get the selected option
+  const selectedOption = dropdown.options[dropdown.selectedIndex];
+  
+  if (selectedOption) {
+    //console.log(selectedOption.innerHTML)
+    update(selectedOption.innerHTML)
+    //console.log('yeet', selectedOption.innerHTML)
   } else {
     alert('No option selected to delete.');
   }
