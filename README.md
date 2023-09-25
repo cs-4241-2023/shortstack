@@ -21,4 +21,6 @@ I used the felbox formatting to make a table like structure. I tried to make cus
 of the categories to help make things look better. The result didn't look as nice as I hoped but 
 the flexbox structure is there. 
 
-The delete function removes a guess the user has made. The modify function lets the user change one of the losses to a win, despite their guess. Both of these go from the first matching instance of in the data to the latest. All the buttons, input fields and texts feilds are controlled by bootstrap/ 
+The delete function removes a guess the user has made. The modify function lets the user change one of the losses to a win, despite their guess. Both of these go from the first matching instance of in the data to the latest. All the buttons, input fields, texts field and custom table for the leaderboard are controlled by bootstrap. 
+
+Also to run on Glitch, keep line 102 on server.improved.js commented out. To run it locally it needs to be uncommented. 

@@ -19,22 +19,22 @@ function createTable(tableData){
   headers.classList.add("row")
 
   const header1 = document.createElement('div')
-  header1.classList.add("hcell")
+  header1.classList.add("col-md-1")
   header1.innerText = 'Player'
   headers.appendChild(header1)
 
   const header2 = document.createElement('div')
-  header2.classList.add("hcell")
+  header2.classList.add("col-md-1")
   header2.innerText = 'Player Guess'
   headers.appendChild(header2)
   
   const header3 = document.createElement('div')
-  header3.classList.add("hcell")
+  header3.classList.add("col-md-1")
   header3.innerText = 'Player Win?'
   headers.appendChild(header3)
 
   const header4 = document.createElement('div')
-  header4.classList.add("hcell")
+  header4.classList.add("col-md-1")
   header4.innerText = 'Computer Guess'
   headers.appendChild(header4)
 
@@ -45,22 +45,22 @@ function createTable(tableData){
       player1.classList.add('row')
 
       const p1Name = document.createElement('div')
-      p1Name.classList.add("cellName")
+      p1Name.classList.add("col-md-4")
       p1Name.innerText = `${e.Player}`
       player1.appendChild(p1Name)
 
       const p1Number = document.createElement('div')
-      p1Number.classList.add("cellGuess")
+      p1Number.classList.add("col-md-4")
       p1Number.innerText = `${e.Player1Guess}`
       player1.appendChild(p1Number)
 
       const p1Winner = document.createElement('div')
-      p1Winner.classList.add("cellResult")
+      p1Winner.classList.add("col-md-4")
       p1Winner.innerText = `${e.isWinner}`
       player1.appendChild(p1Winner)
 
       const answer = document.createElement('div')
-      answer.classList.add("cellGuess")
+      answer.classList.add("col-md-4")
       answer.innerText = `${e.CompGuess}`
       player1.appendChild(answer)
 

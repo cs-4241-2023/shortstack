@@ -98,8 +98,8 @@ const sendFile = function( response, filename ) {
    })
 }*/
 
-
-require('dotenv').config()
+//To run on Glitch keep 102 commented out, to run locally uncomment it
+//require('dotenv').config()
 const express = require("express"),
       { MongoClient } = require("mongodb"),
       app = express(),
