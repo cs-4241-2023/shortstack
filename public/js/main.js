@@ -75,6 +75,15 @@ Generate the HTML for the food entries. Format:
     <p class="delete_x">x</p>
   </div>
 </div>
+
+Entries is a list of
+{
+  id: [string],
+  name: [string],
+  calories: [number],
+  protein: [number],
+  percentProtein: [number]
+}
 */
 const generateFoodEntries = function(entries) {
 
@@ -214,12 +223,13 @@ const getServerResponse = async function(command, jsonText = {}) {
 
     setCounter("calories", serverResponse.data.totalCalories, serverResponse.data.caloriesGoal);
     setCounter("protein", serverResponse.data.totalProtein, serverResponse.data.proteinGoal);
+  
+    generateFoodEntries(serverResponse.data.entries);
+  
   }
   else {
     console.log("error", serverResponse.status, serverResponse.message);
   }
-
-  // generateFoodEntries(data.entries);
 
 }
 
@@ -294,6 +304,6 @@ window.onload = function() {
   const json = { mode: "read"};
   const body = JSON.stringify( json );
 
-  (async function() { await getServerResponse(body); })();
+  (async function() { await getServerResponse("/null"); })();
 
 }

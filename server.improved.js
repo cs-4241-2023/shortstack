@@ -55,7 +55,7 @@ const sendUserState = async function(res) {
     entries: []
   }
 
-  globals = await Global.find();
+  let globals = await Global.find();
   for (let i = 0; i < globals.length; i++) {
     if (globals[i].name === "caloriesGoal") {
       state.caloriesGoal = parseInt(globals[i].value);
@@ -64,7 +64,7 @@ const sendUserState = async function(res) {
     }
   }
 
-  entries = await Entry.find();
+  let entries = await Entry.find();
       
   for (let i = 0; i < entries.length; i++) {
     state.entries.push({
@@ -72,6 +72,7 @@ const sendUserState = async function(res) {
       name: entries[i].name,
       calories: entries[i].calories,
       protein: entries[i].protein,
+      percentProtein: entries[i].percentProtein
     });
 
     state.totalCalories += parseInt(entries[i].calories);
@@ -82,6 +83,12 @@ const sendUserState = async function(res) {
   res.json({status: 200, message: "Successfully added entry", data: state},);
 
 }
+
+// Do nothing but just return data
+app.post('/null', (req, res) => {
+  console.log("null", req.body);
+  sendUserState(res);
+});
 
 // Set calories/protein goal
 // Format: {type: ["proteinGoal"/"caloriesGoal"], value: [number]}
