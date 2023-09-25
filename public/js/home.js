@@ -221,6 +221,9 @@ const getServerResponse = async function(command, jsonText = {}) {
 
   if (serverResponse.status === 200) {
 
+    const usernameElement = document.getElementById("username");
+    usernameElement.textContent = serverResponse.data.user;
+
     setCounter("calories", serverResponse.data.totalCalories, serverResponse.data.caloriesGoal);
     setCounter("protein", serverResponse.data.totalProtein, serverResponse.data.proteinGoal);
   
@@ -286,6 +289,16 @@ let goal = promptAndValidate("Enter new " + goalType + " goal", defaultGoal,
   await getServerResponse("/setgoal", {type: goalType + "Goal", value: goalNum});
 }
 
+const onLogout = async function() {
+  await fetch( "/logout", {
+    method:'POST',
+    headers: {'Content-Type': 'application/json'}
+  })
+
+  // redirect to login page
+  window.location.href = '/';
+};
+
 
 window.onload = function() {
   const submitButton = document.querySelector("#food_submit_button");
@@ -299,6 +312,9 @@ window.onload = function() {
 
   const proteinGoalButton = document.querySelector("#protein_goal_button");
   proteinGoalButton.onclick = () => onGoalButtonClick("protein");
+
+  const logoutButton = document.querySelector("#logout_button");
+  logoutButton.onclick = () => onLogout();
 
 
   const json = { mode: "read"};

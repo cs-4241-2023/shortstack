@@ -75,7 +75,7 @@ app.get('*', (req, res) => {
 });
 
 // return all the data for the logged in user
-const sendUserState = async function(res) {
+const sendUserState = async function(req, res) {
 
   let state = {
     user: req.session.username,
@@ -123,7 +123,7 @@ app.post('/null', (req, res) => {
   if (!verifyLogin(req, res)) return;
 
   console.log("null", req.body);
-  sendUserState(res);
+  sendUserState(req, res);
 });
 
 // login user
@@ -166,7 +166,7 @@ app.post('/signup', async (req, res) => {
 
     }
 
-    const user = new User({ username, password, caloriesGoal: 3000, proteinGoal: 150 });
+    const user = new User({ username: username, password: password, caloriesGoal: 3000, proteinGoal: 150 });
     await user.save();
 
     console.log('User signed up successfully');
@@ -177,6 +177,13 @@ app.post('/signup', async (req, res) => {
     console.log(error);
     return res.json({status: 500, message: 'Internal Server Error'});
   }
+});
+
+// logout
+app.post('/logout', (req, res) => {
+  console.log("logout");
+  req.session.destroy();
+  res.redirect('/');
 });
 
 // Set calories/protein goal
@@ -198,7 +205,7 @@ app.post('/setgoal', (req, res) => {
   
   User.findOneAndUpdate(filter, update, options).then(
    (result) => {
-      sendUserState(res);
+      sendUserState(req, res);
     }
   ).catch(
     (err) => {
@@ -234,7 +241,7 @@ app.post('/add', (req, res) => {
     (result) => {
       console.log("Entry saved", entryData);
 
-      sendUserState(res);
+      sendUserState(req, res);
     }
   ).catch(
     (err) => {
@@ -255,7 +262,7 @@ app.post('/delete', (req, res) => {
 
   Entry.findByIdAndDelete(json.id).then(
     (result) => {
-      sendUserState(res);
+      sendUserState(req, res);
     }
   ).catch(
     (err) => {
@@ -275,7 +282,7 @@ app.post('/clear', (req, res) => {
 
   Entry.deleteMany({}).then(
     (result) => {
-      sendUserState(res);
+      sendUserState(req, res);
     }
   ).catch(
     (err) => {
