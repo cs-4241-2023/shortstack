@@ -1,5 +1,5 @@
 //function for login button 
-const login =  async function(){
+const login = async function(){
   const username = document.getElementById('username').value
   const password = document.getElementById('password').value
   // console.log(username,password)
