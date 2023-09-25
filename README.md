@@ -32,6 +32,9 @@ Lighthouse scores:
 - 100% Best practices
 - 90% SEO
 
+This is hosted on Heroku at https://calorie-counter-87a47dc49720.herokuapp.com/
+
+
 W3C tips followed:
 - Provide informative, unique page titles. In the login page, I specify that in the title to distinguish it from the main page
 - Provide clear instructions. In the new entry form, I have instructions for the type of text to be entered, and it provides feedback in the form of an error if not correct.

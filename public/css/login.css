@@ -21,4 +21,5 @@ input {
 #message {
     color: red;
     opacity: 0;
+    text-align: center;
   }
