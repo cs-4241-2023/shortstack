@@ -39,8 +39,8 @@ async function run() {
 
 // Handle login POST request
 app.post('/login', async (req, res) => {
-  const username = req.body.user.username
-  const password = req.body.user.password
+  const username = req.body.username
+  const password = req.body.password
 console.log('username and password: ',username, password)
   try {
     // Check if the user exists in the database

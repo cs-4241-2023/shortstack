@@ -1,34 +1,20 @@
-//function for login button 
-const login = async function(){
-  const username = document.getElementById('username').value
-  const password = document.getElementById('password').value
-  // console.log(username,password)
-  loginServer(username,password)
-}
-
-
-const loginServer = async function(username, password) {
-  //event.preventDefault()
-
+const loginServer = async function(event) {
+  event.preventDefault()
+  console.log("here")
   const json = {
-    "username": username,
-    "password": password
+    "username": document.getElementById('username').value,
+    "password": document.getElementById('password').value
   }
   fetch( '/login', {
     method:'POST',
     headers: { 'Content-Type': 'application/json' },
-    body:JSON.stringify({ "user":json })
+    body:JSON.stringify(json)
   }).catch(error => {
     console.error('Fetch error:', error);
   })
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const loginForm = document.getElementById('login'); // Replace 'yourFormId' with your actual form ID
-  loginForm.addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
-    login(); // Call your login function here
-  });
-
-  // Your login and loginServer functions
-});
+window.onload = function(){
+  const loginBtn = document.getElementById('login');
+  loginBtn.onclick = loginServer;
+}
