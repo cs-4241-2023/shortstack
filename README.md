@@ -32,6 +32,20 @@ Lighthouse scores:
 - 100% Best practices
 - 90% SEO
 
+W3C tips followed:
+- Provide informative, unique page titles. In the login page, I specify that in the title to distinguish it from the main page
+- Provide clear instructions. In the new entry form, I have instructions for the type of text to be entered, and it provides feedback in the form of an error if not correct.
+- Keep content clear and concise. The text is minimalist and tries to convey info in the most direct way
+- Provide sufficient contrast between foreground and background. Text color was changed for more contrast.
+- Don’t use color alone to convey information. In the message displayed after submitting a new form, not only does color convey whether it was valid, text indicates it in more detail.
+- Ensure that interactive elements are easy to identify. Buttons when hovered change the mouse cursor
+- Ensure that form elements include clearly associated labels. All the entry form values are labelled clearly.
+- Provide easily identifiable feedback. When logging in or submitting entry form, feedback is right below the button.
+- Use headings and spacing to group related content. I use gaps and margin-bottom to space out sections.
+- Create designs for different viewport sizes. If sufficieenlty small viewport size, the two protein/calorie statuses are collapsed into a single column
+- Associate a label with every form control. All the entry forms are labelled.
+- Use mark-up to convey meaning and structure. I use semantic html like <header> and <section>
+
 The four CRAP principles:
 
 In my site, contrast has been utilized to guide the users' eyes and to highlight the importance of various elements. The header of each page has been rendered with a larger font than all the other text, receiving the most emphasis. This allows users to quickly identify the purpose or topic of each page. Additionally, contrasting colors are employed to distinguish actionable elements like buttons from other graphical units, promoting user interaction and enhancing the overall user experience. This utilization of contrast helps in shaping a clear and concise visual hierarchy within the site.
