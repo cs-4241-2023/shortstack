@@ -1,5 +1,5 @@
 //function for login button 
-const login = function(){
+const login =  async function(){
   const username = document.getElementById('username').value
   const password = document.getElementById('password').value
   // console.log(username,password)
@@ -22,3 +22,13 @@ const loginServer = async function(username, password) {
     console.error('Fetch error:', error);
   })
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  const loginForm = document.getElementById('login'); // Replace 'yourFormId' with your actual form ID
+  loginForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+    login(); // Call your login function here
+  });
+
+  // Your login and loginServer functions
+});

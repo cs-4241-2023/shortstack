@@ -63,8 +63,8 @@ console.log(user)
 
     if (passwordMatch) {
       console.log('password correct' )
-      // res.redirect('/playerRating.html');
-      res.sendFile('/public/playerRating.html');
+      res.redirect('/playerRating.html');
+      // res.sendFile('/public/playerRating.html');
     }
     else{
       console.log('password incorrect' )
