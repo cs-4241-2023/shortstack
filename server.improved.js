@@ -152,7 +152,16 @@ app.post('/delete', (req, res) => {
   const json = req.body;
   console.log("delete", json);
 
-  sendUserState(res);
+  Entry.findByIdAndDelete(json.id).then(
+    (result) => {
+      sendUserState(res);
+    }
+  ).catch(
+    (err) => {
+      console.log(err)
+      res.json({status: 400, message: "Error clearing entries"});
+    }
+  );
 });
 
 // Clear all entries
@@ -161,27 +170,14 @@ app.post('/clear', (req, res) => {
   const json = req.body;
   console.log("clear", json);
 
-  sendUserState(res);
+  Entry.deleteMany({}).then(
+    (result) => {
+      sendUserState(res);
+    }
+  ).catch(
+    (err) => {
+      console.log(err)
+      res.json({status: 400, message: "Error clearing entries"});
+    }
+  );
 });
-
-
-
-// app.post('/submit', (req, res) => {
-//   const json = req.body;
-//   console.log("post", req.body);
-
-//   if (json.mode === "add") {
-//     json.entry.id = idCounter++;
-//     let proteinCalories = json.entry.protein * 4;
-//     json.entry.percentProtein = Math.round((proteinCalories / json.entry.calories) * 100);
-//     entries.push(json.entry);
-//   } else if (json.mode === "delete") {
-//     const index = entries.findIndex(e => e.id === json.id);
-//     if (index !== -1) entries.splice(index, 1);
-//   } else if (json.mode === "clear") {
-//     entries.length = 0;
-//   }
-
-//   const responseObj = new ServerResponse(entries);
-//   res.json(responseObj);
-// });
