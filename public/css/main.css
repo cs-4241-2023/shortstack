@@ -57,10 +57,8 @@ font-size: 2vw;
 }
 
 
-.status > .status_goal_field {
-  text-align: center;
-  font-size: 1vw;
-  width: 5%;
+.status > .status_goal {
+  display: inline-block;
 }
 
 

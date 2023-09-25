@@ -1,74 +1,29 @@
-class FoodEntry {
-  constructor(name, calories, protein) {
-      this.id = -1; // not yet assigned by server
-      this.name = name;
-      this.calories = calories;
-      this.protein = protein;
-  }
-}
+// checks if the entry values are valid
+// returns {valid: [boolean], message: [string]}
+const validateEntry = function(name, calories, protein) {
 
-class FoodEntryBuilder {
-  constructor() {
-      this.name = "";
-      this.calories = "";
-      this.protein = "";
-      this.message = "";
-      this.valid = false;
+  if (name === "") {
+    return {valid: false, message: "Name cannot be empty"};
   }
 
-  setName(name) {
-      this.name = name;
+  let numCalories = parseInt(calories);
+  if (isNaN(numCalories)) {
+    return {valid: false, message: "Calories must be a number"};
+  }
+  if (numCalories <= 0) {
+    return {valid: false, message: "Calories must be positive"};
+  }
+  
+  let numProtein = parseInt(protein);
+  if (isNaN(numProtein)) {
+    return {valid: false, message: "Protein must be a number"};
+  }
+  if (numProtein <= 0) {
+    return {valid: false, message: "Protein must be positive"};
   }
 
-  setCalories(calories) {
-      this.calories = calories;
-  }
-
-  setProtein(protein) {
-      this.protein = protein;
-  }
-
-  // build the food entry, or return null if the food entry is invalid
-  build() {
-
-      this.valid = false;
-
-      if (this.name === "") {
-          this.message = "Name cannot be empty";
-          return null;
-      }
-
-      let numCalories = parseInt(this.calories);
-      if (isNaN(numCalories)) {
-          this.message = "Calories must be a number";
-          return null;
-      }
-      if (numCalories <= 0) {
-          this.message = "Calories must be positive";
-          return null;
-      }
-      
-      let numProtein = parseInt(this.protein);
-      if (isNaN(numProtein)) {
-          this.message = "Protein must be a number";
-          return null;
-      }
-      if (numProtein <= 0) {
-          this.message = "Protein must be positive";
-          return null;
-      }
-
-      this.message = "Successfully added!";
-      this.valid = true;
-      return new FoodEntry(this.name, numCalories, numProtein);
-
-  }
-
-  getMessage() {
-      return this.message;
-  }
-
-}
+  return {valid: true, message: "Successfully added!"};
+};
 
 const setCounter = function(type, amount) {
 
@@ -102,20 +57,6 @@ const setCounter = function(type, amount) {
       offsetElement.textContent = "You've met your goal!";
   }
 
-};
-
-const updateCaloriesGoal = function() {
-  console.log("updateCaloriesGoal");
-  let valueElement = document.getElementById("calories_value");
-  let currentCalories = parseInt(valueElement.textContent);
-  setCounter("calories", currentCalories);
-};
-
-const updateProteinGoal = function() {
-  console.log("updateProteinGoal");
-  let valueElement = document.getElementById("protein_value");
-  let currentProtein = parseInt(valueElement.textContent);
-  setCounter("protein", currentProtein);
 };
 
 /*
@@ -176,10 +117,8 @@ const generateFoodEntries = function(entries) {
       let deleteHTML = document.createElement("div");
       deleteHTML.classList.add("delete");
       deleteHTML.onclick = async function() {
-        const json = { mode: "delete", id: entryData.id };
-        const body = JSON.stringify( json );
-
-        await getServerResponse(body);
+        const data = { id: entryData.id };
+        await getServerResponse("/delete", data);
       };
 
       let deleteXHTML = document.createElement("h1");
@@ -206,30 +145,25 @@ const submit = async function( event ) {
 
   console.log("submitting");
 
-  let builder = new FoodEntryBuilder();
-
+  let messageElement = document.getElementById("food_submit_message");
   let nameElement = document.getElementById("food_name");
   let caloriesElement = document.getElementById("food_calories");
   let proteinElement = document.getElementById("food_protein");
 
-  builder.setName(nameElement.value.toLowerCase());
-  builder.setCalories(caloriesElement.value);
-  builder.setProtein(proteinElement.value);
+  let name = nameElement.value;
+  let calories = caloriesElement.value;
+  let protein = proteinElement.value;
 
-  let message = document.getElementById("food_submit_message");
+  const result = validateEntry(name, calories, protein);
+  messageElement.textContent = result.message;
 
-  let foodEntry = builder.build();
-  message.textContent = builder.getMessage();
-  console.log("message", builder.getMessage());
+  if (result.valid) messageElement.style.color = "lightgreen";
+  else messageElement.style.color = "red";
 
-  if (builder.valid) message.style.color = "lightgreen";
-  else message.style.color = "red";
-  console.log("valid", builder.valid);
-
-  // fade message out afte rone second
-  message.style.opacity = '1';
+  // fade message out after one second
+  messageElement.style.opacity = '1';
     setTimeout(function() {
-        message.style.opacity = '0';
+        messageElement.style.opacity = '0';
     }, 2000);
 
   // invalid food entry
@@ -242,12 +176,11 @@ const submit = async function( event ) {
     proteinElement.value = "";
   }
 
-  console.log("valid");
-  
-  const json = { mode: "add", entry: foodEntry };
-  const body = JSON.stringify( json );
-
-  await getServerResponse(body);
+  await getServerResponse("/add", {
+    name: name,
+    calories: calories,
+    protein: protein
+  });
   
 }
 
@@ -259,22 +192,20 @@ const clear = async function( event ) {
   event.preventDefault();
 
   console.log("clear");
-  
-  const json = { mode: "clear"};
-  const body = JSON.stringify( json );
-
-  await getServerResponse(body);
+  await getServerResponse("/clear");
 
 }
 
-const getServerResponse = async function(body) {
+const getServerResponse = async function(command, jsonText = {}) {
 
-  const response = await fetch( '/submit', {
+  json = JSON.stringify(jsonText);
+
+  const response = await fetch( command, {
     method:'POST',
     headers: {
       'Content-Type': 'application/json'
   },
-    body 
+    json 
   })
 
   const text = await response.text();
@@ -294,6 +225,18 @@ window.onload = function() {
 
   const clearButton = document.querySelector("#food_clear_button");
   clearButton.onclick = clear;
+
+  const caloriesGoalButton = document.querySelector("#calories_goal_button");
+  caloriesGoalButton.onclick = async function() {
+    let caloriesGoal = prompt("Enter new calories goal", "3000");
+    await getServerResponse("/setgoal", {type: "calories", value: caloriesGoal});
+  }
+
+  const proteinGoalButton = document.querySelector("#protein_goal_button");
+  proteinGoalButton.onclick = async function() {
+    let proteinGoal = prompt("Enter new protein goal", "150");
+    await getServerResponse("/setgoal", {type: "protein", value: proteinGoal});
+  };
 
 
   const json = { mode: "read"};

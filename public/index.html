@@ -21,30 +21,22 @@
         <h2 class = "status_name">Calories</h2>
         <p class = "status_value" id = "calories_value">0</p>
         <p class = "status_offset" id = "calories_offset">300 to go</p>
-        <div>
-          <label for="calories_goal">Goal: </label>
-          <input
-            type = "number"
-            value = "3000"
-            id = "calories_goal"
-            onchange = "updateCaloriesGoal()"
-            class = "status_goal"> kcal
-        </div>
+        <p class = "status_goal_text">
+          Goal:
+          <span class = "status_goal" id = "calories_goal">[N/A]</span>
+          <button id="calories_goal_button">Edit</button>
+        </p>
       </div>
 
       <div class = "status status_protein">
         <h2 class = "status_name">Protein</h2>
         <p class = "status_value" id = "protein_value">0</p>
         <p class = "status_offset" id = "protein_offset">300 to go</p>
-        <div>
-          <label for= "protein_goal">Goal: </label>
-          <input
-          type = "number"
-          value = "150"
-          id = "protein_goal"
-          onchange = "updateProteinGoal()"
-          class = "status_goal"> g
-        </div>
+        <p class = "status_goal_text">
+          Goal:
+          <span class = "status_goal" id = "protein_goal">[N/A]</span>
+          <button id="protein_goal_button">Edit</button>
+        </p>
       </div>
     </section>
 
