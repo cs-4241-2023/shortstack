@@ -25,7 +25,9 @@ const validateEntry = function(name, calories, protein) {
   return {valid: true, message: "Successfully added!"};
 };
 
-const setCounter = function(type, amount) {
+const setCounter = function(type, total, goal) {
+
+  console.log("setCounter", type, total, goal);
 
   let suffix;
   if (type === "calories") {
@@ -41,9 +43,9 @@ const setCounter = function(type, amount) {
   let offsetElement = document.getElementById(type + "_offset");
   let goalElement = document.getElementById(type + "_goal");
 
-  valueElement.textContent = amount;
-  let goal = parseInt(goalElement.value);
-  let offset = goal - amount;
+  goalElement.textContent = goal + suffix;
+  valueElement.textContent = total + suffix;
+  let offset = goal - total;
 
   if (offset > 0) {
       offsetElement.style.color = "green";
@@ -51,7 +53,7 @@ const setCounter = function(type, amount) {
     
   } else if (offset < 0) {
       offsetElement.style.color = "red";
-      offsetElement.textContent = "" + offset + suffix + " over target.";
+      offsetElement.textContent = "You're past your goal! " + offset + suffix + " over target.";
   } else {
       offsetElement.style.color = "black";
       offsetElement.textContent = "You've met your goal!";
@@ -166,21 +168,18 @@ const submit = async function( event ) {
         messageElement.style.opacity = '0';
     }, 2000);
 
-  // invalid food entry
-  if (foodEntry === null) {
-    return;
-  } else {
-    // valid, clear form
+  if (result.valid) {
+    // valid, clear form and send to server
     nameElement.value = "";
     caloriesElement.value = "";
     proteinElement.value = "";
-  }
 
-  await getServerResponse("/add", {
-    name: name,
-    calories: calories,
-    protein: protein
-  });
+    await getServerResponse("/add", {
+      name: name,
+      calories: calories,
+      protein: protein
+    });
+  }
   
 }
 
@@ -208,15 +207,75 @@ const getServerResponse = async function(command, jsonText = {}) {
     body: json 
   })
 
-  const data = await response.json();
+  const serverResponse = await response.json();
+  console.log( 'server:', serverResponse );
 
-  console.log( 'data:', data );
-  // setCounter("calories", data.totalCalories);
-  // setCounter("protein", data.totalProtein);
+  if (serverResponse.status === 200) {
+
+    setCounter("calories", serverResponse.data.totalCalories, serverResponse.data.caloriesGoal);
+    setCounter("protein", serverResponse.data.totalProtein, serverResponse.data.proteinGoal);
+  }
+  else {
+    console.log("error", serverResponse.status, serverResponse.message);
+  }
 
   // generateFoodEntries(data.entries);
 
 }
+
+// validator returns {valid: [boolean], message: [string]}
+const promptAndValidate = function(promptText, defaultText, validator) {
+  let input = prompt(promptText, defaultText);
+
+  if (input === null) {
+    // user pressed cancel
+    return null;
+  }
+
+  let result = validator(input);
+  while (!result.valid) {
+    input = prompt(result.message + "\n\n" + promptText, defaultText);
+
+    if (input === null) {
+      // user pressed cancel
+      return null;
+    }
+
+    result = validator(input);
+  }
+  return input;
+}
+
+
+// type is either "calories" or "protein"
+const onGoalButtonClick = async function(goalType) {
+
+let defaultGoal = (goalType === "calories") ? "3000" : "150";
+let capGoalType = goalType.charAt(0).toUpperCase() + goalType.slice(1); // capitalized
+
+let goal = promptAndValidate("Enter new " + goalType + " goal", defaultGoal,
+    (input) => {
+      let num = parseInt(input);
+      if (isNaN(num)) {
+        return {valid: false, message: capGoalType + " must be a number"};
+      }
+      if (num <= 0) {
+        return {valid: false, message: capGoalType + " Calories must be positive"};
+      }
+      return {valid: true};
+    }
+  );
+
+  if (goal === null) {
+    // user pressed cancel
+    return;
+  }
+
+  // got valid calories goal from user, send to server
+  let goalNum = parseInt(goal);
+  await getServerResponse("/setgoal", {type: goalType + "Goal", value: goalNum});
+}
+
 
 window.onload = function() {
   const submitButton = document.querySelector("#food_submit_button");
@@ -226,18 +285,10 @@ window.onload = function() {
   clearButton.onclick = clear;
 
   const caloriesGoalButton = document.querySelector("#calories_goal_button");
-  caloriesGoalButton.onclick = async function() {
-    let caloriesGoal = prompt("Enter new calories goal", "3000");
-    console.log(caloriesGoal);
-    await getServerResponse("/setgoal", {type: "calories", value: caloriesGoal});
-  };
+  caloriesGoalButton.onclick = () => onGoalButtonClick("calories");
 
   const proteinGoalButton = document.querySelector("#protein_goal_button");
-  proteinGoalButton.onclick = async function() {
-    let proteinGoal = prompt("Enter new protein goal", "150");
-    console.log(proteinGoal);
-    await getServerResponse("/setgoal", {type: "protein", value: proteinGoal});
-  };
+  proteinGoalButton.onclick = () => onGoalButtonClick("protein");
 
 
   const json = { mode: "read"};

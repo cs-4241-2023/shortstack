@@ -7,6 +7,9 @@ const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 3000;
 
+const Entry = require('./models/Entry.js');
+const Global = require('./models/Globals.js');
+
 // Connect to mongodb
 require('dotenv').config();
 const uri = "mongodb+srv://anselychang:" + process.env.MONGODB_PASSWORD + "@ansel.musopg0.mongodb.net/?retryWrites=true&w=majority";
@@ -41,16 +44,65 @@ app.get('*', (req, res) => {
   });
 });
 
-const getState = function() {
-  return {message: "hello world"};
-};
+// return all the data for the logged in user
+const sendUserState = async function(res) {
+
+  let state = {
+    caloriesGoal: 3000, // default calories goal
+    proteinGoal: 150, // default protein gaol
+    totalCalories: 0,
+    totalProtein: 0,
+    entries: []
+  }
+
+  globals = await Global.find();
+  for (let i = 0; i < globals.length; i++) {
+    if (globals[i].name === "caloriesGoal") {
+      state.caloriesGoal = parseInt(globals[i].value);
+    } else if (globals[i].name === "proteinGoal") {
+      state.proteinGoal = parseInt(globals[i].value);
+    }
+  }
+
+  entries = await Entry.find();
+      
+  for (let i = 0; i < entries.length; i++) {
+    state.entries.push({
+      id: entries[i]._id,
+      name: entries[i].name,
+      calories: entries[i].calories,
+      protein: entries[i].protein,
+    });
+
+    state.totalCalories += parseInt(entries[i].calories);
+    state.totalProtein += parseInt(entries[i].protein);
+
+  }
+
+  res.json({status: 200, message: "Successfully added entry", data: state},);
+
+}
 
 // Set calories/protein goal
-// Format: {type: ["protein"/"calories"], value: [number]}
+// Format: {type: ["proteinGoal"/"caloriesGoal"], value: [number]}
 app.post('/setgoal', (req, res) => {
   const json = req.body;
   console.log("set goal", json);
-  res.json(getState());
+
+  const filter = { name: json.type };
+  const update = { value: json.value };
+  const options = { new: true, upsert: true }; // 'upsert' will create the document if it doesn't exist
+  
+  Global.findOneAndUpdate(filter, update, options).then(
+    (result) => {
+      sendUserState(res);
+    }
+  ).catch(
+    (err) => {
+      console.log(err)
+      res.json({status: 400, message: "Error setting goal"});
+    }
+  );
 });
 
 // Add entry
@@ -58,7 +110,33 @@ app.post('/setgoal', (req, res) => {
 app.post('/add', (req, res) => {
   const json = req.body;
   console.log("add", json);
-  res.json(getState());
+
+  // calculate percent protein from calories and protein
+  const proteinCalories = json.protein * 4;
+  const percentProtein = Math.round((proteinCalories / json.calories) * 100);
+
+  const entryData = {
+    name: json.name,
+    calories: json.calories,
+    protein: json.protein,
+    percentProtein: percentProtein
+  };
+
+  const entry = new Entry(entryData);
+
+  entry.save().then(
+    (result) => {
+      console.log("Entry saved", entryData);
+
+      sendUserState(res);
+    }
+  ).catch(
+    (err) => {
+      console.log(err)
+      res.json({status: 400, message: "Error saving entry"});
+    }
+  );
+
 });
 
 // Delete entry
@@ -66,7 +144,8 @@ app.post('/add', (req, res) => {
 app.post('/delete', (req, res) => {
   const json = req.body;
   console.log("delete", json);
-  res.json(getState());
+
+  sendUserState(res);
 });
 
 // Clear all entries
@@ -74,7 +153,8 @@ app.post('/delete', (req, res) => {
 app.post('/clear', (req, res) => {
   const json = req.body;
   console.log("clear", json);
-  res.json(getState());
+
+  sendUserState(res);
 });
 
 

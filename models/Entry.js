@@ -1,11 +1,9 @@
+// Schema for a food entry
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const entrySchema = new Schema({
-    id: {
-        type: Number,
-        required: true
-    },
     name: {
         type: String,
         required: true,
@@ -15,6 +13,10 @@ const entrySchema = new Schema({
         required: true
     },
     protein: {
+        type: Number,
+        required: true
+    },
+    percentProtein: {
         type: Number,
         required: true
     }
