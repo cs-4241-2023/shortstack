@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const mime = require('mime');
 const fs = require('fs');
@@ -7,8 +8,11 @@ const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 3000;
 
+
+
 const Entry = require('./models/Entry.js');
 const Global = require('./models/Globals.js');
+const User = require('./models/User.js');
 
 // Connect to mongodb
 require('dotenv').config();
@@ -28,13 +32,30 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
 app.use(express.json());
 app.use(express.static('public'));
 
+// Use sessions for tracking logins
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { httpOnly: true, secure: false }
+}));
 
-app.get('*', (req, res) => {
-  console.log("get", req.url)
-  const filename = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
-  const type = mime.getType(filename);
+// redirect to login page if not logged in
+const verifyLogin = function(req, res) {
+  if(!req.session.username) {
+    console.log("not logged in");
+    res.redirect('/');
+    return false;
+  }
+  return true;
+}
 
-  fs.readFile(filename, (err, content) => {
+
+const sendFile = function(res, filename) {
+  const fullFilename = path.join(__dirname, 'public', filename);
+  const type = mime.getType(fullFilename);
+
+  fs.readFile(fullFilename, (err, content) => {
     if (err === null) {
       res.set('Content-Type', type);
       res.send(content);
@@ -42,6 +63,16 @@ app.get('*', (req, res) => {
       res.status(404).send('404 Error: File Not Found');
     }
   });
+};
+
+app.get('/main', (req, res) => {
+  if (!verifyLogin(req, res)) return;
+  sendFile(res, 'home.html');
+});
+
+app.get('*', (req, res) => {
+  console.log("get *", req.url);
+  sendFile(res, 'login.html');
 });
 
 // return all the data for the logged in user
@@ -86,13 +117,70 @@ const sendUserState = async function(res) {
 
 // Do nothing but just return data
 app.post('/null', (req, res) => {
+  if (!verifyLogin(req, res)) return;
+
   console.log("null", req.body);
   sendUserState(res);
+});
+
+// login user
+// Format: {username: [string], password: [string]}
+app.post('/login', async (req, res) => {
+
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    const user = await User.findOne({ username });
+
+    if (!user || password !== user.password) {
+      console.log('Invalid username or password');
+      return res.json({status: 400, message: 'Invalid username or password'});
+    }
+
+    console.log('User logged in successfully');
+    req.session.username = username; // store username in session
+    return res.json({status: 200, message: 'User loged in successfully'});
+
+  } catch (error) {
+    console.log(error);
+    return res.json({status: 500, message: 'Internal Server Error'});
+  }
+
+});
+
+// Sign up a new account
+app.post('/signup', async (req, res) => {
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    const existingUser = await User.findOne({ username });
+
+    if (existingUser) {
+      console.log('User already exists');
+      return res.json({status: 400, message: 'User already exists'});
+
+    }
+
+    const user = new User({ username, password });
+    await user.save();
+
+    console.log('User signed up successfully');
+    req.session.username = username; // store username in session
+    return res.json({status: 200, message: 'User signed up in successfully'});
+
+  } catch (error) {
+    console.log(error);
+    return res.json({status: 500, message: 'Internal Server Error'});
+  }
 });
 
 // Set calories/protein goal
 // Format: {type: ["proteinGoal"/"caloriesGoal"], value: [number]}
 app.post('/setgoal', (req, res) => {
+  if (!verifyLogin(req, res)) return;
+
   const json = req.body;
   console.log("set goal", json);
 
@@ -115,6 +203,8 @@ app.post('/setgoal', (req, res) => {
 // Add entry
 // Format: {name: [string], calories: [number], protein: [number]}
 app.post('/add', (req, res) => {
+  if (!verifyLogin(req, res)) return;
+
   const json = req.body;
   console.log("add", json);
 
@@ -149,6 +239,8 @@ app.post('/add', (req, res) => {
 // Delete entry
 // Format: {id: [number]}
 app.post('/delete', (req, res) => {
+  if (!verifyLogin(req, res)) return;
+
   const json = req.body;
   console.log("delete", json);
 
@@ -167,6 +259,8 @@ app.post('/delete', (req, res) => {
 // Clear all entries
 // Format: {}
 app.post('/clear', (req, res) => {
+  if (!verifyLogin(req, res)) return;
+
   const json = req.body;
   console.log("clear", json);
 
