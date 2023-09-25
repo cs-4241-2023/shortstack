@@ -53,7 +53,7 @@ const setCounter = function(type, total, goal) {
     
   } else if (offset < 0) {
       offsetElement.style.color = "red";
-      offsetElement.textContent = "You're past your goal! " + offset + suffix + " over target.";
+      offsetElement.textContent = offset + suffix + " over target.";
   } else {
       offsetElement.style.color = "black";
       offsetElement.textContent = "You've met your goal!";
@@ -108,17 +108,17 @@ const generateFoodEntries = function(entries) {
       let infoHTML = document.createElement("div");
       infoHTML.classList.add("info");
 
-      let caloriesHTML = document.createElement("p");
+      let caloriesHTML = document.createElement("h4");
       caloriesHTML.textContent = "Calories: " + entryData.calories + " kcal";
       caloriesHTML.classList.add("calories");
       infoHTML.appendChild(caloriesHTML);
 
-      let proteinHTML = document.createElement("p");
+      let proteinHTML = document.createElement("h4");
       proteinHTML.textContent = "Protein: " + entryData.protein + " g";
       proteinHTML.classList.add("protein");
       infoHTML.appendChild(proteinHTML);
 
-      let percentProteinHTML = document.createElement("p");
+      let percentProteinHTML = document.createElement("h4");
       percentProteinHTML.textContent = "Percent Protein: " + entryData.percentProtein + "%";
       percentProteinHTML.classList.add("percent_protein");
       infoHTML.appendChild(percentProteinHTML);

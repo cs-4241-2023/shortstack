@@ -5,6 +5,8 @@ const mime = require('mime');
 const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -12,6 +14,9 @@ const port = process.env.PORT || 3000;
 
 const Entry = require('./models/Entry.js');
 const User = require('./models/User.js');
+
+app.use(morgan('dev')); // 'dev' is one of the predefined formats provided by Morgan
+
 
 // Connect to mongodb
 require('dotenv').config();

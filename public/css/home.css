@@ -45,7 +45,7 @@ header > h1, h4 {
   margin-bottom: 5%;
 }
 
-.status > h2, p {
+.status > h2, p, h4, h1 {
   color: #FAF9F6;
 }
 
