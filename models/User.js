@@ -12,6 +12,14 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    caloriesGoal: {
+        type: Number,
+        required: true,
+    },
+    proteinGoal: {
+        type: Number,
+        required: true,
+    }
 });
 
 const User = mongoose.model('User', userSchema);

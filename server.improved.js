@@ -11,7 +11,6 @@ const port = process.env.PORT || 3000;
 
 
 const Entry = require('./models/Entry.js');
-const Global = require('./models/Globals.js');
 const User = require('./models/User.js');
 
 // Connect to mongodb
@@ -79,6 +78,7 @@ app.get('*', (req, res) => {
 const sendUserState = async function(res) {
 
   let state = {
+    user: req.session.username,
     caloriesGoal: 3000, // default calories goal
     proteinGoal: 150, // default protein gaol
     totalCalories: 0,
@@ -86,18 +86,21 @@ const sendUserState = async function(res) {
     entries: []
   }
 
-  let globals = await Global.find();
-  for (let i = 0; i < globals.length; i++) {
-    if (globals[i].name === "caloriesGoal") {
-      state.caloriesGoal = parseInt(globals[i].value);
-    } else if (globals[i].name === "proteinGoal") {
-      state.proteinGoal = parseInt(globals[i].value);
-    }
+  let user = await User.findOne({ username: req.session.username });
+  if (user) {
+    state.caloriesGoal = parseInt(user.caloriesGoal);
+    state.proteinGoal = parseInt(user.proteinGoal);
   }
 
   let entries = await Entry.find();
       
   for (let i = 0; i < entries.length; i++) {
+
+    // only add entries for the logged in user
+    if (entries[i].username !== req.session.username) {
+      continue;
+    }
+
     state.entries.push({
       id: entries[i]._id,
       name: entries[i].name,
@@ -163,7 +166,7 @@ app.post('/signup', async (req, res) => {
 
     }
 
-    const user = new User({ username, password });
+    const user = new User({ username, password, caloriesGoal: 3000, proteinGoal: 150 });
     await user.save();
 
     console.log('User signed up successfully');
@@ -184,12 +187,17 @@ app.post('/setgoal', (req, res) => {
   const json = req.body;
   console.log("set goal", json);
 
-  const filter = { name: json.type };
-  const update = { value: json.value };
-  const options = { new: true, upsert: true }; // 'upsert' will create the document if it doesn't exist
+  const filter = { username: req.session.username };
+  const options = { new: true, upsert: false };
+
+  let update;
   
-  Global.findOneAndUpdate(filter, update, options).then(
-    (result) => {
+  if (json.type === "caloriesGoal") update = { caloriesGoal: json.value };
+  else if (json.type === "proteinGoal") update = { proteinGoal: json.value };
+  else return;
+  
+  User.findOneAndUpdate(filter, update, options).then(
+   (result) => {
       sendUserState(res);
     }
   ).catch(
@@ -213,6 +221,7 @@ app.post('/add', (req, res) => {
   const percentProtein = Math.round((proteinCalories / json.calories) * 100);
 
   const entryData = {
+    username: req.session.username, // each entry is associated with a user
     name: json.name,
     calories: json.calories,
     protein: json.protein,
