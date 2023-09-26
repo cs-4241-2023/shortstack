@@ -50,6 +50,7 @@
               <th scope="col">Name</th>
               <th scope="col">Year of Release</th>
               <th scope="col">Genre</th>
+              <th scope="col">Relevance</th>
               <th scope="col">Edit/Delete</th>
             </tr>
           </thead>
@@ -58,6 +59,13 @@
           </tbody>
         </table>
 
+        <button onclick="myFunction()">Try it</button>
+
+        <script>
+          function myFunction() {
+            document.getElementById("showsTable").deleteRow(0);
+          }
+        </script>
 
       </div>
     </div>

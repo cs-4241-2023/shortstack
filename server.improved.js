@@ -9,9 +9,7 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'showName': 'Suite Life of Zack and Cody', 'relYear': '2005', 'showGenre': 'Sitcom',}
-]
+const appdata = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {  // retrieve info from server data
@@ -35,22 +33,37 @@ const handlePost = function( request, response ) {
   //handle /delete /submit requests here
   //calculate the derived field
   //add data to app data 
+
+  //Note that "request" is an object. You have to use "request.url" to get the url string.
+
+  debugger;
   
   let dataString = ''
 
-  request.on( 'data', function( data ) {
-      dataString += data // stuff from frontend
+      request.on( 'data', function( data ) {
+        dataString += data // stuff from frontend
+    })
+
+    request.on( 'end', function() {
+    console.log( JSON.parse( dataString ) ) // This is logging the object containing the row.
+
+    json = JSON.parse( dataString ); // This is the object containing the row.
+      
+    if(request.url == '/submit'){
+      // ... do something with the data here!!!
+      appdata.push(JSON.parse(dataString))
+
+      response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+      response.end( JSON.stringify( appdata) ) 
+    }
+
+    else if(request.url == '/delete'){
+      appdata.splice(json.row, 1);
+      console.log("Row " + json.row + " was deleted.")
+    }
   })
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
-    appdata.push(JSON.parse(dataString))
-
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end( JSON.stringify( appdata) ) 
-  })
 }
 
 const sendFile = function( response, filename ) {
@@ -74,7 +87,5 @@ const sendFile = function( response, filename ) {
      }
    })
 }
-
-const deleteRow = async function( event ) {}
 
 server.listen( process.env.PORT || port )
