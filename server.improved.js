@@ -1,16 +1,19 @@
 require('dotenv').config()
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const util = require('util');
+const hashAsync = util.promisify(bcrypt.hash);
 const express    = require('express'),
 { MongoClient } = require("mongodb"),
       app        = express()
-const currentUser = 'test'
+let currentUser = 'test'
 const saltRounds = 10;
 
 
 app.use( express.static( 'public' ) )
 app.use( express.static( 'views'  ) )
 app.use( express.json() )
+app.use(express.urlencoded());
 app.use( (req,res,next) => {
   if( PlayerCollection !== null ) {
     next()
@@ -38,36 +41,43 @@ async function run() {
 
 
 // Handle login POST request
-app.post('/login', async (req, res) => {
-  const username = req.body.username
-  const password = req.body.password
-console.log('username and password: ',username, password)
+app.post('/playerRating.html', async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  console.log('username and password: ', username, password);
+
   try {
     // Check if the user exists in the database
-const user = await userCollection.find(
-  {username: username}
-).toArray()
-console.log(user)
+    const user = await userCollection.find({ username: username }).toArray();
+    console.log(user);
 
     if (user.length === 0) {
-      console.log("add user")
+      console.log("add user");
 
-      bcrypt.hash(password, saltRounds, function(err, hash) {
-        // Store hash in your password DB.
-        const userToAdd = userCollection.insertOne({ username: username, password: hash })
-    });
+      // Use async/await with bcrypt.hash
+      const hash = await hashAsync(password, saltRounds);
+
+      // Store hash in your password DB.
+      const userToAdd = await userCollection.insertOne({ username: username, password: hash });
     }
 
     // Check if the password is correct
     const passwordMatch = await bcrypt.compare(password, user[0].password);
 
     if (passwordMatch) {
-      console.log('password correct' )
-      // res.redirect('/playerRating.html');
-      res.sendFile(__dirname + '/public/playerRating.html');
-    }
-    else{
-      console.log('password incorrect' )
+      console.log('password correct');
+      currentUser = username;
+      const absoluteFilePath = __dirname + '/public/playerRating.html';
+      console.log(absoluteFilePath);
+      console.log(req.path);
+      res.sendFile(absoluteFilePath, (err) => {
+        if (err) {
+          console.error('Error sending file:', err);
+          res.status(500).send('Internal Server Error');
+        }
+      });
+    } else {
+      console.log('password incorrect');
     }
   } catch (err) {
     console.error(err);
