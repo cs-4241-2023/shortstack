@@ -98,8 +98,8 @@ const deleteARow = async function(row){
 
 function relevanceByYear(currentYear, yearOfRelease){
   let yearDiff = currentYear - yearOfRelease;
-  let relevanceByYear = "Unknown...";
-  if(yearDiff <= 1){
+  let relevanceByYear = "Huh?";
+  if(yearDiff >= 0 && yearDiff <= 1){
     relevanceByYear = "Everyone's watching that!"
   }
 
@@ -111,8 +111,12 @@ function relevanceByYear(currentYear, yearOfRelease){
     relevanceByYear = "That's a pretty old one!"
   }
 
-  else {
+  else if(yearDiff > 80){
     relevanceByYear = "No show should even be that old!"
+  }
+
+  else{
+    relevanceByYear = "No year given..."
   }
   return relevanceByYear;
 }
