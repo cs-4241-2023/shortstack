@@ -50,6 +50,11 @@ const submit = async function( event ) {
       deleteBtn.id = i;
       deleteBtn.onclick = ()=> deleteARow(deleteBtn.id)
 
+      // Relevance Section:
+      let curYear = new Date().getFullYear()
+      let relQuote = relevanceByYear(curYear, item.relYear)
+      console.log("The show " + item.showName + " was made " + (curYear - item.relYear) + " years ago." + relQuote)
+
       const tr = document.createElement('tr')
       console.log(item.idNum)
       const td1 = document.createElement('td')
@@ -60,6 +65,7 @@ const submit = async function( event ) {
       td1.innerHTML = item.showName
       td2.innerHTML = item.relYear
       td3.innerHTML = item.showGenre
+      td4.innerHTML = relQuote
       td5.appendChild(editBtn)
       td5.appendChild(deleteBtn)
       tr.appendChild(td1)
@@ -97,17 +103,18 @@ function relevanceByYear(currentYear, yearOfRelease){
     relevanceByYear = "Everyone's watching that!"
   }
 
-  else if(yearDiff > 1 && yearDiff <= 5){
+  else if(yearDiff > 1 && yearDiff <= 10){
     relevanceByYear = "Still commonly watched!"
   }
 
-  else if(yearDiff > 5 && yearDiff <= 80){
+  else if(yearDiff > 10 && yearDiff <= 80){
     relevanceByYear = "That's a pretty old one!"
   }
 
   else {
     relevanceByYear = "No show should even be that old!"
   }
+  return relevanceByYear;
 }
 
 
