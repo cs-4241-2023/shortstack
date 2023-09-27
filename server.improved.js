@@ -1,6 +1,7 @@
 const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
+      // To run, use node server.improved.js
       // to install the mime library if you're testing this on your local machine.
       // However, Glitch will install it automatically by looking in your package.json
       // file.
@@ -8,16 +9,12 @@ const http = require( 'http' ),
       dir  = 'public/',
       port = 3000
 
-const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
-]
+const appdata = []
 
 const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
+  if( request.method === 'GET' ) {  // retrieve info from server data
     handleGet( request, response )    
-  }else if( request.method === 'POST' ){
+  }else if( request.method === 'POST' ) {  // add info to server data 
     handlePost( request, response ) 
   }
 })
@@ -33,20 +30,40 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
+  //handle /delete /submit requests here
+  //calculate the derived field
+  //add data to app data 
+
+  //Note that "request" is an object. You have to use "request.url" to get the url string.
+
+  debugger;
+  
   let dataString = ''
 
-  request.on( 'data', function( data ) {
-      dataString += data 
+      request.on( 'data', function( data ) {
+        dataString += data // stuff from frontend
+    })
+
+    request.on( 'end', function() {
+    console.log( JSON.parse( dataString ) ) // This is logging the object containing the row.
+
+    json = JSON.parse( dataString ); // This is the object containing the row.
+      
+    if(request.url == '/submit'){
+      // ... do something with the data here!!!
+      appdata.push(JSON.parse(dataString))
+
+      response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+      response.end( JSON.stringify( appdata) ) 
+    }
+
+    else if(request.url == '/delete'){
+      appdata.splice(json.row, 1);
+      console.log("Row " + json.row + " was deleted.")
+    }
   })
 
-  request.on( 'end', function() {
-    console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
-
-    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-    response.end('test')
-  })
 }
 
 const sendFile = function( response, filename ) {
