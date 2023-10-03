@@ -1,4 +1,29 @@
 
+
+#table tr:nth-child(even){background-color: #f2f2f2;}
+#table tr:nth-child(odd){background-color: #d7d7d7;}
+
+
+#table tr:hover {background-color: #9F91CC;}
+
+body {
+
+  background-color:#CEC2FA;
+}
+
+input[type=text], select {
+  width: 22%;
+  padding: 10px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  /* border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family:'Poppins', sans-serif; */
+
+}
+
+/* 
 input[type=text], select {
   width: 20%;
   padding: 12px 20px;
@@ -90,4 +115,4 @@ p {
   color: black;
   font-family:'Poppins', sans-serif;
 
-}
+} */
